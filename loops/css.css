@@ -1,0 +1,310 @@
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-family: Arial, Helvetica, serif;
+    color: black;
+    font-size: 14px;
+    height: 100%;
+    margin: 0;
+    background-color: #e4ece5;
+    cursor: default;
+}
+
+* {
+    /* border: 1px dashed rgba(128, 128, 128, 0.5); */
+}
+
+#game {
+    display: grid;
+    grid-template-areas: "mana  mana      mana      " "menu  resources resources " "menu  controls  controls  " "stats actions   town      ";
+}
+
+#mana {
+    grid-area: mana;
+}
+
+#menu {
+    grid-area: menu;
+    /* justify-self: center; */
+}
+
+#resources {
+    grid-area: resources;
+}
+
+#controls {
+    grid-area: controls;
+}
+
+#stats {
+    grid-area: stats;
+}
+
+#actions {
+    grid-area: actions;
+}
+
+#town {
+    grid-area: town;
+}
+
+div#manaBar {
+    background: white;
+    margin: 3px;
+}
+
+#manaSlider {
+    height: 10px;
+    margin: auto;
+    background: hsla(232, 100%, 75%, 1);
+    transition: width 0.2s;
+}
+
+.large {
+    font-size: 16px;
+}
+
+.medium {
+    font-size: 14px;
+}
+
+.small {
+    font-size: 12px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.centered {
+    text-align: center;
+}
+
+.superLargeIcon {
+    width: 34px;
+    height: 34px;
+}
+
+.largeIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.smallIcon {
+    width: 16px;
+    height: 16px;
+}
+
+input, label {
+    cursor: pointer;
+}
+
+/* town */
+#townTop {
+    display: grid;
+    grid-template-areas: "prev name next";
+    grid-template-columns: 1fr 250px 1fr;
+}
+
+#townPrev {
+    text-align: right;
+}
+
+#townName {
+    text-align: center;
+}
+
+#townNext {
+}
+
+div#townVars {
+    padding: 10px 30px;
+}
+
+.townVarContainer {
+    margin-bottom: 5px;
+}
+
+.townVarContainer * {
+    display: inline-block;
+}
+
+.thinProgressBarUpper, .thinProgressBarLower {
+    background-color: white;
+    display: block;
+    margin: 0 0 2px 5px;
+}
+
+.thinProgressBarUpper {
+    height: 4px;
+}
+
+.thinProgressBarLower {
+    height: 3px;
+}
+
+.thickProgressBar {
+    background-color: white;
+    display: inline-block;
+    margin: 0 2px 2px 2px;
+    height: 8px;
+}
+
+.statBar {
+    height: 100%;
+    width: 0;
+    display: block;
+}
+
+.statLevelBar, .townExpBar, .skillExpBar {
+    background-color: #9d67cd;
+}
+
+.statTalentBar {
+    background-color: #ffb45b;
+}
+
+.townBar {
+    background-color: #95afff;
+}
+
+#townActions {
+    text-align: center;
+}
+
+.townActionContainer {
+    cursor: pointer;
+    width: 102px;
+    height: 50px;
+    vertical-align: top;
+    margin: 0 2px;
+    font-size: 13px;
+    display: inline-block;
+}
+
+.townActionContainer:hover, .travelContainer:hover {
+    background-color: #bef8ff;
+}
+
+.travelContainer {
+    cursor: pointer;
+    display: block;
+    width: 200px;
+    height: 50px;
+    vertical-align: top;
+    margin: 2px auto;
+    font-size: 13px;
+}
+
+.townActionAffectedIcon {
+    position: absolute;
+    margin-top: 17px;
+    margin-left: 5px;
+}
+
+
+
+
+
+
+
+#actions {
+    display: grid;
+    grid-template-areas: 
+        "name   name   "
+        "cur    next   "
+        "curbar nextbar"
+        "bar    bar    ";
+    grid-template-rows: auto 1fr auto auto;
+    grid-auto-columns: auto;
+}
+
+
+#actionsName {
+    grid-area: name;
+    padding-bottom: 2px;
+}
+#actionListCurrent {
+    grid-area: cur;
+    background-color: #c2e6cc;
+    min-height: 350px;
+    padding: 10px 0px 0px 1px;
+}
+#actionListNext {
+    grid-area: next;
+    background-color: #cdded2;
+}
+#actionListDescription {
+    grid-area: next;
+    background-color: #cdded2;
+}
+#actionListCurrentBottom {
+    grid-area: curbar;
+    background-color: #c2e6cc;
+}
+#actionListNextBottom {
+    grid-area: nextbar;
+    background-color: #cdded2;
+}
+#actionListBottom {
+    grid-area: bar;
+}
+
+
+
+.actionListContainer {
+    margin-left:3px;
+    display:block;
+    /* padding-top: 1px; */
+    padding-bottom: 1px;
+    border-bottom:2px solid #b9b9b9;
+    position:relative;
+    width:102px;
+}
+.actionListProgress {
+    height:100%;
+    /* width:75%; */
+    background-color: #ff907d;
+    position:absolute;
+    opacity:.5;
+}
+.actionListDone {
+    height:100%;
+    width:100%;
+    background-color: hsla(0, 0%, 43%, 1);
+    position:absolute;
+    opacity: 0.25;
+}
+.actionListTotalProgress {
+    height:2px;
+    width:100%;
+    background-color: #4caf50;
+    position:absolute;
+    opacity:.7;
+    bottom: -2px;
+}
+.actionListSelectedIndicator {
+    position: absolute;
+    opacity: 0;
+    background-color: #4caf50;
+    width: 3px;
+    height: 100%;
+    left: -3px;
+}
+.actionListContainer:hover .actionListSelectedIndicator {
+    opacity: 1;
+}
+.actionListContainer img {
+    vertical-align: bottom;
+    margin-top: 2px;
+}
+
+
+.nextActionContainer {
+    width:188px;
+}
+.curActionContainer {
+}

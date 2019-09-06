@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <script type="text/javascript" src="commons/common.js"></script>
+        <script type="text/javascript" src="shared/vue.js"></script>
+        <script type="text/javascript" defer src="js.js"></script>
+        <link rel="stylesheet" type="text/css" href="css.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <div id="game">
+            <div id="mana">
+                <div id="manaBar">
+                    <div id="manaSlider" :style="{width:100*mana/maxMana+'%'}"></div>
+                </div>
+            </div>
+            <div id="menu">[menu]</div>
+            <div id="resources">[resources]</div>
+            <div id="controls">[controls]</div>
+            <div id="stats">[stats]</div>
+            <div id="actions">
+                <div id="actionsName" class="large bold centered">Action List</div>
+                <div id="actionListCurrent">
+                    <div class="actionListContainer small" v-for="action of actionListCurrent">
+                        <div :class="'actionList'+(action.complete?'Done':'Progress')" :style="{width:action.complete?'100%':action.loopProgress*100+'%'}"></div>
+                        <div class="actionListDone" v-show="action.complete"></div>
+                        <div class="actionListTotalProgress" :style="{width:action.complete?'100%':(action.loopsDone+action.loopProgress)/action.loops*100+'%'}"></div>
+                        <div class="actionListSelectedIndicator"></div>
+                        <img :src="action.img" class="smallIcon"> x {{ action.loops }}({{ action.loopsLeft }})
+                    </div>
+                </div>
+                <div v-show="1" id="actionListNext">actionListNext</div>
+                <div v-show="0" id="actionListDescription">actionListDescription</div>
+                <div id="actionListCurrentBottom">actionListCurrentBar</div>
+                <div id="actionListNextBottom">actionListNextBar</div>
+                <div id="actionListBottom">actionListBottomBar</div>
+            </div>
+            <div id="town">
+                <div id="townTop">
+                    <div id="townPrev">
+                        <div class="fa fa-arrow-left"></div>
+                    </div>
+                    <div id="townName" class="large bold">{{ town.name }}</div>
+                    <div id="townNext">
+                        <div class="fa fa-arrow-right"></div>
+                    </div>
+                </div>
+                <div id="townVars">
+                    <div class="townVarContainer" v-for="vary of town.vars">
+                        [{{vary.type}}]
+                        
+                        <template v-if="vary.type=='progressvar'">
+                            <div class="bold">{{ vary.label }}</div>
+                            {{vary.level}}{{ vary.levelLabel }}
+                            
+                            <div class="thinProgressBarUpper">
+                                <div id="expBarWander" class="statBar townExpBar" :style="{width: vary.level/vary.maxLevel*100+'%'}"></div>
+                            </div>
+                            <div class="thinProgressBarLower">
+                                <div id="barWander" class="statBar townBar" :style="{width: vary.exp/vary.maxExp*100+'%'}"></div>
+                            </div>
+                        </template>
+                        <template v-else-if="vary.type=='checkvar'">
+                            <div class="bold">{{ vary.label }}</div>
+                            {{ vary.left }}
+                            <i class="fa fa-arrow-left"></i>
+                            {{ vary.good }}
+                            <i class="fa fa-arrow-left"></i>
+                            {{ vary.unchecked }}
+                        
+                        </template>
+                    </div>
+                </div>
+                <div id="townActions">
+                    <div class="large bold">Action Options</div>
+                    <div class="townActionContainer" v-for="action of town.actions" @click="townAddAction(action)">
+                        {{action.label}}<br>
+                        <div style="position:relative">
+                            <img :src="action.img" class="superLargeIcon">
+                            <img v-if="action.affectedImg" :src="action.affectedImg" class="smallIcon townActionAffectedIcon">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
