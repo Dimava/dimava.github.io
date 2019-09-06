@@ -1,0 +1,158 @@
+body {
+    /* padding-bottom: 50vh; */
+    /* overflow: hidden; */
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+#div>div {
+    /* margin-bottom: 10px; */
+}
+
+.html_recipe_val {
+    grid-area: right;
+    overflow-y: auto;
+    max-height: 99vh;
+}
+
+.btn {
+    display: inline-block;
+    border: 2px outset;
+    background: gray;
+    padding: 2px;
+    margin: 2px;
+}
+
+.btn.selected {
+    background: orange;
+}
+
+.item-cell {
+    height: 32px;
+    width: 32px;
+    border: 2px outset;
+    background: gray;
+}
+
+body>img, #last>img {
+    display: inline-block;
+}
+
+.img32 {
+    width: 32px;
+    height: 32px;
+    display: block;
+    /*     object-position: left;
+    object-fit: cover; */
+}
+
+.img64 {
+    width: 64px;
+    height: 64px;
+    display: block;
+}
+
+.inline {
+    display: inline-block;
+    display: inline-flex;
+}
+
+td {
+    border: 1px solid #ccc;
+}
+
+.btn {
+    vertical-align: middle;
+}
+
+.btn_item {
+    background: lightblue
+}
+
+.btn_fluid {
+    background: aliceblue
+}
+
+.btn.btn_recipe {
+    background: peachpuff;
+}
+
+.in3line {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 13.33333px;
+}
+
+.in3line>input {
+    background: #eee;
+    border: none;
+    padding: 0px 3px;
+    width: 6em;
+    display: block;
+    /* width: 3em; */
+}
+
+table .in3line>input {
+    width: 3em;
+}
+
+.in3line>input:nth-child(5) {
+    color: #aaa;
+    text-indent: 10px;
+}
+
+.in3line>span {
+    background: #eee;
+    border: none;
+    width: 100px;
+    display: inline-block;
+    overflow: hidden;
+    /* -webkit-appearance: textfield; */
+    height: 15px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    -webkit-appearance: textfield;
+    background-color: white;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    padding: 1px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+
+/* /////////////////////////////////////////// */
+div#div {
+    display: grid;
+    grid-template: "left center right";
+    max-height: 100%;
+    max-width: 100vw;
+    overflow: hidden;
+    /* padding: 10px; */
+    /* box-sizing: border-box; */
+    /* justify-items: center; */
+}
+
+.html_search {
+    grid-area: left;
+    max-width: 608px;
+    max-height: 99vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* width: 457px; */
+    justify-self: center;
+}
+
+.html_search_input * {
+    margin: 3px;
+    margin-right: 0;
+}
+
+.html_search_items {
+    overflow-y: auto;
+}
