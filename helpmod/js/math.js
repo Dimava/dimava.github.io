@@ -295,9 +295,9 @@ Mx = class Matrix extends Array {
         let h = 0, i = 0
         for (i; i < this.length && h < this[0].length - 1; i++) {
             h = this.gauss_step_down(i, h);
-            console.log({i,h});
+//             console.log({i,h});
         }
-            console.table(this);
+//             console.table(this);
         h = h;
 
         // if it can be solved, all numbers bolow last 1 will be 0s
