@@ -142,10 +142,28 @@ html_recipe_val = `
 html_search = `
 <div class="html_search">
     <div class="html_search_input">
-        <input v-model="filter_string"> <button @click="filter_string=''">x</button>
+        <input v-model="filter_string">
+        <button @click="filter_string=''">x</button>
+        &nbsp; &nbsp; &nbsp;
+        <button @click="$event.target.nextElementSibling.style.display = $event.target.nextElementSibling.style.display == 'none' ? 'block' : 'none'">?</button>
+        <div style="display: none;">
+                 qwe - search
+            <br> "qwe" - exact search
+            <br> in:qwe / in:"qwe" - recipe with input
+            <br> out:qwe - recipe with output
+            <br> io:qwe - recipe with input or output
+            <br> :i - item
+            <br> :f - fuel
+            <br> :r - recipe
+            <br> :p - buildable
+            <br> :ass - alike type - assembling-machine. furnace, , etc.
+            <br> cat:qwe - alike crafting category
+            <br> * - show in all groups
+
+        </div>
     </div>
     <div class="html_search_groups">
-        <div class="btn" :class="group_selected == index?'selected':''" 
+        <div class="btn" :class="group_selected == index || filter_string.includes('*') ? 'selected' : ''" 
                     v-for="(group, index) of groups"
                     v-if="group.subgroups.find(e=>e.items.find(ee=>filter_by_string(ee)))"
                     :title="group.name" @click="group_selected = index">
@@ -153,7 +171,7 @@ html_search = `
         </div>
     </div>
     <div class="html_search_items">
-        <div v-for="subgroup in groups[group_selected].subgroups">
+        <div v-for="subgroup in (filter_string.includes('*') ? Object.values(groups).flatMap(e=>e.subgroups) : groups[group_selected].subgroups)">
             <div :class="['btn', 'btn_'+item.type]"
                         v-for="item of subgroup.items"
                         v-if="filter_by_string(item)"
@@ -232,10 +250,13 @@ methods = {
         else if (io == 'out')
             io = 'in';
         data.filter_string = `${io}:"${item.name}"`;
-        let alike = raw.grouped_list.filter(e=>this.filter_by_string(e));
+        let alike = data.raw.grouped_list.filter(e=>this.filter_by_string(e));
         if (alike.length == 1) {
             this.book_item_click(alike[0]);
             data.filter_string = fs;
+        } else {
+            let alike_groups = Object.values(data.raw["item-subgroup"]).filter(e=>e.items.find(it=>vue.filter_by_string(it)));
+            if (alike_groups.length <= 5) data.filter_string += ' *';
         }
     },
 

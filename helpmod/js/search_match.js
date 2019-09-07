@@ -52,6 +52,8 @@ function part_match(part) {
         } else {
             fn = (recipe)=>recipe.type == 'recipe' && recipe.category.includes(s_name);
         }
+    } else if (!s_in && s_name == '*') {
+        fn = (item)=>true;
     } else if (!s_in) {
         if (s_quote) {
             fn = (item)=>item.name == s_name;
@@ -60,7 +62,7 @@ function part_match(part) {
         }
     } else if (s_in == ':' && s_name) {
         if (s_name == 'p') {
-            fn = (item)=>item.built;
+            fn = (item)=>item.placed;
         } else if (s_name == 'r' || s_name == 'recipe') {
             fn = (item)=>item.type == 'recipe';
         } else if (s_name == 'i' || s_name == 'item') {
@@ -74,7 +76,7 @@ function part_match(part) {
             // } else if ('fuel'.startsWith(s_name)) {
             //     fn = (item)=>item.fuel_value;
         } else {
-            fn = (item)=>item.type.startsWith(s_name) || item.built && item.built.type.startsWith(s_name);
+            fn = (item)=>item.type.startsWith(s_name) || item.placed && item.placed.type.startsWith(s_name);
             // if (s_quote) {
             //     fn = (recipe)=>recipe.type == 'recipe' && (recipe.ingredients.find(e=>e.name == s_name) || recipe.results.find(e=>e.name == s_name));
             // } else {

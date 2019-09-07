@@ -147,13 +147,19 @@ div#div {
 
 .html_search {
     grid-area: left;
-    max-width: 608px;
+    width: 608px;
     max-height: 99vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     /* width: 457px; */
     justify-self: center;
+}
+
+@media (max-width: 1400px) {
+    .html_search {
+        width: 420px;
+    }
 }
 
 .html_search_input * {
