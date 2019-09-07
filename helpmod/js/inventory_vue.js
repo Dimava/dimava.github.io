@@ -212,7 +212,7 @@ methods = {
             return item.icon_data;
         }
         if (typeof item.icon == 'string') {
-            return './data/' + item.icon;
+            return './data/' + item.icon.replace(/__/g,'');
         }
 
         return './data/__base__/graphics/icons/info.png'
