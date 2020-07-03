@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>shapez.io - Build automated factories to build, combine and color shapes!</title>
+    <!-- mobile stuff -->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no,viewport-fit=cover">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="MobileOptimized" content="320">
+    <meta name="theme-color" content="#393747">
+    <!-- seo -->
+    <meta name="copyright" content="2020 Tobias Springer IT Solutions and .io Games">
+    <meta name="author" content="Tobias Springer, tobias.springer1@gmail.com">
+    <meta name="description" content="shapez.io is an open-source factory building game about combining and producing different types of shapes.">
+    <meta name="keywords" content="shapes, .io games, factorio, incremental, upgrades, base building, open source">
+    <meta property="og:title" content="shapez.io">
+    <meta property="og:description" content="shapez.io is a fun factory base building game about combining shapes">
+    <meta property="og:url" content="https://shapez.io/">
+    <meta property="og:image" content="https://shapez.io/og_thumb.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:type" content="website">
+    <!-- misc -->
+    <meta http-equiv="Cache-Control" content="private, max-age=0, no-store, no-cache, must-revalidate">
+    <meta http-equiv="Expires" content="0">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="canonical" href="https://shapez.io">
+    <link rel="preconnect" href="http://localhost:5005" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="none" onload="this.media=&#34;all&#34;" href="main.css">
+    <link rel="preload" href="res/fonts/GameFont.woff2" crossorigin="anonymous" as="font">
+    <style type="text/css">
+        @font-face {
+            font-family: GameFont;
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url(res/fonts/GameFont.woff2) format('woff2')
+        }
+
+        #ll_fp {
+            font-family: GameFont;
+            font-size: 14px;
+            position: fixed;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            opacity: .05
+        }
+
+        #ll_p {
+            display: flex;
+            position: fixed;
+            z-index: 99999;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            justify-content: center;
+            align-items: center
+        }
+
+        #ll_p>div {
+            position: absolute;
+            text-align: center;
+            bottom: 40px;
+            left: 20px;
+            right: 20px;
+            color: #393747;
+            font-family: GameFont, sans-serif;
+            font-size: 20px
+        }
+
+        #ll_p>span {
+            width: 60px;
+            height: 60px;
+            display: inline-flex;
+            background: center center/contain no-repeat;
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJtYXJnaW46YXV0bztiYWNrZ3JvdW5kOjAgMCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCIgZGlzcGxheT0iYmxvY2siPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzM5Mzc0NyIgc3Ryb2tlLXdpZHRoPSIzIiByPSI0MiIgc3Ryb2tlLWRhc2hhcnJheT0iMTk3LjkyMDMzNzE3NjE1Njk4IDY3Ljk3MzQ0NTcyNTM4NTY2IiB0cmFuc2Zvcm09InJvdGF0ZSg0OC4yNjUgNTAgNTApIj48YW5pbWF0ZVRyYW5zZm9ybSBhdHRyaWJ1dGVOYW1lPSJ0cmFuc2Zvcm0iIHR5cGU9InJvdGF0ZSIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIGR1cj0iNS41NTU1NTU1NTU1NTU1NTVzIiB2YWx1ZXM9IjAgNTAgNTA7MzYwIDUwIDUwIiBrZXlUaW1lcz0iMDsxIi8+PC9jaXJjbGU+PC9zdmc+)
+        }
+    </style>
+    <script type="text/javascript">
+        var bundleSrc = "bundle.js",
+            bundleSrcTranspiled = "bundle-transpiled.js",
+            bundleIntegrity = null,
+            bundleIntegrityTranspiled = null;
+        ! function() {
+            var e = null,
+                n = !1;
+
+            function t(e, n, t, r, o) {
+                console.error("👀 Init Error:", e, n, t, r, o);
+                var l = document.createElement("div");
+                l.style.position = "fixed", l.style.top = "0", l.style.right = "0", l.style.bottom = "0", l.style.left = "0", l.style.zIndex = "29999", l.style.backgroundColor = "#222429", l.style.display = "flex", l.style.justifyContent = "center", l.style.alignItems = "center";
+                var d = document.createElement("div");
+                d.style.color = "#fff", d.style.fontFamily = "GameFont, sans-serif", d.style.fontSize = "15px", d.style.padding = "30px", d.style.textAlign = "center", l.appendChild(d);
+                var i = document.createElement("h3");
+                i.style.color = "#ef5072", i.innerText = "Error", i.style.marginBottom = "40px", i.style.fontSize = "45px", d.appendChild(i);
+                var a = document.createElement("p");
+                if (a.style.color = "#eee", a.innerText = o || e && e.message || e || "Unknown Error", d.appendChild(a), n) {
+                    var s = document.createElement("p");
+                    s.style.color = "#777", s.innerText = s + ":" + t + ":" + r, d.appendChild(s)
+                }
+                document.documentElement.appendChild(l)
+            }
+
+            function r(e, n) {
+                var t = document.createElement("script");
+                return t.src = e, t.type = "text/javascript", t.charset = "utf-8", t.defer = !0, n && t.setAttribute("integrity", n), t
+            }
+
+            function o(e) {
+                throw console.error("👀 Failed to load bundle!"), console.error("👀 Error was:", e), new Error("Core load failed.")
+            }
+
+            function l() {
+                if (!n) throw console.error("👀 Got no core callback"), new Error("Core thread failed to respond within time.")
+            }
+
+            function d() {
+                console.log("👀 Core loaded at", Math.floor(performance.now()), "ms"), e = setTimeout(l, 15e3), window.removeEventListener("error", t), window.removeEventListener("unhandledrejection", t)
+            }
+            window.addEventListener("error", t), window.addEventListener("unhandledrejection", t), window.coreThreadLoadedCb = function() {
+                console.log("👀 Core responded at", Math.floor(performance.now()), "ms"), clearTimeout(e), n = !(e = null)
+            };
+            var i = r(bundleSrc, bundleIntegrity);
+            i.addEventListener("error", function(e) {
+                console.warn("👀 ES6 Script not supported, loading transpiled code."), console.warn("👀 Error was:", e);
+                var n = r(bundleSrcTranspiled, bundleIntegrityTranspiled);
+                n.addEventListener("error", o), n.addEventListener("load", d), document.head.appendChild(n)
+            }), i.addEventListener("load", d), document.head.appendChild(i)
+        }()
+    </script>
+</head>
+
+<body oncontextmenu="return!1" style="background:#393747">
+    <div id="ll_fp">_</div>
+    <div id="ll_p">
+        <span></span>
+        <div>Downloading Game Files</div>
+    </div>
+</body>
+
+</html>
