@@ -27078,6 +27078,7 @@ class Camera extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_7__["Basic
             event.preventDefault();
             // event.stopPropagation();
         }
+        const prevZoom = this.zoomLevel;
 
         const delta = Math.sign(event.deltaY) * -0.15 * this.root.app.settings.getScrollWheelSensitivity();
         window.assert(Number.isFinite(delta), "Got invalid delta in mouse wheel event: " + event.deltaY);
@@ -27092,7 +27093,9 @@ class Camera extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_7__["Basic
         if (mousePosition) {
             const worldPos = this.root.camera.screenToWorld(mousePosition);
             let de = worldPos.sub(this.center);
-            this.center = this.center.add(de.multiplyScalar(delta));
+            this.desiredCenter = null;
+            const actualDelta = this.zoomLevel / prevZoom - 1;
+            this.center = this.center.add(de.multiplyScalar(actualDelta));
         }
 
         return false;
