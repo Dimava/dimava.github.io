@@ -21523,7 +21523,7 @@ function getBuildId() {
     if ( true && _config__WEBPACK_IMPORTED_MODULE_0__["IS_DEBUG"]) {
         return "local-dev";
     } else if (true) {
-        return "dev-" + getPlatformName() + "-" + "e85ffe0";
+        return "dev-" + getPlatformName() + "-" + "b01eeee";
     } else {}
 }
 
@@ -28611,6 +28611,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_energy_generator__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/energy_generator */ "./src/js/game/components/energy_generator.js");
 /* harmony import */ var _components_wired_pins__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/wired_pins */ "./src/js/game/components/wired_pins.js");
 /* harmony import */ var _components_energy_consumer__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/energy_consumer */ "./src/js/game/components/energy_consumer.js");
+/* harmony import */ var _custom_modBuildings__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./custom/modBuildings */ "./src/js/game/custom/modBuildings.js");
 
 
 
@@ -28626,7 +28627,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// import { allCustomBuildingData } from "./custom/modBuildings"
+
 
 function initComponentRegistry() {
     _core_global_registries__WEBPACK_IMPORTED_MODULE_0__["gComponentRegistry"].register(_components_static_map_entity__WEBPACK_IMPORTED_MODULE_1__["StaticMapEntityComponent"]);
@@ -28644,11 +28645,11 @@ function initComponentRegistry() {
     _core_global_registries__WEBPACK_IMPORTED_MODULE_0__["gComponentRegistry"].register(_components_wired_pins__WEBPACK_IMPORTED_MODULE_13__["WiredPinsComponent"]);
     _core_global_registries__WEBPACK_IMPORTED_MODULE_0__["gComponentRegistry"].register(_components_energy_consumer__WEBPACK_IMPORTED_MODULE_14__["EnergyConsumerComponent"]);
 
-    // for (let custom of allCustomBuildingData) {
-    //     if (custom.component) {
-    //         gComponentRegistry.register(custom.component);
-    //     }
-    // }
+    for (let custom of _custom_modBuildings__WEBPACK_IMPORTED_MODULE_15__["allCustomBuildingData"]) {
+        if (custom.component) {
+            _core_global_registries__WEBPACK_IMPORTED_MODULE_0__["gComponentRegistry"].register(custom.component);
+        }
+    }
 
     // IMPORTANT ^^^^^ UPDATE ENTITY COMPONENT STORAGE AFTERWARDS
 
@@ -28656,7 +28657,8 @@ function initComponentRegistry() {
 
     window.assert(
         // @ts-ignore
-        __webpack_require__("./src/js/game/components sync .*\\.js/").keys().length + 0 === // allCustomBuildingData.filter(e => e.component).length ===
+        __webpack_require__("./src/js/game/components sync .*\\.js/").keys().length + 
+            _custom_modBuildings__WEBPACK_IMPORTED_MODULE_15__["allCustomBuildingData"].filter(e => e.component).length ===
             _core_global_registries__WEBPACK_IMPORTED_MODULE_0__["gComponentRegistry"].getNumEntries(),
         "Not all components are registered"
     );
@@ -31138,66 +31140,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tscSprite", function() { return tscSprite; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tscSpriteBp", function() { return tscSpriteBp; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checker", function() { return checker; });
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../component */ "./src/js/game/component.js");
-/* harmony import */ var _savegame_serialization__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../savegame/serialization */ "./src/js/savegame/serialization.js");
-/* harmony import */ var _core_global_registries__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../core/global_registries */ "./src/js/core/global_registries.js");
-/* harmony import */ var _base_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../base_item */ "./src/js/game/base_item.js");
-/* harmony import */ var _core_vector__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../core/vector */ "./src/js/core/vector.js");
-/* harmony import */ var _core_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../core/config */ "./src/js/core/config.js");
-/* harmony import */ var _components_item_acceptor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/item_acceptor */ "./src/js/game/components/item_acceptor.js");
-/* harmony import */ var _components_item_ejector__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/item_ejector */ "./src/js/game/components/item_ejector.js");
-/* harmony import */ var _components_item_processor__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/item_processor */ "./src/js/game/components/item_processor.js");
-/* harmony import */ var _entity__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../entity */ "./src/js/game/entity.js");
-/* harmony import */ var _meta_building__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../meta_building */ "./src/js/game/meta_building.js");
-/* harmony import */ var _root__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../root */ "./src/js/game/root.js");
-/* harmony import */ var _tutorial_goals__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../tutorial_goals */ "./src/js/game/tutorial_goals.js");
-/* harmony import */ var _translations__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../translations */ "./src/js/translations.js");
-/* harmony import */ var _core_utils__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../core/utils */ "./src/js/core/utils.js");
-/* harmony import */ var _game_system_with_filter__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../game_system_with_filter */ "./src/js/game/game_system_with_filter.js");
-/* harmony import */ var _core_draw_parameters__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../../core/draw_parameters */ "./src/js/core/draw_parameters.js");
-/* harmony import */ var _core_loader__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../../core/loader */ "./src/js/core/loader.js");
-/* harmony import */ var _items_shape_item__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../items/shape_item */ "./src/js/game/items/shape_item.js");
-/* harmony import */ var _shape_definition__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../shape_definition */ "./src/js/game/shape_definition.js");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* harmony import */ var _gameData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../gameData */ "./src/js/game/custom/gameData.js");
 
 
 const id = "checker";
 const color = "#ff6000";
 
-class TargetShapeCheckerComponent extends _component__WEBPACK_IMPORTED_MODULE_0__["Component"] {
+class TargetShapeCheckerComponent extends _gameData__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     static getId() {
         return id;
     }
 
     static getSchema() {
         return {
-            filter: _savegame_serialization__WEBPACK_IMPORTED_MODULE_1__["types"].string,
-            filterIndex: _savegame_serialization__WEBPACK_IMPORTED_MODULE_1__["types"].int,
-            filterType: _savegame_serialization__WEBPACK_IMPORTED_MODULE_1__["types"].string,
-            isfil: _savegame_serialization__WEBPACK_IMPORTED_MODULE_1__["types"].bool,
-            storedItem: _savegame_serialization__WEBPACK_IMPORTED_MODULE_1__["types"].nullable(_savegame_serialization__WEBPACK_IMPORTED_MODULE_1__["types"].obj(_core_global_registries__WEBPACK_IMPORTED_MODULE_2__["gItemRegistry"])),
+            filter: _gameData__WEBPACK_IMPORTED_MODULE_0__["types"].string,
+            filterIndex: _gameData__WEBPACK_IMPORTED_MODULE_0__["types"].int,
+            filterType: _gameData__WEBPACK_IMPORTED_MODULE_0__["types"].string,
+            isfil: _gameData__WEBPACK_IMPORTED_MODULE_0__["types"].bool,
+            storedItem: _gameData__WEBPACK_IMPORTED_MODULE_0__["types"].nullable(_gameData__WEBPACK_IMPORTED_MODULE_0__["types"].obj(_gameData__WEBPACK_IMPORTED_MODULE_0__["gItemRegistry"])),
         };
     }
     constructor({
@@ -31225,13 +31185,13 @@ class TargetShapeCheckerComponent extends _component__WEBPACK_IMPORTED_MODULE_0_
     }
 }
 
-class MetaTargetShapeCheckerBuilding extends _meta_building__WEBPACK_IMPORTED_MODULE_10__["MetaBuilding"] {
+class MetaTargetShapeCheckerBuilding extends _gameData__WEBPACK_IMPORTED_MODULE_0__["MetaBuilding"] {
     constructor() {
         super(id);
     }
 
     getDimensions() {
-        return new _core_vector__WEBPACK_IMPORTED_MODULE_4__["Vector"](1, 1);
+        return new _gameData__WEBPACK_IMPORTED_MODULE_0__["Vector"](1, 1);
     }
 
     getSilhouetteColor() {
@@ -31251,8 +31211,8 @@ class MetaTargetShapeCheckerBuilding extends _meta_building__WEBPACK_IMPORTED_MO
      * @returns {Array<[string, string]>}
      */
     getAdditionalStatistics(root, variant) {
-        const speed = root.hubGoals.getProcessorBaseSpeed(_components_item_processor__WEBPACK_IMPORTED_MODULE_8__["enumItemProcessorTypes"][id]);
-        return [[_translations__WEBPACK_IMPORTED_MODULE_13__["T"].ingame.buildingPlacement.infoTexts.speed, Object(_core_utils__WEBPACK_IMPORTED_MODULE_14__["formatItemsPerSecond"])(speed)]];
+        const speed = root.hubGoals.getProcessorBaseSpeed(_gameData__WEBPACK_IMPORTED_MODULE_0__["enumItemProcessorTypes"][id]);
+        return [[_gameData__WEBPACK_IMPORTED_MODULE_0__["T"].ingame.buildingPlacement.infoTexts.speed, Object(_gameData__WEBPACK_IMPORTED_MODULE_0__["formatItemsPerSecond"])(speed)]];
     }
 
     /**
@@ -31261,32 +31221,32 @@ class MetaTargetShapeCheckerBuilding extends _meta_building__WEBPACK_IMPORTED_MO
      */
     setupEntityComponents(entity) {
         entity.addComponent(
-            new _components_item_processor__WEBPACK_IMPORTED_MODULE_8__["ItemProcessorComponent"]({
+            new _gameData__WEBPACK_IMPORTED_MODULE_0__["ItemProcessorComponent"]({
                 inputsPerCharge: 1,
-                processorType: _components_item_processor__WEBPACK_IMPORTED_MODULE_8__["enumItemProcessorTypes"][id],
+                processorType: _gameData__WEBPACK_IMPORTED_MODULE_0__["enumItemProcessorTypes"][id],
             })
         );
         entity.addComponent(new TargetShapeCheckerComponent({}));
         entity.addComponent(
-            new _components_item_ejector__WEBPACK_IMPORTED_MODULE_7__["ItemEjectorComponent"]({
+            new _gameData__WEBPACK_IMPORTED_MODULE_0__["ItemEjectorComponent"]({
                 slots: [
                     {
-                        pos: new _core_vector__WEBPACK_IMPORTED_MODULE_4__["Vector"](0, 0),
-                        direction: _core_vector__WEBPACK_IMPORTED_MODULE_4__["enumDirection"].top,
+                        pos: new _gameData__WEBPACK_IMPORTED_MODULE_0__["Vector"](0, 0),
+                        direction: _gameData__WEBPACK_IMPORTED_MODULE_0__["enumDirection"].top,
                     },
                     {
-                        pos: new _core_vector__WEBPACK_IMPORTED_MODULE_4__["Vector"](0, 0),
-                        direction: _core_vector__WEBPACK_IMPORTED_MODULE_4__["enumDirection"].right,
+                        pos: new _gameData__WEBPACK_IMPORTED_MODULE_0__["Vector"](0, 0),
+                        direction: _gameData__WEBPACK_IMPORTED_MODULE_0__["enumDirection"].right,
                     },
                 ],
             })
         );
         entity.addComponent(
-            new _components_item_acceptor__WEBPACK_IMPORTED_MODULE_6__["ItemAcceptorComponent"]({
+            new _gameData__WEBPACK_IMPORTED_MODULE_0__["ItemAcceptorComponent"]({
                 slots: [
                     {
-                        pos: new _core_vector__WEBPACK_IMPORTED_MODULE_4__["Vector"](0, 0),
-                        directions: [_core_vector__WEBPACK_IMPORTED_MODULE_4__["enumDirection"].bottom],
+                        pos: new _gameData__WEBPACK_IMPORTED_MODULE_0__["Vector"](0, 0),
+                        directions: [_gameData__WEBPACK_IMPORTED_MODULE_0__["enumDirection"].bottom],
                     },
                 ],
             })
@@ -31294,11 +31254,11 @@ class MetaTargetShapeCheckerBuilding extends _meta_building__WEBPACK_IMPORTED_MO
     }
 }
 
-class TargetShapeCheckerSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MODULE_15__["GameSystemWithFilter"] {
+class TargetShapeCheckerSystem extends _gameData__WEBPACK_IMPORTED_MODULE_0__["GameSystemWithFilter"] {
     constructor(root) {
         super(root, [TargetShapeCheckerComponent]);
 
-        this.storageOverlaySprite = _core_loader__WEBPACK_IMPORTED_MODULE_17__["Loader"].getSprite("sprites/misc/storage_overlay.png");
+        this.storageOverlaySprite = _gameData__WEBPACK_IMPORTED_MODULE_0__["Loader"].getSprite("sprites/misc/storage_overlay.png");
         this.goal = "";
     }
 
@@ -31357,7 +31317,7 @@ function targetShapeCheckerProcess({ items, trackProduction, entity, outItems, s
     trackProduction = false;
 
     const tscComponent = entity.components[id];
-    if (!tscComponent.isfil && inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_18__["ShapeItem"]) {
+    if (!tscComponent.isfil && inputItem instanceof _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"]) {
         // setting filter type:
         let item = inputItem.definition.getHash();
         //shape:
@@ -31371,7 +31331,7 @@ function targetShapeCheckerProcess({ items, trackProduction, entity, outItems, s
             let index = (m.index % 9) / 2;
             let topKey = `${"--".repeat(index)}${tscComponent.filter}u${"--".repeat(3 - index)}`;
             let key = (topKey + ":").repeat(layer - 1) + topKey;
-            tscComponent.storedItem = new _items_shape_item__WEBPACK_IMPORTED_MODULE_18__["ShapeItem"](_shape_definition__WEBPACK_IMPORTED_MODULE_19__["ShapeDefinition"].fromShortKey(key));
+            tscComponent.storedItem = new _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"](_gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(key));
         }
         // hole:
         else if (
@@ -31388,7 +31348,7 @@ function targetShapeCheckerProcess({ items, trackProduction, entity, outItems, s
             let index = (m.index % 9) / 2;
             let topKey = `${"Cu".repeat(index)}--${"Cu".repeat(3 - index)}`;
             let key = (topKey + ":").repeat(layer - 1) + topKey;
-            tscComponent.storedItem = new _items_shape_item__WEBPACK_IMPORTED_MODULE_18__["ShapeItem"](_shape_definition__WEBPACK_IMPORTED_MODULE_19__["ShapeDefinition"].fromShortKey(key));
+            tscComponent.storedItem = new _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"](_gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(key));
         }
         // color:
         else if (item.match(/(.[^u].u.u.u|.u.[^u].u.u|.u.u.[^u].u|.u.u.u.[^u])$/)) {
@@ -31401,7 +31361,7 @@ function targetShapeCheckerProcess({ items, trackProduction, entity, outItems, s
             let index = ((m.index % 9) - 1) / 2;
             let topKey = `${"--".repeat(index)}C${tscComponent.filter}${"--".repeat(3 - index)}`;
             let key = (topKey + ":").repeat(layer - 1) + topKey;
-            tscComponent.storedItem = new _items_shape_item__WEBPACK_IMPORTED_MODULE_18__["ShapeItem"](_shape_definition__WEBPACK_IMPORTED_MODULE_19__["ShapeDefinition"].fromShortKey(key));
+            tscComponent.storedItem = new _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"](_gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(key));
         }
         // uncolored:
         else if (
@@ -31418,7 +31378,7 @@ function targetShapeCheckerProcess({ items, trackProduction, entity, outItems, s
             let index = ((m.index % 9) - 1) / 2;
             let topKey = `${"--".repeat(index)}C${tscComponent.filter}${"--".repeat(3 - index)}`;
             let key = (topKey + ":").repeat(layer - 1) + topKey;
-            tscComponent.storedItem = new _items_shape_item__WEBPACK_IMPORTED_MODULE_18__["ShapeItem"](_shape_definition__WEBPACK_IMPORTED_MODULE_19__["ShapeDefinition"].fromShortKey(key));
+            tscComponent.storedItem = new _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"](_gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(key));
         }
         return false;
     }
@@ -31804,7 +31764,7 @@ class CounterSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MODULE_7_
     update() {
         // for (let i = 0; i < this.allEntities.length; ++i) {
         //     const entity = this.allEntities[i];
-        //     const counterComp = entity.components.Counter;
+        //     const counterComp = entity.components[id];
         // }
     }
 
@@ -31930,7 +31890,7 @@ function counterProcess({ items, trackProduction, entity, outItems, self }) {
     trackProduction = false;
 
     /** @type {ItemCounterComponent} */
-    const counterComp = entity.components.Counter;
+    const counterComp = entity.components[id];
     counterComp.itemTickHistory.shift();
     let now = self.root.time.timeSeconds;
     // now = performance.now() / 1e3;
@@ -32081,8 +32041,6 @@ function colorShape(shape, color) {
     let out = cache[recipeId];
     if (out) return out;
 
-    debugger;
-
     let layers = shape.split(':').map(e=>e.split(''));
     for (let i = 0; i < 4; i++) {
         let charges = 2;
@@ -32143,8 +32101,6 @@ function colorShape(shape, color) {
     const recipeId = shape + "+" + color;
     let out = cache[recipeId];
     if (out) return out;
-
-    debugger;
 
     let layers = shape.split(':').map(e=>e.split(''));
     for (let i = 0; i < 4; i++) {
@@ -32528,6 +32484,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _translations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../translations */ "./src/js/translations.js");
 /* harmony import */ var _modSpriteDrawer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modSpriteDrawer */ "./src/js/game/custom/modSpriteDrawer.js");
 /* harmony import */ var _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../tutorial_goals */ "./src/js/game/tutorial_goals.js");
+/* harmony import */ var _gameData__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./gameData */ "./src/js/game/custom/gameData.js");
+
+
 
 
 
@@ -37516,7 +37475,7 @@ class HUDDebugInfo extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDP
      */
     onModeChanged(mode) {
         this.element.setAttribute("data-mode", mode);
-        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"e85ffe0"}`;
+        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"b01eeee"}`;
     }
 
     /**
@@ -50635,8 +50594,8 @@ if (window.coreThreadLoadedCb) {
 // }
 
 console.log(
-    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"e85ffe0"}%c on %c${new Date(
-        1596107800676
+    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"b01eeee"}%c on %c${new Date(
+        1596115731543
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -58590,7 +58549,7 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameSt
 
                     <div class="lower">
                         <button class="resetApp styledButton">Reset App</button>
-                        <i>Build ${"1.2.0"} @ ${"e85ffe0"}</i>
+                        <i>Build ${"1.2.0"} @ ${"b01eeee"}</i>
                     </div>
                 </div>
         `;
@@ -58725,14 +58684,14 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1596107800676;
+        const lastBuildMs = new Date().getTime() - 1596115731543;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
 
         labelVersion.innerHTML = `
             <span class='version'>
-                ${"1.2.0"} @ ${version} @ ${"e85ffe0"}
+                ${"1.2.0"} @ ${version} @ ${"b01eeee"}
             </span>
             <span class='buildTime'>
                 ${_translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.buildDate.replace("<at-date>", lastBuildText)}<br />
