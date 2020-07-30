@@ -32533,6 +32533,7 @@ function addMod(mod) {
 }
 
 function addCustom(custom) {
+    Object.assign(customBuildingData[custom.id], custom);
 
     if (custom.goal) {
         if (_tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].find(e=>e.reward == custom.goal.reward)) {
