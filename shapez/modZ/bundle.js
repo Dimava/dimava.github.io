@@ -21523,7 +21523,7 @@ function getBuildId() {
     if ( true && _config__WEBPACK_IMPORTED_MODULE_0__["IS_DEBUG"]) {
         return "local-dev";
     } else if (true) {
-        return "dev-" + getPlatformName() + "-" + "b01eeee";
+        return "dev-" + getPlatformName() + "-" + "f4008de";
     } else {}
 }
 
@@ -31462,7 +31462,7 @@ const checker = {
     id: "checker",
     component: TargetShapeCheckerComponent,
     building: MetaTargetShapeCheckerBuilding,
-    toolbar: 1,
+    toolbar: 2,
     system: TargetShapeCheckerSystem,
     sysOrder: 4.5,
     process: targetShapeCheckerProcess,
@@ -31639,7 +31639,7 @@ const SpriteBp = {
 const unstackerBuildingData = {
     id: id,
     building: MetaCombinerBuilding,
-    toolbar: 1,
+    toolbar: 2,
     sprite: Sprite,
     spriteBp: SpriteBp,
     process: CombinerProcess,
@@ -31920,7 +31920,7 @@ const counterBuildingData = {
     id,
     component: ItemCounterComponent,
     building: MetaCounterBuilding,
-    toolbar: 1,
+    toolbar: 2,
     system: CounterSystem,
     sprite: counterSprite,
     spriteBp: counterSpriteBp,
@@ -32285,7 +32285,7 @@ const SpriteBp = {
 const unstackerBuildingData = {
     id,
     building: MetaUnstackerBuilding,
-    toolbar: 1,
+    toolbar: 2,
     sprite: Sprite,
     spriteBp: SpriteBp,
     process: UnstackerProcess,
@@ -32480,11 +32480,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCustomBuildingSystemsNulled", function() { return getCustomBuildingSystemsNulled; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "internalInitSystemsAddAt", function() { return internalInitSystemsAddAt; });
 /* harmony import */ var _hud_parts_buildings_toolbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../hud/parts/buildings_toolbar */ "./src/js/game/hud/parts/buildings_toolbar.js");
-/* harmony import */ var _components_item_processor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/item_processor */ "./src/js/game/components/item_processor.js");
-/* harmony import */ var _translations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../translations */ "./src/js/translations.js");
-/* harmony import */ var _modSpriteDrawer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modSpriteDrawer */ "./src/js/game/custom/modSpriteDrawer.js");
-/* harmony import */ var _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../tutorial_goals */ "./src/js/game/tutorial_goals.js");
-/* harmony import */ var _gameData__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./gameData */ "./src/js/game/custom/gameData.js");
+/* harmony import */ var _hud_parts_tools_toolbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hud/parts/tools_toolbar */ "./src/js/game/hud/parts/tools_toolbar.js");
+/* harmony import */ var _components_item_processor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/item_processor */ "./src/js/game/components/item_processor.js");
+/* harmony import */ var _translations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../translations */ "./src/js/translations.js");
+/* harmony import */ var _modSpriteDrawer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modSpriteDrawer */ "./src/js/game/custom/modSpriteDrawer.js");
+/* harmony import */ var _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../tutorial_goals */ "./src/js/game/tutorial_goals.js");
+/* harmony import */ var _gameData__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./gameData */ "./src/js/game/custom/gameData.js");
+
+
 
 
 
@@ -32518,21 +32521,33 @@ allCustomBuildingData = Object.values(customBuildingData);
 allCustomBuildingData.sort((a, b) => (a.variantId || 1e4) - (b.variantId || 1e4));
 
 for (let custom of allCustomBuildingData) {
+    addCustom(custom);
+}
+
+globalThis.addCustom = addCustom;
+globalThis.gameData = _gameData__WEBPACK_IMPORTED_MODULE_6__;
+globalThis.addMod = addMod;
+
+function addMod(mod) {
+    addCustom(mod(_gameData__WEBPACK_IMPORTED_MODULE_6__));
+}
+
+function addCustom(custom) {
 
     if (custom.goal) {
-        if (_tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["tutorialGoals"].find(e=>e.reward == custom.goal.reward)) {
-            let index = _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["tutorialGoals"].findIndex(e=>e.reward == custom.goal.reward);
-            _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["tutorialGoals"].splice(index, 1);
+        if (_tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].find(e=>e.reward == custom.goal.reward)) {
+            let index = _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].findIndex(e=>e.reward == custom.goal.reward);
+            _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].splice(index, 1);
         }
-        _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["tutorialGoals"].push(custom.goal);
-        _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["tutorialGoals"].sort((a,b)=>a.required-b.required);
+        _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].push(custom.goal);
+        _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].sort((a,b)=>a.required-b.required);
         if (custom.goal.reward) {
             if (!custom.goal.reward.startsWith("reward_")) {
                 custom.goal.reward = "reward_" + custom.goal.reward;
             }
-            _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"][custom.goal.reward] = custom.goal.reward;
-            if (!_translations__WEBPACK_IMPORTED_MODULE_2__["T"].storyRewards[custom.goal.reward]) {
-                _translations__WEBPACK_IMPORTED_MODULE_2__["T"].storyRewards[custom.goal.reward] = { title: custom.goal.Tname || custom.Tname || custom.id };
+            _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["enumHubGoalRewards"][custom.goal.reward] = custom.goal.reward;
+            if (!_translations__WEBPACK_IMPORTED_MODULE_3__["T"].storyRewards[custom.goal.reward]) {
+                _translations__WEBPACK_IMPORTED_MODULE_3__["T"].storyRewards[custom.goal.reward] = { title: custom.goal.Tname || custom.Tname || custom.id };
             }
         }
     }
@@ -32543,7 +32558,7 @@ for (let custom of allCustomBuildingData) {
         }
 
         if (custom.process) {
-            _components_item_processor__WEBPACK_IMPORTED_MODULE_1__["enumItemProcessorTypes"][custom.id] = custom.id;
+            _components_item_processor__WEBPACK_IMPORTED_MODULE_2__["enumItemProcessorTypes"][custom.id] = custom.id;
         }
 
         if (!custom.Tname) {
@@ -32552,10 +32567,10 @@ for (let custom of allCustomBuildingData) {
         if (!custom.Tdesc) {
             custom.Tdesc = "";
         }
-        if (!_translations__WEBPACK_IMPORTED_MODULE_2__["T"].buildings[custom.id]) {
-            _translations__WEBPACK_IMPORTED_MODULE_2__["T"].buildings[custom.id] = {};
+        if (!_translations__WEBPACK_IMPORTED_MODULE_3__["T"].buildings[custom.id]) {
+            _translations__WEBPACK_IMPORTED_MODULE_3__["T"].buildings[custom.id] = {};
         }
-        _translations__WEBPACK_IMPORTED_MODULE_2__["T"].buildings[custom.id][custom.variant] = {
+        _translations__WEBPACK_IMPORTED_MODULE_3__["T"].buildings[custom.id][custom.variant] = {
             name: custom.Tname,
             description: custom.Tdesc,
         };
@@ -32567,8 +32582,11 @@ for (let custom of allCustomBuildingData) {
             custom.speedClass = "belt";
         }
 
-        if (custom.meta && custom.toolbar == 1) {
+        if (custom.meta && custom.toolbar == 0) {
             _hud_parts_buildings_toolbar__WEBPACK_IMPORTED_MODULE_0__["supportedBuildings"].push(custom.meta);
+        }
+        if (custom.meta && custom.toolbar == 2) {
+            _hud_parts_tools_toolbar__WEBPACK_IMPORTED_MODULE_1__["supportedBuildings"].push(custom.meta);
         }
     }
 
@@ -32578,12 +32596,12 @@ for (let custom of allCustomBuildingData) {
         (custom.sprite[0] || custom.sprite).sprite = `sprites/buildings/${custom.id}${
             custom.variant == "default" ? "" : "-" + custom.variant
         }.png`;
-        Object(_modSpriteDrawer__WEBPACK_IMPORTED_MODULE_3__["addSprite"])(custom.sprite);
+        Object(_modSpriteDrawer__WEBPACK_IMPORTED_MODULE_4__["addSprite"])(custom.sprite);
         (custom.spriteBp[0] || custom.spriteBp).sprite = `sprites/blueprints/${custom.id}${
             custom.variant == "default" ? "" : "-" + custom.variant
         }.png`;
         custom.spriteBp.transparent = true;
-        Object(_modSpriteDrawer__WEBPACK_IMPORTED_MODULE_3__["addSprite"])(custom.spriteBp);
+        Object(_modSpriteDrawer__WEBPACK_IMPORTED_MODULE_4__["addSprite"])(custom.spriteBp);
     }
 }
 
@@ -34954,11 +34972,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_query_parameters__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../../core/query_parameters */ "./src/js/core/query_parameters.js");
 /* harmony import */ var _parts_sandbox_controller__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./parts/sandbox_controller */ "./src/js/game/hud/parts/sandbox_controller.js");
 /* harmony import */ var _parts_wires_toolbar__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./parts/wires_toolbar */ "./src/js/game/hud/parts/wires_toolbar.js");
+/* harmony import */ var _parts_tools_toolbar__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./parts/tools_toolbar */ "./src/js/game/hud/parts/tools_toolbar.js");
 
 
 /* dev:start */
 
 /* dev:end */
+
 
 
 
@@ -35010,8 +35030,11 @@ class GameHUD {
     initialize() {
         this.parts = {
             processingOverlay: new _parts_processing_overlay__WEBPACK_IMPORTED_MODULE_3__["HUDProcessingOverlay"](this.root),
+
             buildingsToolbar: new _parts_buildings_toolbar__WEBPACK_IMPORTED_MODULE_4__["HUDBuildingsToolbar"](this.root),
             wiresToolbar: new _parts_wires_toolbar__WEBPACK_IMPORTED_MODULE_35__["HUDWiresToolbar"](this.root),
+            toolsToolbar: new _parts_tools_toolbar__WEBPACK_IMPORTED_MODULE_36__["HUDToolsToolbar"](this.root),
+
             blueprintPlacer: new _parts_blueprint_placer__WEBPACK_IMPORTED_MODULE_6__["HUDBlueprintPlacer"](this.root),
             buildingPlacer: new _parts_building_placer__WEBPACK_IMPORTED_MODULE_5__["HUDBuildingPlacer"](this.root),
             unlockNotification: new _parts_unlock_notification__WEBPACK_IMPORTED_MODULE_8__["HUDUnlockNotification"](this.root),
@@ -35326,6 +35349,8 @@ class HUDBaseToolbar extends _base_hud_part__WEBPACK_IMPORTED_MODULE_6__["BaseHU
             this.onSelectedPlacementBuildingChanged,
             this
         );
+        // Probably not the best location, but the one which makes most sense
+        this.root.keyMapper.getBinding(_key_action_mapper__WEBPACK_IMPORTED_MODULE_3__["KEYMAPPINGS"].ingame.switchToolbar).add(this.switchToolbar, this);
 
         this.domAttach = new _dynamic_dom_attach__WEBPACK_IMPORTED_MODULE_7__["DynamicDomAttach"](this.root, this.element, {
             timeToKeepSeconds: 0.12,
@@ -35333,6 +35358,10 @@ class HUDBaseToolbar extends _base_hud_part__WEBPACK_IMPORTED_MODULE_6__["BaseHU
         });
         this.lastSelectedIndex = 0;
         actionMapper.getBinding(_key_action_mapper__WEBPACK_IMPORTED_MODULE_3__["KEYMAPPINGS"].placement.cycleBuildings).add(this.cycleBuildings, this);
+    }
+
+    switchToolbar() {
+        this.root.currentToolbar = (this.root.currentToolbar + 1) % 2;
     }
 
     /**
@@ -37151,7 +37180,9 @@ class HUDBuildingsToolbar extends _base_toolbar__WEBPACK_IMPORTED_MODULE_12__["H
         super(root, {
             supportedBuildings,
             visibilityCondition: () =>
-                !this.root.camera.getIsMapOverlayActive() && this.root.currentLayer === _root__WEBPACK_IMPORTED_MODULE_11__["enumLayer"].regular,
+                !this.root.camera.getIsMapOverlayActive() &&
+                this.root.currentLayer === _root__WEBPACK_IMPORTED_MODULE_11__["enumLayer"].regular &&
+                this.root.currentToolbar === 0,
             htmlElementId: "ingame_HUD_buildings_toolbar",
         });
     }
@@ -37475,7 +37506,7 @@ class HUDDebugInfo extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDP
      */
     onModeChanged(mode) {
         this.element.setAttribute("data-mode", mode);
-        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"b01eeee"}`;
+        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"f4008de"}`;
     }
 
     /**
@@ -40759,6 +40790,49 @@ class HUDShapeStatisticsHandle {
 
 /***/ }),
 
+/***/ "./src/js/game/hud/parts/tools_toolbar.js":
+/*!************************************************!*\
+  !*** ./src/js/game/hud/parts/tools_toolbar.js ***!
+  \************************************************/
+/*! exports provided: supportedBuildings, HUDToolsToolbar */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "supportedBuildings", function() { return supportedBuildings; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HUDToolsToolbar", function() { return HUDToolsToolbar; });
+/* harmony import */ var _buildings_cutter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../buildings/cutter */ "./src/js/game/buildings/cutter.js");
+/* harmony import */ var _buildings_energy_generator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../buildings/energy_generator */ "./src/js/game/buildings/energy_generator.js");
+/* harmony import */ var _root__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../root */ "./src/js/game/root.js");
+/* harmony import */ var _base_toolbar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./base_toolbar */ "./src/js/game/hud/parts/base_toolbar.js");
+/* harmony import */ var _buildings_advanced_processor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../buildings/advanced_processor */ "./src/js/game/buildings/advanced_processor.js");
+
+
+
+
+
+
+const supportedBuildings = [
+    _buildings_energy_generator__WEBPACK_IMPORTED_MODULE_1__["MetaEnergyGenerator"],
+    _buildings_advanced_processor__WEBPACK_IMPORTED_MODULE_4__["MetaAdvancedProcessorBuilding"],
+];
+
+class HUDToolsToolbar extends _base_toolbar__WEBPACK_IMPORTED_MODULE_3__["HUDBaseToolbar"] {
+    constructor(root) {
+        super(root, {
+            supportedBuildings,
+            visibilityCondition: () =>
+                !this.root.camera.getIsMapOverlayActive() &&
+                this.root.currentLayer === _root__WEBPACK_IMPORTED_MODULE_2__["enumLayer"].regular &&
+                this.root.currentToolbar === 1,
+            htmlElementId: "ingame_HUD_buildings_toolbar",
+        });
+    }
+}
+
+
+/***/ }),
+
 /***/ "./src/js/game/hud/parts/tutorial_hints.js":
 /*!*************************************************!*\
   !*** ./src/js/game/hud/parts/tutorial_hints.js ***!
@@ -42532,6 +42606,7 @@ const KEYMAPPINGS = {
         toggleFPSInfo: { keyCode: 115 }, // F4
 
         switchLayers: { keyCode: key("Y") },
+        switchToolbar: { keyCode: key("N") },
     },
 
     navigation: {
@@ -45078,6 +45153,8 @@ class GameRoot {
 
         /** @type {enumLayer} */
         this.currentLayer = enumLayer.regular;
+
+        this.currentToolbar = 0;
 
         this.signals = {
             // Entities
@@ -50594,8 +50671,8 @@ if (window.coreThreadLoadedCb) {
 // }
 
 console.log(
-    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"b01eeee"}%c on %c${new Date(
-        1596115731543
+    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"f4008de"}%c on %c${new Date(
+        1596133401508
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -58549,7 +58626,7 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameSt
 
                     <div class="lower">
                         <button class="resetApp styledButton">Reset App</button>
-                        <i>Build ${"1.2.0"} @ ${"b01eeee"}</i>
+                        <i>Build ${"1.2.0"} @ ${"f4008de"}</i>
                     </div>
                 </div>
         `;
@@ -58684,14 +58761,14 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1596115731543;
+        const lastBuildMs = new Date().getTime() - 1596133401508;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
 
         labelVersion.innerHTML = `
             <span class='version'>
-                ${"1.2.0"} @ ${version} @ ${"b01eeee"}
+                ${"1.2.0"} @ ${version} @ ${"f4008de"}
             </span>
             <span class='buildTime'>
                 ${_translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.buildDate.replace("<at-date>", lastBuildText)}<br />
