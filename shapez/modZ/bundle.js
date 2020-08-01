@@ -36088,7 +36088,7 @@ class HUDBaseToolbar extends _base_hud_part__WEBPACK_IMPORTED_MODULE_6__["BaseHU
             }
         }
 
-        if (metaBuilding.id == "toolbar_swapper") {
+        if (metaBuilding && metaBuilding.id == "toolbar_swapper") {
             this.switchToolbar();
             metaBuilding = null;
         }
@@ -51004,11 +51004,11 @@ const UPGRADES = {
                 required: [{ shape: "SrSrSrSr:CyCyCyCy:SwSwSwSw", amount: 10000 }],
                 improvement: 2,
             },
-            // {
-            //     required: [{ shape: finalGameShape, amount: 150000 }],
-            //     improvement: 5,
-            //     excludePrevious: true,
-            // },
+            {
+                required: [{ shape: finalGameShape, amount: 150000 }],
+                improvement: 5,
+                excludePrevious: true,
+            },
         ],
     },
 
@@ -51034,11 +51034,11 @@ const UPGRADES = {
                 required: [{ shape: "CbRbRbCb:CwCwCwCw:WbWbWbWb", amount: 10000 }],
                 improvement: 2,
             },
-            // {
-            //     required: [{ shape: finalGameShape, amount: 150000 }],
-            //     improvement: 5,
-            //     excludePrevious: true,
-            // },
+            {
+                required: [{ shape: finalGameShape, amount: 150000 }],
+                improvement: 5,
+                excludePrevious: true,
+            },
         ],
     },
 
@@ -51064,11 +51064,11 @@ const UPGRADES = {
                 required: [{ shape: "WrRgWrRg:CwCrCwCr:SgSgSgSg", amount: 10000 }],
                 improvement: 2,
             },
-            // {
-            //     required: [{ shape: finalGameShape, amount: 150000 }],
-            //     improvement: 5,
-            //     excludePrevious: true,
-            // },
+            {
+                required: [{ shape: finalGameShape, amount: 150000 }],
+                improvement: 5,
+                excludePrevious: true,
+            },
         ],
     },
 
@@ -51094,11 +51094,11 @@ const UPGRADES = {
                 required: [{ shape: "WmWmWmWm:CwCwCwCw:WmWmWmWm:CwCwCwCw", amount: 10000 }],
                 improvement: 2,
             },
-            // {
-            //     required: [{ shape: finalGameShape, amount: 150000 }],
-            //     improvement: 5,
-            //     excludePrevious: true,
-            // },
+            {
+                required: [{ shape: finalGameShape, amount: 150000 }],
+                improvement: 5,
+                excludePrevious: true,
+            },
         ],
     },
 };
@@ -51354,7 +51354,7 @@ if (window.coreThreadLoadedCb) {
 
 console.log(
     `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"7f0845e"}%c on %c${new Date(
-        1596298215833
+        1596300065335
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -59446,7 +59446,7 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1596298215833;
+        const lastBuildMs = new Date().getTime() - 1596300065335;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
