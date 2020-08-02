@@ -13014,7 +13014,7 @@ module.exports = function() {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = function() {
-  return __webpack_require__(/*! !./node_modules/worker-loader/dist/workers/InlineWorker.js */ "./node_modules/worker-loader/dist/workers/InlineWorker.js")("/******/ (function(modules) { // webpackBootstrap\n/******/ \t// The module cache\n/******/ \tvar installedModules = {};\n/******/\n/******/ \t// The require function\n/******/ \tfunction __webpack_require__(moduleId) {\n/******/\n/******/ \t\t// Check if module is in cache\n/******/ \t\tif(installedModules[moduleId]) {\n/******/ \t\t\treturn installedModules[moduleId].exports;\n/******/ \t\t}\n/******/ \t\t// Create a new module (and put it into the cache)\n/******/ \t\tvar module = installedModules[moduleId] = {\n/******/ \t\t\ti: moduleId,\n/******/ \t\t\tl: false,\n/******/ \t\t\texports: {}\n/******/ \t\t};\n/******/\n/******/ \t\t// Execute the module function\n/******/ \t\tmodules[moduleId].call(module.exports, module, module.exports, __webpack_require__);\n/******/\n/******/ \t\t// Flag the module as loaded\n/******/ \t\tmodule.l = true;\n/******/\n/******/ \t\t// Return the exports of the module\n/******/ \t\treturn module.exports;\n/******/ \t}\n/******/\n/******/\n/******/ \t// expose the modules object (__webpack_modules__)\n/******/ \t__webpack_require__.m = modules;\n/******/\n/******/ \t// expose the module cache\n/******/ \t__webpack_require__.c = installedModules;\n/******/\n/******/ \t// define getter function for harmony exports\n/******/ \t__webpack_require__.d = function(exports, name, getter) {\n/******/ \t\tif(!__webpack_require__.o(exports, name)) {\n/******/ \t\t\tObject.defineProperty(exports, name, { enumerable: true, get: getter });\n/******/ \t\t}\n/******/ \t};\n/******/\n/******/ \t// define __esModule on exports\n/******/ \t__webpack_require__.r = function(exports) {\n/******/ \t\tif(typeof Symbol !== 'undefined' && Symbol.toStringTag) {\n/******/ \t\t\tObject.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });\n/******/ \t\t}\n/******/ \t\tObject.defineProperty(exports, '__esModule', { value: true });\n/******/ \t};\n/******/\n/******/ \t// create a fake namespace object\n/******/ \t// mode & 1: value is a module id, require it\n/******/ \t// mode & 2: merge all properties of value into the ns\n/******/ \t// mode & 4: return value when already ns object\n/******/ \t// mode & 8|1: behave like require\n/******/ \t__webpack_require__.t = function(value, mode) {\n/******/ \t\tif(mode & 1) value = __webpack_require__(value);\n/******/ \t\tif(mode & 8) return value;\n/******/ \t\tif((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;\n/******/ \t\tvar ns = Object.create(null);\n/******/ \t\t__webpack_require__.r(ns);\n/******/ \t\tObject.defineProperty(ns, 'default', { enumerable: true, value: value });\n/******/ \t\tif(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));\n/******/ \t\treturn ns;\n/******/ \t};\n/******/\n/******/ \t// getDefaultExport function for compatibility with non-harmony modules\n/******/ \t__webpack_require__.n = function(module) {\n/******/ \t\tvar getter = module && module.__esModule ?\n/******/ \t\t\tfunction getDefault() { return module['default']; } :\n/******/ \t\t\tfunction getModuleExports() { return module; };\n/******/ \t\t__webpack_require__.d(getter, 'a', getter);\n/******/ \t\treturn getter;\n/******/ \t};\n/******/\n/******/ \t// Object.prototype.hasOwnProperty.call\n/******/ \t__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };\n/******/\n/******/ \t// __webpack_public_path__\n/******/ \t__webpack_require__.p = \"\";\n/******/\n/******/\n/******/ \t// Load entry module and return exports\n/******/ \treturn __webpack_require__(__webpack_require__.s = \"./node_modules/webpack-strip-block/index.js?!./src/js/webworkers/compression.worker.js\");\n/******/ })\n/************************************************************************/\n/******/ ({\n\n/***/ \"./node_modules/decode-uri-component/index.js\":\n/*!****************************************************!*\\\n  !*** ./node_modules/decode-uri-component/index.js ***!\n  \\****************************************************/\n/*! no static exports found */\n/***/ (function(module, exports, __webpack_require__) {\n\n\"use strict\";\n\nvar token = '%[a-f0-9]{2}';\nvar singleMatcher = new RegExp(token, 'gi');\nvar multiMatcher = new RegExp('(' + token + ')+', 'gi');\n\nfunction decodeComponents(components, split) {\n\ttry {\n\t\t// Try to decode the entire string first\n\t\treturn decodeURIComponent(components.join(''));\n\t} catch (err) {\n\t\t// Do nothing\n\t}\n\n\tif (components.length === 1) {\n\t\treturn components;\n\t}\n\n\tsplit = split || 1;\n\n\t// Split the array in 2 parts\n\tvar left = components.slice(0, split);\n\tvar right = components.slice(split);\n\n\treturn Array.prototype.concat.call([], decodeComponents(left), decodeComponents(right));\n}\n\nfunction decode(input) {\n\ttry {\n\t\treturn decodeURIComponent(input);\n\t} catch (err) {\n\t\tvar tokens = input.match(singleMatcher);\n\n\t\tfor (var i = 1; i < tokens.length; i++) {\n\t\t\tinput = decodeComponents(tokens, i).join('');\n\n\t\t\ttokens = input.match(singleMatcher);\n\t\t}\n\n\t\treturn input;\n\t}\n}\n\nfunction customDecodeURIComponent(input) {\n\t// Keep track of all the replacements and prefill the map with the `BOM`\n\tvar replaceMap = {\n\t\t'%FE%FF': '\\uFFFD\\uFFFD',\n\t\t'%FF%FE': '\\uFFFD\\uFFFD'\n\t};\n\n\tvar match = multiMatcher.exec(input);\n\twhile (match) {\n\t\ttry {\n\t\t\t// Decode as big chunks as possible\n\t\t\treplaceMap[match[0]] = decodeURIComponent(match[0]);\n\t\t} catch (err) {\n\t\t\tvar result = decode(match[0]);\n\n\t\t\tif (result !== match[0]) {\n\t\t\t\treplaceMap[match[0]] = result;\n\t\t\t}\n\t\t}\n\n\t\tmatch = multiMatcher.exec(input);\n\t}\n\n\t// Add `%C2` at the end of the map to make sure it does not replace the combinator before everything else\n\treplaceMap['%C2'] = '\\uFFFD';\n\n\tvar entries = Object.keys(replaceMap);\n\n\tfor (var i = 0; i < entries.length; i++) {\n\t\t// Replace all decoded components\n\t\tvar key = entries[i];\n\t\tinput = input.replace(new RegExp(key, 'g'), replaceMap[key]);\n\t}\n\n\treturn input;\n}\n\nmodule.exports = function (encodedURI) {\n\tif (typeof encodedURI !== 'string') {\n\t\tthrow new TypeError('Expected `encodedURI` to be of type `string`, got `' + typeof encodedURI + '`');\n\t}\n\n\ttry {\n\t\tencodedURI = encodedURI.replace(/\\+/g, ' ');\n\n\t\t// Try the built in decoder first\n\t\treturn decodeURIComponent(encodedURI);\n\t} catch (err) {\n\t\t// Fallback to a more advanced decoder\n\t\treturn customDecodeURIComponent(encodedURI);\n\t}\n};\n\n\n/***/ }),\n\n/***/ \"./node_modules/query-string/index.js\":\n/*!********************************************!*\\\n  !*** ./node_modules/query-string/index.js ***!\n  \\********************************************/\n/*! no static exports found */\n/***/ (function(module, exports, __webpack_require__) {\n\n\"use strict\";\n\nconst strictUriEncode = __webpack_require__(/*! strict-uri-encode */ \"./node_modules/strict-uri-encode/index.js\");\nconst decodeComponent = __webpack_require__(/*! decode-uri-component */ \"./node_modules/decode-uri-component/index.js\");\nconst splitOnFirst = __webpack_require__(/*! split-on-first */ \"./node_modules/split-on-first/index.js\");\n\nconst isNullOrUndefined = value => value === null || value === undefined;\n\nfunction encoderForArrayFormat(options) {\n\tswitch (options.arrayFormat) {\n\t\tcase 'index':\n\t\t\treturn key => (result, value) => {\n\t\t\t\tconst index = result.length;\n\n\t\t\t\tif (\n\t\t\t\t\tvalue === undefined ||\n\t\t\t\t\t(options.skipNull && value === null) ||\n\t\t\t\t\t(options.skipEmptyString && value === '')\n\t\t\t\t) {\n\t\t\t\t\treturn result;\n\t\t\t\t}\n\n\t\t\t\tif (value === null) {\n\t\t\t\t\treturn [...result, [encode(key, options), '[', index, ']'].join('')];\n\t\t\t\t}\n\n\t\t\t\treturn [\n\t\t\t\t\t...result,\n\t\t\t\t\t[encode(key, options), '[', encode(index, options), ']=', encode(value, options)].join('')\n\t\t\t\t];\n\t\t\t};\n\n\t\tcase 'bracket':\n\t\t\treturn key => (result, value) => {\n\t\t\t\tif (\n\t\t\t\t\tvalue === undefined ||\n\t\t\t\t\t(options.skipNull && value === null) ||\n\t\t\t\t\t(options.skipEmptyString && value === '')\n\t\t\t\t) {\n\t\t\t\t\treturn result;\n\t\t\t\t}\n\n\t\t\t\tif (value === null) {\n\t\t\t\t\treturn [...result, [encode(key, options), '[]'].join('')];\n\t\t\t\t}\n\n\t\t\t\treturn [...result, [encode(key, options), '[]=', encode(value, options)].join('')];\n\t\t\t};\n\n\t\tcase 'comma':\n\t\tcase 'separator':\n\t\t\treturn key => (result, value) => {\n\t\t\t\tif (value === null || value === undefined || value.length === 0) {\n\t\t\t\t\treturn result;\n\t\t\t\t}\n\n\t\t\t\tif (result.length === 0) {\n\t\t\t\t\treturn [[encode(key, options), '=', encode(value, options)].join('')];\n\t\t\t\t}\n\n\t\t\t\treturn [[result, encode(value, options)].join(options.arrayFormatSeparator)];\n\t\t\t};\n\n\t\tdefault:\n\t\t\treturn key => (result, value) => {\n\t\t\t\tif (\n\t\t\t\t\tvalue === undefined ||\n\t\t\t\t\t(options.skipNull && value === null) ||\n\t\t\t\t\t(options.skipEmptyString && value === '')\n\t\t\t\t) {\n\t\t\t\t\treturn result;\n\t\t\t\t}\n\n\t\t\t\tif (value === null) {\n\t\t\t\t\treturn [...result, encode(key, options)];\n\t\t\t\t}\n\n\t\t\t\treturn [...result, [encode(key, options), '=', encode(value, options)].join('')];\n\t\t\t};\n\t}\n}\n\nfunction parserForArrayFormat(options) {\n\tlet result;\n\n\tswitch (options.arrayFormat) {\n\t\tcase 'index':\n\t\t\treturn (key, value, accumulator) => {\n\t\t\t\tresult = /\\[(\\d*)\\]$/.exec(key);\n\n\t\t\t\tkey = key.replace(/\\[\\d*\\]$/, '');\n\n\t\t\t\tif (!result) {\n\t\t\t\t\taccumulator[key] = value;\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\tif (accumulator[key] === undefined) {\n\t\t\t\t\taccumulator[key] = {};\n\t\t\t\t}\n\n\t\t\t\taccumulator[key][result[1]] = value;\n\t\t\t};\n\n\t\tcase 'bracket':\n\t\t\treturn (key, value, accumulator) => {\n\t\t\t\tresult = /(\\[\\])$/.exec(key);\n\t\t\t\tkey = key.replace(/\\[\\]$/, '');\n\n\t\t\t\tif (!result) {\n\t\t\t\t\taccumulator[key] = value;\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\tif (accumulator[key] === undefined) {\n\t\t\t\t\taccumulator[key] = [value];\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\taccumulator[key] = [].concat(accumulator[key], value);\n\t\t\t};\n\n\t\tcase 'comma':\n\t\tcase 'separator':\n\t\t\treturn (key, value, accumulator) => {\n\t\t\t\tconst isArray = typeof value === 'string' && value.split('').indexOf(options.arrayFormatSeparator) > -1;\n\t\t\t\tconst newValue = isArray ? value.split(options.arrayFormatSeparator).map(item => decode(item, options)) : value === null ? value : decode(value, options);\n\t\t\t\taccumulator[key] = newValue;\n\t\t\t};\n\n\t\tdefault:\n\t\t\treturn (key, value, accumulator) => {\n\t\t\t\tif (accumulator[key] === undefined) {\n\t\t\t\t\taccumulator[key] = value;\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\taccumulator[key] = [].concat(accumulator[key], value);\n\t\t\t};\n\t}\n}\n\nfunction validateArrayFormatSeparator(value) {\n\tif (typeof value !== 'string' || value.length !== 1) {\n\t\tthrow new TypeError('arrayFormatSeparator must be single character string');\n\t}\n}\n\nfunction encode(value, options) {\n\tif (options.encode) {\n\t\treturn options.strict ? strictUriEncode(value) : encodeURIComponent(value);\n\t}\n\n\treturn value;\n}\n\nfunction decode(value, options) {\n\tif (options.decode) {\n\t\treturn decodeComponent(value);\n\t}\n\n\treturn value;\n}\n\nfunction keysSorter(input) {\n\tif (Array.isArray(input)) {\n\t\treturn input.sort();\n\t}\n\n\tif (typeof input === 'object') {\n\t\treturn keysSorter(Object.keys(input))\n\t\t\t.sort((a, b) => Number(a) - Number(b))\n\t\t\t.map(key => input[key]);\n\t}\n\n\treturn input;\n}\n\nfunction removeHash(input) {\n\tconst hashStart = input.indexOf('#');\n\tif (hashStart !== -1) {\n\t\tinput = input.slice(0, hashStart);\n\t}\n\n\treturn input;\n}\n\nfunction getHash(url) {\n\tlet hash = '';\n\tconst hashStart = url.indexOf('#');\n\tif (hashStart !== -1) {\n\t\thash = url.slice(hashStart);\n\t}\n\n\treturn hash;\n}\n\nfunction extract(input) {\n\tinput = removeHash(input);\n\tconst queryStart = input.indexOf('?');\n\tif (queryStart === -1) {\n\t\treturn '';\n\t}\n\n\treturn input.slice(queryStart + 1);\n}\n\nfunction parseValue(value, options) {\n\tif (options.parseNumbers && !Number.isNaN(Number(value)) && (typeof value === 'string' && value.trim() !== '')) {\n\t\tvalue = Number(value);\n\t} else if (options.parseBooleans && value !== null && (value.toLowerCase() === 'true' || value.toLowerCase() === 'false')) {\n\t\tvalue = value.toLowerCase() === 'true';\n\t}\n\n\treturn value;\n}\n\nfunction parse(input, options) {\n\toptions = Object.assign({\n\t\tdecode: true,\n\t\tsort: true,\n\t\tarrayFormat: 'none',\n\t\tarrayFormatSeparator: ',',\n\t\tparseNumbers: false,\n\t\tparseBooleans: false\n\t}, options);\n\n\tvalidateArrayFormatSeparator(options.arrayFormatSeparator);\n\n\tconst formatter = parserForArrayFormat(options);\n\n\t// Create an object with no prototype\n\tconst ret = Object.create(null);\n\n\tif (typeof input !== 'string') {\n\t\treturn ret;\n\t}\n\n\tinput = input.trim().replace(/^[?#&]/, '');\n\n\tif (!input) {\n\t\treturn ret;\n\t}\n\n\tfor (const param of input.split('&')) {\n\t\tlet [key, value] = splitOnFirst(options.decode ? param.replace(/\\+/g, ' ') : param, '=');\n\n\t\t// Missing `=` should be `null`:\n\t\t// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters\n\t\tvalue = value === undefined ? null : ['comma', 'separator'].includes(options.arrayFormat) ? value : decode(value, options);\n\t\tformatter(decode(key, options), value, ret);\n\t}\n\n\tfor (const key of Object.keys(ret)) {\n\t\tconst value = ret[key];\n\t\tif (typeof value === 'object' && value !== null) {\n\t\t\tfor (const k of Object.keys(value)) {\n\t\t\t\tvalue[k] = parseValue(value[k], options);\n\t\t\t}\n\t\t} else {\n\t\t\tret[key] = parseValue(value, options);\n\t\t}\n\t}\n\n\tif (options.sort === false) {\n\t\treturn ret;\n\t}\n\n\treturn (options.sort === true ? Object.keys(ret).sort() : Object.keys(ret).sort(options.sort)).reduce((result, key) => {\n\t\tconst value = ret[key];\n\t\tif (Boolean(value) && typeof value === 'object' && !Array.isArray(value)) {\n\t\t\t// Sort object keys, not values\n\t\t\tresult[key] = keysSorter(value);\n\t\t} else {\n\t\t\tresult[key] = value;\n\t\t}\n\n\t\treturn result;\n\t}, Object.create(null));\n}\n\nexports.extract = extract;\nexports.parse = parse;\n\nexports.stringify = (object, options) => {\n\tif (!object) {\n\t\treturn '';\n\t}\n\n\toptions = Object.assign({\n\t\tencode: true,\n\t\tstrict: true,\n\t\tarrayFormat: 'none',\n\t\tarrayFormatSeparator: ','\n\t}, options);\n\n\tvalidateArrayFormatSeparator(options.arrayFormatSeparator);\n\n\tconst shouldFilter = key => (\n\t\t(options.skipNull && isNullOrUndefined(object[key])) ||\n\t\t(options.skipEmptyString && object[key] === '')\n\t);\n\n\tconst formatter = encoderForArrayFormat(options);\n\n\tconst objectCopy = {};\n\n\tfor (const key of Object.keys(object)) {\n\t\tif (!shouldFilter(key)) {\n\t\t\tobjectCopy[key] = object[key];\n\t\t}\n\t}\n\n\tconst keys = Object.keys(objectCopy);\n\n\tif (options.sort !== false) {\n\t\tkeys.sort(options.sort);\n\t}\n\n\treturn keys.map(key => {\n\t\tconst value = object[key];\n\n\t\tif (value === undefined) {\n\t\t\treturn '';\n\t\t}\n\n\t\tif (value === null) {\n\t\t\treturn encode(key, options);\n\t\t}\n\n\t\tif (Array.isArray(value)) {\n\t\t\treturn value\n\t\t\t\t.reduce(formatter(key), [])\n\t\t\t\t.join('&');\n\t\t}\n\n\t\treturn encode(key, options) + '=' + encode(value, options);\n\t}).filter(x => x.length > 0).join('&');\n};\n\nexports.parseUrl = (input, options) => {\n\treturn {\n\t\turl: removeHash(input).split('?')[0] || '',\n\t\tquery: parse(extract(input), options)\n\t};\n};\n\nexports.stringifyUrl = (input, options) => {\n\tconst url = removeHash(input.url).split('?')[0] || '';\n\tconst queryFromUrl = exports.extract(input.url);\n\tconst parsedQueryFromUrl = exports.parse(queryFromUrl);\n\tconst hash = getHash(input.url);\n\tconst query = Object.assign(parsedQueryFromUrl, input.query);\n\tlet queryString = exports.stringify(query, options);\n\tif (queryString) {\n\t\tqueryString = `?${queryString}`;\n\t}\n\n\treturn `${url}${queryString}${hash}`;\n};\n\n\n/***/ }),\n\n/***/ \"./node_modules/rusha/dist/rusha.js\":\n/*!******************************************!*\\\n  !*** ./node_modules/rusha/dist/rusha.js ***!\n  \\******************************************/\n/*! no static exports found */\n/***/ (function(module, exports, __webpack_require__) {\n\n(function webpackUniversalModuleDefinition(root, factory) {\n\tif(true)\n\t\tmodule.exports = factory();\n\telse {}\n})(typeof self !== 'undefined' ? self : this, function() {\nreturn /******/ (function(modules) { // webpackBootstrap\n/******/ \t// The module cache\n/******/ \tvar installedModules = {};\n/******/\n/******/ \t// The require function\n/******/ \tfunction __webpack_require__(moduleId) {\n/******/\n/******/ \t\t// Check if module is in cache\n/******/ \t\tif(installedModules[moduleId]) {\n/******/ \t\t\treturn installedModules[moduleId].exports;\n/******/ \t\t}\n/******/ \t\t// Create a new module (and put it into the cache)\n/******/ \t\tvar module = installedModules[moduleId] = {\n/******/ \t\t\ti: moduleId,\n/******/ \t\t\tl: false,\n/******/ \t\t\texports: {}\n/******/ \t\t};\n/******/\n/******/ \t\t// Execute the module function\n/******/ \t\tmodules[moduleId].call(module.exports, module, module.exports, __webpack_require__);\n/******/\n/******/ \t\t// Flag the module as loaded\n/******/ \t\tmodule.l = true;\n/******/\n/******/ \t\t// Return the exports of the module\n/******/ \t\treturn module.exports;\n/******/ \t}\n/******/\n/******/\n/******/ \t// expose the modules object (__webpack_modules__)\n/******/ \t__webpack_require__.m = modules;\n/******/\n/******/ \t// expose the module cache\n/******/ \t__webpack_require__.c = installedModules;\n/******/\n/******/ \t// define getter function for harmony exports\n/******/ \t__webpack_require__.d = function(exports, name, getter) {\n/******/ \t\tif(!__webpack_require__.o(exports, name)) {\n/******/ \t\t\tObject.defineProperty(exports, name, {\n/******/ \t\t\t\tconfigurable: false,\n/******/ \t\t\t\tenumerable: true,\n/******/ \t\t\t\tget: getter\n/******/ \t\t\t});\n/******/ \t\t}\n/******/ \t};\n/******/\n/******/ \t// getDefaultExport function for compatibility with non-harmony modules\n/******/ \t__webpack_require__.n = function(module) {\n/******/ \t\tvar getter = module && module.__esModule ?\n/******/ \t\t\tfunction getDefault() { return module['default']; } :\n/******/ \t\t\tfunction getModuleExports() { return module; };\n/******/ \t\t__webpack_require__.d(getter, 'a', getter);\n/******/ \t\treturn getter;\n/******/ \t};\n/******/\n/******/ \t// Object.prototype.hasOwnProperty.call\n/******/ \t__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };\n/******/\n/******/ \t// __webpack_public_path__\n/******/ \t__webpack_require__.p = \"\";\n/******/\n/******/ \t// Load entry module and return exports\n/******/ \treturn __webpack_require__(__webpack_require__.s = 3);\n/******/ })\n/************************************************************************/\n/******/ ([\n/* 0 */\n/***/ (function(module, exports, __webpack_require__) {\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\n/* eslint-env commonjs, browser */\n\nvar RushaCore = __webpack_require__(5);\n\nvar _require = __webpack_require__(1),\n    toHex = _require.toHex,\n    ceilHeapSize = _require.ceilHeapSize;\n\nvar conv = __webpack_require__(6);\n\n// Calculate the length of buffer that the sha1 routine uses\n// including the padding.\nvar padlen = function (len) {\n  for (len += 9; len % 64 > 0; len += 1) {}\n  return len;\n};\n\nvar padZeroes = function (bin, len) {\n  var h8 = new Uint8Array(bin.buffer);\n  var om = len % 4,\n      align = len - om;\n  switch (om) {\n    case 0:\n      h8[align + 3] = 0;\n    case 1:\n      h8[align + 2] = 0;\n    case 2:\n      h8[align + 1] = 0;\n    case 3:\n      h8[align + 0] = 0;\n  }\n  for (var i = (len >> 2) + 1; i < bin.length; i++) {\n    bin[i] = 0;\n  }\n};\n\nvar padData = function (bin, chunkLen, msgLen) {\n  bin[chunkLen >> 2] |= 0x80 << 24 - (chunkLen % 4 << 3);\n  // To support msgLen >= 2 GiB, use a float division when computing the\n  // high 32-bits of the big-endian message length in bits.\n  bin[((chunkLen >> 2) + 2 & ~0x0f) + 14] = msgLen / (1 << 29) | 0;\n  bin[((chunkLen >> 2) + 2 & ~0x0f) + 15] = msgLen << 3;\n};\n\nvar getRawDigest = function (heap, padMaxChunkLen) {\n  var io = new Int32Array(heap, padMaxChunkLen + 320, 5);\n  var out = new Int32Array(5);\n  var arr = new DataView(out.buffer);\n  arr.setInt32(0, io[0], false);\n  arr.setInt32(4, io[1], false);\n  arr.setInt32(8, io[2], false);\n  arr.setInt32(12, io[3], false);\n  arr.setInt32(16, io[4], false);\n  return out;\n};\n\nvar Rusha = function () {\n  function Rusha(chunkSize) {\n    _classCallCheck(this, Rusha);\n\n    chunkSize = chunkSize || 64 * 1024;\n    if (chunkSize % 64 > 0) {\n      throw new Error('Chunk size must be a multiple of 128 bit');\n    }\n    this._offset = 0;\n    this._maxChunkLen = chunkSize;\n    this._padMaxChunkLen = padlen(chunkSize);\n    // The size of the heap is the sum of:\n    // 1. The padded input message size\n    // 2. The extended space the algorithm needs (320 byte)\n    // 3. The 160 bit state the algoritm uses\n    this._heap = new ArrayBuffer(ceilHeapSize(this._padMaxChunkLen + 320 + 20));\n    this._h32 = new Int32Array(this._heap);\n    this._h8 = new Int8Array(this._heap);\n    this._core = new RushaCore({ Int32Array: Int32Array }, {}, this._heap);\n  }\n\n  Rusha.prototype._initState = function _initState(heap, padMsgLen) {\n    this._offset = 0;\n    var io = new Int32Array(heap, padMsgLen + 320, 5);\n    io[0] = 1732584193;\n    io[1] = -271733879;\n    io[2] = -1732584194;\n    io[3] = 271733878;\n    io[4] = -1009589776;\n  };\n\n  Rusha.prototype._padChunk = function _padChunk(chunkLen, msgLen) {\n    var padChunkLen = padlen(chunkLen);\n    var view = new Int32Array(this._heap, 0, padChunkLen >> 2);\n    padZeroes(view, chunkLen);\n    padData(view, chunkLen, msgLen);\n    return padChunkLen;\n  };\n\n  Rusha.prototype._write = function _write(data, chunkOffset, chunkLen, off) {\n    conv(data, this._h8, this._h32, chunkOffset, chunkLen, off || 0);\n  };\n\n  Rusha.prototype._coreCall = function _coreCall(data, chunkOffset, chunkLen, msgLen, finalize) {\n    var padChunkLen = chunkLen;\n    this._write(data, chunkOffset, chunkLen);\n    if (finalize) {\n      padChunkLen = this._padChunk(chunkLen, msgLen);\n    }\n    this._core.hash(padChunkLen, this._padMaxChunkLen);\n  };\n\n  Rusha.prototype.rawDigest = function rawDigest(str) {\n    var msgLen = str.byteLength || str.length || str.size || 0;\n    this._initState(this._heap, this._padMaxChunkLen);\n    var chunkOffset = 0,\n        chunkLen = this._maxChunkLen;\n    for (chunkOffset = 0; msgLen > chunkOffset + chunkLen; chunkOffset += chunkLen) {\n      this._coreCall(str, chunkOffset, chunkLen, msgLen, false);\n    }\n    this._coreCall(str, chunkOffset, msgLen - chunkOffset, msgLen, true);\n    return getRawDigest(this._heap, this._padMaxChunkLen);\n  };\n\n  Rusha.prototype.digest = function digest(str) {\n    return toHex(this.rawDigest(str).buffer);\n  };\n\n  Rusha.prototype.digestFromString = function digestFromString(str) {\n    return this.digest(str);\n  };\n\n  Rusha.prototype.digestFromBuffer = function digestFromBuffer(str) {\n    return this.digest(str);\n  };\n\n  Rusha.prototype.digestFromArrayBuffer = function digestFromArrayBuffer(str) {\n    return this.digest(str);\n  };\n\n  Rusha.prototype.resetState = function resetState() {\n    this._initState(this._heap, this._padMaxChunkLen);\n    return this;\n  };\n\n  Rusha.prototype.append = function append(chunk) {\n    var chunkOffset = 0;\n    var chunkLen = chunk.byteLength || chunk.length || chunk.size || 0;\n    var turnOffset = this._offset % this._maxChunkLen;\n    var inputLen = void 0;\n\n    this._offset += chunkLen;\n    while (chunkOffset < chunkLen) {\n      inputLen = Math.min(chunkLen - chunkOffset, this._maxChunkLen - turnOffset);\n      this._write(chunk, chunkOffset, inputLen, turnOffset);\n      turnOffset += inputLen;\n      chunkOffset += inputLen;\n      if (turnOffset === this._maxChunkLen) {\n        this._core.hash(this._maxChunkLen, this._padMaxChunkLen);\n        turnOffset = 0;\n      }\n    }\n    return this;\n  };\n\n  Rusha.prototype.getState = function getState() {\n    var turnOffset = this._offset % this._maxChunkLen;\n    var heap = void 0;\n    if (!turnOffset) {\n      var io = new Int32Array(this._heap, this._padMaxChunkLen + 320, 5);\n      heap = io.buffer.slice(io.byteOffset, io.byteOffset + io.byteLength);\n    } else {\n      heap = this._heap.slice(0);\n    }\n    return {\n      offset: this._offset,\n      heap: heap\n    };\n  };\n\n  Rusha.prototype.setState = function setState(state) {\n    this._offset = state.offset;\n    if (state.heap.byteLength === 20) {\n      var io = new Int32Array(this._heap, this._padMaxChunkLen + 320, 5);\n      io.set(new Int32Array(state.heap));\n    } else {\n      this._h32.set(new Int32Array(state.heap));\n    }\n    return this;\n  };\n\n  Rusha.prototype.rawEnd = function rawEnd() {\n    var msgLen = this._offset;\n    var chunkLen = msgLen % this._maxChunkLen;\n    var padChunkLen = this._padChunk(chunkLen, msgLen);\n    this._core.hash(padChunkLen, this._padMaxChunkLen);\n    var result = getRawDigest(this._heap, this._padMaxChunkLen);\n    this._initState(this._heap, this._padMaxChunkLen);\n    return result;\n  };\n\n  Rusha.prototype.end = function end() {\n    return toHex(this.rawEnd().buffer);\n  };\n\n  return Rusha;\n}();\n\nmodule.exports = Rusha;\nmodule.exports._core = RushaCore;\n\n/***/ }),\n/* 1 */\n/***/ (function(module, exports) {\n\n/* eslint-env commonjs, browser */\n\n//\n// toHex\n//\n\nvar precomputedHex = new Array(256);\nfor (var i = 0; i < 256; i++) {\n  precomputedHex[i] = (i < 0x10 ? '0' : '') + i.toString(16);\n}\n\nmodule.exports.toHex = function (arrayBuffer) {\n  var binarray = new Uint8Array(arrayBuffer);\n  var res = new Array(arrayBuffer.byteLength);\n  for (var _i = 0; _i < res.length; _i++) {\n    res[_i] = precomputedHex[binarray[_i]];\n  }\n  return res.join('');\n};\n\n//\n// ceilHeapSize\n//\n\nmodule.exports.ceilHeapSize = function (v) {\n  // The asm.js spec says:\n  // The heap object's byteLength must be either\n  // 2^n for n in [12, 24) or 2^24 * n for n ≥ 1.\n  // Also, byteLengths smaller than 2^16 are deprecated.\n  var p = 0;\n  // If v is smaller than 2^16, the smallest possible solution\n  // is 2^16.\n  if (v <= 65536) return 65536;\n  // If v < 2^24, we round up to 2^n,\n  // otherwise we round up to 2^24 * n.\n  if (v < 16777216) {\n    for (p = 1; p < v; p = p << 1) {}\n  } else {\n    for (p = 16777216; p < v; p += 16777216) {}\n  }\n  return p;\n};\n\n//\n// isDedicatedWorkerScope\n//\n\nmodule.exports.isDedicatedWorkerScope = function (self) {\n  var isRunningInWorker = 'WorkerGlobalScope' in self && self instanceof self.WorkerGlobalScope;\n  var isRunningInSharedWorker = 'SharedWorkerGlobalScope' in self && self instanceof self.SharedWorkerGlobalScope;\n  var isRunningInServiceWorker = 'ServiceWorkerGlobalScope' in self && self instanceof self.ServiceWorkerGlobalScope;\n\n  // Detects whether we run inside a dedicated worker or not.\n  //\n  // We can't just check for `DedicatedWorkerGlobalScope`, since IE11\n  // has a bug where it only supports `WorkerGlobalScope`.\n  //\n  // Therefore, we consider us as running inside a dedicated worker\n  // when we are running inside a worker, but not in a shared or service worker.\n  //\n  // When new types of workers are introduced, we will need to adjust this code.\n  return isRunningInWorker && !isRunningInSharedWorker && !isRunningInServiceWorker;\n};\n\n/***/ }),\n/* 2 */\n/***/ (function(module, exports, __webpack_require__) {\n\n/* eslint-env commonjs, worker */\n\nmodule.exports = function () {\n  var Rusha = __webpack_require__(0);\n\n  var hashData = function (hasher, data, cb) {\n    try {\n      return cb(null, hasher.digest(data));\n    } catch (e) {\n      return cb(e);\n    }\n  };\n\n  var hashFile = function (hasher, readTotal, blockSize, file, cb) {\n    var reader = new self.FileReader();\n    reader.onloadend = function onloadend() {\n      if (reader.error) {\n        return cb(reader.error);\n      }\n      var buffer = reader.result;\n      readTotal += reader.result.byteLength;\n      try {\n        hasher.append(buffer);\n      } catch (e) {\n        cb(e);\n        return;\n      }\n      if (readTotal < file.size) {\n        hashFile(hasher, readTotal, blockSize, file, cb);\n      } else {\n        cb(null, hasher.end());\n      }\n    };\n    reader.readAsArrayBuffer(file.slice(readTotal, readTotal + blockSize));\n  };\n\n  var workerBehaviourEnabled = true;\n\n  self.onmessage = function (event) {\n    if (!workerBehaviourEnabled) {\n      return;\n    }\n\n    var data = event.data.data,\n        file = event.data.file,\n        id = event.data.id;\n    if (typeof id === 'undefined') return;\n    if (!file && !data) return;\n    var blockSize = event.data.blockSize || 4 * 1024 * 1024;\n    var hasher = new Rusha(blockSize);\n    hasher.resetState();\n    var done = function (err, hash) {\n      if (!err) {\n        self.postMessage({ id: id, hash: hash });\n      } else {\n        self.postMessage({ id: id, error: err.name });\n      }\n    };\n    if (data) hashData(hasher, data, done);\n    if (file) hashFile(hasher, 0, blockSize, file, done);\n  };\n\n  return function () {\n    workerBehaviourEnabled = false;\n  };\n};\n\n/***/ }),\n/* 3 */\n/***/ (function(module, exports, __webpack_require__) {\n\n/* eslint-env commonjs, browser */\n\nvar work = __webpack_require__(4);\nvar Rusha = __webpack_require__(0);\nvar createHash = __webpack_require__(7);\nvar runWorker = __webpack_require__(2);\n\nvar _require = __webpack_require__(1),\n    isDedicatedWorkerScope = _require.isDedicatedWorkerScope;\n\nvar isRunningInDedicatedWorker = typeof self !== 'undefined' && isDedicatedWorkerScope(self);\n\nRusha.disableWorkerBehaviour = isRunningInDedicatedWorker ? runWorker() : function () {};\n\nRusha.createWorker = function () {\n  var worker = work(/*require.resolve*/(2));\n  var terminate = worker.terminate;\n  worker.terminate = function () {\n    URL.revokeObjectURL(worker.objectURL);\n    terminate.call(worker);\n  };\n  return worker;\n};\n\nRusha.createHash = createHash;\n\nmodule.exports = Rusha;\n\n/***/ }),\n/* 4 */\n/***/ (function(module, exports, __webpack_require__) {\n\nfunction webpackBootstrapFunc (modules) {\n/******/  // The module cache\n/******/  var installedModules = {};\n\n/******/  // The require function\n/******/  function __webpack_require__(moduleId) {\n\n/******/    // Check if module is in cache\n/******/    if(installedModules[moduleId])\n/******/      return installedModules[moduleId].exports;\n\n/******/    // Create a new module (and put it into the cache)\n/******/    var module = installedModules[moduleId] = {\n/******/      i: moduleId,\n/******/      l: false,\n/******/      exports: {}\n/******/    };\n\n/******/    // Execute the module function\n/******/    modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);\n\n/******/    // Flag the module as loaded\n/******/    module.l = true;\n\n/******/    // Return the exports of the module\n/******/    return module.exports;\n/******/  }\n\n/******/  // expose the modules object (__webpack_modules__)\n/******/  __webpack_require__.m = modules;\n\n/******/  // expose the module cache\n/******/  __webpack_require__.c = installedModules;\n\n/******/  // identity function for calling harmony imports with the correct context\n/******/  __webpack_require__.i = function(value) { return value; };\n\n/******/  // define getter function for harmony exports\n/******/  __webpack_require__.d = function(exports, name, getter) {\n/******/    if(!__webpack_require__.o(exports, name)) {\n/******/      Object.defineProperty(exports, name, {\n/******/        configurable: false,\n/******/        enumerable: true,\n/******/        get: getter\n/******/      });\n/******/    }\n/******/  };\n\n/******/  // define __esModule on exports\n/******/  __webpack_require__.r = function(exports) {\n/******/    Object.defineProperty(exports, '__esModule', { value: true });\n/******/  };\n\n/******/  // getDefaultExport function for compatibility with non-harmony modules\n/******/  __webpack_require__.n = function(module) {\n/******/    var getter = module && module.__esModule ?\n/******/      function getDefault() { return module['default']; } :\n/******/      function getModuleExports() { return module; };\n/******/    __webpack_require__.d(getter, 'a', getter);\n/******/    return getter;\n/******/  };\n\n/******/  // Object.prototype.hasOwnProperty.call\n/******/  __webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };\n\n/******/  // __webpack_public_path__\n/******/  __webpack_require__.p = \"/\";\n\n/******/  // on error function for async loading\n/******/  __webpack_require__.oe = function(err) { console.error(err); throw err; };\n\n  var f = __webpack_require__(__webpack_require__.s = ENTRY_MODULE)\n  return f.default || f // try to call default if defined to also support babel esmodule exports\n}\n\nvar moduleNameReqExp = '[\\\\.|\\\\-|\\\\+|\\\\w|\\/|@]+'\nvar dependencyRegExp = '\\\\((\\/\\\\*.*?\\\\*\\/)?\\s?.*?(' + moduleNameReqExp + ').*?\\\\)' // additional chars when output.pathinfo is true\n\n// http://stackoverflow.com/a/2593661/130442\nfunction quoteRegExp (str) {\n  return (str + '').replace(/[.?*+^$[\\]\\\\(){}|-]/g, '\\\\$&')\n}\n\nfunction getModuleDependencies (sources, module, queueName) {\n  var retval = {}\n  retval[queueName] = []\n\n  var fnString = module.toString()\n  var wrapperSignature = fnString.match(/^function\\s?\\(\\w+,\\s*\\w+,\\s*(\\w+)\\)/)\n  if (!wrapperSignature) return retval\n  var webpackRequireName = wrapperSignature[1]\n\n  // main bundle deps\n  var re = new RegExp('(\\\\\\\\n|\\\\W)' + quoteRegExp(webpackRequireName) + dependencyRegExp, 'g')\n  var match\n  while ((match = re.exec(fnString))) {\n    if (match[3] === 'dll-reference') continue\n    retval[queueName].push(match[3])\n  }\n\n  // dll deps\n  re = new RegExp('\\\\(' + quoteRegExp(webpackRequireName) + '\\\\(\"(dll-reference\\\\s(' + moduleNameReqExp + '))\"\\\\)\\\\)' + dependencyRegExp, 'g')\n  while ((match = re.exec(fnString))) {\n    if (!sources[match[2]]) {\n      retval[queueName].push(match[1])\n      sources[match[2]] = __webpack_require__(match[1]).m\n    }\n    retval[match[2]] = retval[match[2]] || []\n    retval[match[2]].push(match[4])\n  }\n\n  return retval\n}\n\nfunction hasValuesInQueues (queues) {\n  var keys = Object.keys(queues)\n  return keys.reduce(function (hasValues, key) {\n    return hasValues || queues[key].length > 0\n  }, false)\n}\n\nfunction getRequiredModules (sources, moduleId) {\n  var modulesQueue = {\n    main: [moduleId]\n  }\n  var requiredModules = {\n    main: []\n  }\n  var seenModules = {\n    main: {}\n  }\n\n  while (hasValuesInQueues(modulesQueue)) {\n    var queues = Object.keys(modulesQueue)\n    for (var i = 0; i < queues.length; i++) {\n      var queueName = queues[i]\n      var queue = modulesQueue[queueName]\n      var moduleToCheck = queue.pop()\n      seenModules[queueName] = seenModules[queueName] || {}\n      if (seenModules[queueName][moduleToCheck] || !sources[queueName][moduleToCheck]) continue\n      seenModules[queueName][moduleToCheck] = true\n      requiredModules[queueName] = requiredModules[queueName] || []\n      requiredModules[queueName].push(moduleToCheck)\n      var newModules = getModuleDependencies(sources, sources[queueName][moduleToCheck], queueName)\n      var newModulesKeys = Object.keys(newModules)\n      for (var j = 0; j < newModulesKeys.length; j++) {\n        modulesQueue[newModulesKeys[j]] = modulesQueue[newModulesKeys[j]] || []\n        modulesQueue[newModulesKeys[j]] = modulesQueue[newModulesKeys[j]].concat(newModules[newModulesKeys[j]])\n      }\n    }\n  }\n\n  return requiredModules\n}\n\nmodule.exports = function (moduleId, options) {\n  options = options || {}\n  var sources = {\n    main: __webpack_require__.m\n  }\n\n  var requiredModules = options.all ? { main: Object.keys(sources) } : getRequiredModules(sources, moduleId)\n\n  var src = ''\n\n  Object.keys(requiredModules).filter(function (m) { return m !== 'main' }).forEach(function (module) {\n    var entryModule = 0\n    while (requiredModules[module][entryModule]) {\n      entryModule++\n    }\n    requiredModules[module].push(entryModule)\n    sources[module][entryModule] = '(function(module, exports, __webpack_require__) { module.exports = __webpack_require__; })'\n    src = src + 'var ' + module + ' = (' + webpackBootstrapFunc.toString().replace('ENTRY_MODULE', JSON.stringify(entryModule)) + ')({' + requiredModules[module].map(function (id) { return '' + JSON.stringify(id) + ': ' + sources[module][id].toString() }).join(',') + '});\\n'\n  })\n\n  src = src + '(' + webpackBootstrapFunc.toString().replace('ENTRY_MODULE', JSON.stringify(moduleId)) + ')({' + requiredModules.main.map(function (id) { return '' + JSON.stringify(id) + ': ' + sources.main[id].toString() }).join(',') + '})(self);'\n\n  var blob = new window.Blob([src], { type: 'text/javascript' })\n  if (options.bare) { return blob }\n\n  var URL = window.URL || window.webkitURL || window.mozURL || window.msURL\n\n  var workerUrl = URL.createObjectURL(blob)\n  var worker = new window.Worker(workerUrl)\n  worker.objectURL = workerUrl\n\n  return worker\n}\n\n\n/***/ }),\n/* 5 */\n/***/ (function(module, exports) {\n\n// The low-level RushCore module provides the heart of Rusha,\n// a high-speed sha1 implementation working on an Int32Array heap.\n// At first glance, the implementation seems complicated, however\n// with the SHA1 spec at hand, it is obvious this almost a textbook\n// implementation that has a few functions hand-inlined and a few loops\n// hand-unrolled.\nmodule.exports = function RushaCore(stdlib$846, foreign$847, heap$848) {\n    'use asm';\n    var H$849 = new stdlib$846.Int32Array(heap$848);\n    function hash$850(k$851, x$852) {\n        // k in bytes\n        k$851 = k$851 | 0;\n        x$852 = x$852 | 0;\n        var i$853 = 0, j$854 = 0, y0$855 = 0, z0$856 = 0, y1$857 = 0, z1$858 = 0, y2$859 = 0, z2$860 = 0, y3$861 = 0, z3$862 = 0, y4$863 = 0, z4$864 = 0, t0$865 = 0, t1$866 = 0;\n        y0$855 = H$849[x$852 + 320 >> 2] | 0;\n        y1$857 = H$849[x$852 + 324 >> 2] | 0;\n        y2$859 = H$849[x$852 + 328 >> 2] | 0;\n        y3$861 = H$849[x$852 + 332 >> 2] | 0;\n        y4$863 = H$849[x$852 + 336 >> 2] | 0;\n        for (i$853 = 0; (i$853 | 0) < (k$851 | 0); i$853 = i$853 + 64 | 0) {\n            z0$856 = y0$855;\n            z1$858 = y1$857;\n            z2$860 = y2$859;\n            z3$862 = y3$861;\n            z4$864 = y4$863;\n            for (j$854 = 0; (j$854 | 0) < 64; j$854 = j$854 + 4 | 0) {\n                t1$866 = H$849[i$853 + j$854 >> 2] | 0;\n                t0$865 = ((y0$855 << 5 | y0$855 >>> 27) + (y1$857 & y2$859 | ~y1$857 & y3$861) | 0) + ((t1$866 + y4$863 | 0) + 1518500249 | 0) | 0;\n                y4$863 = y3$861;\n                y3$861 = y2$859;\n                y2$859 = y1$857 << 30 | y1$857 >>> 2;\n                y1$857 = y0$855;\n                y0$855 = t0$865;\n                H$849[k$851 + j$854 >> 2] = t1$866;\n            }\n            for (j$854 = k$851 + 64 | 0; (j$854 | 0) < (k$851 + 80 | 0); j$854 = j$854 + 4 | 0) {\n                t1$866 = (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) << 1 | (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) >>> 31;\n                t0$865 = ((y0$855 << 5 | y0$855 >>> 27) + (y1$857 & y2$859 | ~y1$857 & y3$861) | 0) + ((t1$866 + y4$863 | 0) + 1518500249 | 0) | 0;\n                y4$863 = y3$861;\n                y3$861 = y2$859;\n                y2$859 = y1$857 << 30 | y1$857 >>> 2;\n                y1$857 = y0$855;\n                y0$855 = t0$865;\n                H$849[j$854 >> 2] = t1$866;\n            }\n            for (j$854 = k$851 + 80 | 0; (j$854 | 0) < (k$851 + 160 | 0); j$854 = j$854 + 4 | 0) {\n                t1$866 = (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) << 1 | (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) >>> 31;\n                t0$865 = ((y0$855 << 5 | y0$855 >>> 27) + (y1$857 ^ y2$859 ^ y3$861) | 0) + ((t1$866 + y4$863 | 0) + 1859775393 | 0) | 0;\n                y4$863 = y3$861;\n                y3$861 = y2$859;\n                y2$859 = y1$857 << 30 | y1$857 >>> 2;\n                y1$857 = y0$855;\n                y0$855 = t0$865;\n                H$849[j$854 >> 2] = t1$866;\n            }\n            for (j$854 = k$851 + 160 | 0; (j$854 | 0) < (k$851 + 240 | 0); j$854 = j$854 + 4 | 0) {\n                t1$866 = (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) << 1 | (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) >>> 31;\n                t0$865 = ((y0$855 << 5 | y0$855 >>> 27) + (y1$857 & y2$859 | y1$857 & y3$861 | y2$859 & y3$861) | 0) + ((t1$866 + y4$863 | 0) - 1894007588 | 0) | 0;\n                y4$863 = y3$861;\n                y3$861 = y2$859;\n                y2$859 = y1$857 << 30 | y1$857 >>> 2;\n                y1$857 = y0$855;\n                y0$855 = t0$865;\n                H$849[j$854 >> 2] = t1$866;\n            }\n            for (j$854 = k$851 + 240 | 0; (j$854 | 0) < (k$851 + 320 | 0); j$854 = j$854 + 4 | 0) {\n                t1$866 = (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) << 1 | (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) >>> 31;\n                t0$865 = ((y0$855 << 5 | y0$855 >>> 27) + (y1$857 ^ y2$859 ^ y3$861) | 0) + ((t1$866 + y4$863 | 0) - 899497514 | 0) | 0;\n                y4$863 = y3$861;\n                y3$861 = y2$859;\n                y2$859 = y1$857 << 30 | y1$857 >>> 2;\n                y1$857 = y0$855;\n                y0$855 = t0$865;\n                H$849[j$854 >> 2] = t1$866;\n            }\n            y0$855 = y0$855 + z0$856 | 0;\n            y1$857 = y1$857 + z1$858 | 0;\n            y2$859 = y2$859 + z2$860 | 0;\n            y3$861 = y3$861 + z3$862 | 0;\n            y4$863 = y4$863 + z4$864 | 0;\n        }\n        H$849[x$852 + 320 >> 2] = y0$855;\n        H$849[x$852 + 324 >> 2] = y1$857;\n        H$849[x$852 + 328 >> 2] = y2$859;\n        H$849[x$852 + 332 >> 2] = y3$861;\n        H$849[x$852 + 336 >> 2] = y4$863;\n    }\n    return { hash: hash$850 };\n};\n\n/***/ }),\n/* 6 */\n/***/ (function(module, exports) {\n\nvar _this = this;\n\n/* eslint-env commonjs, browser */\n\nvar reader = void 0;\nif (typeof self !== 'undefined' && typeof self.FileReaderSync !== 'undefined') {\n  reader = new self.FileReaderSync();\n}\n\n// Convert a binary string and write it to the heap.\n// A binary string is expected to only contain char codes < 256.\nvar convStr = function (str, H8, H32, start, len, off) {\n  var i = void 0,\n      om = off % 4,\n      lm = (len + om) % 4,\n      j = len - lm;\n  switch (om) {\n    case 0:\n      H8[off] = str.charCodeAt(start + 3);\n    case 1:\n      H8[off + 1 - (om << 1) | 0] = str.charCodeAt(start + 2);\n    case 2:\n      H8[off + 2 - (om << 1) | 0] = str.charCodeAt(start + 1);\n    case 3:\n      H8[off + 3 - (om << 1) | 0] = str.charCodeAt(start);\n  }\n  if (len < lm + (4 - om)) {\n    return;\n  }\n  for (i = 4 - om; i < j; i = i + 4 | 0) {\n    H32[off + i >> 2] = str.charCodeAt(start + i) << 24 | str.charCodeAt(start + i + 1) << 16 | str.charCodeAt(start + i + 2) << 8 | str.charCodeAt(start + i + 3);\n  }\n  switch (lm) {\n    case 3:\n      H8[off + j + 1 | 0] = str.charCodeAt(start + j + 2);\n    case 2:\n      H8[off + j + 2 | 0] = str.charCodeAt(start + j + 1);\n    case 1:\n      H8[off + j + 3 | 0] = str.charCodeAt(start + j);\n  }\n};\n\n// Convert a buffer or array and write it to the heap.\n// The buffer or array is expected to only contain elements < 256.\nvar convBuf = function (buf, H8, H32, start, len, off) {\n  var i = void 0,\n      om = off % 4,\n      lm = (len + om) % 4,\n      j = len - lm;\n  switch (om) {\n    case 0:\n      H8[off] = buf[start + 3];\n    case 1:\n      H8[off + 1 - (om << 1) | 0] = buf[start + 2];\n    case 2:\n      H8[off + 2 - (om << 1) | 0] = buf[start + 1];\n    case 3:\n      H8[off + 3 - (om << 1) | 0] = buf[start];\n  }\n  if (len < lm + (4 - om)) {\n    return;\n  }\n  for (i = 4 - om; i < j; i = i + 4 | 0) {\n    H32[off + i >> 2 | 0] = buf[start + i] << 24 | buf[start + i + 1] << 16 | buf[start + i + 2] << 8 | buf[start + i + 3];\n  }\n  switch (lm) {\n    case 3:\n      H8[off + j + 1 | 0] = buf[start + j + 2];\n    case 2:\n      H8[off + j + 2 | 0] = buf[start + j + 1];\n    case 1:\n      H8[off + j + 3 | 0] = buf[start + j];\n  }\n};\n\nvar convBlob = function (blob, H8, H32, start, len, off) {\n  var i = void 0,\n      om = off % 4,\n      lm = (len + om) % 4,\n      j = len - lm;\n  var buf = new Uint8Array(reader.readAsArrayBuffer(blob.slice(start, start + len)));\n  switch (om) {\n    case 0:\n      H8[off] = buf[3];\n    case 1:\n      H8[off + 1 - (om << 1) | 0] = buf[2];\n    case 2:\n      H8[off + 2 - (om << 1) | 0] = buf[1];\n    case 3:\n      H8[off + 3 - (om << 1) | 0] = buf[0];\n  }\n  if (len < lm + (4 - om)) {\n    return;\n  }\n  for (i = 4 - om; i < j; i = i + 4 | 0) {\n    H32[off + i >> 2 | 0] = buf[i] << 24 | buf[i + 1] << 16 | buf[i + 2] << 8 | buf[i + 3];\n  }\n  switch (lm) {\n    case 3:\n      H8[off + j + 1 | 0] = buf[j + 2];\n    case 2:\n      H8[off + j + 2 | 0] = buf[j + 1];\n    case 1:\n      H8[off + j + 3 | 0] = buf[j];\n  }\n};\n\nmodule.exports = function (data, H8, H32, start, len, off) {\n  if (typeof data === 'string') {\n    return convStr(data, H8, H32, start, len, off);\n  }\n  if (data instanceof Array) {\n    return convBuf(data, H8, H32, start, len, off);\n  }\n  // Safely doing a Buffer check using \"this\" to avoid Buffer polyfill to be included in the dist\n  if (_this && _this.Buffer && _this.Buffer.isBuffer(data)) {\n    return convBuf(data, H8, H32, start, len, off);\n  }\n  if (data instanceof ArrayBuffer) {\n    return convBuf(new Uint8Array(data), H8, H32, start, len, off);\n  }\n  if (data.buffer instanceof ArrayBuffer) {\n    return convBuf(new Uint8Array(data.buffer, data.byteOffset, data.byteLength), H8, H32, start, len, off);\n  }\n  if (data instanceof Blob) {\n    return convBlob(data, H8, H32, start, len, off);\n  }\n  throw new Error('Unsupported data type.');\n};\n\n/***/ }),\n/* 7 */\n/***/ (function(module, exports, __webpack_require__) {\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\n/* eslint-env commonjs, browser */\n\nvar Rusha = __webpack_require__(0);\n\nvar _require = __webpack_require__(1),\n    toHex = _require.toHex;\n\nvar Hash = function () {\n  function Hash() {\n    _classCallCheck(this, Hash);\n\n    this._rusha = new Rusha();\n    this._rusha.resetState();\n  }\n\n  Hash.prototype.update = function update(data) {\n    this._rusha.append(data);\n    return this;\n  };\n\n  Hash.prototype.digest = function digest(encoding) {\n    var digest = this._rusha.rawEnd().buffer;\n    if (!encoding) {\n      return digest;\n    }\n    if (encoding === 'hex') {\n      return toHex(digest);\n    }\n    throw new Error('unsupported digest encoding');\n  };\n\n  return Hash;\n}();\n\nmodule.exports = function () {\n  return new Hash();\n};\n\n/***/ })\n/******/ ]);\n});\n\n/***/ }),\n\n/***/ \"./node_modules/split-on-first/index.js\":\n/*!**********************************************!*\\\n  !*** ./node_modules/split-on-first/index.js ***!\n  \\**********************************************/\n/*! no static exports found */\n/***/ (function(module, exports, __webpack_require__) {\n\n\"use strict\";\n\n\nmodule.exports = (string, separator) => {\n\tif (!(typeof string === 'string' && typeof separator === 'string')) {\n\t\tthrow new TypeError('Expected the arguments to be of type `string`');\n\t}\n\n\tif (separator === '') {\n\t\treturn [string];\n\t}\n\n\tconst separatorIndex = string.indexOf(separator);\n\n\tif (separatorIndex === -1) {\n\t\treturn [string];\n\t}\n\n\treturn [\n\t\tstring.slice(0, separatorIndex),\n\t\tstring.slice(separatorIndex + separator.length)\n\t];\n};\n\n\n/***/ }),\n\n/***/ \"./node_modules/strict-uri-encode/index.js\":\n/*!*************************************************!*\\\n  !*** ./node_modules/strict-uri-encode/index.js ***!\n  \\*************************************************/\n/*! no static exports found */\n/***/ (function(module, exports, __webpack_require__) {\n\n\"use strict\";\n\nmodule.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.charCodeAt(0).toString(16).toUpperCase()}`);\n\n\n/***/ }),\n\n/***/ \"./node_modules/webpack-strip-block/index.js?!./src/js/webworkers/compression.worker.js\":\n/*!**********************************************************************************************!*\\\n  !*** ./node_modules/webpack-strip-block??ref--7-0!./src/js/webworkers/compression.worker.js ***!\n  \\**********************************************************************************************/\n/*! no exports provided */\n/***/ (function(module, __webpack_exports__, __webpack_require__) {\n\n\"use strict\";\n__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _core_lzstring__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/lzstring */ \"./src/js/core/lzstring.js\");\n/* harmony import */ var _core_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/config */ \"./src/js/core/config.js\");\n/* harmony import */ var _core_sensitive_utils_encrypt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/sensitive_utils.encrypt */ \"./src/js/core/sensitive_utils.encrypt.js\");\n\r\n\r\n\r\n\r\nfunction accessNestedPropertyReverse(obj, keys) {\r\n    let result = obj;\r\n    for (let i = keys.length - 1; i >= 0; --i) {\r\n        result = result[keys[i]];\r\n    }\r\n    return result;\r\n}\r\n\r\nconst salt = accessNestedPropertyReverse(_core_config__WEBPACK_IMPORTED_MODULE_1__[\"globalConfig\"], [\"file\", \"info\"]);\r\n\r\nonmessage = function ({ data: { jobId, job, data } }) {\r\n    const result = performJob(job, data);\r\n    postMessage({ jobId, result });\r\n};\r\n\r\nfunction performJob(job, data) {\r\n    switch (job) {\r\n        case \"compressX64\": {\r\n            return Object(_core_lzstring__WEBPACK_IMPORTED_MODULE_0__[\"compressX64\"])(data);\r\n        }\r\n        case \"compressFile\": {\r\n            const checksum = Object(_core_sensitive_utils_encrypt__WEBPACK_IMPORTED_MODULE_2__[\"sha1\"])(data.text + salt);\r\n            return data.compressionPrefix + Object(_core_lzstring__WEBPACK_IMPORTED_MODULE_0__[\"compressX64\"])(checksum + data.text);\r\n        }\r\n        default:\r\n            throw new Error(\"Webworker: Unknown job: \" + job);\r\n    }\r\n}\r\n\n\n/***/ }),\n\n/***/ \"./src/js/core/config.js\":\n/*!*******************************!*\\\n  !*** ./src/js/core/config.js ***!\n  \\*******************************/\n/*! exports provided: IS_DEBUG, IS_DEMO, SUPPORT_TOUCH, THIRDPARTY_URLS, globalConfig, IS_MOBILE */\n/***/ (function(module, __webpack_exports__, __webpack_require__) {\n\n\"use strict\";\n__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"IS_DEBUG\", function() { return IS_DEBUG; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"IS_DEMO\", function() { return IS_DEMO; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"SUPPORT_TOUCH\", function() { return SUPPORT_TOUCH; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"THIRDPARTY_URLS\", function() { return THIRDPARTY_URLS; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"globalConfig\", function() { return globalConfig; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"IS_MOBILE\", function() { return IS_MOBILE; });\n/* harmony import */ var _query_parameters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./query_parameters */ \"./src/js/core/query_parameters.js\");\n\r\n\r\nconst IS_DEBUG =  true ||\r\n    false;\r\n\r\nconst IS_DEMO = _query_parameters__WEBPACK_IMPORTED_MODULE_0__[\"queryParamOptions\"].fullVersion\r\n    ? false\r\n    : ( false) ||\r\n      (typeof window !== \"undefined\" && window.location.search.indexOf(\"demo\") >= 0);\r\n\r\nconst SUPPORT_TOUCH = false;\r\n\r\nconst smoothCanvas = true;\r\n\r\nconst THIRDPARTY_URLS = {\r\n    discord: \"https://discord.gg/HN7EVzV\",\r\n    github: \"https://github.com/tobspr/shapez.io\",\r\n    reddit: \"https://www.reddit.com/r/shapezio\",\r\n\r\n    standaloneStorePage: \"https://store.steampowered.com/app/1318690/shapezio/\",\r\n};\r\n\r\nconst globalConfig = {\r\n    // Size of a single tile in Pixels.\r\n    // NOTICE: Update webpack.production.config too!\r\n    tileSize: 32,\r\n    halfTileSize: 16,\r\n\r\n    // Which dpi the assets have\r\n    assetsDpi: 192 / 32,\r\n    assetsSharpness: 1.2,\r\n    shapesSharpness: 1.4,\r\n\r\n    // Production analytics\r\n    statisticsGraphDpi: 2.5,\r\n    statisticsGraphSlices: 100,\r\n    analyticsSliceDurationSeconds:  true ? 1 : undefined,\r\n\r\n    minimumTickRate: 25,\r\n    maximumTickRate: 500,\r\n\r\n    // Map\r\n    mapChunkSize: 16,\r\n    mapChunkPrerenderMinZoom: -1,\r\n    mapChunkOverviewMinZoom: 0.7,\r\n\r\n    // Belt speeds\r\n    // NOTICE: Update webpack.production.config too!\r\n    beltSpeedItemsPerSecond: 2,\r\n    minerSpeedItemsPerSecond: 0, // COMPUTED\r\n\r\n    beltItemSpacingByLayer: {\r\n        regular: 0.63,\r\n        wires: 0.4,\r\n    },\r\n\r\n    wiresSpeedItemsPerSecond: 6,\r\n\r\n    undergroundBeltMaxTilesByTier: [5, 8],\r\n\r\n    buildingSpeeds: {\r\n        cutter: 1 / 4,\r\n        cutterQuad: 1 / 4,\r\n        rotater: 1 / 1,\r\n        rotaterCCW: 1 / 1,\r\n        rotaterFL: 1 / 1,\r\n        painter: 1 / 6,\r\n        painterDouble: 1 / 8,\r\n        painterQuad: 1 / 8,\r\n        mixer: 1 / 5,\r\n        stacker: 1 / 6,\r\n        advancedProcessor: 1 / 3,\r\n    },\r\n\r\n    // Zooming\r\n    initialZoom: 1.9,\r\n    minZoomLevel: 0.1,\r\n    maxZoomLevel: 3,\r\n\r\n    // Global game speed\r\n    gameSpeed: 1,\r\n\r\n    warmupTimeSecondsFast: 0.1,\r\n    warmupTimeSecondsRegular: 1,\r\n\r\n    smoothing: {\r\n        smoothMainCanvas: smoothCanvas && true,\r\n        quality: \"low\", // Low is CRUCIAL for mobile performance!\r\n    },\r\n\r\n    rendering: {},\r\n    debug:  true ? __webpack_require__(/*! ./config.local */ \"./src/js/core/config.local.js\").default : undefined,\r\n\r\n    // Secret vars\r\n    info: {\r\n        // Binary file salt\r\n        file: \"Ec'])@^+*9zMevK3uMV4432x9%iK'=\",\r\n\r\n        // Savegame salt\r\n        sgSalt: \"}95Q3%8/.837Lqym_BJx%q7)pAHJbF\",\r\n\r\n        // Analytics key\r\n        analyticsApiKey: \"baf6a50f0cc7dfdec5a0e21c88a1c69a4b34bc4a\",\r\n    },\r\n};\r\n\r\nconst IS_MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);\r\n\r\n// Automatic calculations\r\nglobalConfig.minerSpeedItemsPerSecond = globalConfig.beltSpeedItemsPerSecond / 5;\r\n\r\n// Dynamic calculations\r\nif (globalConfig.debug.disableMapOverview) {\r\n    globalConfig.mapChunkOverviewMinZoom = 0;\r\n    globalConfig.mapChunkPrerenderMinZoom = 0;\r\n}\r\n\r\n// Stuff for making the trailer\r\nif ( true && globalConfig.debug.renderForTrailer) {\r\n    globalConfig.debug.framePausesBetweenTicks = 32;\r\n    // globalConfig.mapChunkOverviewMinZoom = 0.0;\r\n    // globalConfig.mapChunkPrerenderMinZoom = globalConfig.mapChunkOverviewMinZoom;\r\n    // globalConfig.debug.instantBelts = true;\r\n    // globalConfig.debug.instantProcessors = true;\r\n    // globalConfig.debug.instantMiners = true;\r\n    globalConfig.debug.disableSavegameWrite = true;\r\n    // globalConfig.beltSpeedItemsPerSecond *= 2;\r\n}\r\n\r\nif (globalConfig.debug.fastGameEnter) {\r\n    globalConfig.debug.noArtificalDelays = true;\r\n}\r\n\n\n/***/ }),\n\n/***/ \"./src/js/core/config.local.js\":\n/*!*************************************!*\\\n  !*** ./src/js/core/config.local.js ***!\n  \\*************************************/\n/*! exports provided: default */\n/***/ (function(module, __webpack_exports__, __webpack_require__) {\n\n\"use strict\";\n__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\r\n    // You can set any debug options here!\r\n    /* dev:start */\r\n    // -----------------------------------------------------------------------------------\r\n    _fastGameEnter: \"Quickly enters the game and skips the main menu - good for fast iterating\",\r\n    fastGameEnter: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _noArtificialDelays: \"Skips any delays like transitions between states and such\",\r\n    noArtificialDelays: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _disableSavegameWrite: \"Disables writing of savegames, useful for testing the same savegame over and over\",\r\n    disableSavegameWrite: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _showEntityBounds: \"Shows bounds of all entities\",\r\n    showEntityBounds: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _showAcceptorEjectors: \"Shows arrows for every ejector / acceptor\",\r\n    showAcceptorEjectors: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _disableMusic: \"Disables the music (Overrides any setting, can cause weird behaviour)\",\r\n    disableMusic: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _doNotRenderStatics: \"Do not render static map entities (=most buildings)\",\r\n    doNotRenderStatics: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _disableZoomLimits: \"Allow to zoom freely without limits\",\r\n    disableZoomLimits: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _showChunkBorders: \"Shows a border arround every chunk\",\r\n    showChunkBorders: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _rewardsInstant: \"All rewards can be unlocked by passing just 1 of any shape\",\r\n    rewardsInstant: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _allBuildingsUnlocked: \"Unlocks all buildings\",\r\n    allBuildingsUnlocked: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _blueprintsNoCost: \"Disables cost of blueprints\",\r\n    blueprintsNoCost: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _upgradesNoCost: \"Disables cost of upgrades\",\r\n    upgradesNoCost: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _disableUnlockDialog: \"Disables the dialog when completing a level\",\r\n    disableUnlockDialog: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _disableLogicTicks: \"Disables the simulation - This effectively pauses the game.\",\r\n    disableLogicTicks: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _testClipping: \"Test the rendering if everything is clipped out properly\",\r\n    testClipping: false,\r\n    // -----------------------------------------------------------------------------------\r\n    // Allows to render slower, useful for recording at half speed to avoid stuttering\r\n    // framePausesBetweenTicks: 1,\r\n    // -----------------------------------------------------------------------------------\r\n    _testTranslations: \"Replace all translations with emojis to see which texts are translateable\",\r\n    testTranslations: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _enableEntityInspector: \"Enables an inspector which shows information about the entity below the curosr\",\r\n    enableEntityInspector: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _testAds: \"Enables ads in the local build (normally they are deactivated there)\",\r\n    testAds: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _noApiCalls: \"Disables API calls\",\r\n    noApiCalls: true,\r\n    // -----------------------------------------------------------------------------------\r\n    _disableMapOverview: \"Disables the automatic switch to an overview when zooming out\",\r\n    disableMapOverview: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _disableUpgradeNotification: \"Disables the notification when there are new entries in the changelog since last played\",\r\n    disableUpgradeNotification: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _instantBelts: \"Makes belts almost infinitely fast\",\r\n    instantBelts: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _instantProcessors: \"Makes item processors almost infinitely fast\",\r\n    instantProcessors: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _instantMiners: \"Makes miners almost infinitely fast\",\r\n    instantMiners: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _resumeGameOnFastEnter: \"When using fastGameEnter, controls whether a new game is started or the last one is resumed\",\r\n    resumeGameOnFastEnter: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _renderForTrailer: \"Special option used to render the trailer\",\r\n    renderForTrailer: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _renderChanges: \"Whether to render changes\",\r\n    renderChanges: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _renderBeltPaths: \"Whether to render belt paths\",\r\n    renderBeltPaths: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _checkBeltPaths: \"Whether to check belt paths\",\r\n    checkBeltPaths: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _detailedStatistics: \"Whether to items / s instead of items / m in stats\",\r\n    detailedStatistics: false,\r\n    // -----------------------------------------------------------------------------------\r\n    /* dev:end */\r\n});\r\n\n\n/***/ }),\n\n/***/ \"./src/js/core/lzstring.js\":\n/*!*********************************!*\\\n  !*** ./src/js/core/lzstring.js ***!\n  \\*********************************/\n/*! exports provided: compressU8, compressU8WHeader, decompressU8WHeader, compressX64, decompressX64 */\n/***/ (function(module, __webpack_exports__, __webpack_require__) {\n\n\"use strict\";\n__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"compressU8\", function() { return compressU8; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"compressU8WHeader\", function() { return compressU8WHeader; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"decompressU8WHeader\", function() { return decompressU8WHeader; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"compressX64\", function() { return compressX64; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"decompressX64\", function() { return decompressX64; });\n// Copyright (c) 2013 Pieroxy <pieroxy@pieroxy.net>\r\n// This work is free. You can redistribute it and/or modify it\r\n// under the terms of the WTFPL, Version 2\r\n// For more information see LICENSE.txt or http://www.wtfpl.net/\r\n//\r\n// For more information, the home page:\r\n// http://pieroxy.net/blog/pages/lz-string/testing.html\r\n//\r\n// LZ-based compression algorithm, version 1.4.4\r\n\r\nconst fromCharCode = String.fromCharCode;\r\nconst hasOwnProperty = Object.prototype.hasOwnProperty;\r\n\r\nconst keyStrUriSafe = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$\";\r\nconst baseReverseDic = {};\r\n\r\nfunction getBaseValue(alphabet, character) {\r\n    if (!baseReverseDic[alphabet]) {\r\n        baseReverseDic[alphabet] = {};\r\n        for (let i = 0; i < alphabet.length; i++) {\r\n            baseReverseDic[alphabet][alphabet.charAt(i)] = i;\r\n        }\r\n    }\r\n    return baseReverseDic[alphabet][character];\r\n}\r\n\r\n//compress into uint8array (UCS-2 big endian format)\r\nfunction compressU8(uncompressed) {\r\n    let compressed = compress(uncompressed);\r\n    let buf = new Uint8Array(compressed.length * 2); // 2 bytes per character\r\n\r\n    for (let i = 0, TotalLen = compressed.length; i < TotalLen; i++) {\r\n        let current_value = compressed.charCodeAt(i);\r\n        buf[i * 2] = current_value >>> 8;\r\n        buf[i * 2 + 1] = current_value % 256;\r\n    }\r\n    return buf;\r\n}\r\n\r\n// Compreses with header\r\n/**\r\n * @param {string} uncompressed\r\n * @param {number} header\r\n */\r\nfunction compressU8WHeader(uncompressed, header) {\r\n    let compressed = compress(uncompressed);\r\n    let buf = new Uint8Array(2 + compressed.length * 2); // 2 bytes per character\r\n\r\n    buf[0] = header >>> 8;\r\n    buf[1] = header % 256;\r\n    for (let i = 0, TotalLen = compressed.length; i < TotalLen; i++) {\r\n        let current_value = compressed.charCodeAt(i);\r\n        buf[2 + i * 2] = current_value >>> 8;\r\n        buf[2 + i * 2 + 1] = current_value % 256;\r\n    }\r\n    return buf;\r\n}\r\n\r\n//decompress from uint8array (UCS-2 big endian format)\r\n/**\r\n *\r\n * @param {Uint8Array} compressed\r\n */\r\nfunction decompressU8WHeader(compressed) {\r\n    // let buf = new Array(compressed.length / 2); // 2 bytes per character\r\n    // for (let i = 0, TotalLen = buf.length; i < TotalLen; i++) {\r\n    //     buf[i] = compressed[i * 2] * 256 + compressed[i * 2 + 1];\r\n    // }\r\n\r\n    // let result = [];\r\n    // buf.forEach(function (c) {\r\n    //     result.push(fromCharCode(c));\r\n    // });\r\n    let result = [];\r\n    for (let i = 2, n = compressed.length; i < n; i += 2) {\r\n        const code = compressed[i] * 256 + compressed[i + 1];\r\n        result.push(fromCharCode(code));\r\n    }\r\n    return decompress(result.join(\"\"));\r\n}\r\n\r\n//compress into a string that is already URI encoded\r\nfunction compressX64(input) {\r\n    if (input == null) return \"\";\r\n    return _compress(input, 6, function (a) {\r\n        return keyStrUriSafe.charAt(a);\r\n    });\r\n}\r\n\r\n//decompress from an output of compressToEncodedURIComponent\r\nfunction decompressX64(input) {\r\n    if (input == null) return \"\";\r\n    if (input == \"\") return null;\r\n    input = input.replace(/ /g, \"+\");\r\n    return _decompress(input.length, 32, function (index) {\r\n        return getBaseValue(keyStrUriSafe, input.charAt(index));\r\n    });\r\n}\r\n\r\nfunction compress(uncompressed) {\r\n    return _compress(uncompressed, 16, function (a) {\r\n        return fromCharCode(a);\r\n    });\r\n}\r\n\r\nfunction _compress(uncompressed, bitsPerChar, getCharFromInt) {\r\n    if (uncompressed == null) return \"\";\r\n    let i,\r\n        value,\r\n        context_dictionary = {},\r\n        context_dictionaryToCreate = {},\r\n        context_c = \"\",\r\n        context_wc = \"\",\r\n        context_w = \"\",\r\n        context_enlargeIn = 2, // Compensate for the first entry which should not count\r\n        context_dictSize = 3,\r\n        context_numBits = 2,\r\n        context_data = [],\r\n        context_data_val = 0,\r\n        context_data_position = 0,\r\n        ii;\r\n\r\n    for (ii = 0; ii < uncompressed.length; ii += 1) {\r\n        context_c = uncompressed.charAt(ii);\r\n        if (!hasOwnProperty.call(context_dictionary, context_c)) {\r\n            context_dictionary[context_c] = context_dictSize++;\r\n            context_dictionaryToCreate[context_c] = true;\r\n        }\r\n\r\n        context_wc = context_w + context_c;\r\n        if (hasOwnProperty.call(context_dictionary, context_wc)) {\r\n            context_w = context_wc;\r\n        } else {\r\n            if (hasOwnProperty.call(context_dictionaryToCreate, context_w)) {\r\n                if (context_w.charCodeAt(0) < 256) {\r\n                    for (i = 0; i < context_numBits; i++) {\r\n                        context_data_val = context_data_val << 1;\r\n                        if (context_data_position == bitsPerChar - 1) {\r\n                            context_data_position = 0;\r\n                            context_data.push(getCharFromInt(context_data_val));\r\n                            context_data_val = 0;\r\n                        } else {\r\n                            context_data_position++;\r\n                        }\r\n                    }\r\n                    value = context_w.charCodeAt(0);\r\n                    for (i = 0; i < 8; i++) {\r\n                        context_data_val = (context_data_val << 1) | (value & 1);\r\n                        if (context_data_position == bitsPerChar - 1) {\r\n                            context_data_position = 0;\r\n                            context_data.push(getCharFromInt(context_data_val));\r\n                            context_data_val = 0;\r\n                        } else {\r\n                            context_data_position++;\r\n                        }\r\n                        value = value >> 1;\r\n                    }\r\n                } else {\r\n                    value = 1;\r\n                    for (i = 0; i < context_numBits; i++) {\r\n                        context_data_val = (context_data_val << 1) | value;\r\n                        if (context_data_position == bitsPerChar - 1) {\r\n                            context_data_position = 0;\r\n                            context_data.push(getCharFromInt(context_data_val));\r\n                            context_data_val = 0;\r\n                        } else {\r\n                            context_data_position++;\r\n                        }\r\n                        value = 0;\r\n                    }\r\n                    value = context_w.charCodeAt(0);\r\n                    for (i = 0; i < 16; i++) {\r\n                        context_data_val = (context_data_val << 1) | (value & 1);\r\n                        if (context_data_position == bitsPerChar - 1) {\r\n                            context_data_position = 0;\r\n                            context_data.push(getCharFromInt(context_data_val));\r\n                            context_data_val = 0;\r\n                        } else {\r\n                            context_data_position++;\r\n                        }\r\n                        value = value >> 1;\r\n                    }\r\n                }\r\n                context_enlargeIn--;\r\n                if (context_enlargeIn == 0) {\r\n                    context_enlargeIn = Math.pow(2, context_numBits);\r\n                    context_numBits++;\r\n                }\r\n                delete context_dictionaryToCreate[context_w];\r\n            } else {\r\n                value = context_dictionary[context_w];\r\n                for (i = 0; i < context_numBits; i++) {\r\n                    context_data_val = (context_data_val << 1) | (value & 1);\r\n                    if (context_data_position == bitsPerChar - 1) {\r\n                        context_data_position = 0;\r\n                        context_data.push(getCharFromInt(context_data_val));\r\n                        context_data_val = 0;\r\n                    } else {\r\n                        context_data_position++;\r\n                    }\r\n                    value = value >> 1;\r\n                }\r\n            }\r\n            context_enlargeIn--;\r\n            if (context_enlargeIn == 0) {\r\n                context_enlargeIn = Math.pow(2, context_numBits);\r\n                context_numBits++;\r\n            }\r\n            // Add wc to the dictionary.\r\n            context_dictionary[context_wc] = context_dictSize++;\r\n            context_w = String(context_c);\r\n        }\r\n    }\r\n\r\n    // Output the code for w.\r\n    if (context_w !== \"\") {\r\n        if (hasOwnProperty.call(context_dictionaryToCreate, context_w)) {\r\n            if (context_w.charCodeAt(0) < 256) {\r\n                for (i = 0; i < context_numBits; i++) {\r\n                    context_data_val = context_data_val << 1;\r\n                    if (context_data_position == bitsPerChar - 1) {\r\n                        context_data_position = 0;\r\n                        context_data.push(getCharFromInt(context_data_val));\r\n                        context_data_val = 0;\r\n                    } else {\r\n                        context_data_position++;\r\n                    }\r\n                }\r\n                value = context_w.charCodeAt(0);\r\n                for (i = 0; i < 8; i++) {\r\n                    context_data_val = (context_data_val << 1) | (value & 1);\r\n                    if (context_data_position == bitsPerChar - 1) {\r\n                        context_data_position = 0;\r\n                        context_data.push(getCharFromInt(context_data_val));\r\n                        context_data_val = 0;\r\n                    } else {\r\n                        context_data_position++;\r\n                    }\r\n                    value = value >> 1;\r\n                }\r\n            } else {\r\n                value = 1;\r\n                for (i = 0; i < context_numBits; i++) {\r\n                    context_data_val = (context_data_val << 1) | value;\r\n                    if (context_data_position == bitsPerChar - 1) {\r\n                        context_data_position = 0;\r\n                        context_data.push(getCharFromInt(context_data_val));\r\n                        context_data_val = 0;\r\n                    } else {\r\n                        context_data_position++;\r\n                    }\r\n                    value = 0;\r\n                }\r\n                value = context_w.charCodeAt(0);\r\n                for (i = 0; i < 16; i++) {\r\n                    context_data_val = (context_data_val << 1) | (value & 1);\r\n                    if (context_data_position == bitsPerChar - 1) {\r\n                        context_data_position = 0;\r\n                        context_data.push(getCharFromInt(context_data_val));\r\n                        context_data_val = 0;\r\n                    } else {\r\n                        context_data_position++;\r\n                    }\r\n                    value = value >> 1;\r\n                }\r\n            }\r\n            context_enlargeIn--;\r\n            if (context_enlargeIn == 0) {\r\n                context_enlargeIn = Math.pow(2, context_numBits);\r\n                context_numBits++;\r\n            }\r\n            delete context_dictionaryToCreate[context_w];\r\n        } else {\r\n            value = context_dictionary[context_w];\r\n            for (i = 0; i < context_numBits; i++) {\r\n                context_data_val = (context_data_val << 1) | (value & 1);\r\n                if (context_data_position == bitsPerChar - 1) {\r\n                    context_data_position = 0;\r\n                    context_data.push(getCharFromInt(context_data_val));\r\n                    context_data_val = 0;\r\n                } else {\r\n                    context_data_position++;\r\n                }\r\n                value = value >> 1;\r\n            }\r\n        }\r\n        context_enlargeIn--;\r\n        if (context_enlargeIn == 0) {\r\n            context_enlargeIn = Math.pow(2, context_numBits);\r\n            context_numBits++;\r\n        }\r\n    }\r\n\r\n    // Mark the end of the stream\r\n    value = 2;\r\n    for (i = 0; i < context_numBits; i++) {\r\n        context_data_val = (context_data_val << 1) | (value & 1);\r\n        if (context_data_position == bitsPerChar - 1) {\r\n            context_data_position = 0;\r\n            context_data.push(getCharFromInt(context_data_val));\r\n            context_data_val = 0;\r\n        } else {\r\n            context_data_position++;\r\n        }\r\n        value = value >> 1;\r\n    }\r\n\r\n    // Flush the last char\r\n    // eslint-disable-next-line no-constant-condition\r\n    while (true) {\r\n        context_data_val = context_data_val << 1;\r\n        if (context_data_position == bitsPerChar - 1) {\r\n            context_data.push(getCharFromInt(context_data_val));\r\n            break;\r\n        } else context_data_position++;\r\n    }\r\n    return context_data.join(\"\");\r\n}\r\n\r\nfunction decompress(compressed) {\r\n    if (compressed == null) return \"\";\r\n    if (compressed == \"\") return null;\r\n    return _decompress(compressed.length, 32768, function (index) {\r\n        return compressed.charCodeAt(index);\r\n    });\r\n}\r\n\r\nfunction _decompress(length, resetValue, getNextValue) {\r\n    let dictionary = [],\r\n        next,\r\n        enlargeIn = 4,\r\n        dictSize = 4,\r\n        numBits = 3,\r\n        entry = \"\",\r\n        result = [],\r\n        i,\r\n        w,\r\n        bits,\r\n        resb,\r\n        maxpower,\r\n        power,\r\n        c,\r\n        data = { val: getNextValue(0), position: resetValue, index: 1 };\r\n\r\n    for (i = 0; i < 3; i += 1) {\r\n        dictionary[i] = i;\r\n    }\r\n\r\n    bits = 0;\r\n    maxpower = Math.pow(2, 2);\r\n    power = 1;\r\n    while (power != maxpower) {\r\n        resb = data.val & data.position;\r\n        data.position >>= 1;\r\n        if (data.position == 0) {\r\n            data.position = resetValue;\r\n            data.val = getNextValue(data.index++);\r\n        }\r\n        bits |= (resb > 0 ? 1 : 0) * power;\r\n        power <<= 1;\r\n    }\r\n\r\n    switch ((next = bits)) {\r\n        case 0:\r\n            bits = 0;\r\n            maxpower = Math.pow(2, 8);\r\n            power = 1;\r\n            while (power != maxpower) {\r\n                resb = data.val & data.position;\r\n                data.position >>= 1;\r\n                if (data.position == 0) {\r\n                    data.position = resetValue;\r\n                    data.val = getNextValue(data.index++);\r\n                }\r\n                bits |= (resb > 0 ? 1 : 0) * power;\r\n                power <<= 1;\r\n            }\r\n            c = fromCharCode(bits);\r\n            break;\r\n        case 1:\r\n            bits = 0;\r\n            maxpower = Math.pow(2, 16);\r\n            power = 1;\r\n            while (power != maxpower) {\r\n                resb = data.val & data.position;\r\n                data.position >>= 1;\r\n                if (data.position == 0) {\r\n                    data.position = resetValue;\r\n                    data.val = getNextValue(data.index++);\r\n                }\r\n                bits |= (resb > 0 ? 1 : 0) * power;\r\n                power <<= 1;\r\n            }\r\n            c = fromCharCode(bits);\r\n            break;\r\n        case 2:\r\n            return \"\";\r\n    }\r\n    dictionary[3] = c;\r\n    w = c;\r\n    result.push(c);\r\n\r\n    // eslint-disable-next-line no-constant-condition\r\n    while (true) {\r\n        if (data.index > length) {\r\n            return \"\";\r\n        }\r\n\r\n        bits = 0;\r\n        maxpower = Math.pow(2, numBits);\r\n        power = 1;\r\n        while (power != maxpower) {\r\n            resb = data.val & data.position;\r\n            data.position >>= 1;\r\n            if (data.position == 0) {\r\n                data.position = resetValue;\r\n                data.val = getNextValue(data.index++);\r\n            }\r\n            bits |= (resb > 0 ? 1 : 0) * power;\r\n            power <<= 1;\r\n        }\r\n\r\n        switch ((c = bits)) {\r\n            case 0:\r\n                bits = 0;\r\n                maxpower = Math.pow(2, 8);\r\n                power = 1;\r\n                while (power != maxpower) {\r\n                    resb = data.val & data.position;\r\n                    data.position >>= 1;\r\n                    if (data.position == 0) {\r\n                        data.position = resetValue;\r\n                        data.val = getNextValue(data.index++);\r\n                    }\r\n                    bits |= (resb > 0 ? 1 : 0) * power;\r\n                    power <<= 1;\r\n                }\r\n\r\n                dictionary[dictSize++] = fromCharCode(bits);\r\n                c = dictSize - 1;\r\n                enlargeIn--;\r\n                break;\r\n            case 1:\r\n                bits = 0;\r\n                maxpower = Math.pow(2, 16);\r\n                power = 1;\r\n                while (power != maxpower) {\r\n                    resb = data.val & data.position;\r\n                    data.position >>= 1;\r\n                    if (data.position == 0) {\r\n                        data.position = resetValue;\r\n                        data.val = getNextValue(data.index++);\r\n                    }\r\n                    bits |= (resb > 0 ? 1 : 0) * power;\r\n                    power <<= 1;\r\n                }\r\n                dictionary[dictSize++] = fromCharCode(bits);\r\n                c = dictSize - 1;\r\n                enlargeIn--;\r\n                break;\r\n            case 2:\r\n                return result.join(\"\");\r\n        }\r\n\r\n        if (enlargeIn == 0) {\r\n            enlargeIn = Math.pow(2, numBits);\r\n            numBits++;\r\n        }\r\n\r\n        if (dictionary[c]) {\r\n            // @ts-ignore\r\n            entry = dictionary[c];\r\n        } else {\r\n            if (c === dictSize) {\r\n                entry = w + w.charAt(0);\r\n            } else {\r\n                return null;\r\n            }\r\n        }\r\n        result.push(entry);\r\n\r\n        // Add w+entry[0] to the dictionary.\r\n        dictionary[dictSize++] = w + entry.charAt(0);\r\n        enlargeIn--;\r\n\r\n        w = entry;\r\n\r\n        if (enlargeIn == 0) {\r\n            enlargeIn = Math.pow(2, numBits);\r\n            numBits++;\r\n        }\r\n    }\r\n}\r\n\n\n/***/ }),\n\n/***/ \"./src/js/core/query_parameters.js\":\n/*!*****************************************!*\\\n  !*** ./src/js/core/query_parameters.js ***!\n  \\*****************************************/\n/*! exports provided: queryParamOptions */\n/***/ (function(module, __webpack_exports__, __webpack_require__) {\n\n\"use strict\";\n__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"queryParamOptions\", function() { return queryParamOptions; });\nconst queryString = __webpack_require__(/*! query-string */ \"./node_modules/query-string/index.js\");\r\nconst options = queryString.parse(location.search);\r\n\r\nlet queryParamOptions = {\r\n    embedProvider: null,\r\n    fullVersion: false,\r\n    sandboxMode: false,\r\n};\r\n\r\nif (options.embed) {\r\n    queryParamOptions.embedProvider = options.embed;\r\n}\r\n\r\n// Allow testing full version outside of standalone\r\nif (options.fullVersion && !false) {\r\n    queryParamOptions.fullVersion = true;\r\n}\r\n\r\n// Allow testing full version outside of standalone\r\nif (options.sandboxMode && !false) {\r\n    queryParamOptions.sandboxMode = true;\r\n}\r\n\n\n/***/ }),\n\n/***/ \"./src/js/core/sensitive_utils.encrypt.js\":\n/*!************************************************!*\\\n  !*** ./src/js/core/sensitive_utils.encrypt.js ***!\n  \\************************************************/\n/*! exports provided: sha1, getNameOfProvider */\n/***/ (function(module, __webpack_exports__, __webpack_require__) {\n\n\"use strict\";\n__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"sha1\", function() { return sha1; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getNameOfProvider\", function() { return getNameOfProvider; });\n/* harmony import */ var rusha__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rusha */ \"./node_modules/rusha/dist/rusha.js\");\n/* harmony import */ var rusha__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(rusha__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _lzstring__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lzstring */ \"./src/js/core/lzstring.js\");\n\r\n\r\n\r\n\r\nfunction sha1(str) {\r\n    return Object(rusha__WEBPACK_IMPORTED_MODULE_0__[\"createHash\"])().update(str).digest(\"hex\");\r\n}\r\n\r\n// Window.location.host\r\nfunction getNameOfProvider() {\r\n    return window[Object(_lzstring__WEBPACK_IMPORTED_MODULE_1__[\"decompressX64\"])(\"DYewxghgLgliB2Q\")][Object(_lzstring__WEBPACK_IMPORTED_MODULE_1__[\"decompressX64\"])(\"BYewzgLgdghgtgUyA\")];\r\n}\r\n\n\n/***/ })\n\n/******/ });\n//# sourceMappingURL=4deafc20e1875f619224.worker.js.map", null);
+  return __webpack_require__(/*! !./node_modules/worker-loader/dist/workers/InlineWorker.js */ "./node_modules/worker-loader/dist/workers/InlineWorker.js")("/******/ (function(modules) { // webpackBootstrap\n/******/ \t// The module cache\n/******/ \tvar installedModules = {};\n/******/\n/******/ \t// The require function\n/******/ \tfunction __webpack_require__(moduleId) {\n/******/\n/******/ \t\t// Check if module is in cache\n/******/ \t\tif(installedModules[moduleId]) {\n/******/ \t\t\treturn installedModules[moduleId].exports;\n/******/ \t\t}\n/******/ \t\t// Create a new module (and put it into the cache)\n/******/ \t\tvar module = installedModules[moduleId] = {\n/******/ \t\t\ti: moduleId,\n/******/ \t\t\tl: false,\n/******/ \t\t\texports: {}\n/******/ \t\t};\n/******/\n/******/ \t\t// Execute the module function\n/******/ \t\tmodules[moduleId].call(module.exports, module, module.exports, __webpack_require__);\n/******/\n/******/ \t\t// Flag the module as loaded\n/******/ \t\tmodule.l = true;\n/******/\n/******/ \t\t// Return the exports of the module\n/******/ \t\treturn module.exports;\n/******/ \t}\n/******/\n/******/\n/******/ \t// expose the modules object (__webpack_modules__)\n/******/ \t__webpack_require__.m = modules;\n/******/\n/******/ \t// expose the module cache\n/******/ \t__webpack_require__.c = installedModules;\n/******/\n/******/ \t// define getter function for harmony exports\n/******/ \t__webpack_require__.d = function(exports, name, getter) {\n/******/ \t\tif(!__webpack_require__.o(exports, name)) {\n/******/ \t\t\tObject.defineProperty(exports, name, { enumerable: true, get: getter });\n/******/ \t\t}\n/******/ \t};\n/******/\n/******/ \t// define __esModule on exports\n/******/ \t__webpack_require__.r = function(exports) {\n/******/ \t\tif(typeof Symbol !== 'undefined' && Symbol.toStringTag) {\n/******/ \t\t\tObject.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });\n/******/ \t\t}\n/******/ \t\tObject.defineProperty(exports, '__esModule', { value: true });\n/******/ \t};\n/******/\n/******/ \t// create a fake namespace object\n/******/ \t// mode & 1: value is a module id, require it\n/******/ \t// mode & 2: merge all properties of value into the ns\n/******/ \t// mode & 4: return value when already ns object\n/******/ \t// mode & 8|1: behave like require\n/******/ \t__webpack_require__.t = function(value, mode) {\n/******/ \t\tif(mode & 1) value = __webpack_require__(value);\n/******/ \t\tif(mode & 8) return value;\n/******/ \t\tif((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;\n/******/ \t\tvar ns = Object.create(null);\n/******/ \t\t__webpack_require__.r(ns);\n/******/ \t\tObject.defineProperty(ns, 'default', { enumerable: true, value: value });\n/******/ \t\tif(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));\n/******/ \t\treturn ns;\n/******/ \t};\n/******/\n/******/ \t// getDefaultExport function for compatibility with non-harmony modules\n/******/ \t__webpack_require__.n = function(module) {\n/******/ \t\tvar getter = module && module.__esModule ?\n/******/ \t\t\tfunction getDefault() { return module['default']; } :\n/******/ \t\t\tfunction getModuleExports() { return module; };\n/******/ \t\t__webpack_require__.d(getter, 'a', getter);\n/******/ \t\treturn getter;\n/******/ \t};\n/******/\n/******/ \t// Object.prototype.hasOwnProperty.call\n/******/ \t__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };\n/******/\n/******/ \t// __webpack_public_path__\n/******/ \t__webpack_require__.p = \"\";\n/******/\n/******/\n/******/ \t// Load entry module and return exports\n/******/ \treturn __webpack_require__(__webpack_require__.s = \"./node_modules/webpack-strip-block/index.js?!./src/js/webworkers/compression.worker.js\");\n/******/ })\n/************************************************************************/\n/******/ ({\n\n/***/ \"./node_modules/decode-uri-component/index.js\":\n/*!****************************************************!*\\\n  !*** ./node_modules/decode-uri-component/index.js ***!\n  \\****************************************************/\n/*! no static exports found */\n/***/ (function(module, exports, __webpack_require__) {\n\n\"use strict\";\n\nvar token = '%[a-f0-9]{2}';\nvar singleMatcher = new RegExp(token, 'gi');\nvar multiMatcher = new RegExp('(' + token + ')+', 'gi');\n\nfunction decodeComponents(components, split) {\n\ttry {\n\t\t// Try to decode the entire string first\n\t\treturn decodeURIComponent(components.join(''));\n\t} catch (err) {\n\t\t// Do nothing\n\t}\n\n\tif (components.length === 1) {\n\t\treturn components;\n\t}\n\n\tsplit = split || 1;\n\n\t// Split the array in 2 parts\n\tvar left = components.slice(0, split);\n\tvar right = components.slice(split);\n\n\treturn Array.prototype.concat.call([], decodeComponents(left), decodeComponents(right));\n}\n\nfunction decode(input) {\n\ttry {\n\t\treturn decodeURIComponent(input);\n\t} catch (err) {\n\t\tvar tokens = input.match(singleMatcher);\n\n\t\tfor (var i = 1; i < tokens.length; i++) {\n\t\t\tinput = decodeComponents(tokens, i).join('');\n\n\t\t\ttokens = input.match(singleMatcher);\n\t\t}\n\n\t\treturn input;\n\t}\n}\n\nfunction customDecodeURIComponent(input) {\n\t// Keep track of all the replacements and prefill the map with the `BOM`\n\tvar replaceMap = {\n\t\t'%FE%FF': '\\uFFFD\\uFFFD',\n\t\t'%FF%FE': '\\uFFFD\\uFFFD'\n\t};\n\n\tvar match = multiMatcher.exec(input);\n\twhile (match) {\n\t\ttry {\n\t\t\t// Decode as big chunks as possible\n\t\t\treplaceMap[match[0]] = decodeURIComponent(match[0]);\n\t\t} catch (err) {\n\t\t\tvar result = decode(match[0]);\n\n\t\t\tif (result !== match[0]) {\n\t\t\t\treplaceMap[match[0]] = result;\n\t\t\t}\n\t\t}\n\n\t\tmatch = multiMatcher.exec(input);\n\t}\n\n\t// Add `%C2` at the end of the map to make sure it does not replace the combinator before everything else\n\treplaceMap['%C2'] = '\\uFFFD';\n\n\tvar entries = Object.keys(replaceMap);\n\n\tfor (var i = 0; i < entries.length; i++) {\n\t\t// Replace all decoded components\n\t\tvar key = entries[i];\n\t\tinput = input.replace(new RegExp(key, 'g'), replaceMap[key]);\n\t}\n\n\treturn input;\n}\n\nmodule.exports = function (encodedURI) {\n\tif (typeof encodedURI !== 'string') {\n\t\tthrow new TypeError('Expected `encodedURI` to be of type `string`, got `' + typeof encodedURI + '`');\n\t}\n\n\ttry {\n\t\tencodedURI = encodedURI.replace(/\\+/g, ' ');\n\n\t\t// Try the built in decoder first\n\t\treturn decodeURIComponent(encodedURI);\n\t} catch (err) {\n\t\t// Fallback to a more advanced decoder\n\t\treturn customDecodeURIComponent(encodedURI);\n\t}\n};\n\n\n/***/ }),\n\n/***/ \"./node_modules/query-string/index.js\":\n/*!********************************************!*\\\n  !*** ./node_modules/query-string/index.js ***!\n  \\********************************************/\n/*! no static exports found */\n/***/ (function(module, exports, __webpack_require__) {\n\n\"use strict\";\n\nconst strictUriEncode = __webpack_require__(/*! strict-uri-encode */ \"./node_modules/strict-uri-encode/index.js\");\nconst decodeComponent = __webpack_require__(/*! decode-uri-component */ \"./node_modules/decode-uri-component/index.js\");\nconst splitOnFirst = __webpack_require__(/*! split-on-first */ \"./node_modules/split-on-first/index.js\");\n\nconst isNullOrUndefined = value => value === null || value === undefined;\n\nfunction encoderForArrayFormat(options) {\n\tswitch (options.arrayFormat) {\n\t\tcase 'index':\n\t\t\treturn key => (result, value) => {\n\t\t\t\tconst index = result.length;\n\n\t\t\t\tif (\n\t\t\t\t\tvalue === undefined ||\n\t\t\t\t\t(options.skipNull && value === null) ||\n\t\t\t\t\t(options.skipEmptyString && value === '')\n\t\t\t\t) {\n\t\t\t\t\treturn result;\n\t\t\t\t}\n\n\t\t\t\tif (value === null) {\n\t\t\t\t\treturn [...result, [encode(key, options), '[', index, ']'].join('')];\n\t\t\t\t}\n\n\t\t\t\treturn [\n\t\t\t\t\t...result,\n\t\t\t\t\t[encode(key, options), '[', encode(index, options), ']=', encode(value, options)].join('')\n\t\t\t\t];\n\t\t\t};\n\n\t\tcase 'bracket':\n\t\t\treturn key => (result, value) => {\n\t\t\t\tif (\n\t\t\t\t\tvalue === undefined ||\n\t\t\t\t\t(options.skipNull && value === null) ||\n\t\t\t\t\t(options.skipEmptyString && value === '')\n\t\t\t\t) {\n\t\t\t\t\treturn result;\n\t\t\t\t}\n\n\t\t\t\tif (value === null) {\n\t\t\t\t\treturn [...result, [encode(key, options), '[]'].join('')];\n\t\t\t\t}\n\n\t\t\t\treturn [...result, [encode(key, options), '[]=', encode(value, options)].join('')];\n\t\t\t};\n\n\t\tcase 'comma':\n\t\tcase 'separator':\n\t\t\treturn key => (result, value) => {\n\t\t\t\tif (value === null || value === undefined || value.length === 0) {\n\t\t\t\t\treturn result;\n\t\t\t\t}\n\n\t\t\t\tif (result.length === 0) {\n\t\t\t\t\treturn [[encode(key, options), '=', encode(value, options)].join('')];\n\t\t\t\t}\n\n\t\t\t\treturn [[result, encode(value, options)].join(options.arrayFormatSeparator)];\n\t\t\t};\n\n\t\tdefault:\n\t\t\treturn key => (result, value) => {\n\t\t\t\tif (\n\t\t\t\t\tvalue === undefined ||\n\t\t\t\t\t(options.skipNull && value === null) ||\n\t\t\t\t\t(options.skipEmptyString && value === '')\n\t\t\t\t) {\n\t\t\t\t\treturn result;\n\t\t\t\t}\n\n\t\t\t\tif (value === null) {\n\t\t\t\t\treturn [...result, encode(key, options)];\n\t\t\t\t}\n\n\t\t\t\treturn [...result, [encode(key, options), '=', encode(value, options)].join('')];\n\t\t\t};\n\t}\n}\n\nfunction parserForArrayFormat(options) {\n\tlet result;\n\n\tswitch (options.arrayFormat) {\n\t\tcase 'index':\n\t\t\treturn (key, value, accumulator) => {\n\t\t\t\tresult = /\\[(\\d*)\\]$/.exec(key);\n\n\t\t\t\tkey = key.replace(/\\[\\d*\\]$/, '');\n\n\t\t\t\tif (!result) {\n\t\t\t\t\taccumulator[key] = value;\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\tif (accumulator[key] === undefined) {\n\t\t\t\t\taccumulator[key] = {};\n\t\t\t\t}\n\n\t\t\t\taccumulator[key][result[1]] = value;\n\t\t\t};\n\n\t\tcase 'bracket':\n\t\t\treturn (key, value, accumulator) => {\n\t\t\t\tresult = /(\\[\\])$/.exec(key);\n\t\t\t\tkey = key.replace(/\\[\\]$/, '');\n\n\t\t\t\tif (!result) {\n\t\t\t\t\taccumulator[key] = value;\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\tif (accumulator[key] === undefined) {\n\t\t\t\t\taccumulator[key] = [value];\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\taccumulator[key] = [].concat(accumulator[key], value);\n\t\t\t};\n\n\t\tcase 'comma':\n\t\tcase 'separator':\n\t\t\treturn (key, value, accumulator) => {\n\t\t\t\tconst isArray = typeof value === 'string' && value.split('').indexOf(options.arrayFormatSeparator) > -1;\n\t\t\t\tconst newValue = isArray ? value.split(options.arrayFormatSeparator).map(item => decode(item, options)) : value === null ? value : decode(value, options);\n\t\t\t\taccumulator[key] = newValue;\n\t\t\t};\n\n\t\tdefault:\n\t\t\treturn (key, value, accumulator) => {\n\t\t\t\tif (accumulator[key] === undefined) {\n\t\t\t\t\taccumulator[key] = value;\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\taccumulator[key] = [].concat(accumulator[key], value);\n\t\t\t};\n\t}\n}\n\nfunction validateArrayFormatSeparator(value) {\n\tif (typeof value !== 'string' || value.length !== 1) {\n\t\tthrow new TypeError('arrayFormatSeparator must be single character string');\n\t}\n}\n\nfunction encode(value, options) {\n\tif (options.encode) {\n\t\treturn options.strict ? strictUriEncode(value) : encodeURIComponent(value);\n\t}\n\n\treturn value;\n}\n\nfunction decode(value, options) {\n\tif (options.decode) {\n\t\treturn decodeComponent(value);\n\t}\n\n\treturn value;\n}\n\nfunction keysSorter(input) {\n\tif (Array.isArray(input)) {\n\t\treturn input.sort();\n\t}\n\n\tif (typeof input === 'object') {\n\t\treturn keysSorter(Object.keys(input))\n\t\t\t.sort((a, b) => Number(a) - Number(b))\n\t\t\t.map(key => input[key]);\n\t}\n\n\treturn input;\n}\n\nfunction removeHash(input) {\n\tconst hashStart = input.indexOf('#');\n\tif (hashStart !== -1) {\n\t\tinput = input.slice(0, hashStart);\n\t}\n\n\treturn input;\n}\n\nfunction getHash(url) {\n\tlet hash = '';\n\tconst hashStart = url.indexOf('#');\n\tif (hashStart !== -1) {\n\t\thash = url.slice(hashStart);\n\t}\n\n\treturn hash;\n}\n\nfunction extract(input) {\n\tinput = removeHash(input);\n\tconst queryStart = input.indexOf('?');\n\tif (queryStart === -1) {\n\t\treturn '';\n\t}\n\n\treturn input.slice(queryStart + 1);\n}\n\nfunction parseValue(value, options) {\n\tif (options.parseNumbers && !Number.isNaN(Number(value)) && (typeof value === 'string' && value.trim() !== '')) {\n\t\tvalue = Number(value);\n\t} else if (options.parseBooleans && value !== null && (value.toLowerCase() === 'true' || value.toLowerCase() === 'false')) {\n\t\tvalue = value.toLowerCase() === 'true';\n\t}\n\n\treturn value;\n}\n\nfunction parse(input, options) {\n\toptions = Object.assign({\n\t\tdecode: true,\n\t\tsort: true,\n\t\tarrayFormat: 'none',\n\t\tarrayFormatSeparator: ',',\n\t\tparseNumbers: false,\n\t\tparseBooleans: false\n\t}, options);\n\n\tvalidateArrayFormatSeparator(options.arrayFormatSeparator);\n\n\tconst formatter = parserForArrayFormat(options);\n\n\t// Create an object with no prototype\n\tconst ret = Object.create(null);\n\n\tif (typeof input !== 'string') {\n\t\treturn ret;\n\t}\n\n\tinput = input.trim().replace(/^[?#&]/, '');\n\n\tif (!input) {\n\t\treturn ret;\n\t}\n\n\tfor (const param of input.split('&')) {\n\t\tlet [key, value] = splitOnFirst(options.decode ? param.replace(/\\+/g, ' ') : param, '=');\n\n\t\t// Missing `=` should be `null`:\n\t\t// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters\n\t\tvalue = value === undefined ? null : ['comma', 'separator'].includes(options.arrayFormat) ? value : decode(value, options);\n\t\tformatter(decode(key, options), value, ret);\n\t}\n\n\tfor (const key of Object.keys(ret)) {\n\t\tconst value = ret[key];\n\t\tif (typeof value === 'object' && value !== null) {\n\t\t\tfor (const k of Object.keys(value)) {\n\t\t\t\tvalue[k] = parseValue(value[k], options);\n\t\t\t}\n\t\t} else {\n\t\t\tret[key] = parseValue(value, options);\n\t\t}\n\t}\n\n\tif (options.sort === false) {\n\t\treturn ret;\n\t}\n\n\treturn (options.sort === true ? Object.keys(ret).sort() : Object.keys(ret).sort(options.sort)).reduce((result, key) => {\n\t\tconst value = ret[key];\n\t\tif (Boolean(value) && typeof value === 'object' && !Array.isArray(value)) {\n\t\t\t// Sort object keys, not values\n\t\t\tresult[key] = keysSorter(value);\n\t\t} else {\n\t\t\tresult[key] = value;\n\t\t}\n\n\t\treturn result;\n\t}, Object.create(null));\n}\n\nexports.extract = extract;\nexports.parse = parse;\n\nexports.stringify = (object, options) => {\n\tif (!object) {\n\t\treturn '';\n\t}\n\n\toptions = Object.assign({\n\t\tencode: true,\n\t\tstrict: true,\n\t\tarrayFormat: 'none',\n\t\tarrayFormatSeparator: ','\n\t}, options);\n\n\tvalidateArrayFormatSeparator(options.arrayFormatSeparator);\n\n\tconst shouldFilter = key => (\n\t\t(options.skipNull && isNullOrUndefined(object[key])) ||\n\t\t(options.skipEmptyString && object[key] === '')\n\t);\n\n\tconst formatter = encoderForArrayFormat(options);\n\n\tconst objectCopy = {};\n\n\tfor (const key of Object.keys(object)) {\n\t\tif (!shouldFilter(key)) {\n\t\t\tobjectCopy[key] = object[key];\n\t\t}\n\t}\n\n\tconst keys = Object.keys(objectCopy);\n\n\tif (options.sort !== false) {\n\t\tkeys.sort(options.sort);\n\t}\n\n\treturn keys.map(key => {\n\t\tconst value = object[key];\n\n\t\tif (value === undefined) {\n\t\t\treturn '';\n\t\t}\n\n\t\tif (value === null) {\n\t\t\treturn encode(key, options);\n\t\t}\n\n\t\tif (Array.isArray(value)) {\n\t\t\treturn value\n\t\t\t\t.reduce(formatter(key), [])\n\t\t\t\t.join('&');\n\t\t}\n\n\t\treturn encode(key, options) + '=' + encode(value, options);\n\t}).filter(x => x.length > 0).join('&');\n};\n\nexports.parseUrl = (input, options) => {\n\treturn {\n\t\turl: removeHash(input).split('?')[0] || '',\n\t\tquery: parse(extract(input), options)\n\t};\n};\n\nexports.stringifyUrl = (input, options) => {\n\tconst url = removeHash(input.url).split('?')[0] || '';\n\tconst queryFromUrl = exports.extract(input.url);\n\tconst parsedQueryFromUrl = exports.parse(queryFromUrl);\n\tconst hash = getHash(input.url);\n\tconst query = Object.assign(parsedQueryFromUrl, input.query);\n\tlet queryString = exports.stringify(query, options);\n\tif (queryString) {\n\t\tqueryString = `?${queryString}`;\n\t}\n\n\treturn `${url}${queryString}${hash}`;\n};\n\n\n/***/ }),\n\n/***/ \"./node_modules/rusha/dist/rusha.js\":\n/*!******************************************!*\\\n  !*** ./node_modules/rusha/dist/rusha.js ***!\n  \\******************************************/\n/*! no static exports found */\n/***/ (function(module, exports, __webpack_require__) {\n\n(function webpackUniversalModuleDefinition(root, factory) {\n\tif(true)\n\t\tmodule.exports = factory();\n\telse {}\n})(typeof self !== 'undefined' ? self : this, function() {\nreturn /******/ (function(modules) { // webpackBootstrap\n/******/ \t// The module cache\n/******/ \tvar installedModules = {};\n/******/\n/******/ \t// The require function\n/******/ \tfunction __webpack_require__(moduleId) {\n/******/\n/******/ \t\t// Check if module is in cache\n/******/ \t\tif(installedModules[moduleId]) {\n/******/ \t\t\treturn installedModules[moduleId].exports;\n/******/ \t\t}\n/******/ \t\t// Create a new module (and put it into the cache)\n/******/ \t\tvar module = installedModules[moduleId] = {\n/******/ \t\t\ti: moduleId,\n/******/ \t\t\tl: false,\n/******/ \t\t\texports: {}\n/******/ \t\t};\n/******/\n/******/ \t\t// Execute the module function\n/******/ \t\tmodules[moduleId].call(module.exports, module, module.exports, __webpack_require__);\n/******/\n/******/ \t\t// Flag the module as loaded\n/******/ \t\tmodule.l = true;\n/******/\n/******/ \t\t// Return the exports of the module\n/******/ \t\treturn module.exports;\n/******/ \t}\n/******/\n/******/\n/******/ \t// expose the modules object (__webpack_modules__)\n/******/ \t__webpack_require__.m = modules;\n/******/\n/******/ \t// expose the module cache\n/******/ \t__webpack_require__.c = installedModules;\n/******/\n/******/ \t// define getter function for harmony exports\n/******/ \t__webpack_require__.d = function(exports, name, getter) {\n/******/ \t\tif(!__webpack_require__.o(exports, name)) {\n/******/ \t\t\tObject.defineProperty(exports, name, {\n/******/ \t\t\t\tconfigurable: false,\n/******/ \t\t\t\tenumerable: true,\n/******/ \t\t\t\tget: getter\n/******/ \t\t\t});\n/******/ \t\t}\n/******/ \t};\n/******/\n/******/ \t// getDefaultExport function for compatibility with non-harmony modules\n/******/ \t__webpack_require__.n = function(module) {\n/******/ \t\tvar getter = module && module.__esModule ?\n/******/ \t\t\tfunction getDefault() { return module['default']; } :\n/******/ \t\t\tfunction getModuleExports() { return module; };\n/******/ \t\t__webpack_require__.d(getter, 'a', getter);\n/******/ \t\treturn getter;\n/******/ \t};\n/******/\n/******/ \t// Object.prototype.hasOwnProperty.call\n/******/ \t__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };\n/******/\n/******/ \t// __webpack_public_path__\n/******/ \t__webpack_require__.p = \"\";\n/******/\n/******/ \t// Load entry module and return exports\n/******/ \treturn __webpack_require__(__webpack_require__.s = 3);\n/******/ })\n/************************************************************************/\n/******/ ([\n/* 0 */\n/***/ (function(module, exports, __webpack_require__) {\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\n/* eslint-env commonjs, browser */\n\nvar RushaCore = __webpack_require__(5);\n\nvar _require = __webpack_require__(1),\n    toHex = _require.toHex,\n    ceilHeapSize = _require.ceilHeapSize;\n\nvar conv = __webpack_require__(6);\n\n// Calculate the length of buffer that the sha1 routine uses\n// including the padding.\nvar padlen = function (len) {\n  for (len += 9; len % 64 > 0; len += 1) {}\n  return len;\n};\n\nvar padZeroes = function (bin, len) {\n  var h8 = new Uint8Array(bin.buffer);\n  var om = len % 4,\n      align = len - om;\n  switch (om) {\n    case 0:\n      h8[align + 3] = 0;\n    case 1:\n      h8[align + 2] = 0;\n    case 2:\n      h8[align + 1] = 0;\n    case 3:\n      h8[align + 0] = 0;\n  }\n  for (var i = (len >> 2) + 1; i < bin.length; i++) {\n    bin[i] = 0;\n  }\n};\n\nvar padData = function (bin, chunkLen, msgLen) {\n  bin[chunkLen >> 2] |= 0x80 << 24 - (chunkLen % 4 << 3);\n  // To support msgLen >= 2 GiB, use a float division when computing the\n  // high 32-bits of the big-endian message length in bits.\n  bin[((chunkLen >> 2) + 2 & ~0x0f) + 14] = msgLen / (1 << 29) | 0;\n  bin[((chunkLen >> 2) + 2 & ~0x0f) + 15] = msgLen << 3;\n};\n\nvar getRawDigest = function (heap, padMaxChunkLen) {\n  var io = new Int32Array(heap, padMaxChunkLen + 320, 5);\n  var out = new Int32Array(5);\n  var arr = new DataView(out.buffer);\n  arr.setInt32(0, io[0], false);\n  arr.setInt32(4, io[1], false);\n  arr.setInt32(8, io[2], false);\n  arr.setInt32(12, io[3], false);\n  arr.setInt32(16, io[4], false);\n  return out;\n};\n\nvar Rusha = function () {\n  function Rusha(chunkSize) {\n    _classCallCheck(this, Rusha);\n\n    chunkSize = chunkSize || 64 * 1024;\n    if (chunkSize % 64 > 0) {\n      throw new Error('Chunk size must be a multiple of 128 bit');\n    }\n    this._offset = 0;\n    this._maxChunkLen = chunkSize;\n    this._padMaxChunkLen = padlen(chunkSize);\n    // The size of the heap is the sum of:\n    // 1. The padded input message size\n    // 2. The extended space the algorithm needs (320 byte)\n    // 3. The 160 bit state the algoritm uses\n    this._heap = new ArrayBuffer(ceilHeapSize(this._padMaxChunkLen + 320 + 20));\n    this._h32 = new Int32Array(this._heap);\n    this._h8 = new Int8Array(this._heap);\n    this._core = new RushaCore({ Int32Array: Int32Array }, {}, this._heap);\n  }\n\n  Rusha.prototype._initState = function _initState(heap, padMsgLen) {\n    this._offset = 0;\n    var io = new Int32Array(heap, padMsgLen + 320, 5);\n    io[0] = 1732584193;\n    io[1] = -271733879;\n    io[2] = -1732584194;\n    io[3] = 271733878;\n    io[4] = -1009589776;\n  };\n\n  Rusha.prototype._padChunk = function _padChunk(chunkLen, msgLen) {\n    var padChunkLen = padlen(chunkLen);\n    var view = new Int32Array(this._heap, 0, padChunkLen >> 2);\n    padZeroes(view, chunkLen);\n    padData(view, chunkLen, msgLen);\n    return padChunkLen;\n  };\n\n  Rusha.prototype._write = function _write(data, chunkOffset, chunkLen, off) {\n    conv(data, this._h8, this._h32, chunkOffset, chunkLen, off || 0);\n  };\n\n  Rusha.prototype._coreCall = function _coreCall(data, chunkOffset, chunkLen, msgLen, finalize) {\n    var padChunkLen = chunkLen;\n    this._write(data, chunkOffset, chunkLen);\n    if (finalize) {\n      padChunkLen = this._padChunk(chunkLen, msgLen);\n    }\n    this._core.hash(padChunkLen, this._padMaxChunkLen);\n  };\n\n  Rusha.prototype.rawDigest = function rawDigest(str) {\n    var msgLen = str.byteLength || str.length || str.size || 0;\n    this._initState(this._heap, this._padMaxChunkLen);\n    var chunkOffset = 0,\n        chunkLen = this._maxChunkLen;\n    for (chunkOffset = 0; msgLen > chunkOffset + chunkLen; chunkOffset += chunkLen) {\n      this._coreCall(str, chunkOffset, chunkLen, msgLen, false);\n    }\n    this._coreCall(str, chunkOffset, msgLen - chunkOffset, msgLen, true);\n    return getRawDigest(this._heap, this._padMaxChunkLen);\n  };\n\n  Rusha.prototype.digest = function digest(str) {\n    return toHex(this.rawDigest(str).buffer);\n  };\n\n  Rusha.prototype.digestFromString = function digestFromString(str) {\n    return this.digest(str);\n  };\n\n  Rusha.prototype.digestFromBuffer = function digestFromBuffer(str) {\n    return this.digest(str);\n  };\n\n  Rusha.prototype.digestFromArrayBuffer = function digestFromArrayBuffer(str) {\n    return this.digest(str);\n  };\n\n  Rusha.prototype.resetState = function resetState() {\n    this._initState(this._heap, this._padMaxChunkLen);\n    return this;\n  };\n\n  Rusha.prototype.append = function append(chunk) {\n    var chunkOffset = 0;\n    var chunkLen = chunk.byteLength || chunk.length || chunk.size || 0;\n    var turnOffset = this._offset % this._maxChunkLen;\n    var inputLen = void 0;\n\n    this._offset += chunkLen;\n    while (chunkOffset < chunkLen) {\n      inputLen = Math.min(chunkLen - chunkOffset, this._maxChunkLen - turnOffset);\n      this._write(chunk, chunkOffset, inputLen, turnOffset);\n      turnOffset += inputLen;\n      chunkOffset += inputLen;\n      if (turnOffset === this._maxChunkLen) {\n        this._core.hash(this._maxChunkLen, this._padMaxChunkLen);\n        turnOffset = 0;\n      }\n    }\n    return this;\n  };\n\n  Rusha.prototype.getState = function getState() {\n    var turnOffset = this._offset % this._maxChunkLen;\n    var heap = void 0;\n    if (!turnOffset) {\n      var io = new Int32Array(this._heap, this._padMaxChunkLen + 320, 5);\n      heap = io.buffer.slice(io.byteOffset, io.byteOffset + io.byteLength);\n    } else {\n      heap = this._heap.slice(0);\n    }\n    return {\n      offset: this._offset,\n      heap: heap\n    };\n  };\n\n  Rusha.prototype.setState = function setState(state) {\n    this._offset = state.offset;\n    if (state.heap.byteLength === 20) {\n      var io = new Int32Array(this._heap, this._padMaxChunkLen + 320, 5);\n      io.set(new Int32Array(state.heap));\n    } else {\n      this._h32.set(new Int32Array(state.heap));\n    }\n    return this;\n  };\n\n  Rusha.prototype.rawEnd = function rawEnd() {\n    var msgLen = this._offset;\n    var chunkLen = msgLen % this._maxChunkLen;\n    var padChunkLen = this._padChunk(chunkLen, msgLen);\n    this._core.hash(padChunkLen, this._padMaxChunkLen);\n    var result = getRawDigest(this._heap, this._padMaxChunkLen);\n    this._initState(this._heap, this._padMaxChunkLen);\n    return result;\n  };\n\n  Rusha.prototype.end = function end() {\n    return toHex(this.rawEnd().buffer);\n  };\n\n  return Rusha;\n}();\n\nmodule.exports = Rusha;\nmodule.exports._core = RushaCore;\n\n/***/ }),\n/* 1 */\n/***/ (function(module, exports) {\n\n/* eslint-env commonjs, browser */\n\n//\n// toHex\n//\n\nvar precomputedHex = new Array(256);\nfor (var i = 0; i < 256; i++) {\n  precomputedHex[i] = (i < 0x10 ? '0' : '') + i.toString(16);\n}\n\nmodule.exports.toHex = function (arrayBuffer) {\n  var binarray = new Uint8Array(arrayBuffer);\n  var res = new Array(arrayBuffer.byteLength);\n  for (var _i = 0; _i < res.length; _i++) {\n    res[_i] = precomputedHex[binarray[_i]];\n  }\n  return res.join('');\n};\n\n//\n// ceilHeapSize\n//\n\nmodule.exports.ceilHeapSize = function (v) {\n  // The asm.js spec says:\n  // The heap object's byteLength must be either\n  // 2^n for n in [12, 24) or 2^24 * n for n ≥ 1.\n  // Also, byteLengths smaller than 2^16 are deprecated.\n  var p = 0;\n  // If v is smaller than 2^16, the smallest possible solution\n  // is 2^16.\n  if (v <= 65536) return 65536;\n  // If v < 2^24, we round up to 2^n,\n  // otherwise we round up to 2^24 * n.\n  if (v < 16777216) {\n    for (p = 1; p < v; p = p << 1) {}\n  } else {\n    for (p = 16777216; p < v; p += 16777216) {}\n  }\n  return p;\n};\n\n//\n// isDedicatedWorkerScope\n//\n\nmodule.exports.isDedicatedWorkerScope = function (self) {\n  var isRunningInWorker = 'WorkerGlobalScope' in self && self instanceof self.WorkerGlobalScope;\n  var isRunningInSharedWorker = 'SharedWorkerGlobalScope' in self && self instanceof self.SharedWorkerGlobalScope;\n  var isRunningInServiceWorker = 'ServiceWorkerGlobalScope' in self && self instanceof self.ServiceWorkerGlobalScope;\n\n  // Detects whether we run inside a dedicated worker or not.\n  //\n  // We can't just check for `DedicatedWorkerGlobalScope`, since IE11\n  // has a bug where it only supports `WorkerGlobalScope`.\n  //\n  // Therefore, we consider us as running inside a dedicated worker\n  // when we are running inside a worker, but not in a shared or service worker.\n  //\n  // When new types of workers are introduced, we will need to adjust this code.\n  return isRunningInWorker && !isRunningInSharedWorker && !isRunningInServiceWorker;\n};\n\n/***/ }),\n/* 2 */\n/***/ (function(module, exports, __webpack_require__) {\n\n/* eslint-env commonjs, worker */\n\nmodule.exports = function () {\n  var Rusha = __webpack_require__(0);\n\n  var hashData = function (hasher, data, cb) {\n    try {\n      return cb(null, hasher.digest(data));\n    } catch (e) {\n      return cb(e);\n    }\n  };\n\n  var hashFile = function (hasher, readTotal, blockSize, file, cb) {\n    var reader = new self.FileReader();\n    reader.onloadend = function onloadend() {\n      if (reader.error) {\n        return cb(reader.error);\n      }\n      var buffer = reader.result;\n      readTotal += reader.result.byteLength;\n      try {\n        hasher.append(buffer);\n      } catch (e) {\n        cb(e);\n        return;\n      }\n      if (readTotal < file.size) {\n        hashFile(hasher, readTotal, blockSize, file, cb);\n      } else {\n        cb(null, hasher.end());\n      }\n    };\n    reader.readAsArrayBuffer(file.slice(readTotal, readTotal + blockSize));\n  };\n\n  var workerBehaviourEnabled = true;\n\n  self.onmessage = function (event) {\n    if (!workerBehaviourEnabled) {\n      return;\n    }\n\n    var data = event.data.data,\n        file = event.data.file,\n        id = event.data.id;\n    if (typeof id === 'undefined') return;\n    if (!file && !data) return;\n    var blockSize = event.data.blockSize || 4 * 1024 * 1024;\n    var hasher = new Rusha(blockSize);\n    hasher.resetState();\n    var done = function (err, hash) {\n      if (!err) {\n        self.postMessage({ id: id, hash: hash });\n      } else {\n        self.postMessage({ id: id, error: err.name });\n      }\n    };\n    if (data) hashData(hasher, data, done);\n    if (file) hashFile(hasher, 0, blockSize, file, done);\n  };\n\n  return function () {\n    workerBehaviourEnabled = false;\n  };\n};\n\n/***/ }),\n/* 3 */\n/***/ (function(module, exports, __webpack_require__) {\n\n/* eslint-env commonjs, browser */\n\nvar work = __webpack_require__(4);\nvar Rusha = __webpack_require__(0);\nvar createHash = __webpack_require__(7);\nvar runWorker = __webpack_require__(2);\n\nvar _require = __webpack_require__(1),\n    isDedicatedWorkerScope = _require.isDedicatedWorkerScope;\n\nvar isRunningInDedicatedWorker = typeof self !== 'undefined' && isDedicatedWorkerScope(self);\n\nRusha.disableWorkerBehaviour = isRunningInDedicatedWorker ? runWorker() : function () {};\n\nRusha.createWorker = function () {\n  var worker = work(/*require.resolve*/(2));\n  var terminate = worker.terminate;\n  worker.terminate = function () {\n    URL.revokeObjectURL(worker.objectURL);\n    terminate.call(worker);\n  };\n  return worker;\n};\n\nRusha.createHash = createHash;\n\nmodule.exports = Rusha;\n\n/***/ }),\n/* 4 */\n/***/ (function(module, exports, __webpack_require__) {\n\nfunction webpackBootstrapFunc (modules) {\n/******/  // The module cache\n/******/  var installedModules = {};\n\n/******/  // The require function\n/******/  function __webpack_require__(moduleId) {\n\n/******/    // Check if module is in cache\n/******/    if(installedModules[moduleId])\n/******/      return installedModules[moduleId].exports;\n\n/******/    // Create a new module (and put it into the cache)\n/******/    var module = installedModules[moduleId] = {\n/******/      i: moduleId,\n/******/      l: false,\n/******/      exports: {}\n/******/    };\n\n/******/    // Execute the module function\n/******/    modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);\n\n/******/    // Flag the module as loaded\n/******/    module.l = true;\n\n/******/    // Return the exports of the module\n/******/    return module.exports;\n/******/  }\n\n/******/  // expose the modules object (__webpack_modules__)\n/******/  __webpack_require__.m = modules;\n\n/******/  // expose the module cache\n/******/  __webpack_require__.c = installedModules;\n\n/******/  // identity function for calling harmony imports with the correct context\n/******/  __webpack_require__.i = function(value) { return value; };\n\n/******/  // define getter function for harmony exports\n/******/  __webpack_require__.d = function(exports, name, getter) {\n/******/    if(!__webpack_require__.o(exports, name)) {\n/******/      Object.defineProperty(exports, name, {\n/******/        configurable: false,\n/******/        enumerable: true,\n/******/        get: getter\n/******/      });\n/******/    }\n/******/  };\n\n/******/  // define __esModule on exports\n/******/  __webpack_require__.r = function(exports) {\n/******/    Object.defineProperty(exports, '__esModule', { value: true });\n/******/  };\n\n/******/  // getDefaultExport function for compatibility with non-harmony modules\n/******/  __webpack_require__.n = function(module) {\n/******/    var getter = module && module.__esModule ?\n/******/      function getDefault() { return module['default']; } :\n/******/      function getModuleExports() { return module; };\n/******/    __webpack_require__.d(getter, 'a', getter);\n/******/    return getter;\n/******/  };\n\n/******/  // Object.prototype.hasOwnProperty.call\n/******/  __webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };\n\n/******/  // __webpack_public_path__\n/******/  __webpack_require__.p = \"/\";\n\n/******/  // on error function for async loading\n/******/  __webpack_require__.oe = function(err) { console.error(err); throw err; };\n\n  var f = __webpack_require__(__webpack_require__.s = ENTRY_MODULE)\n  return f.default || f // try to call default if defined to also support babel esmodule exports\n}\n\nvar moduleNameReqExp = '[\\\\.|\\\\-|\\\\+|\\\\w|\\/|@]+'\nvar dependencyRegExp = '\\\\((\\/\\\\*.*?\\\\*\\/)?\\s?.*?(' + moduleNameReqExp + ').*?\\\\)' // additional chars when output.pathinfo is true\n\n// http://stackoverflow.com/a/2593661/130442\nfunction quoteRegExp (str) {\n  return (str + '').replace(/[.?*+^$[\\]\\\\(){}|-]/g, '\\\\$&')\n}\n\nfunction getModuleDependencies (sources, module, queueName) {\n  var retval = {}\n  retval[queueName] = []\n\n  var fnString = module.toString()\n  var wrapperSignature = fnString.match(/^function\\s?\\(\\w+,\\s*\\w+,\\s*(\\w+)\\)/)\n  if (!wrapperSignature) return retval\n  var webpackRequireName = wrapperSignature[1]\n\n  // main bundle deps\n  var re = new RegExp('(\\\\\\\\n|\\\\W)' + quoteRegExp(webpackRequireName) + dependencyRegExp, 'g')\n  var match\n  while ((match = re.exec(fnString))) {\n    if (match[3] === 'dll-reference') continue\n    retval[queueName].push(match[3])\n  }\n\n  // dll deps\n  re = new RegExp('\\\\(' + quoteRegExp(webpackRequireName) + '\\\\(\"(dll-reference\\\\s(' + moduleNameReqExp + '))\"\\\\)\\\\)' + dependencyRegExp, 'g')\n  while ((match = re.exec(fnString))) {\n    if (!sources[match[2]]) {\n      retval[queueName].push(match[1])\n      sources[match[2]] = __webpack_require__(match[1]).m\n    }\n    retval[match[2]] = retval[match[2]] || []\n    retval[match[2]].push(match[4])\n  }\n\n  return retval\n}\n\nfunction hasValuesInQueues (queues) {\n  var keys = Object.keys(queues)\n  return keys.reduce(function (hasValues, key) {\n    return hasValues || queues[key].length > 0\n  }, false)\n}\n\nfunction getRequiredModules (sources, moduleId) {\n  var modulesQueue = {\n    main: [moduleId]\n  }\n  var requiredModules = {\n    main: []\n  }\n  var seenModules = {\n    main: {}\n  }\n\n  while (hasValuesInQueues(modulesQueue)) {\n    var queues = Object.keys(modulesQueue)\n    for (var i = 0; i < queues.length; i++) {\n      var queueName = queues[i]\n      var queue = modulesQueue[queueName]\n      var moduleToCheck = queue.pop()\n      seenModules[queueName] = seenModules[queueName] || {}\n      if (seenModules[queueName][moduleToCheck] || !sources[queueName][moduleToCheck]) continue\n      seenModules[queueName][moduleToCheck] = true\n      requiredModules[queueName] = requiredModules[queueName] || []\n      requiredModules[queueName].push(moduleToCheck)\n      var newModules = getModuleDependencies(sources, sources[queueName][moduleToCheck], queueName)\n      var newModulesKeys = Object.keys(newModules)\n      for (var j = 0; j < newModulesKeys.length; j++) {\n        modulesQueue[newModulesKeys[j]] = modulesQueue[newModulesKeys[j]] || []\n        modulesQueue[newModulesKeys[j]] = modulesQueue[newModulesKeys[j]].concat(newModules[newModulesKeys[j]])\n      }\n    }\n  }\n\n  return requiredModules\n}\n\nmodule.exports = function (moduleId, options) {\n  options = options || {}\n  var sources = {\n    main: __webpack_require__.m\n  }\n\n  var requiredModules = options.all ? { main: Object.keys(sources) } : getRequiredModules(sources, moduleId)\n\n  var src = ''\n\n  Object.keys(requiredModules).filter(function (m) { return m !== 'main' }).forEach(function (module) {\n    var entryModule = 0\n    while (requiredModules[module][entryModule]) {\n      entryModule++\n    }\n    requiredModules[module].push(entryModule)\n    sources[module][entryModule] = '(function(module, exports, __webpack_require__) { module.exports = __webpack_require__; })'\n    src = src + 'var ' + module + ' = (' + webpackBootstrapFunc.toString().replace('ENTRY_MODULE', JSON.stringify(entryModule)) + ')({' + requiredModules[module].map(function (id) { return '' + JSON.stringify(id) + ': ' + sources[module][id].toString() }).join(',') + '});\\n'\n  })\n\n  src = src + '(' + webpackBootstrapFunc.toString().replace('ENTRY_MODULE', JSON.stringify(moduleId)) + ')({' + requiredModules.main.map(function (id) { return '' + JSON.stringify(id) + ': ' + sources.main[id].toString() }).join(',') + '})(self);'\n\n  var blob = new window.Blob([src], { type: 'text/javascript' })\n  if (options.bare) { return blob }\n\n  var URL = window.URL || window.webkitURL || window.mozURL || window.msURL\n\n  var workerUrl = URL.createObjectURL(blob)\n  var worker = new window.Worker(workerUrl)\n  worker.objectURL = workerUrl\n\n  return worker\n}\n\n\n/***/ }),\n/* 5 */\n/***/ (function(module, exports) {\n\n// The low-level RushCore module provides the heart of Rusha,\n// a high-speed sha1 implementation working on an Int32Array heap.\n// At first glance, the implementation seems complicated, however\n// with the SHA1 spec at hand, it is obvious this almost a textbook\n// implementation that has a few functions hand-inlined and a few loops\n// hand-unrolled.\nmodule.exports = function RushaCore(stdlib$846, foreign$847, heap$848) {\n    'use asm';\n    var H$849 = new stdlib$846.Int32Array(heap$848);\n    function hash$850(k$851, x$852) {\n        // k in bytes\n        k$851 = k$851 | 0;\n        x$852 = x$852 | 0;\n        var i$853 = 0, j$854 = 0, y0$855 = 0, z0$856 = 0, y1$857 = 0, z1$858 = 0, y2$859 = 0, z2$860 = 0, y3$861 = 0, z3$862 = 0, y4$863 = 0, z4$864 = 0, t0$865 = 0, t1$866 = 0;\n        y0$855 = H$849[x$852 + 320 >> 2] | 0;\n        y1$857 = H$849[x$852 + 324 >> 2] | 0;\n        y2$859 = H$849[x$852 + 328 >> 2] | 0;\n        y3$861 = H$849[x$852 + 332 >> 2] | 0;\n        y4$863 = H$849[x$852 + 336 >> 2] | 0;\n        for (i$853 = 0; (i$853 | 0) < (k$851 | 0); i$853 = i$853 + 64 | 0) {\n            z0$856 = y0$855;\n            z1$858 = y1$857;\n            z2$860 = y2$859;\n            z3$862 = y3$861;\n            z4$864 = y4$863;\n            for (j$854 = 0; (j$854 | 0) < 64; j$854 = j$854 + 4 | 0) {\n                t1$866 = H$849[i$853 + j$854 >> 2] | 0;\n                t0$865 = ((y0$855 << 5 | y0$855 >>> 27) + (y1$857 & y2$859 | ~y1$857 & y3$861) | 0) + ((t1$866 + y4$863 | 0) + 1518500249 | 0) | 0;\n                y4$863 = y3$861;\n                y3$861 = y2$859;\n                y2$859 = y1$857 << 30 | y1$857 >>> 2;\n                y1$857 = y0$855;\n                y0$855 = t0$865;\n                H$849[k$851 + j$854 >> 2] = t1$866;\n            }\n            for (j$854 = k$851 + 64 | 0; (j$854 | 0) < (k$851 + 80 | 0); j$854 = j$854 + 4 | 0) {\n                t1$866 = (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) << 1 | (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) >>> 31;\n                t0$865 = ((y0$855 << 5 | y0$855 >>> 27) + (y1$857 & y2$859 | ~y1$857 & y3$861) | 0) + ((t1$866 + y4$863 | 0) + 1518500249 | 0) | 0;\n                y4$863 = y3$861;\n                y3$861 = y2$859;\n                y2$859 = y1$857 << 30 | y1$857 >>> 2;\n                y1$857 = y0$855;\n                y0$855 = t0$865;\n                H$849[j$854 >> 2] = t1$866;\n            }\n            for (j$854 = k$851 + 80 | 0; (j$854 | 0) < (k$851 + 160 | 0); j$854 = j$854 + 4 | 0) {\n                t1$866 = (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) << 1 | (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) >>> 31;\n                t0$865 = ((y0$855 << 5 | y0$855 >>> 27) + (y1$857 ^ y2$859 ^ y3$861) | 0) + ((t1$866 + y4$863 | 0) + 1859775393 | 0) | 0;\n                y4$863 = y3$861;\n                y3$861 = y2$859;\n                y2$859 = y1$857 << 30 | y1$857 >>> 2;\n                y1$857 = y0$855;\n                y0$855 = t0$865;\n                H$849[j$854 >> 2] = t1$866;\n            }\n            for (j$854 = k$851 + 160 | 0; (j$854 | 0) < (k$851 + 240 | 0); j$854 = j$854 + 4 | 0) {\n                t1$866 = (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) << 1 | (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) >>> 31;\n                t0$865 = ((y0$855 << 5 | y0$855 >>> 27) + (y1$857 & y2$859 | y1$857 & y3$861 | y2$859 & y3$861) | 0) + ((t1$866 + y4$863 | 0) - 1894007588 | 0) | 0;\n                y4$863 = y3$861;\n                y3$861 = y2$859;\n                y2$859 = y1$857 << 30 | y1$857 >>> 2;\n                y1$857 = y0$855;\n                y0$855 = t0$865;\n                H$849[j$854 >> 2] = t1$866;\n            }\n            for (j$854 = k$851 + 240 | 0; (j$854 | 0) < (k$851 + 320 | 0); j$854 = j$854 + 4 | 0) {\n                t1$866 = (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) << 1 | (H$849[j$854 - 12 >> 2] ^ H$849[j$854 - 32 >> 2] ^ H$849[j$854 - 56 >> 2] ^ H$849[j$854 - 64 >> 2]) >>> 31;\n                t0$865 = ((y0$855 << 5 | y0$855 >>> 27) + (y1$857 ^ y2$859 ^ y3$861) | 0) + ((t1$866 + y4$863 | 0) - 899497514 | 0) | 0;\n                y4$863 = y3$861;\n                y3$861 = y2$859;\n                y2$859 = y1$857 << 30 | y1$857 >>> 2;\n                y1$857 = y0$855;\n                y0$855 = t0$865;\n                H$849[j$854 >> 2] = t1$866;\n            }\n            y0$855 = y0$855 + z0$856 | 0;\n            y1$857 = y1$857 + z1$858 | 0;\n            y2$859 = y2$859 + z2$860 | 0;\n            y3$861 = y3$861 + z3$862 | 0;\n            y4$863 = y4$863 + z4$864 | 0;\n        }\n        H$849[x$852 + 320 >> 2] = y0$855;\n        H$849[x$852 + 324 >> 2] = y1$857;\n        H$849[x$852 + 328 >> 2] = y2$859;\n        H$849[x$852 + 332 >> 2] = y3$861;\n        H$849[x$852 + 336 >> 2] = y4$863;\n    }\n    return { hash: hash$850 };\n};\n\n/***/ }),\n/* 6 */\n/***/ (function(module, exports) {\n\nvar _this = this;\n\n/* eslint-env commonjs, browser */\n\nvar reader = void 0;\nif (typeof self !== 'undefined' && typeof self.FileReaderSync !== 'undefined') {\n  reader = new self.FileReaderSync();\n}\n\n// Convert a binary string and write it to the heap.\n// A binary string is expected to only contain char codes < 256.\nvar convStr = function (str, H8, H32, start, len, off) {\n  var i = void 0,\n      om = off % 4,\n      lm = (len + om) % 4,\n      j = len - lm;\n  switch (om) {\n    case 0:\n      H8[off] = str.charCodeAt(start + 3);\n    case 1:\n      H8[off + 1 - (om << 1) | 0] = str.charCodeAt(start + 2);\n    case 2:\n      H8[off + 2 - (om << 1) | 0] = str.charCodeAt(start + 1);\n    case 3:\n      H8[off + 3 - (om << 1) | 0] = str.charCodeAt(start);\n  }\n  if (len < lm + (4 - om)) {\n    return;\n  }\n  for (i = 4 - om; i < j; i = i + 4 | 0) {\n    H32[off + i >> 2] = str.charCodeAt(start + i) << 24 | str.charCodeAt(start + i + 1) << 16 | str.charCodeAt(start + i + 2) << 8 | str.charCodeAt(start + i + 3);\n  }\n  switch (lm) {\n    case 3:\n      H8[off + j + 1 | 0] = str.charCodeAt(start + j + 2);\n    case 2:\n      H8[off + j + 2 | 0] = str.charCodeAt(start + j + 1);\n    case 1:\n      H8[off + j + 3 | 0] = str.charCodeAt(start + j);\n  }\n};\n\n// Convert a buffer or array and write it to the heap.\n// The buffer or array is expected to only contain elements < 256.\nvar convBuf = function (buf, H8, H32, start, len, off) {\n  var i = void 0,\n      om = off % 4,\n      lm = (len + om) % 4,\n      j = len - lm;\n  switch (om) {\n    case 0:\n      H8[off] = buf[start + 3];\n    case 1:\n      H8[off + 1 - (om << 1) | 0] = buf[start + 2];\n    case 2:\n      H8[off + 2 - (om << 1) | 0] = buf[start + 1];\n    case 3:\n      H8[off + 3 - (om << 1) | 0] = buf[start];\n  }\n  if (len < lm + (4 - om)) {\n    return;\n  }\n  for (i = 4 - om; i < j; i = i + 4 | 0) {\n    H32[off + i >> 2 | 0] = buf[start + i] << 24 | buf[start + i + 1] << 16 | buf[start + i + 2] << 8 | buf[start + i + 3];\n  }\n  switch (lm) {\n    case 3:\n      H8[off + j + 1 | 0] = buf[start + j + 2];\n    case 2:\n      H8[off + j + 2 | 0] = buf[start + j + 1];\n    case 1:\n      H8[off + j + 3 | 0] = buf[start + j];\n  }\n};\n\nvar convBlob = function (blob, H8, H32, start, len, off) {\n  var i = void 0,\n      om = off % 4,\n      lm = (len + om) % 4,\n      j = len - lm;\n  var buf = new Uint8Array(reader.readAsArrayBuffer(blob.slice(start, start + len)));\n  switch (om) {\n    case 0:\n      H8[off] = buf[3];\n    case 1:\n      H8[off + 1 - (om << 1) | 0] = buf[2];\n    case 2:\n      H8[off + 2 - (om << 1) | 0] = buf[1];\n    case 3:\n      H8[off + 3 - (om << 1) | 0] = buf[0];\n  }\n  if (len < lm + (4 - om)) {\n    return;\n  }\n  for (i = 4 - om; i < j; i = i + 4 | 0) {\n    H32[off + i >> 2 | 0] = buf[i] << 24 | buf[i + 1] << 16 | buf[i + 2] << 8 | buf[i + 3];\n  }\n  switch (lm) {\n    case 3:\n      H8[off + j + 1 | 0] = buf[j + 2];\n    case 2:\n      H8[off + j + 2 | 0] = buf[j + 1];\n    case 1:\n      H8[off + j + 3 | 0] = buf[j];\n  }\n};\n\nmodule.exports = function (data, H8, H32, start, len, off) {\n  if (typeof data === 'string') {\n    return convStr(data, H8, H32, start, len, off);\n  }\n  if (data instanceof Array) {\n    return convBuf(data, H8, H32, start, len, off);\n  }\n  // Safely doing a Buffer check using \"this\" to avoid Buffer polyfill to be included in the dist\n  if (_this && _this.Buffer && _this.Buffer.isBuffer(data)) {\n    return convBuf(data, H8, H32, start, len, off);\n  }\n  if (data instanceof ArrayBuffer) {\n    return convBuf(new Uint8Array(data), H8, H32, start, len, off);\n  }\n  if (data.buffer instanceof ArrayBuffer) {\n    return convBuf(new Uint8Array(data.buffer, data.byteOffset, data.byteLength), H8, H32, start, len, off);\n  }\n  if (data instanceof Blob) {\n    return convBlob(data, H8, H32, start, len, off);\n  }\n  throw new Error('Unsupported data type.');\n};\n\n/***/ }),\n/* 7 */\n/***/ (function(module, exports, __webpack_require__) {\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\n/* eslint-env commonjs, browser */\n\nvar Rusha = __webpack_require__(0);\n\nvar _require = __webpack_require__(1),\n    toHex = _require.toHex;\n\nvar Hash = function () {\n  function Hash() {\n    _classCallCheck(this, Hash);\n\n    this._rusha = new Rusha();\n    this._rusha.resetState();\n  }\n\n  Hash.prototype.update = function update(data) {\n    this._rusha.append(data);\n    return this;\n  };\n\n  Hash.prototype.digest = function digest(encoding) {\n    var digest = this._rusha.rawEnd().buffer;\n    if (!encoding) {\n      return digest;\n    }\n    if (encoding === 'hex') {\n      return toHex(digest);\n    }\n    throw new Error('unsupported digest encoding');\n  };\n\n  return Hash;\n}();\n\nmodule.exports = function () {\n  return new Hash();\n};\n\n/***/ })\n/******/ ]);\n});\n\n/***/ }),\n\n/***/ \"./node_modules/split-on-first/index.js\":\n/*!**********************************************!*\\\n  !*** ./node_modules/split-on-first/index.js ***!\n  \\**********************************************/\n/*! no static exports found */\n/***/ (function(module, exports, __webpack_require__) {\n\n\"use strict\";\n\n\nmodule.exports = (string, separator) => {\n\tif (!(typeof string === 'string' && typeof separator === 'string')) {\n\t\tthrow new TypeError('Expected the arguments to be of type `string`');\n\t}\n\n\tif (separator === '') {\n\t\treturn [string];\n\t}\n\n\tconst separatorIndex = string.indexOf(separator);\n\n\tif (separatorIndex === -1) {\n\t\treturn [string];\n\t}\n\n\treturn [\n\t\tstring.slice(0, separatorIndex),\n\t\tstring.slice(separatorIndex + separator.length)\n\t];\n};\n\n\n/***/ }),\n\n/***/ \"./node_modules/strict-uri-encode/index.js\":\n/*!*************************************************!*\\\n  !*** ./node_modules/strict-uri-encode/index.js ***!\n  \\*************************************************/\n/*! no static exports found */\n/***/ (function(module, exports, __webpack_require__) {\n\n\"use strict\";\n\nmodule.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.charCodeAt(0).toString(16).toUpperCase()}`);\n\n\n/***/ }),\n\n/***/ \"./node_modules/webpack-strip-block/index.js?!./src/js/webworkers/compression.worker.js\":\n/*!**********************************************************************************************!*\\\n  !*** ./node_modules/webpack-strip-block??ref--7-0!./src/js/webworkers/compression.worker.js ***!\n  \\**********************************************************************************************/\n/*! no exports provided */\n/***/ (function(module, __webpack_exports__, __webpack_require__) {\n\n\"use strict\";\n__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _core_lzstring__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/lzstring */ \"./src/js/core/lzstring.js\");\n/* harmony import */ var _core_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/config */ \"./src/js/core/config.js\");\n/* harmony import */ var _core_sensitive_utils_encrypt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/sensitive_utils.encrypt */ \"./src/js/core/sensitive_utils.encrypt.js\");\n\r\n\r\n\r\n\r\nfunction accessNestedPropertyReverse(obj, keys) {\r\n    let result = obj;\r\n    for (let i = keys.length - 1; i >= 0; --i) {\r\n        result = result[keys[i]];\r\n    }\r\n    return result;\r\n}\r\n\r\nconst salt = accessNestedPropertyReverse(_core_config__WEBPACK_IMPORTED_MODULE_1__[\"globalConfig\"], [\"file\", \"info\"]);\r\n\r\nonmessage = function ({ data: { jobId, job, data } }) {\r\n    const result = performJob(job, data);\r\n    postMessage({ jobId, result });\r\n};\r\n\r\nfunction performJob(job, data) {\r\n    switch (job) {\r\n        case \"compressX64\": {\r\n            return Object(_core_lzstring__WEBPACK_IMPORTED_MODULE_0__[\"compressX64\"])(data);\r\n        }\r\n        case \"compressFile\": {\r\n            const checksum = Object(_core_sensitive_utils_encrypt__WEBPACK_IMPORTED_MODULE_2__[\"sha1\"])(data.text + salt);\r\n            return data.compressionPrefix + Object(_core_lzstring__WEBPACK_IMPORTED_MODULE_0__[\"compressX64\"])(checksum + data.text);\r\n        }\r\n        default:\r\n            throw new Error(\"Webworker: Unknown job: \" + job);\r\n    }\r\n}\r\n\n\n/***/ }),\n\n/***/ \"./src/js/core/config.js\":\n/*!*******************************!*\\\n  !*** ./src/js/core/config.js ***!\n  \\*******************************/\n/*! exports provided: IS_DEBUG, IS_DEMO, SUPPORT_TOUCH, THIRDPARTY_URLS, globalConfig, IS_MOBILE */\n/***/ (function(module, __webpack_exports__, __webpack_require__) {\n\n\"use strict\";\n__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"IS_DEBUG\", function() { return IS_DEBUG; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"IS_DEMO\", function() { return IS_DEMO; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"SUPPORT_TOUCH\", function() { return SUPPORT_TOUCH; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"THIRDPARTY_URLS\", function() { return THIRDPARTY_URLS; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"globalConfig\", function() { return globalConfig; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"IS_MOBILE\", function() { return IS_MOBILE; });\n/* harmony import */ var _query_parameters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./query_parameters */ \"./src/js/core/query_parameters.js\");\n\r\n\r\nconst IS_DEBUG =\r\n     true ||\r\n    (false);\r\n\r\nconst IS_DEMO = _query_parameters__WEBPACK_IMPORTED_MODULE_0__[\"queryParamOptions\"].fullVersion\r\n    ? false\r\n    : ( false) ||\r\n      (typeof window !== \"undefined\" && window.location.search.indexOf(\"demo\") >= 0);\r\n\r\nconst SUPPORT_TOUCH = false;\r\n\r\nconst smoothCanvas = true;\r\n\r\nconst THIRDPARTY_URLS = {\r\n    discord: \"https://discord.gg/HN7EVzV\",\r\n    github: \"https://github.com/tobspr/shapez.io\",\r\n    reddit: \"https://www.reddit.com/r/shapezio\",\r\n\r\n    standaloneStorePage: \"https://store.steampowered.com/app/1318690/shapezio/\",\r\n};\r\n\r\nconst globalConfig = {\r\n    // Size of a single tile in Pixels.\r\n    // NOTICE: Update webpack.production.config too!\r\n    tileSize: 32,\r\n    halfTileSize: 16,\r\n\r\n    // Which dpi the assets have\r\n    assetsDpi: 192 / 32,\r\n    assetsSharpness: 1.2,\r\n    shapesSharpness: 1.4,\r\n\r\n    // Production analytics\r\n    statisticsGraphDpi: 2.5,\r\n    statisticsGraphSlices: 100,\r\n    analyticsSliceDurationSeconds:  true ? 1 : undefined,\r\n\r\n    minimumTickRate: 25,\r\n    maximumTickRate: 500,\r\n\r\n    // Map\r\n    mapChunkSize: 16,\r\n    mapChunkPrerenderMinZoom: -1,\r\n    mapChunkOverviewMinZoom: 0.7,\r\n\r\n    // Belt speeds\r\n    // NOTICE: Update webpack.production.config too!\r\n    beltSpeedItemsPerSecond: 2,\r\n    minerSpeedItemsPerSecond: 0, // COMPUTED\r\n\r\n    beltItemSpacingByLayer: {\r\n        regular: 0.63,\r\n        wires: 0.4,\r\n    },\r\n\r\n    wiresSpeedItemsPerSecond: 6,\r\n\r\n    undergroundBeltMaxTilesByTier: [5, 8],\r\n\r\n    buildingSpeeds: {\r\n        cutter: 1 / 4,\r\n        cutterQuad: 1 / 4,\r\n        rotater: 1 / 1,\r\n        rotaterCCW: 1 / 1,\r\n        rotaterFL: 1 / 1,\r\n        painter: 1 / 6,\r\n        painterDouble: 1 / 8,\r\n        painterQuad: 1 / 8,\r\n        mixer: 1 / 5,\r\n        stacker: 1 / 6,\r\n        advancedProcessor: 1 / 3,\r\n    },\r\n\r\n    // Zooming\r\n    initialZoom: 1.9,\r\n    minZoomLevel: 0.1,\r\n    maxZoomLevel: 3,\r\n\r\n    // Global game speed\r\n    gameSpeed: 1,\r\n\r\n    warmupTimeSecondsFast: 0.1,\r\n    warmupTimeSecondsRegular: 1,\r\n\r\n    smoothing: {\r\n        smoothMainCanvas: smoothCanvas && true,\r\n        quality: \"low\", // Low is CRUCIAL for mobile performance!\r\n    },\r\n\r\n    rendering: {},\r\n    debug:  true ? __webpack_require__(/*! ./config.local */ \"./src/js/core/config.local.js\").default : undefined,\r\n\r\n    // Secret vars\r\n    info: {\r\n        // Binary file salt\r\n        file: \"Ec'])@^+*9zMevK3uMV4432x9%iK'=\",\r\n\r\n        // Savegame salt\r\n        sgSalt: \"}95Q3%8/.837Lqym_BJx%q7)pAHJbF\",\r\n\r\n        // Analytics key\r\n        analyticsApiKey: \"baf6a50f0cc7dfdec5a0e21c88a1c69a4b34bc4a\",\r\n    },\r\n};\r\n\r\nconst IS_MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);\r\n\r\n// Automatic calculations\r\nglobalConfig.minerSpeedItemsPerSecond = globalConfig.beltSpeedItemsPerSecond / 5;\r\n\r\n// Dynamic calculations\r\nif (globalConfig.debug.disableMapOverview) {\r\n    globalConfig.mapChunkOverviewMinZoom = 0;\r\n    globalConfig.mapChunkPrerenderMinZoom = 0;\r\n}\r\n\r\n// Stuff for making the trailer\r\nif ( true && globalConfig.debug.renderForTrailer) {\r\n    globalConfig.debug.framePausesBetweenTicks = 32;\r\n    // globalConfig.mapChunkOverviewMinZoom = 0.0;\r\n    // globalConfig.mapChunkPrerenderMinZoom = globalConfig.mapChunkOverviewMinZoom;\r\n    // globalConfig.debug.instantBelts = true;\r\n    // globalConfig.debug.instantProcessors = true;\r\n    // globalConfig.debug.instantMiners = true;\r\n    globalConfig.debug.disableSavegameWrite = true;\r\n    // globalConfig.beltSpeedItemsPerSecond *= 2;\r\n}\r\n\r\nif (globalConfig.debug.fastGameEnter) {\r\n    globalConfig.debug.noArtificalDelays = true;\r\n}\r\n\n\n/***/ }),\n\n/***/ \"./src/js/core/config.local.js\":\n/*!*************************************!*\\\n  !*** ./src/js/core/config.local.js ***!\n  \\*************************************/\n/*! exports provided: default */\n/***/ (function(module, __webpack_exports__, __webpack_require__) {\n\n\"use strict\";\n__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\r\n    // You can set any debug options here!\r\n    /* dev:start */\r\n    // -----------------------------------------------------------------------------------\r\n    _fastGameEnter: \"Quickly enters the game and skips the main menu - good for fast iterating\",\r\n    fastGameEnter: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _noArtificialDelays: \"Skips any delays like transitions between states and such\",\r\n    noArtificialDelays: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _disableSavegameWrite:\r\n        \"Disables writing of savegames, useful for testing the same savegame over and over\",\r\n    disableSavegameWrite: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _showEntityBounds: \"Shows bounds of all entities\",\r\n    showEntityBounds: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _showAcceptorEjectors: \"Shows arrows for every ejector / acceptor\",\r\n    showAcceptorEjectors: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _disableMusic: \"Disables the music (Overrides any setting, can cause weird behaviour)\",\r\n    disableMusic: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _doNotRenderStatics: \"Do not render static map entities (=most buildings)\",\r\n    doNotRenderStatics: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _disableZoomLimits: \"Allow to zoom freely without limits\",\r\n    disableZoomLimits: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _showChunkBorders: \"Shows a border arround every chunk\",\r\n    showChunkBorders: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _rewardsInstant: \"All rewards can be unlocked by passing just 1 of any shape\",\r\n    rewardsInstant: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _allBuildingsUnlocked: \"Unlocks all buildings\",\r\n    allBuildingsUnlocked: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _blueprintsNoCost: \"Disables cost of blueprints\",\r\n    blueprintsNoCost: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _upgradesNoCost: \"Disables cost of upgrades\",\r\n    upgradesNoCost: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _disableUnlockDialog: \"Disables the dialog when completing a level\",\r\n    disableUnlockDialog: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _disableLogicTicks: \"Disables the simulation - This effectively pauses the game.\",\r\n    disableLogicTicks: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _testClipping: \"Test the rendering if everything is clipped out properly\",\r\n    testClipping: false,\r\n    // -----------------------------------------------------------------------------------\r\n    // Allows to render slower, useful for recording at half speed to avoid stuttering\r\n    // framePausesBetweenTicks: 1,\r\n    // -----------------------------------------------------------------------------------\r\n    _testTranslations: \"Replace all translations with emojis to see which texts are translateable\",\r\n    testTranslations: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _enableEntityInspector: \"Enables an inspector which shows information about the entity below the curosr\",\r\n    enableEntityInspector: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _testAds: \"Enables ads in the local build (normally they are deactivated there)\",\r\n    testAds: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _noApiCalls: \"Disables API calls\",\r\n    noApiCalls: true,\r\n    // -----------------------------------------------------------------------------------\r\n    _disableMapOverview: \"Disables the automatic switch to an overview when zooming out\",\r\n    disableMapOverview: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _disableUpgradeNotification:\r\n        \"Disables the notification when there are new entries in the changelog since last played\",\r\n    disableUpgradeNotification: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _instantBelts: \"Makes belts almost infinitely fast\",\r\n    instantBelts: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _instantProcessors: \"Makes item processors almost infinitely fast\",\r\n    instantProcessors: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _instantMiners: \"Makes miners almost infinitely fast\",\r\n    instantMiners: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _resumeGameOnFastEnter:\r\n        \"When using fastGameEnter, controls whether a new game is started or the last one is resumed\",\r\n    resumeGameOnFastEnter: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _renderForTrailer: \"Special option used to render the trailer\",\r\n    renderForTrailer: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _renderChanges: \"Whether to render changes\",\r\n    renderChanges: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _renderBeltPaths: \"Whether to render belt paths\",\r\n    renderBeltPaths: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _checkBeltPaths: \"Whether to check belt paths\",\r\n    checkBeltPaths: false,\r\n    // -----------------------------------------------------------------------------------\r\n    _detailedStatistics: \"Whether to items / s instead of items / m in stats\",\r\n    detailedStatistics: false,\r\n    // -----------------------------------------------------------------------------------\r\n    /* dev:end */\r\n});\r\n\n\n/***/ }),\n\n/***/ \"./src/js/core/lzstring.js\":\n/*!*********************************!*\\\n  !*** ./src/js/core/lzstring.js ***!\n  \\*********************************/\n/*! exports provided: compressU8, compressU8WHeader, decompressU8WHeader, compressX64, decompressX64 */\n/***/ (function(module, __webpack_exports__, __webpack_require__) {\n\n\"use strict\";\n__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"compressU8\", function() { return compressU8; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"compressU8WHeader\", function() { return compressU8WHeader; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"decompressU8WHeader\", function() { return decompressU8WHeader; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"compressX64\", function() { return compressX64; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"decompressX64\", function() { return decompressX64; });\n// Copyright (c) 2013 Pieroxy <pieroxy@pieroxy.net>\r\n// This work is free. You can redistribute it and/or modify it\r\n// under the terms of the WTFPL, Version 2\r\n// For more information see LICENSE.txt or http://www.wtfpl.net/\r\n//\r\n// For more information, the home page:\r\n// http://pieroxy.net/blog/pages/lz-string/testing.html\r\n//\r\n// LZ-based compression algorithm, version 1.4.4\r\n\r\nconst fromCharCode = String.fromCharCode;\r\nconst hasOwnProperty = Object.prototype.hasOwnProperty;\r\n\r\nconst keyStrUriSafe = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$\";\r\nconst baseReverseDic = {};\r\n\r\nfunction getBaseValue(alphabet, character) {\r\n    if (!baseReverseDic[alphabet]) {\r\n        baseReverseDic[alphabet] = {};\r\n        for (let i = 0; i < alphabet.length; i++) {\r\n            baseReverseDic[alphabet][alphabet.charAt(i)] = i;\r\n        }\r\n    }\r\n    return baseReverseDic[alphabet][character];\r\n}\r\n\r\n//compress into uint8array (UCS-2 big endian format)\r\nfunction compressU8(uncompressed) {\r\n    let compressed = compress(uncompressed);\r\n    let buf = new Uint8Array(compressed.length * 2); // 2 bytes per character\r\n\r\n    for (let i = 0, TotalLen = compressed.length; i < TotalLen; i++) {\r\n        let current_value = compressed.charCodeAt(i);\r\n        buf[i * 2] = current_value >>> 8;\r\n        buf[i * 2 + 1] = current_value % 256;\r\n    }\r\n    return buf;\r\n}\r\n\r\n// Compreses with header\r\n/**\r\n * @param {string} uncompressed\r\n * @param {number} header\r\n */\r\nfunction compressU8WHeader(uncompressed, header) {\r\n    let compressed = compress(uncompressed);\r\n    let buf = new Uint8Array(2 + compressed.length * 2); // 2 bytes per character\r\n\r\n    buf[0] = header >>> 8;\r\n    buf[1] = header % 256;\r\n    for (let i = 0, TotalLen = compressed.length; i < TotalLen; i++) {\r\n        let current_value = compressed.charCodeAt(i);\r\n        buf[2 + i * 2] = current_value >>> 8;\r\n        buf[2 + i * 2 + 1] = current_value % 256;\r\n    }\r\n    return buf;\r\n}\r\n\r\n//decompress from uint8array (UCS-2 big endian format)\r\n/**\r\n *\r\n * @param {Uint8Array} compressed\r\n */\r\nfunction decompressU8WHeader(compressed) {\r\n    // let buf = new Array(compressed.length / 2); // 2 bytes per character\r\n    // for (let i = 0, TotalLen = buf.length; i < TotalLen; i++) {\r\n    //     buf[i] = compressed[i * 2] * 256 + compressed[i * 2 + 1];\r\n    // }\r\n\r\n    // let result = [];\r\n    // buf.forEach(function (c) {\r\n    //     result.push(fromCharCode(c));\r\n    // });\r\n    let result = [];\r\n    for (let i = 2, n = compressed.length; i < n; i += 2) {\r\n        const code = compressed[i] * 256 + compressed[i + 1];\r\n        result.push(fromCharCode(code));\r\n    }\r\n    return decompress(result.join(\"\"));\r\n}\r\n\r\n//compress into a string that is already URI encoded\r\nfunction compressX64(input) {\r\n    if (input == null) return \"\";\r\n    return _compress(input, 6, function (a) {\r\n        return keyStrUriSafe.charAt(a);\r\n    });\r\n}\r\n\r\n//decompress from an output of compressToEncodedURIComponent\r\nfunction decompressX64(input) {\r\n    if (input == null) return \"\";\r\n    if (input == \"\") return null;\r\n    input = input.replace(/ /g, \"+\");\r\n    return _decompress(input.length, 32, function (index) {\r\n        return getBaseValue(keyStrUriSafe, input.charAt(index));\r\n    });\r\n}\r\n\r\nfunction compress(uncompressed) {\r\n    return _compress(uncompressed, 16, function (a) {\r\n        return fromCharCode(a);\r\n    });\r\n}\r\n\r\nfunction _compress(uncompressed, bitsPerChar, getCharFromInt) {\r\n    if (uncompressed == null) return \"\";\r\n    let i,\r\n        value,\r\n        context_dictionary = {},\r\n        context_dictionaryToCreate = {},\r\n        context_c = \"\",\r\n        context_wc = \"\",\r\n        context_w = \"\",\r\n        context_enlargeIn = 2, // Compensate for the first entry which should not count\r\n        context_dictSize = 3,\r\n        context_numBits = 2,\r\n        context_data = [],\r\n        context_data_val = 0,\r\n        context_data_position = 0,\r\n        ii;\r\n\r\n    for (ii = 0; ii < uncompressed.length; ii += 1) {\r\n        context_c = uncompressed.charAt(ii);\r\n        if (!hasOwnProperty.call(context_dictionary, context_c)) {\r\n            context_dictionary[context_c] = context_dictSize++;\r\n            context_dictionaryToCreate[context_c] = true;\r\n        }\r\n\r\n        context_wc = context_w + context_c;\r\n        if (hasOwnProperty.call(context_dictionary, context_wc)) {\r\n            context_w = context_wc;\r\n        } else {\r\n            if (hasOwnProperty.call(context_dictionaryToCreate, context_w)) {\r\n                if (context_w.charCodeAt(0) < 256) {\r\n                    for (i = 0; i < context_numBits; i++) {\r\n                        context_data_val = context_data_val << 1;\r\n                        if (context_data_position == bitsPerChar - 1) {\r\n                            context_data_position = 0;\r\n                            context_data.push(getCharFromInt(context_data_val));\r\n                            context_data_val = 0;\r\n                        } else {\r\n                            context_data_position++;\r\n                        }\r\n                    }\r\n                    value = context_w.charCodeAt(0);\r\n                    for (i = 0; i < 8; i++) {\r\n                        context_data_val = (context_data_val << 1) | (value & 1);\r\n                        if (context_data_position == bitsPerChar - 1) {\r\n                            context_data_position = 0;\r\n                            context_data.push(getCharFromInt(context_data_val));\r\n                            context_data_val = 0;\r\n                        } else {\r\n                            context_data_position++;\r\n                        }\r\n                        value = value >> 1;\r\n                    }\r\n                } else {\r\n                    value = 1;\r\n                    for (i = 0; i < context_numBits; i++) {\r\n                        context_data_val = (context_data_val << 1) | value;\r\n                        if (context_data_position == bitsPerChar - 1) {\r\n                            context_data_position = 0;\r\n                            context_data.push(getCharFromInt(context_data_val));\r\n                            context_data_val = 0;\r\n                        } else {\r\n                            context_data_position++;\r\n                        }\r\n                        value = 0;\r\n                    }\r\n                    value = context_w.charCodeAt(0);\r\n                    for (i = 0; i < 16; i++) {\r\n                        context_data_val = (context_data_val << 1) | (value & 1);\r\n                        if (context_data_position == bitsPerChar - 1) {\r\n                            context_data_position = 0;\r\n                            context_data.push(getCharFromInt(context_data_val));\r\n                            context_data_val = 0;\r\n                        } else {\r\n                            context_data_position++;\r\n                        }\r\n                        value = value >> 1;\r\n                    }\r\n                }\r\n                context_enlargeIn--;\r\n                if (context_enlargeIn == 0) {\r\n                    context_enlargeIn = Math.pow(2, context_numBits);\r\n                    context_numBits++;\r\n                }\r\n                delete context_dictionaryToCreate[context_w];\r\n            } else {\r\n                value = context_dictionary[context_w];\r\n                for (i = 0; i < context_numBits; i++) {\r\n                    context_data_val = (context_data_val << 1) | (value & 1);\r\n                    if (context_data_position == bitsPerChar - 1) {\r\n                        context_data_position = 0;\r\n                        context_data.push(getCharFromInt(context_data_val));\r\n                        context_data_val = 0;\r\n                    } else {\r\n                        context_data_position++;\r\n                    }\r\n                    value = value >> 1;\r\n                }\r\n            }\r\n            context_enlargeIn--;\r\n            if (context_enlargeIn == 0) {\r\n                context_enlargeIn = Math.pow(2, context_numBits);\r\n                context_numBits++;\r\n            }\r\n            // Add wc to the dictionary.\r\n            context_dictionary[context_wc] = context_dictSize++;\r\n            context_w = String(context_c);\r\n        }\r\n    }\r\n\r\n    // Output the code for w.\r\n    if (context_w !== \"\") {\r\n        if (hasOwnProperty.call(context_dictionaryToCreate, context_w)) {\r\n            if (context_w.charCodeAt(0) < 256) {\r\n                for (i = 0; i < context_numBits; i++) {\r\n                    context_data_val = context_data_val << 1;\r\n                    if (context_data_position == bitsPerChar - 1) {\r\n                        context_data_position = 0;\r\n                        context_data.push(getCharFromInt(context_data_val));\r\n                        context_data_val = 0;\r\n                    } else {\r\n                        context_data_position++;\r\n                    }\r\n                }\r\n                value = context_w.charCodeAt(0);\r\n                for (i = 0; i < 8; i++) {\r\n                    context_data_val = (context_data_val << 1) | (value & 1);\r\n                    if (context_data_position == bitsPerChar - 1) {\r\n                        context_data_position = 0;\r\n                        context_data.push(getCharFromInt(context_data_val));\r\n                        context_data_val = 0;\r\n                    } else {\r\n                        context_data_position++;\r\n                    }\r\n                    value = value >> 1;\r\n                }\r\n            } else {\r\n                value = 1;\r\n                for (i = 0; i < context_numBits; i++) {\r\n                    context_data_val = (context_data_val << 1) | value;\r\n                    if (context_data_position == bitsPerChar - 1) {\r\n                        context_data_position = 0;\r\n                        context_data.push(getCharFromInt(context_data_val));\r\n                        context_data_val = 0;\r\n                    } else {\r\n                        context_data_position++;\r\n                    }\r\n                    value = 0;\r\n                }\r\n                value = context_w.charCodeAt(0);\r\n                for (i = 0; i < 16; i++) {\r\n                    context_data_val = (context_data_val << 1) | (value & 1);\r\n                    if (context_data_position == bitsPerChar - 1) {\r\n                        context_data_position = 0;\r\n                        context_data.push(getCharFromInt(context_data_val));\r\n                        context_data_val = 0;\r\n                    } else {\r\n                        context_data_position++;\r\n                    }\r\n                    value = value >> 1;\r\n                }\r\n            }\r\n            context_enlargeIn--;\r\n            if (context_enlargeIn == 0) {\r\n                context_enlargeIn = Math.pow(2, context_numBits);\r\n                context_numBits++;\r\n            }\r\n            delete context_dictionaryToCreate[context_w];\r\n        } else {\r\n            value = context_dictionary[context_w];\r\n            for (i = 0; i < context_numBits; i++) {\r\n                context_data_val = (context_data_val << 1) | (value & 1);\r\n                if (context_data_position == bitsPerChar - 1) {\r\n                    context_data_position = 0;\r\n                    context_data.push(getCharFromInt(context_data_val));\r\n                    context_data_val = 0;\r\n                } else {\r\n                    context_data_position++;\r\n                }\r\n                value = value >> 1;\r\n            }\r\n        }\r\n        context_enlargeIn--;\r\n        if (context_enlargeIn == 0) {\r\n            context_enlargeIn = Math.pow(2, context_numBits);\r\n            context_numBits++;\r\n        }\r\n    }\r\n\r\n    // Mark the end of the stream\r\n    value = 2;\r\n    for (i = 0; i < context_numBits; i++) {\r\n        context_data_val = (context_data_val << 1) | (value & 1);\r\n        if (context_data_position == bitsPerChar - 1) {\r\n            context_data_position = 0;\r\n            context_data.push(getCharFromInt(context_data_val));\r\n            context_data_val = 0;\r\n        } else {\r\n            context_data_position++;\r\n        }\r\n        value = value >> 1;\r\n    }\r\n\r\n    // Flush the last char\r\n    // eslint-disable-next-line no-constant-condition\r\n    while (true) {\r\n        context_data_val = context_data_val << 1;\r\n        if (context_data_position == bitsPerChar - 1) {\r\n            context_data.push(getCharFromInt(context_data_val));\r\n            break;\r\n        } else context_data_position++;\r\n    }\r\n    return context_data.join(\"\");\r\n}\r\n\r\nfunction decompress(compressed) {\r\n    if (compressed == null) return \"\";\r\n    if (compressed == \"\") return null;\r\n    return _decompress(compressed.length, 32768, function (index) {\r\n        return compressed.charCodeAt(index);\r\n    });\r\n}\r\n\r\nfunction _decompress(length, resetValue, getNextValue) {\r\n    let dictionary = [],\r\n        next,\r\n        enlargeIn = 4,\r\n        dictSize = 4,\r\n        numBits = 3,\r\n        entry = \"\",\r\n        result = [],\r\n        i,\r\n        w,\r\n        bits,\r\n        resb,\r\n        maxpower,\r\n        power,\r\n        c,\r\n        data = { val: getNextValue(0), position: resetValue, index: 1 };\r\n\r\n    for (i = 0; i < 3; i += 1) {\r\n        dictionary[i] = i;\r\n    }\r\n\r\n    bits = 0;\r\n    maxpower = Math.pow(2, 2);\r\n    power = 1;\r\n    while (power != maxpower) {\r\n        resb = data.val & data.position;\r\n        data.position >>= 1;\r\n        if (data.position == 0) {\r\n            data.position = resetValue;\r\n            data.val = getNextValue(data.index++);\r\n        }\r\n        bits |= (resb > 0 ? 1 : 0) * power;\r\n        power <<= 1;\r\n    }\r\n\r\n    switch ((next = bits)) {\r\n        case 0:\r\n            bits = 0;\r\n            maxpower = Math.pow(2, 8);\r\n            power = 1;\r\n            while (power != maxpower) {\r\n                resb = data.val & data.position;\r\n                data.position >>= 1;\r\n                if (data.position == 0) {\r\n                    data.position = resetValue;\r\n                    data.val = getNextValue(data.index++);\r\n                }\r\n                bits |= (resb > 0 ? 1 : 0) * power;\r\n                power <<= 1;\r\n            }\r\n            c = fromCharCode(bits);\r\n            break;\r\n        case 1:\r\n            bits = 0;\r\n            maxpower = Math.pow(2, 16);\r\n            power = 1;\r\n            while (power != maxpower) {\r\n                resb = data.val & data.position;\r\n                data.position >>= 1;\r\n                if (data.position == 0) {\r\n                    data.position = resetValue;\r\n                    data.val = getNextValue(data.index++);\r\n                }\r\n                bits |= (resb > 0 ? 1 : 0) * power;\r\n                power <<= 1;\r\n            }\r\n            c = fromCharCode(bits);\r\n            break;\r\n        case 2:\r\n            return \"\";\r\n    }\r\n    dictionary[3] = c;\r\n    w = c;\r\n    result.push(c);\r\n\r\n    // eslint-disable-next-line no-constant-condition\r\n    while (true) {\r\n        if (data.index > length) {\r\n            return \"\";\r\n        }\r\n\r\n        bits = 0;\r\n        maxpower = Math.pow(2, numBits);\r\n        power = 1;\r\n        while (power != maxpower) {\r\n            resb = data.val & data.position;\r\n            data.position >>= 1;\r\n            if (data.position == 0) {\r\n                data.position = resetValue;\r\n                data.val = getNextValue(data.index++);\r\n            }\r\n            bits |= (resb > 0 ? 1 : 0) * power;\r\n            power <<= 1;\r\n        }\r\n\r\n        switch ((c = bits)) {\r\n            case 0:\r\n                bits = 0;\r\n                maxpower = Math.pow(2, 8);\r\n                power = 1;\r\n                while (power != maxpower) {\r\n                    resb = data.val & data.position;\r\n                    data.position >>= 1;\r\n                    if (data.position == 0) {\r\n                        data.position = resetValue;\r\n                        data.val = getNextValue(data.index++);\r\n                    }\r\n                    bits |= (resb > 0 ? 1 : 0) * power;\r\n                    power <<= 1;\r\n                }\r\n\r\n                dictionary[dictSize++] = fromCharCode(bits);\r\n                c = dictSize - 1;\r\n                enlargeIn--;\r\n                break;\r\n            case 1:\r\n                bits = 0;\r\n                maxpower = Math.pow(2, 16);\r\n                power = 1;\r\n                while (power != maxpower) {\r\n                    resb = data.val & data.position;\r\n                    data.position >>= 1;\r\n                    if (data.position == 0) {\r\n                        data.position = resetValue;\r\n                        data.val = getNextValue(data.index++);\r\n                    }\r\n                    bits |= (resb > 0 ? 1 : 0) * power;\r\n                    power <<= 1;\r\n                }\r\n                dictionary[dictSize++] = fromCharCode(bits);\r\n                c = dictSize - 1;\r\n                enlargeIn--;\r\n                break;\r\n            case 2:\r\n                return result.join(\"\");\r\n        }\r\n\r\n        if (enlargeIn == 0) {\r\n            enlargeIn = Math.pow(2, numBits);\r\n            numBits++;\r\n        }\r\n\r\n        if (dictionary[c]) {\r\n            // @ts-ignore\r\n            entry = dictionary[c];\r\n        } else {\r\n            if (c === dictSize) {\r\n                entry = w + w.charAt(0);\r\n            } else {\r\n                return null;\r\n            }\r\n        }\r\n        result.push(entry);\r\n\r\n        // Add w+entry[0] to the dictionary.\r\n        dictionary[dictSize++] = w + entry.charAt(0);\r\n        enlargeIn--;\r\n\r\n        w = entry;\r\n\r\n        if (enlargeIn == 0) {\r\n            enlargeIn = Math.pow(2, numBits);\r\n            numBits++;\r\n        }\r\n    }\r\n}\r\n\n\n/***/ }),\n\n/***/ \"./src/js/core/query_parameters.js\":\n/*!*****************************************!*\\\n  !*** ./src/js/core/query_parameters.js ***!\n  \\*****************************************/\n/*! exports provided: queryParamOptions */\n/***/ (function(module, __webpack_exports__, __webpack_require__) {\n\n\"use strict\";\n__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"queryParamOptions\", function() { return queryParamOptions; });\nconst queryString = __webpack_require__(/*! query-string */ \"./node_modules/query-string/index.js\");\r\nconst options = queryString.parse(location.search);\r\n\r\nlet queryParamOptions = {\r\n    embedProvider: null,\r\n    fullVersion: false,\r\n    sandboxMode: false,\r\n};\r\n\r\nif (options.embed) {\r\n    queryParamOptions.embedProvider = options.embed;\r\n}\r\n\r\n// Allow testing full version outside of standalone\r\nif (options.fullVersion && !false) {\r\n    queryParamOptions.fullVersion = true;\r\n}\r\n\r\n// Allow testing full version outside of standalone\r\nif (options.sandboxMode && !false) {\r\n    queryParamOptions.sandboxMode = true;\r\n}\r\n\n\n/***/ }),\n\n/***/ \"./src/js/core/sensitive_utils.encrypt.js\":\n/*!************************************************!*\\\n  !*** ./src/js/core/sensitive_utils.encrypt.js ***!\n  \\************************************************/\n/*! exports provided: sha1, getNameOfProvider */\n/***/ (function(module, __webpack_exports__, __webpack_require__) {\n\n\"use strict\";\n__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"sha1\", function() { return sha1; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getNameOfProvider\", function() { return getNameOfProvider; });\n/* harmony import */ var rusha__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rusha */ \"./node_modules/rusha/dist/rusha.js\");\n/* harmony import */ var rusha__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(rusha__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _lzstring__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lzstring */ \"./src/js/core/lzstring.js\");\n\r\n\r\n\r\n\r\nfunction sha1(str) {\r\n    return Object(rusha__WEBPACK_IMPORTED_MODULE_0__[\"createHash\"])().update(str).digest(\"hex\");\r\n}\r\n\r\n// Window.location.host\r\nfunction getNameOfProvider() {\r\n    return window[Object(_lzstring__WEBPACK_IMPORTED_MODULE_1__[\"decompressX64\"])(\"DYewxghgLgliB2Q\")][Object(_lzstring__WEBPACK_IMPORTED_MODULE_1__[\"decompressX64\"])(\"BYewzgLgdghgtgUyA\")];\r\n}\r\n\n\n/***/ })\n\n/******/ });\n//# sourceMappingURL=3228c3dcec72317baa44.worker.js.map", null);
 };
 
 /***/ }),
@@ -15779,8 +15779,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _query_parameters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./query_parameters */ "./src/js/core/query_parameters.js");
 
 
-const IS_DEBUG =  true ||
-    false;
+const IS_DEBUG =
+     true ||
+    (false);
 
 const IS_DEMO = _query_parameters__WEBPACK_IMPORTED_MODULE_0__["queryParamOptions"].fullVersion
     ? false
@@ -15932,7 +15933,8 @@ __webpack_require__.r(__webpack_exports__);
     _noArtificialDelays: "Skips any delays like transitions between states and such",
     noArtificialDelays: false,
     // -----------------------------------------------------------------------------------
-    _disableSavegameWrite: "Disables writing of savegames, useful for testing the same savegame over and over",
+    _disableSavegameWrite:
+        "Disables writing of savegames, useful for testing the same savegame over and over",
     disableSavegameWrite: false,
     // -----------------------------------------------------------------------------------
     _showEntityBounds: "Shows bounds of all entities",
@@ -15992,7 +15994,8 @@ __webpack_require__.r(__webpack_exports__);
     _disableMapOverview: "Disables the automatic switch to an overview when zooming out",
     disableMapOverview: false,
     // -----------------------------------------------------------------------------------
-    _disableUpgradeNotification: "Disables the notification when there are new entries in the changelog since last played",
+    _disableUpgradeNotification:
+        "Disables the notification when there are new entries in the changelog since last played",
     disableUpgradeNotification: false,
     // -----------------------------------------------------------------------------------
     _instantBelts: "Makes belts almost infinitely fast",
@@ -16004,7 +16007,8 @@ __webpack_require__.r(__webpack_exports__);
     _instantMiners: "Makes miners almost infinitely fast",
     instantMiners: false,
     // -----------------------------------------------------------------------------------
-    _resumeGameOnFastEnter: "When using fastGameEnter, controls whether a new game is started or the last one is resumed",
+    _resumeGameOnFastEnter:
+        "When using fastGameEnter, controls whether a new game is started or the last one is resumed",
     resumeGameOnFastEnter: false,
     // -----------------------------------------------------------------------------------
     _renderForTrailer: "Special option used to render the trailer",
@@ -21538,7 +21542,7 @@ function getBuildId() {
     if ( true && _config__WEBPACK_IMPORTED_MODULE_0__["IS_DEBUG"]) {
         return "local-dev";
     } else if (true) {
-        return "dev-" + getPlatformName() + "-" + "7f0845e";
+        return "dev-" + getPlatformName() + "-" + "bcd0af0";
     } else {}
 }
 
@@ -26623,8 +26627,7 @@ class MetaToolbarSwapperBuilding extends _meta_building__WEBPACK_IMPORTED_MODULE
      * Creates the entity at the given location
      * @param {Entity} entity
      */
-    setupEntityComponents(entity) {
-    }
+    setupEntityComponents(entity) {}
 }
 
 
@@ -28753,7 +28756,7 @@ function initComponentRegistry() {
 
     window.assert(
         // @ts-ignore
-        __webpack_require__("./src/js/game/components sync .*\\.js/").keys().length + 
+        __webpack_require__("./src/js/game/components sync .*\\.js/").keys().length +
             _custom_modBuildings__WEBPACK_IMPORTED_MODULE_15__["allCustomBuildingData"].filter(e => e.component).length ===
             _core_global_registries__WEBPACK_IMPORTED_MODULE_0__["gComponentRegistry"].getNumEntries(),
         "Not all components are registered"
@@ -29265,6 +29268,7 @@ class HubComponent extends _component__WEBPACK_IMPORTED_MODULE_0__["Component"] 
         this.hashesToAnalyze.push(hash);
     }
 }
+
 
 /***/ }),
 
@@ -31304,7 +31308,7 @@ class MetaTargetShapeCheckerBuilding extends _gameData__WEBPACK_IMPORTED_MODULE_
      * @param {GameRoot} root
      */
     getIsUnlocked(root) {
-        return root.hubGoals.isRewardUnlocked(`reward_${ id }`);
+        return root.hubGoals.isRewardUnlocked(`reward_${id}`);
     }
 
     /**
@@ -31576,6 +31580,10 @@ const checker = {
     variantId: 500,
     meta: MetaTargetShapeCheckerBuilding,
     speed: 2,
+
+    Tname: "Checker",
+    Tdesc:
+        "Toggles output direction depending on current hub goal shape, allowing automation of random levels.",
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (checker);
@@ -31600,11 +31608,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _gameData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../gameData */ "./src/js/game/custom/gameData.js");
 
 
-
 const id = "combiner";
 const color = "blue";
-
-
 
 class MetaCombinerBuilding extends _gameData__WEBPACK_IMPORTED_MODULE_0__["MetaBuilding"] {
     constructor() {
@@ -31623,7 +31628,7 @@ class MetaCombinerBuilding extends _gameData__WEBPACK_IMPORTED_MODULE_0__["MetaB
      * @param {GameRoot} root
      */
     getIsUnlocked(root) {
-        return root.hubGoals.isRewardUnlocked(`reward_${ id }`);
+        return root.hubGoals.isRewardUnlocked(`reward_${id}`);
     }
 
     /**
@@ -31676,8 +31681,42 @@ class MetaCombinerBuilding extends _gameData__WEBPACK_IMPORTED_MODULE_0__["MetaB
     }
 }
 
+const components = {
+    R: "R",
+    C: "C",
+    S: "S",
+    W: "W",
+    B: "RC",
+    D: "RS",
+    O: "RW",
+    F: "CS",
+    U: "CW",
+    M: "SW",
+    Z: "RCS",
+    T: "RCW",
+    L: "RSW",
+    P: "CSW",
+    Y: "RCSW",
+};
 
+const recipes = {};
 
+for (let s in components) {
+    components[s] = components[s].split("").sort().join("");
+}
+
+for (let s1 in components) {
+    let res = {};
+    for (let s2 in components) {
+        let cm = [...new Set(components[s1] + components[s2])].sort().join("");
+        for (let r in components) {
+            if (cm == components[r]) {
+                res[s2] = r;
+            }
+        }
+    }
+    recipes[s1] = res;
+}
 
 // returns trackProduction
 function CombinerProcess({ items, trackProduction, entity, outItems, self }) {
@@ -31686,31 +31725,45 @@ function CombinerProcess({ items, trackProduction, entity, outItems, self }) {
     const inputItem = items[0].item;
     trackProduction = true;
 
-//     debugger;
+    //     debugger;
     let input = items.map(e => e.item.definition.getHash());
-
 
     let [it1, it2] = input;
     let out = [];
-    const recipes = {
-        "CC": "L",
-        "RR": "P",
-        "SS": "T",
-        "WW": "Z",
-        "CR" : "B", "RC" : "B",
-        "CS" : "U", "SC" : "U",
-    };
-    let a = ""; 
-    for (let i = 0; i < 4; i++) {
-        let empty = it1[i*2] == "-" || it2[i*2] == "-";
-        let r = recipes[it1[i*2] + it2[i*2]] || "C";
-        a += empty ? "--" : r + "u";
+    let a = "";
+
+    // for (let i = 0; i < 4; i++) {
+    //     let empty = it1[i*2] == "-" || it2[i*2] == "-";
+    //     let r = recipes[it1[i*2] + it2[i*2]] || "C";
+    //     a += empty ? "--" : r + "u";
+    // }
+    let quads1 = it1
+        .split(":")
+        .flatMap(e => e.match(/../g))
+        .map(e => e[0]);
+    let quads2 = it2
+        .split(":")
+        .flatMap(e => e.match(/../g))
+        .map(e => e[0]);
+
+    let r = [];
+    for (let i = 0; i < Math.max(quads1.length, quads2.length); ++i) {
+        if (!quads1[i] || !quads2[i]) {
+            r.push(quads1[i] || quads2[i]);
+            continue;
+        }
+        if (quads1[i] == "-" || quads2[i] == "-") {
+            r.push(quads1[i] == "-" ? quads2[i] : quads1[i]);
+        }
+        window.assert(recipes[quads1[i]][quads2[i]]);
+        r.push(recipes[quads1[i]][quads2[i]]);
     }
+    a = r.map((e, i) => `${i && !(i % 4) ? ":" : ""}${e}${e == "-" ? "-" : "u"}`).join("");
 
     if (a != "--------") {
         outItems.push({
             item: new _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"](_gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(a)),
-        })
+        });
     }
 
     // for (let i = 0; i < out.length; ++i) {
@@ -31724,16 +31777,15 @@ function CombinerProcess({ items, trackProduction, entity, outItems, self }) {
     return trackProduction;
 }
 
-
 const Sprite = {
-    sprite: `sprites/buildings/${ id }.png`,
-    url: `./res/${ id }.png`,
+    sprite: `sprites/buildings/${id}.png`,
+    url: `./res/${id}.png`,
     w: 192 * 2,
     h: 192 * 2,
 };
 const SpriteBp = {
-    sprite: `sprites/blueprints/${ id }.png`,
-    url: `./res/${ id }-bp.png`,
+    sprite: `sprites/blueprints/${id}.png`,
+    url: `./res/${id}-bp.png`,
     w: 192 * 2,
     h: 192 * 2,
 };
@@ -31747,8 +31799,8 @@ const unstackerBuildingData = {
     process: CombinerProcess,
     // TODO: keybinding in KEYMAPPINGS
     // TODO: T
-    Tname: id,
-    Tdesc: "Whatever...",
+    Tname: "Combiner",
+    Tdesc: "Combines shapes into shapes of higher class. Works with shapes same as Merger works with colors.",
     speed: 1 / 5,
     speedClass: "processors",
     meta: MetaCombinerBuilding,
@@ -31756,6 +31808,7 @@ const unstackerBuildingData = {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (unstackerBuildingData);
+
 
 /***/ }),
 
@@ -31944,7 +31997,7 @@ class MetaCounterBuilding extends _meta_building__WEBPACK_IMPORTED_MODULE_15__["
      * @param {GameRoot} root
      */
     getIsUnlocked(root) {
-        return root.hubGoals.isRewardUnlocked(`reward_${ id }`);
+        return root.hubGoals.isRewardUnlocked(`reward_${id}`);
     }
 
     /**
@@ -32024,7 +32077,7 @@ const counterBuildingData = {
     // TODO: keybinding in KEYMAPPINGS
     // TODO: T
     Tname: "Counter",
-    Tdesc: "Whatever...",
+    Tdesc: "Displays current throughput of a belt.",
     variantId: 510,
     meta: MetaCounterBuilding,
     speed: 2,
@@ -32044,17 +32097,13 @@ const counterBuildingData = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-
-
-
-
 const painter = {
     id: "painter4",
     goal: {
         shape: "CuCuCuCu",
         required: 5000,
         reward: "painter_quad",
-    }
+    },
 };
 const inverter = {
     id: "inverter",
@@ -32062,7 +32111,7 @@ const inverter = {
         shape: "CuCuCuCu",
         required: 5000,
         reward: "inverter",
-    }
+    },
 };
 const counter = {
     id: "counter",
@@ -32070,7 +32119,7 @@ const counter = {
         shape: "CuCuCuCu",
         required: 5000,
         reward: "counter",
-    }
+    },
 };
 const checker = {
     id: "checker",
@@ -32078,7 +32127,7 @@ const checker = {
         shape: "CuCuCuCu",
         required: 5000,
         reward: "checker",
-    }
+    },
 };
 const combiner = {
     id: "combiner",
@@ -32086,7 +32135,7 @@ const combiner = {
         shape: "CuCuCuCu",
         required: 5000,
         reward: "combiner",
-    }
+    },
 };
 
 const unstacker = {
@@ -32095,21 +32144,13 @@ const unstacker = {
         shape: "CuCuCuCu",
         required: 5000,
         reward: "unstacker",
-    }
+    },
 };
 
-
-const levels = [
-    inverter,
-    counter,
-    checker,
-    combiner,
-    unstacker,
-]
-
-
+const levels = [inverter, counter, checker, combiner, unstacker];
 
 /* harmony default export */ __webpack_exports__["default"] = (levels);
+
 
 /***/ }),
 
@@ -32127,7 +32168,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _gameData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../gameData */ "./src/js/game/custom/gameData.js");
 
 
-
 const id = "painter";
 
 const cache = {};
@@ -32137,19 +32177,19 @@ function colorShape(shape, color) {
     let out = cache[recipeId];
     if (out) return out;
 
-    let layers = shape.split(':').map(e=>e.split(''));
+    let layers = shape.split(":").map(e => e.split(""));
     for (let i = 0; i < 4; i++) {
         let charges = 4;
         for (let j = layers.length - 1; j >= 0; --j) {
-            if (layers[j][2*i] != "-") {
-                layers[j][2*i+1] = color;
+            if (layers[j][2 * i] != "-") {
+                layers[j][2 * i + 1] = color;
                 charges--;
                 if (!charges) break;
             }
         }
     }
-    let result = layers.map(e=>e.join('')).join(':');
-    return cache[recipeId] = _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(result);
+    let result = layers.map(e => e.join("")).join(":");
+    return (cache[recipeId] = _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(result));
 }
 
 // returns trackProduction
@@ -32164,13 +32204,13 @@ function Painter1Process({ items, trackProduction, entity, outItems, self }) {
     return true;
 }
 
-
 const BuildingData = {
     id: id,
     process: Painter1Process,
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (BuildingData);
+
 
 /***/ }),
 
@@ -32188,7 +32228,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _gameData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../gameData */ "./src/js/game/custom/gameData.js");
 
 
-
 const id = "painterDouble";
 
 const cache = {};
@@ -32198,19 +32237,19 @@ function colorShape(shape, color) {
     let out = cache[recipeId];
     if (out) return out;
 
-    let layers = shape.split(':').map(e=>e.split(''));
+    let layers = shape.split(":").map(e => e.split(""));
     for (let i = 0; i < 4; i++) {
         let charges = 2;
         for (let j = layers.length - 1; j >= 0; --j) {
-            if (layers[j][2*i] != "-") {
-                layers[j][2*i+1] = color;
+            if (layers[j][2 * i] != "-") {
+                layers[j][2 * i + 1] = color;
                 charges--;
                 if (!charges) break;
             }
         }
     }
-    let result = layers.map(e=>e.join('')).join(':');
-    return cache[recipeId] = _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(result);
+    let result = layers.map(e => e.join("")).join(":");
+    return (cache[recipeId] = _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(result));
 }
 
 // returns trackProduction
@@ -32229,13 +32268,13 @@ function Painter2Process({ items, trackProduction, entity, outItems, self }) {
     return true;
 }
 
-
 const BuildingData = {
     id: id,
     process: Painter2Process,
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (BuildingData);
+
 
 /***/ }),
 
@@ -32256,9 +32295,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _gameData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../gameData */ "./src/js/game/custom/gameData.js");
 
 
-
 const id = "quaduo";
-
 
 class MetaQuaduoPainterBuilding extends _gameData__WEBPACK_IMPORTED_MODULE_0__["MetaBuilding"] {
     constructor() {
@@ -32277,7 +32314,7 @@ class MetaQuaduoPainterBuilding extends _gameData__WEBPACK_IMPORTED_MODULE_0__["
      * @param {GameRoot} root
      */
     getIsUnlocked(root) {
-        return root.hubGoals.isRewardUnlocked(`reward_${ id }`);
+        return root.hubGoals.isRewardUnlocked(`reward_${id}`);
     }
 
     /**
@@ -32287,7 +32324,7 @@ class MetaQuaduoPainterBuilding extends _gameData__WEBPACK_IMPORTED_MODULE_0__["
      */
     getAdditionalStatistics(root, variant) {
         const speed = root.hubGoals.getProcessorBaseSpeed(id);
-        return [[_gameData__WEBPACK_IMPORTED_MODULE_0__["T"].ingame.buildingPlacement.infoTexts.speed, Object(_gameData__WEBPACK_IMPORTED_MODULE_0__["formatItemsPerSecond"])(speed)]];
+        return [[_gameData__WEBPACK_IMPORTED_MODULE_0__["T"].ingame.buildingPlacement.infoTexts.speed, Object(_gameData__WEBPACK_IMPORTED_MODULE_0__["formatItemsPerSecond"])(speed, true)]];
     }
 
     /**
@@ -32350,7 +32387,6 @@ class MetaQuaduoPainterBuilding extends _gameData__WEBPACK_IMPORTED_MODULE_0__["
     }
 }
 
-
 const cache = {};
 
 function colorShape(shape, c1, c2, c3, c4) {
@@ -32358,20 +32394,18 @@ function colorShape(shape, c1, c2, c3, c4) {
     let out = cache[recipeId];
     if (out) return out;
 
-    let layers = shape.split(':').map(e=>e.split(''));
+    let layers = shape.split(":").map(e => e.split(""));
     let colors = [c1, c2, c3, c4];
     for (let i = 0; i < 4; i++) {
         for (let j = layers.length - 1; j >= 0; --j) {
-            if (layers[j][2*i] != "-") {
-                layers[j][2*i+1] = colors[i];
+            if (layers[j][2 * i] != "-") {
+                layers[j][2 * i + 1] = colors[i];
             }
         }
     }
-    let result = layers.map(e=>e.join('')).join(':');
-    return cache[recipeId] = _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(result);
+    let result = layers.map(e => e.join("")).join(":");
+    return (cache[recipeId] = _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(result));
 }
-
-
 
 // returns trackProduction
 function QuaduoPainterProcess({ items, trackProduction, entity, outItems, self }) {
@@ -32382,26 +32416,25 @@ function QuaduoPainterProcess({ items, trackProduction, entity, outItems, self }
     let out1 = colorShape(input[0], input[2], input[3], input[4], input[5]);
     outItems.push({
         item: new _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"](out1),
-    })
+    });
     let out2 = colorShape(input[1], input[2], input[3], input[4], input[5]);
     outItems.push({
         item: new _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"](out2),
-    })
+    });
 
     // trackProduction
     return true;
 }
 
-
 const Sprite = {
-    sprite: `sprites/buildings/${ id }.png`,
-    url: `./res/${ id }.png`,
+    sprite: `sprites/buildings/${id}.png`,
+    url: `./res/${id}.png`,
     w: 756,
     h: 378,
 };
 const SpriteBp = {
-    sprite: `sprites/blueprints/${ id }.png`,
-    url: `./res/${ id }.png`, // NOT BP ATM
+    sprite: `sprites/blueprints/${id}.png`,
+    url: `./res/${id}.png`, // NOT BP ATM
     w: 756,
     h: 378,
 };
@@ -32416,14 +32449,15 @@ const unstackerBuildingData = {
     // TODO: keybinding in KEYMAPPINGS
     // TODO: T
     Tname: "QuaduoPainter",
-    Tdesc: "Whatever...",
-    speed: 1 / 5,
+    Tdesc: "Paints all layers of 2 shapes on insane speed.",
+    speed: 1 / 2,
     speedClass: "processors",
     meta: MetaQuaduoPainterBuilding,
     variantId: 560,
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (unstackerBuildingData);
+
 
 /***/ }),
 
@@ -32456,19 +32490,15 @@ class RepeaterComponent extends _gameData__WEBPACK_IMPORTED_MODULE_0__["Componen
 
     static getSchema() {
         return {
-            itemHash: _gameData__WEBPACK_IMPORTED_MODULE_0__["types"].string, 
+            itemHash: _gameData__WEBPACK_IMPORTED_MODULE_0__["types"].string,
             storedItem: _gameData__WEBPACK_IMPORTED_MODULE_0__["types"].nullable(_gameData__WEBPACK_IMPORTED_MODULE_0__["types"].obj(_gameData__WEBPACK_IMPORTED_MODULE_0__["gItemRegistry"])),
             charges: _gameData__WEBPACK_IMPORTED_MODULE_0__["types"].int,
         };
     }
-    constructor({
-        itemHash = "",
-        storedItem = null,
-        charges = 0,
-    }) {
+    constructor({ itemHash = "", storedItem = null, charges = 0 }) {
         super();
 
-        this.itemHash = "";
+        this.itemHash = itemHash;
         /**
          * Currently stored item
          * @type {BaseItem}
@@ -32478,7 +32508,7 @@ class RepeaterComponent extends _gameData__WEBPACK_IMPORTED_MODULE_0__["Componen
     }
 
     duplicateWithoutContents() {
-        return new RepeaterComponent(this);
+        return new RepeaterComponent({ itemHash: this.itemHash, storedItem: this.storedItem });
     }
 }
 
@@ -32556,7 +32586,6 @@ class RepeaterSystem extends _gameData__WEBPACK_IMPORTED_MODULE_0__["GameSystemW
     }
 
     update() {
-
         const storedShapes = this.root.hubGoals.storedShapes;
 
         for (let i = 0; i < this.allEntities.length; ++i) {
@@ -32590,11 +32619,13 @@ class RepeaterSystem extends _gameData__WEBPACK_IMPORTED_MODULE_0__["GameSystemW
                             comp.charges++;
                         }
                         comp.charges--;
-                        slots[i].item = item instanceof _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"] ? _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"].createFromHash(comp.itemHash) : _gameData__WEBPACK_IMPORTED_MODULE_0__["ColorItem"].createFromHash(comp.itemHash);
+                        slots[i].item =
+                            item instanceof _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"]
+                                ? _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"].createFromHash(comp.itemHash)
+                                : _gameData__WEBPACK_IMPORTED_MODULE_0__["ColorItem"].createFromHash(comp.itemHash);
                     }
                 }
             }
-
         }
     }
 
@@ -32650,7 +32681,7 @@ function repeaterProcess({ items, trackProduction, entity, outItems, self }) {
 const tscSprite = [
     {
         // data:
-        sprite: `sprites/buildings/${ id }.png`,
+        sprite: `sprites/buildings/${id}.png`,
         w: 192,
         h: 192,
     },
@@ -32682,7 +32713,7 @@ const tscSprite = [
 const tscSpriteBp = [
     {
         // data:
-        sprite: `sprites/blueprints/${ id }.png`,
+        sprite: `sprites/blueprints/${id}.png`,
         w: 192,
         h: 192,
         transparent: true,
@@ -32733,7 +32764,7 @@ const repeater = {
     meta: MetaRepeaterBuilding,
     speed: 2,
     Tname: "Repeater",
-    Tdesc: "Duplicates items, taking them from hub",
+    Tdesc: "Duplicates shapes or colors, taking them from hub. Can store up to 1000 items itself.",
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (repeater);
@@ -32758,9 +32789,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _gameData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../gameData */ "./src/js/game/custom/gameData.js");
 
 
-
 const id = "unstacker";
-
 
 class MetaUnstackerBuilding extends _gameData__WEBPACK_IMPORTED_MODULE_0__["MetaBuilding"] {
     constructor() {
@@ -32779,7 +32808,7 @@ class MetaUnstackerBuilding extends _gameData__WEBPACK_IMPORTED_MODULE_0__["Meta
      * @param {GameRoot} root
      */
     getIsUnlocked(root) {
-        return root.hubGoals.isRewardUnlocked(`reward_${ id }`);
+        return root.hubGoals.isRewardUnlocked(`reward_${id}`);
     }
 
     /**
@@ -32831,9 +32860,6 @@ class MetaUnstackerBuilding extends _gameData__WEBPACK_IMPORTED_MODULE_0__["Meta
     }
 }
 
-
-
-
 // returns trackProduction
 function UnstackerProcess({ items, trackProduction, entity, outItems, self }) {
     // console.log("Unstacker PROCESSES");
@@ -32841,33 +32867,26 @@ function UnstackerProcess({ items, trackProduction, entity, outItems, self }) {
     const inputItem = items[0].item;
     trackProduction = true;
 
-//     debugger;
+    //     debugger;
     let input = items.map(e => e.item.definition.getHash());
-
-
 
     let [it] = input;
     let out = [];
-    let a = it.split(':');
+    let a = it.split(":");
     let top = a.shift();
-    let right = a.join(':');
-    out = [top, right]
-
-
-
-
+    let right = a.join(":");
+    out = [top, right];
 
     for (let i = 0; i < out.length; ++i) {
-    	if (!out[i]) continue;
-    	outItems.push({
-    		item: new _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"](_gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(out[i])),
-    		requiredSlot: i,
-    	})
+        if (!out[i]) continue;
+        outItems.push({
+            item: new _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"](_gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(out[i])),
+            requiredSlot: i,
+        });
     }
 
     return trackProduction;
 }
-
 
 const Sprite = {
     sprite: "sprites/buildings/unstacker.png",
@@ -32892,7 +32911,7 @@ const unstackerBuildingData = {
     // TODO: keybinding in KEYMAPPINGS
     // TODO: T
     Tname: "Unstacker",
-    Tdesc: "Whatever...",
+    Tdesc: "Splits lowest layer out of a shape.",
     speed: 1 / 5,
     speedClass: "processors",
     meta: MetaUnstackerBuilding,
@@ -32900,6 +32919,7 @@ const unstackerBuildingData = {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (unstackerBuildingData);
+
 
 /***/ }),
 
@@ -33063,7 +33083,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 /***/ }),
 
 /***/ "./src/js/game/custom/modBuildings.js":
@@ -33136,19 +33155,21 @@ function addCustom(custom) {
     Object.assign(customBuildingData[custom.id], custom);
 
     if (custom.goal) {
-        if (_tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].find(e=>e.reward == custom.goal.reward)) {
-            let index = _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].findIndex(e=>e.reward == custom.goal.reward);
+        if (_tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].find(e => e.reward == custom.goal.reward)) {
+            let index = _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].findIndex(e => e.reward == custom.goal.reward);
             _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].splice(index, 1);
         }
         _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].push(custom.goal);
-        _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].sort((a,b)=>a.required-b.required);
+        _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].sort((a, b) => a.required - b.required);
         if (custom.goal.reward) {
             if (!custom.goal.reward.startsWith("reward_")) {
                 custom.goal.reward = "reward_" + custom.goal.reward;
             }
             _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["enumHubGoalRewards"][custom.goal.reward] = custom.goal.reward;
             if (!_translations__WEBPACK_IMPORTED_MODULE_3__["T"].storyRewards[custom.goal.reward]) {
-                _translations__WEBPACK_IMPORTED_MODULE_3__["T"].storyRewards[custom.goal.reward] = { title: custom.goal.Tname || custom.Tname || custom.id };
+                _translations__WEBPACK_IMPORTED_MODULE_3__["T"].storyRewards[custom.goal.reward] = {
+                    title: custom.goal.Tname || custom.Tname || custom.id,
+                };
             }
         }
     }
@@ -33190,8 +33211,6 @@ function addCustom(custom) {
             _hud_parts_tools_toolbar__WEBPACK_IMPORTED_MODULE_1__["supportedBuildings"].push(custom.meta);
         }
     }
-
-
 
     if (custom.sprite) {
         (custom.sprite[0] || custom.sprite).sprite = `sprites/buildings/${custom.id}${
@@ -33486,7 +33505,7 @@ registerCustomShape({
 });
 
 registerCustomShape({
-    id: "razor",
+    id: "saw",
     code: "Z",
     ...customDefaults,
     draw({ dims, innerDims, layer, quad, context, color, begin }) {
@@ -33537,6 +33556,69 @@ registerCustomShape({
         context.arc(c, 0, b, PI - PI3, PI);
     },
     tier: 4,
+});
+
+registerCustomShape({
+    id: "leaf",
+    code: "F",
+    ...customDefaults,
+    draw: "M 0 0 v 0.5 a 0.5 0.5 0 0 0 0.5 0.5 h 0.5 v -0.5 a 0.5 0.5 0 0 0 -0.5 -0.5 z",
+});
+
+registerCustomShape({
+    id: "diamond",
+    code: "D",
+    ...customDefaults,
+    draw: "M 0 0 l 0 0.5 0.5 0.5 0.5 0 0 -0.5 -0.5 -0.5 z",
+});
+
+registerCustomShape({
+    id: "mill",
+    code: "M",
+    ...customDefaults,
+    draw: "M 0 0 L 0 1 1 1 Z",
+});
+
+// registerCustomShape({
+//     id: "halfleaf",
+//     code: "H",
+//     ...customDefaults,
+//     draw: "100 M 0 0 L 0 100 A 45 45 0 0 0 30 30 A 45 45 0 0 0 100 0 Z",
+// })
+
+registerCustomShape({
+    id: "yinyang",
+    code: "Y",
+    ...customDefaults,
+    // draw({ dims, innerDims, layer, quad, context, color, begin }) {
+    //     begin({ size: 1/(0.5+Math.SQRT1_2), path: true });
+
+    //     /** @type{CanvasRenderingContext2D} */
+    //     let ctx = context;
+
+    //     with (ctx) { with (Math) {
+    //     ////////////////////////
+    //     // draw mostly in [0,1]x[0,1] square
+    //     // draw: "100 M 0 50 A 50 50 0 1 1 85 85 A 121 121 0 0 1 -85 85 A 50 50 0 0 0 0 50",
+    //     moveTo(0, 0.5);
+    //     arc(0.5, 0.5, 0.5, PI, PI/4)
+    //     arc(0, 0, 0.5+SQRT1_2, PI/4, PI/4+PI/2, 0)
+    //     arc(-0.5, 0.5, 0.5, 3*PI/4, 0, 1)
+
+    //     moveTo(0.6, 0.5)
+    //     arc(0.5, 0.5, 0.1, 0, 2*PI)
+    //     }}
+
+    // },
+    draw:
+        "120.71 M 0 50 A 50 50 0 1 1 85.355 85.355 A 120.71 120.71 0 0 1 -85.355 85.355 A 50 50 0 0 0 0 50 Z M 40 50 A 10 10 0 1 0 40 49.99 Z",
+});
+
+registerCustomShape({
+    id: "octagon",
+    code: "O",
+    ...customDefaults,
+    draw: "M 0 0 L 0 1 0.4142 1 1 0.4142 1 0 Z",
 });
 
 
@@ -33634,7 +33716,7 @@ class DynamicTickrate {
         }
 
         const desiredFps = this.root.app.settings.getDesiredFps();
-        this.setTickRate(Math.round(Math.max(desiredFps / 3, this.currentTickRate * 0.8)));
+        this.setTickRate(Math.round(Math.max(desiredFps / 2, this.currentTickRate * 0.8)));
     }
 
     /**
@@ -35132,10 +35214,13 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
         const holeTier = 3; // max 2
 
         // @ts-ignore
-        const availableColors = Object.values(_colors__WEBPACK_IMPORTED_MODULE_4__["allColorData"]).filter(e => e.tier <= colorTier).map(e=>e.id);
+        const availableColors = Object.values(_colors__WEBPACK_IMPORTED_MODULE_4__["allColorData"])
+            .filter(e => e.tier <= colorTier)
+            .map(e => e.id);
         // @ts-ignore
-        const availableShapes = Object.values(_shapes__WEBPACK_IMPORTED_MODULE_5__["allShapeData"]).filter(e => e.tier <= shapeTier).map(e=>e.id);
-
+        const availableShapes = Object.values(_shapes__WEBPACK_IMPORTED_MODULE_5__["allShapeData"])
+            .filter(e => e.tier <= shapeTier)
+            .map(e => e.id);
 
         const randomColor = () => rng.choice(availableColors);
         const randomShape = () => rng.choice(availableShapes);
@@ -35952,7 +36037,8 @@ class HUDBaseToolbar extends _base_hud_part__WEBPACK_IMPORTED_MODULE_6__["BaseHU
             const binding = mapping && actionMapper.getBinding(mapping);
 
             const itemContainer = Object(_core_utils__WEBPACK_IMPORTED_MODULE_2__["makeDiv"])(items, null, ["building"]);
-            itemContainer.style.backgroundImage = "url(./res/ui/building_icons/" + metaBuilding.getId() + ".png)";
+            itemContainer.style.backgroundImage =
+                "url(./res/ui/building_icons/" + metaBuilding.getId() + ".png)";
             itemContainer.setAttribute("data-icon", "building_icons/" + metaBuilding.getId() + ".png");
 
             if (binding) {
@@ -38141,7 +38227,7 @@ class HUDDebugInfo extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDP
      */
     onModeChanged(mode) {
         this.element.setAttribute("data-mode", mode);
-        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"7f0845e"}`;
+        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"bcd0af0"}`;
     }
 
     /**
@@ -41147,9 +41233,12 @@ class HUDStatistics extends _base_hud_part__WEBPACK_IMPORTED_MODULE_4__["BaseHUD
             const shapeKey = entry[0];
 
             let handle = this.activeHandles[shapeKey];
-            // TODO TODO TODO TODO TODO TODO TODO TODO TODO 
+            // TODO TODO TODO TODO TODO TODO TODO TODO TODO
             if (!handle) {
-                const definition = (shapeKey.length > 1) ? this.root.shapeDefinitionMgr.getShapeFromShortKey(shapeKey) : _game_items_color_item__WEBPACK_IMPORTED_MODULE_8__["ColorItem"].createFromHash(shapeKey);
+                const definition =
+                    shapeKey.length > 1
+                        ? this.root.shapeDefinitionMgr.getShapeFromShortKey(shapeKey)
+                        : _game_items_color_item__WEBPACK_IMPORTED_MODULE_8__["ColorItem"].createFromHash(shapeKey);
                 handle = this.activeHandles[shapeKey] = new _statistics_handle__WEBPACK_IMPORTED_MODULE_6__["HUDShapeStatisticsHandle"](
                     this.root,
                     definition,
@@ -41231,7 +41320,10 @@ class HUDShapeStatisticsHandle {
 
     initElement() {
         this.element = document.createElement("div");
-        this.element.setAttribute("data-shape-key", typeof(this.definition) == 'string' ? this.definition : this.definition.getHash());
+        this.element.setAttribute(
+            "data-shape-key",
+            typeof this.definition == "string" ? this.definition : this.definition.getHash()
+        );
 
         this.counter = document.createElement("span");
         this.counter.classList.add("counter");
@@ -41443,8 +41535,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _buildings_energy_generator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../buildings/energy_generator */ "./src/js/game/buildings/energy_generator.js");
 /* harmony import */ var _root__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../root */ "./src/js/game/root.js");
 /* harmony import */ var _base_toolbar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./base_toolbar */ "./src/js/game/hud/parts/base_toolbar.js");
-/* harmony import */ var _buildings_advanced_processor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../buildings/advanced_processor */ "./src/js/game/buildings/advanced_processor.js");
-/* harmony import */ var _buildings_toolbar_swapper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../buildings/toolbar_swapper */ "./src/js/game/buildings/toolbar_swapper.js");
+/* harmony import */ var _buildings_belt_base__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../buildings/belt_base */ "./src/js/game/buildings/belt_base.js");
+/* harmony import */ var _buildings_splitter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../buildings/splitter */ "./src/js/game/buildings/splitter.js");
+/* harmony import */ var _buildings_underground_belt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../buildings/underground_belt */ "./src/js/game/buildings/underground_belt.js");
+/* harmony import */ var _buildings_advanced_processor__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../buildings/advanced_processor */ "./src/js/game/buildings/advanced_processor.js");
+/* harmony import */ var _buildings_toolbar_swapper__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../buildings/toolbar_swapper */ "./src/js/game/buildings/toolbar_swapper.js");
+
+
+
+
 
 
 
@@ -41453,10 +41552,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const supportedBuildings = [
-    _buildings_toolbar_swapper__WEBPACK_IMPORTED_MODULE_5__["MetaToolbarSwapperBuilding"],
-    
+    _buildings_toolbar_swapper__WEBPACK_IMPORTED_MODULE_8__["MetaToolbarSwapperBuilding"],
+
+    _buildings_belt_base__WEBPACK_IMPORTED_MODULE_4__["MetaBeltBaseBuilding"],
+    _buildings_splitter__WEBPACK_IMPORTED_MODULE_5__["MetaSplitterBuilding"],
+    _buildings_underground_belt__WEBPACK_IMPORTED_MODULE_6__["MetaUndergroundBeltBuilding"],
+
     _buildings_energy_generator__WEBPACK_IMPORTED_MODULE_1__["MetaEnergyGenerator"],
-    _buildings_advanced_processor__WEBPACK_IMPORTED_MODULE_4__["MetaAdvancedProcessorBuilding"],
+    _buildings_advanced_processor__WEBPACK_IMPORTED_MODULE_7__["MetaAdvancedProcessorBuilding"],
 ];
 
 class HUDToolsToolbar extends _base_toolbar__WEBPACK_IMPORTED_MODULE_3__["HUDBaseToolbar"] {
@@ -43032,7 +43135,6 @@ class ColorItem extends _base_item__WEBPACK_IMPORTED_MODULE_4__["BaseItem"] {
         this.internalGenerateColorBuffer(canvas, context, size, size, 1);
         return canvas;
     }
-
 }
 
 
@@ -43189,7 +43291,7 @@ class ShapeItem extends _base_item__WEBPACK_IMPORTED_MODULE_2__["BaseItem"] {
     }
 
     getHash() {
-        return this.definition.getHash()
+        return this.definition.getHash();
     }
 
     /** @returns {ShapeItem} */
@@ -46271,15 +46373,29 @@ class ShapeDefinition extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_7
         for (let layerIndex = 0; layerIndex < this.layers.length; ++layerIndex) {
             const quadrants = this.layers[layerIndex];
 
+            let quads = quadrants
+                .map((e, i) => ({ e, i }))
+                .filter(e => e.e)
+                .map(e => ({ ...e.e, quadrantIndex: e.i }))
+                .sort(
+                    (a, b) =>
+                        (_shapes_js__WEBPACK_IMPORTED_MODULE_0__["allShapeData"][a.subShape] || noSuchShape(a.subShape)).layer -
+                        (_shapes_js__WEBPACK_IMPORTED_MODULE_0__["allShapeData"][b.subShape] || noSuchShape(b.subShape)).layer
+                );
+
             const layerScale = Math.max(0.1, 0.9 - layerIndex * 0.22);
 
-            for (let quadrantIndex = 0; quadrantIndex < 4; ++quadrantIndex) {
-                if (!quadrants[quadrantIndex]) {
+            for (let quad of quads) {
+                if (!quad) {
                     continue;
                 }
-                const { subShape, color } = quadrants[quadrantIndex];
+                const { subShape, color, quadrantIndex } = quad;
+                if (subShape == "-") {
+                    continue;
+                }
 
                 const quadrantPos = arrayQuadrantIndexToOffset[quadrantIndex];
+
                 const centerQuadrantX = quadrantPos.x * quadrantHalfSize;
                 const centerQuadrantY = quadrantPos.y * quadrantHalfSize;
 
@@ -48730,19 +48846,22 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
             const processorComp = entity.components.ItemProcessor;
             const ejectorComp = entity.components.ItemEjector;
 
-            // First of all, process the current recipe
-            processorComp.secondsUntilEject = Math.max(
-                0,
-                processorComp.secondsUntilEject - this.root.dynamicTickrate.deltaSeconds
-            );
+            if (processorComp.secondsUntilEject > 0) {
+                // First of all, process the current recipe
+                processorComp.secondsUntilEject =
+                    processorComp.secondsUntilEject - this.root.dynamicTickrate.deltaSeconds;
 
-            if ( true && _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].debug.instantProcessors) {
+                if ( true && _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].debug.instantProcessors) {
+                    processorComp.secondsUntilEject = 0;
+                }
+            } else {
+                // Remove time carryover if processing is not continuous
                 processorComp.secondsUntilEject = 0;
             }
 
             // Check if we have any finished items we can eject
             if (
-                processorComp.secondsUntilEject === 0 && // it was processed in time
+                processorComp.secondsUntilEject <= 0 && // it was processed in time
                 processorComp.itemsToEject.length > 0 // we have some items left to eject
             ) {
                 for (let itemIndex = 0; itemIndex < processorComp.itemsToEject.length; ++itemIndex) {
@@ -48814,7 +48933,7 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
         }
 
         const baseSpeed = this.root.hubGoals.getProcessorBaseSpeed(processorComp.type);
-        processorComp.secondsUntilEject = 1 / baseSpeed;
+        processorComp.secondsUntilEject += 1 / baseSpeed;
 
         /** @type {Array<{item: BaseItem, requiredSlot?: number, preferredSlot?: number}>} */
         const outItems = [];
@@ -48834,280 +48953,289 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
                 self: this,
             });
         } else
-        switch (processorComp.type) {
-            // SPLITTER
-            case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].splitterWires:
-            case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].splitter: {
-                trackProduction = false;
-                const availableSlots = entity.components.ItemEjector.slots.length;
+            switch (processorComp.type) {
+                // SPLITTER
+                case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].splitterWires:
+                case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].splitter: {
+                    trackProduction = false;
+                    const availableSlots = entity.components.ItemEjector.slots.length;
 
-                let nextSlot = processorComp.nextOutputSlot++ % availableSlots;
-                for (let i = 0; i < items.length; ++i) {
-                    outItems.push({
-                        item: items[i].item,
-                        preferredSlot: (nextSlot + i) % availableSlots,
-                    });
-                }
-                break;
-            }
-
-            // CUTTER
-            case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].cutter: {
-                const inputItem = /** @type {ShapeItem} */ (items[0].item);
-                window.assert(inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for cut is not a shape");
-                const inputDefinition = inputItem.definition;
-
-                const cutDefinitions = this.root.shapeDefinitionMgr.shapeActionCutHalf(inputDefinition);
-
-                for (let i = 0; i < cutDefinitions.length; ++i) {
-                    const definition = cutDefinitions[i];
-                    if (!definition.isEntirelyEmpty()) {
+                    let nextSlot = processorComp.nextOutputSlot++ % availableSlots;
+                    for (let i = 0; i < items.length; ++i) {
                         outItems.push({
-                            item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](definition),
-                            requiredSlot: i,
+                            item: items[i].item,
+                            preferredSlot: (nextSlot + i) % availableSlots,
                         });
                     }
+                    break;
                 }
 
-                break;
-            }
+                // CUTTER
+                case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].cutter: {
+                    const inputItem = /** @type {ShapeItem} */ (items[0].item);
+                    window.assert(inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for cut is not a shape");
+                    const inputDefinition = inputItem.definition;
 
-            // CUTTER (Quad)
-            case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].cutterQuad: {
-                const inputItem = /** @type {ShapeItem} */ (items[0].item);
-                window.assert(inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for cut is not a shape");
-                const inputDefinition = inputItem.definition;
+                    const cutDefinitions = this.root.shapeDefinitionMgr.shapeActionCutHalf(inputDefinition);
 
-                const cutDefinitions = this.root.shapeDefinitionMgr.shapeActionCutQuad(inputDefinition);
-
-                for (let i = 0; i < cutDefinitions.length; ++i) {
-                    const definition = cutDefinitions[i];
-                    if (!definition.isEntirelyEmpty()) {
-                        outItems.push({
-                            item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](definition),
-                            requiredSlot: i,
-                        });
+                    for (let i = 0; i < cutDefinitions.length; ++i) {
+                        const definition = cutDefinitions[i];
+                        if (!definition.isEntirelyEmpty()) {
+                            outItems.push({
+                                item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](definition),
+                                requiredSlot: i,
+                            });
+                        }
                     }
+
+                    break;
                 }
 
-                break;
-            }
+                // CUTTER (Quad)
+                case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].cutterQuad: {
+                    const inputItem = /** @type {ShapeItem} */ (items[0].item);
+                    window.assert(inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for cut is not a shape");
+                    const inputDefinition = inputItem.definition;
 
-            // ROTATER
-            case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].rotater: {
-                const inputItem = /** @type {ShapeItem} */ (items[0].item);
-                window.assert(inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for rotation is not a shape");
-                const inputDefinition = inputItem.definition;
+                    const cutDefinitions = this.root.shapeDefinitionMgr.shapeActionCutQuad(inputDefinition);
 
-                const rotatedDefinition = this.root.shapeDefinitionMgr.shapeActionRotateCW(inputDefinition);
-                outItems.push({
-                    item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](rotatedDefinition),
-                });
-                break;
-            }
+                    for (let i = 0; i < cutDefinitions.length; ++i) {
+                        const definition = cutDefinitions[i];
+                        if (!definition.isEntirelyEmpty()) {
+                            outItems.push({
+                                item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](definition),
+                                requiredSlot: i,
+                            });
+                        }
+                    }
 
-            // ROTATER (CCW)
-            case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].rotaterCCW: {
-                const inputItem = /** @type {ShapeItem} */ (items[0].item);
-                window.assert(inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for rotation is not a shape");
-                const inputDefinition = inputItem.definition;
-
-                const rotatedDefinition = this.root.shapeDefinitionMgr.shapeActionRotateCCW(inputDefinition);
-                outItems.push({
-                    item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](rotatedDefinition),
-                });
-                break;
-            }
-
-            // ROTATER (FL)
-            case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].rotaterFL: {
-                const inputItem = /** @type {ShapeItem} */ (items[0].item);
-                window.assert(inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for rotation is not a shape");
-                const inputDefinition = inputItem.definition;
-
-                const rotatedDefinition = this.root.shapeDefinitionMgr.shapeActionRotateFL(inputDefinition);
-                outItems.push({
-                    item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](rotatedDefinition),
-                });
-                break;
-            }
-
-            // STACKER
-
-            case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].stacker: {
-                const lowerItem = /** @type {ShapeItem} */ (itemsBySlot[0].item);
-                const upperItem = /** @type {ShapeItem} */ (itemsBySlot[1].item);
-
-                window.assert(lowerItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for lower stack is not a shape");
-                window.assert(upperItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for upper stack is not a shape");
-
-                const stackedDefinition = this.root.shapeDefinitionMgr.shapeActionStack(
-                    lowerItem.definition,
-                    upperItem.definition
-                );
-                outItems.push({
-                    item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](stackedDefinition),
-                });
-                break;
-            }
-
-            // TRASH
-
-            case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].trash: {
-                // Well this one is easy .. simply do nothing with the item
-                break;
-            }
-
-            // MIXER
-
-            case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].mixer: {
-                // Find both colors and combine them
-                const item1 = /** @type {ColorItem} */ (items[0].item);
-                const item2 = /** @type {ColorItem} */ (items[1].item);
-                window.assert(item1 instanceof _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"], "Input for color mixer is not a color");
-                window.assert(item2 instanceof _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"], "Input for color mixer is not a color");
-
-                const color1 = item1.color;
-                const color2 = item2.color;
-
-                // Try finding mixer color, and if we can't mix it we simply return the same color
-                const mixedColor = _colors__WEBPACK_IMPORTED_MODULE_2__["enumColorMixingResults"][color1][color2];
-                let resultColor = color1;
-                if (mixedColor) {
-                    resultColor = mixedColor;
-                }
-                outItems.push({
-                    item: new _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"](resultColor),
-                });
-
-                break;
-            }
-
-            // PAINTER
-
-            case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].painter: {
-                const shapeItem = /** @type {ShapeItem} */ (itemsBySlot[0].item);
-                const colorItem = /** @type {ColorItem} */ (itemsBySlot[1].item);
-
-                const colorizedDefinition = this.root.shapeDefinitionMgr.shapeActionPaintWith(
-                    shapeItem.definition,
-                    colorItem.color
-                );
-
-                outItems.push({
-                    item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](colorizedDefinition),
-                });
-
-                break;
-            }
-
-            // PAINTER (DOUBLE)
-
-            case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].painterDouble: {
-                const shapeItem1 = /** @type {ShapeItem} */ (itemsBySlot[0].item);
-                const shapeItem2 = /** @type {ShapeItem} */ (itemsBySlot[1].item);
-                const colorItem = /** @type {ColorItem} */ (itemsBySlot[2].item);
-
-                window.assert(shapeItem1 instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for painter is not a shape");
-                window.assert(shapeItem2 instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for painter is not a shape");
-                window.assert(colorItem instanceof _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"], "Input for painter is not a color");
-
-                const colorizedDefinition1 = this.root.shapeDefinitionMgr.shapeActionPaintWith(
-                    shapeItem1.definition,
-                    colorItem.color
-                );
-
-                const colorizedDefinition2 = this.root.shapeDefinitionMgr.shapeActionPaintWith(
-                    shapeItem2.definition,
-                    colorItem.color
-                );
-                outItems.push({
-                    item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](colorizedDefinition1),
-                });
-
-                outItems.push({
-                    item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](colorizedDefinition2),
-                });
-
-                break;
-            }
-
-            // PAINTER (QUAD)
-
-            case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].painterQuad: {
-                const shapeItem = /** @type {ShapeItem} */ (itemsBySlot[0].item);
-                const colorItem1 = /** @type {ColorItem} */ (itemsBySlot[1].item);
-                const colorItem2 = /** @type {ColorItem} */ (itemsBySlot[2].item);
-                const colorItem3 = /** @type {ColorItem} */ (itemsBySlot[3].item);
-                const colorItem4 = /** @type {ColorItem} */ (itemsBySlot[4].item);
-
-                window.assert(shapeItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for painter is not a shape");
-                window.assert(colorItem1 instanceof _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"], "Input for painter is not a color");
-                window.assert(colorItem2 instanceof _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"], "Input for painter is not a color");
-                window.assert(colorItem3 instanceof _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"], "Input for painter is not a color");
-                window.assert(colorItem4 instanceof _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"], "Input for painter is not a color");
-
-                const colorizedDefinition = this.root.shapeDefinitionMgr.shapeActionPaintWith4Colors(
-                    shapeItem.definition,
-                    [colorItem2.color, colorItem3.color, colorItem4.color, colorItem1.color]
-                );
-
-                outItems.push({
-                    item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](colorizedDefinition),
-                });
-
-                break;
-            }
-
-            // HUB
-
-            case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].hub: {
-                trackProduction = false;
-
-                const hubComponent = entity.components.Hub;
-                window.assert(hubComponent, "Hub item processor has no hub component");
-
-                for (let i = 0; i < items.length; ++i) {
-                    // const shapeItem = /** @type {ShapeItem} */ (items[i].item);
-                    // hubComponent.queueShapeDefinition(shapeItem.definition);
-                    hubComponent.queueByHash(items[i].item.getHash());
+                    break;
                 }
 
-                break;
-            }
+                // ROTATER
+                case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].rotater: {
+                    const inputItem = /** @type {ShapeItem} */ (items[0].item);
+                    window.assert(inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for rotation is not a shape");
+                    const inputDefinition = inputItem.definition;
 
-            // ADVANCED PROCESSING
-
-            case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].advancedProcessor: {
-                const item = items[0].item;
-
-                if (item.getItemType() === _base_item__WEBPACK_IMPORTED_MODULE_1__["enumItemType"].color) {
-                    const colorItem = /** @type {ColorItem} */ (items[0].item);
-                    const newColor = _colors__WEBPACK_IMPORTED_MODULE_2__["enumInvertedColors"][colorItem.color];
+                    const rotatedDefinition = this.root.shapeDefinitionMgr.shapeActionRotateCW(
+                        inputDefinition
+                    );
                     outItems.push({
-                        item: new _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"](newColor),
-                        requiredSlot: 0,
+                        item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](rotatedDefinition),
                     });
-                } else if (item.getItemType() === _base_item__WEBPACK_IMPORTED_MODULE_1__["enumItemType"].shape) {
-                    const shapeItem = /** @type {ShapeItem} */ (items[0].item);
-                    const newItem = this.root.shapeDefinitionMgr.shapeActionInvertColors(
-                        shapeItem.definition
+                    break;
+                }
+
+                // ROTATER (CCW)
+                case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].rotaterCCW: {
+                    const inputItem = /** @type {ShapeItem} */ (items[0].item);
+                    window.assert(inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for rotation is not a shape");
+                    const inputDefinition = inputItem.definition;
+
+                    const rotatedDefinition = this.root.shapeDefinitionMgr.shapeActionRotateCCW(
+                        inputDefinition
+                    );
+                    outItems.push({
+                        item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](rotatedDefinition),
+                    });
+                    break;
+                }
+
+                // ROTATER (FL)
+                case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].rotaterFL: {
+                    const inputItem = /** @type {ShapeItem} */ (items[0].item);
+                    window.assert(inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for rotation is not a shape");
+                    const inputDefinition = inputItem.definition;
+
+                    const rotatedDefinition = this.root.shapeDefinitionMgr.shapeActionRotateFL(
+                        inputDefinition
+                    );
+                    outItems.push({
+                        item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](rotatedDefinition),
+                    });
+                    break;
+                }
+
+                // STACKER
+
+                case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].stacker: {
+                    const lowerItem = /** @type {ShapeItem} */ (itemsBySlot[0].item);
+                    const upperItem = /** @type {ShapeItem} */ (itemsBySlot[1].item);
+
+                    window.assert(lowerItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for lower stack is not a shape");
+                    window.assert(upperItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for upper stack is not a shape");
+
+                    const stackedDefinition = this.root.shapeDefinitionMgr.shapeActionStack(
+                        lowerItem.definition,
+                        upperItem.definition
+                    );
+                    outItems.push({
+                        item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](stackedDefinition),
+                    });
+                    break;
+                }
+
+                // TRASH
+
+                case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].trash: {
+                    // Well this one is easy .. simply do nothing with the item
+                    break;
+                }
+
+                // MIXER
+
+                case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].mixer: {
+                    // Find both colors and combine them
+                    const item1 = /** @type {ColorItem} */ (items[0].item);
+                    const item2 = /** @type {ColorItem} */ (items[1].item);
+                    window.assert(item1 instanceof _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"], "Input for color mixer is not a color");
+                    window.assert(item2 instanceof _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"], "Input for color mixer is not a color");
+
+                    const color1 = item1.color;
+                    const color2 = item2.color;
+
+                    // Try finding mixer color, and if we can't mix it we simply return the same color
+                    const mixedColor = _colors__WEBPACK_IMPORTED_MODULE_2__["enumColorMixingResults"][color1][color2];
+                    let resultColor = color1;
+                    if (mixedColor) {
+                        resultColor = mixedColor;
+                    }
+                    outItems.push({
+                        item: new _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"](resultColor),
+                    });
+
+                    break;
+                }
+
+                // PAINTER
+
+                case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].painter: {
+                    const shapeItem = /** @type {ShapeItem} */ (itemsBySlot[0].item);
+                    const colorItem = /** @type {ColorItem} */ (itemsBySlot[1].item);
+
+                    const colorizedDefinition = this.root.shapeDefinitionMgr.shapeActionPaintWith(
+                        shapeItem.definition,
+                        colorItem.color
                     );
 
                     outItems.push({
-                        item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](newItem),
-                        requiredSlot: 0,
+                        item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](colorizedDefinition),
                     });
-                } else {
-                    window.assert(false, "Bad item type: " + item.getItemType() + " for advanced processor.");
+
+                    break;
                 }
 
-                break;
-            }
+                // PAINTER (DOUBLE)
 
-            default:
-                window.assert(false, "Unkown item processor type: " + processorComp.type);
-        }
+                case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].painterDouble: {
+                    const shapeItem1 = /** @type {ShapeItem} */ (itemsBySlot[0].item);
+                    const shapeItem2 = /** @type {ShapeItem} */ (itemsBySlot[1].item);
+                    const colorItem = /** @type {ColorItem} */ (itemsBySlot[2].item);
+
+                    window.assert(shapeItem1 instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for painter is not a shape");
+                    window.assert(shapeItem2 instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for painter is not a shape");
+                    window.assert(colorItem instanceof _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"], "Input for painter is not a color");
+
+                    const colorizedDefinition1 = this.root.shapeDefinitionMgr.shapeActionPaintWith(
+                        shapeItem1.definition,
+                        colorItem.color
+                    );
+
+                    const colorizedDefinition2 = this.root.shapeDefinitionMgr.shapeActionPaintWith(
+                        shapeItem2.definition,
+                        colorItem.color
+                    );
+                    outItems.push({
+                        item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](colorizedDefinition1),
+                    });
+
+                    outItems.push({
+                        item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](colorizedDefinition2),
+                    });
+
+                    break;
+                }
+
+                // PAINTER (QUAD)
+
+                case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].painterQuad: {
+                    const shapeItem = /** @type {ShapeItem} */ (itemsBySlot[0].item);
+                    const colorItem1 = /** @type {ColorItem} */ (itemsBySlot[1].item);
+                    const colorItem2 = /** @type {ColorItem} */ (itemsBySlot[2].item);
+                    const colorItem3 = /** @type {ColorItem} */ (itemsBySlot[3].item);
+                    const colorItem4 = /** @type {ColorItem} */ (itemsBySlot[4].item);
+
+                    window.assert(shapeItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for painter is not a shape");
+                    window.assert(colorItem1 instanceof _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"], "Input for painter is not a color");
+                    window.assert(colorItem2 instanceof _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"], "Input for painter is not a color");
+                    window.assert(colorItem3 instanceof _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"], "Input for painter is not a color");
+                    window.assert(colorItem4 instanceof _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"], "Input for painter is not a color");
+
+                    const colorizedDefinition = this.root.shapeDefinitionMgr.shapeActionPaintWith4Colors(
+                        shapeItem.definition,
+                        [colorItem2.color, colorItem3.color, colorItem4.color, colorItem1.color]
+                    );
+
+                    outItems.push({
+                        item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](colorizedDefinition),
+                    });
+
+                    break;
+                }
+
+                // HUB
+
+                case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].hub: {
+                    trackProduction = false;
+
+                    const hubComponent = entity.components.Hub;
+                    window.assert(hubComponent, "Hub item processor has no hub component");
+
+                    for (let i = 0; i < items.length; ++i) {
+                        // const shapeItem = /** @type {ShapeItem} */ (items[i].item);
+                        // hubComponent.queueShapeDefinition(shapeItem.definition);
+                        hubComponent.queueByHash(items[i].item.getHash());
+                    }
+
+                    break;
+                }
+
+                // ADVANCED PROCESSING
+
+                case _components_item_processor__WEBPACK_IMPORTED_MODULE_3__["enumItemProcessorTypes"].advancedProcessor: {
+                    const item = items[0].item;
+
+                    if (item.getItemType() === _base_item__WEBPACK_IMPORTED_MODULE_1__["enumItemType"].color) {
+                        const colorItem = /** @type {ColorItem} */ (items[0].item);
+                        const newColor = _colors__WEBPACK_IMPORTED_MODULE_2__["enumInvertedColors"][colorItem.color];
+                        outItems.push({
+                            item: new _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"](newColor),
+                            requiredSlot: 0,
+                        });
+                    } else if (item.getItemType() === _base_item__WEBPACK_IMPORTED_MODULE_1__["enumItemType"].shape) {
+                        const shapeItem = /** @type {ShapeItem} */ (items[0].item);
+                        const newItem = this.root.shapeDefinitionMgr.shapeActionInvertColors(
+                            shapeItem.definition
+                        );
+
+                        outItems.push({
+                            item: new _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"](newItem),
+                            requiredSlot: 0,
+                        });
+                    } else {
+                        window.assert(
+                            false,
+                            "Bad item type: " + item.getItemType() + " for advanced processor."
+                        );
+                    }
+
+                    break;
+                }
+
+                default:
+                    window.assert(false, "Unkown item processor type: " + processorComp.type);
+            }
 
         // Track produced items
         if (trackProduction) {
@@ -49275,13 +49403,14 @@ class MinerSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MODULE_6__[
                 }
             }
 
-            if (this.root.time.isIngameTimerExpired(minerComp.lastMiningTime, 1 / miningSpeed)) {
+            let now = this.root.time.now();
+            if (minerComp.lastMiningTime < now) {
                 if (this.tryPerformMinerEject(entity, minerComp.cachedMinedItem)) {
                     // Analytics hook
                     this.root.signals.itemProduced.dispatch(minerComp.cachedMinedItem);
 
                     // Actually mine
-                    minerComp.lastMiningTime = this.root.time.now();
+                    minerComp.lastMiningTime = Math.max(now, minerComp.lastMiningTime + 1 / miningSpeed);
                 }
             }
         }
@@ -51353,8 +51482,8 @@ if (window.coreThreadLoadedCb) {
 // }
 
 console.log(
-    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"7f0845e"}%c on %c${new Date(
-        1596300065335
+    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"bcd0af0"}%c on %c${new Date(
+        1596378323077
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -53894,14 +54023,14 @@ const allApplicationSettings = [
 
 if (_core_config__WEBPACK_IMPORTED_MODULE_5__["IS_DEBUG"]) {
     for (let k in _core_config__WEBPACK_IMPORTED_MODULE_5__["globalConfig"].debug) {
-        if (k.startsWith('_')) continue;
-        const setting = new _setting_types__WEBPACK_IMPORTED_MODULE_1__["BoolSetting"](`debug_${ k }`, enumCategories.debug, (app, value) => {
+        if (k.startsWith("_")) continue;
+        const setting = new _setting_types__WEBPACK_IMPORTED_MODULE_1__["BoolSetting"](`debug_${k}`, enumCategories.debug, (app, value) => {
             _core_config__WEBPACK_IMPORTED_MODULE_5__["globalConfig"].debug[k] = value;
         });
         setting.validate = () => true;
-        _translations__WEBPACK_IMPORTED_MODULE_6__["T"].settings.labels[`debug_${ k }`] = {
+        _translations__WEBPACK_IMPORTED_MODULE_6__["T"].settings.labels[`debug_${k}`] = {
             title: k.replace(/(?!^)([A-Z])/g, " $1"),
-            description: _core_config__WEBPACK_IMPORTED_MODULE_5__["globalConfig"].debug[`_${ k }`],
+            description: _core_config__WEBPACK_IMPORTED_MODULE_5__["globalConfig"].debug[`_${k}`],
         };
         allApplicationSettings.push(setting);
     }
@@ -53979,7 +54108,7 @@ class ApplicationSettings extends _core_read_write_proxy__WEBPACK_IMPORTED_MODUL
      * @param {string} key
      */
     getSetting(key) {
-        if (!key.startsWith('debug_')) {
+        if (!key.startsWith("debug_")) {
             window.assert(this.getAllSettings().hasOwnProperty(key), "Setting not known: " + key);
         }
         return this.getAllSettings()[key];
@@ -59311,7 +59440,7 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameSt
 
                     <div class="lower">
                         <button class="resetApp styledButton">Reset App</button>
-                        <i>Build ${"1.2.0"} @ ${"7f0845e"}</i>
+                        <i>Build ${"1.2.0"} @ ${"bcd0af0"}</i>
                     </div>
                 </div>
         `;
@@ -59446,14 +59575,14 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1596300065335;
+        const lastBuildMs = new Date().getTime() - 1596378323077;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
 
         labelVersion.innerHTML = `
             <span class='version'>
-                ${"1.2.0"} @ ${version} @ ${"7f0845e"}
+                ${"1.2.0"} @ ${version} @ ${"bcd0af0"}
             </span>
             <span class='buildTime'>
                 ${_translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.buildDate.replace("<at-date>", lastBuildText)}<br />
