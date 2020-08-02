@@ -21542,7 +21542,7 @@ function getBuildId() {
     if ( true && _config__WEBPACK_IMPORTED_MODULE_0__["IS_DEBUG"]) {
         return "local-dev";
     } else if (true) {
-        return "dev-" + getPlatformName() + "-" + "bcd0af0";
+        return "dev-" + getPlatformName() + "-" + "bea07c4";
     } else {}
 }
 
@@ -28344,7 +28344,7 @@ const enumColorToShortcode = {
     [enumColors.white]: "w",
     [enumColors.uncolored]: "u",
 
-    [enumColors.black]: "0",
+    [enumColors.black]: "k",
 };
 
 /** @enum {enumColors} */
@@ -31426,8 +31426,25 @@ function targetShapeCheckerProcess({ items, trackProduction, entity, outItems, s
     if (!tscComponent.isfil && inputItem instanceof _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"]) {
         // setting filter type:
         let item = inputItem.definition.getHash();
+        // color:
+        if (
+            item.match(
+                /(.[^u-].[u-].[u-].[u-]|.[u-].[^u-].[u-].[u-]|.[u-].[u-].[^u-].[u-]|.[u-].[u-].[u-].[^u-])$/
+            )
+        ) {
+            let m = item.match(/([^u])(.u)*$/);
+            tscComponent.filterType = "color";
+            tscComponent.filterIndex = m.index;
+            tscComponent.filter = m[0].slice(0, 1);
+            tscComponent.isfil = true;
+            let layer = item.split(":").length;
+            let index = ((m.index % 9) - 1) / 2;
+            let topKey = `${"--".repeat(index)}C${tscComponent.filter}${"--".repeat(3 - index)}`;
+            let key = (topKey + ":").repeat(layer - 1) + topKey;
+            tscComponent.storedItem = new _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"](_gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(key));
+        }
         //shape:
-        if (item.match(/([^-][^-]------|--[^-][^-]----|----[^-][^-]--|------[^-][^-])$/)) {
+        else if (item.match(/([^-][^-]------|--[^-][^-]----|----[^-][^-]--|------[^-][^-])$/)) {
             let m = item.match(/([^-][^-])(--)*$/);
             tscComponent.filterType = "shape";
             tscComponent.filterIndex = m.index;
@@ -31453,19 +31470,6 @@ function targetShapeCheckerProcess({ items, trackProduction, entity, outItems, s
             let layer = item.split(":").length;
             let index = (m.index % 9) / 2;
             let topKey = `${"Cu".repeat(index)}--${"Cu".repeat(3 - index)}`;
-            let key = (topKey + ":").repeat(layer - 1) + topKey;
-            tscComponent.storedItem = new _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"](_gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(key));
-        }
-        // color:
-        else if (item.match(/(.[^u].u.u.u|.u.[^u].u.u|.u.u.[^u].u|.u.u.u.[^u])$/)) {
-            let m = item.match(/([^u])(.u)*$/);
-            tscComponent.filterType = "color";
-            tscComponent.filterIndex = m.index;
-            tscComponent.filter = m[0].slice(0, 1);
-            tscComponent.isfil = true;
-            let layer = item.split(":").length;
-            let index = ((m.index % 9) - 1) / 2;
-            let topKey = `${"--".repeat(index)}C${tscComponent.filter}${"--".repeat(3 - index)}`;
             let key = (topKey + ":").repeat(layer - 1) + topKey;
             tscComponent.storedItem = new _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"](_gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeDefinition"].fromShortKey(key));
         }
@@ -32103,6 +32107,8 @@ const painter = {
         shape: "CuCuCuCu",
         required: 5000,
         reward: "painter_quad",
+        title: "Ultimate painting",
+        desc: "You have unlocked the <strong>Quaduo painter</strong> - It can paints a whole belt.",
     },
 };
 const inverter = {
@@ -32111,14 +32117,20 @@ const inverter = {
         shape: "CuCuCuCu",
         required: 5000,
         reward: "inverter",
+        title: "Inversion",
+        desc:
+            "The new <strong>Inverter</strong> allows you to obtain a new <strong>black</strong> color as well as the good old <strong>grey</strong>.",
     },
 };
 const counter = {
     id: "counter",
     goal: {
-        shape: "CuCuCuCu",
+        shape: "RwCwSbCw:RwCwSrCw:RwCwSyCw",
         required: 5000,
         reward: "counter",
+        title: "The Speed Unravelled",
+        desc:
+            "The <strong>Counter</strong> will allow you to see the speed not onli as a blinking of insanely fast shapes.",
     },
 };
 const checker = {
@@ -32127,6 +32139,13 @@ const checker = {
         shape: "CuCuCuCu",
         required: 5000,
         reward: "checker",
+        title: "The Full Automation",
+        desc:
+            "Say hello to the <strong>Checker</strong>, the king of Automation." +
+            " - Set it a simple filter - a <strong>shape quad</strong> or a <strong>colored quad</strong>" +
+            " and it will <strong>select path</strong> depending on <strong>current Hub Goal</strong>, itself, forever!" +
+            " In case you need some more advanced options, <strong>layer</strong> quads to filter a higher layer," +
+            " color 3 of 4 quads for <strong>uncolored</strong> or leave a single <strong>hole</strong> to get a hole one",
     },
 };
 const combiner = {
@@ -32137,7 +32156,6 @@ const combiner = {
         reward: "combiner",
     },
 };
-
 const unstacker = {
     id: "unstacker",
     goal: {
@@ -32146,8 +32164,92 @@ const unstacker = {
         reward: "unstacker",
     },
 };
+const repeater = {
+    id: "repeater",
+    goal: {
+        shape: "CuCuCuCu",
+        required: 5000,
+        reward: "repeater",
+    },
+};
 
 const levels = [inverter, counter, checker, combiner, unstacker];
+
+let baseCount = 1000;
+let countPerLevel = 200;
+
+let freeplayIndex = 1;
+function makeFreeplay(minLevel, maxLevel, holeTier, shapeTier, colorTier, layerTier, etc) {
+    let freeplayGoal = {
+        id: `freeplay_${freeplayIndex}`,
+        goal: {
+            fixed: true,
+            minLevel,
+            maxLevel,
+            baseCount: baseCount + minLevel * countPerLevel,
+            countPerLevel,
+            shape: {
+                holeTier,
+                shapeTier,
+                colorTier,
+                layerTier,
+            },
+            reward: `no_reward_freeplay_${freeplayIndex}`,
+            ...etc,
+        },
+    };
+    levels.push(freeplayGoal);
+
+    ++freeplayIndex;
+}
+
+makeFreeplay(25, 25, 1, 1, 1, 1, {
+    title: "The Freeplay",
+    desc:
+        "So, this was the first <strong>Freeplay</strong> level. Nothing really special, just a random shape." +
+        " This one was easy, but next ones are going to be harder, slowly becoming harder and harder once a while to keep you stuffed." +
+        " Make sure to use <strong>Checker</strong> and make a fully automated Ultimate Factory that can produce Anywhing! Onwards, to FREEPLAY!!!",
+});
+makeFreeplay(26, 29, 1, 2, 1, 1, {
+    title: "descriptions are WIP but progression goes",
+    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
+});
+makeFreeplay(30, 34, 1, 3, 1, 1, {
+    title: "descriptions are WIP but progression goes",
+    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
+});
+makeFreeplay(35, 39, 2, 3, 2, 1, {
+    title: "descriptions are WIP but progression goes",
+    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
+});
+makeFreeplay(40, 44, 2, 4, 2, 2, {
+    title: "descriptions are WIP but progression goes",
+    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
+});
+makeFreeplay(45, 49, 3, 4, 2, 2, {
+    title: "descriptions are WIP but progression goes",
+    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
+});
+makeFreeplay(50, 54, 3, 4, 2, 3, {
+    title: "descriptions are WIP but progression goes",
+    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
+});
+makeFreeplay(55, 59, 3, 4, 3, 3, {
+    title: "descriptions are WIP but progression goes",
+    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
+});
+makeFreeplay(60, 64, 4, 4, 3, 3, {
+    title: "descriptions are WIP but progression goes",
+    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
+});
+makeFreeplay(65, 74, 4, 4, 3, 4, {
+    title: "descriptions are WIP but progression goes",
+    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
+});
+makeFreeplay(75, 100, 4, 4, 4, 4, {
+    title: "descriptions are WIP but progression goes",
+    desc: "I, Dimava, have not wrote all the descriptions yet. This is the TOP hardness so far.",
+});
 
 /* harmony default export */ __webpack_exports__["default"] = (levels);
 
@@ -33155,21 +33257,42 @@ function addCustom(custom) {
     Object.assign(customBuildingData[custom.id], custom);
 
     if (custom.goal) {
-        if (_tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].find(e => e.reward == custom.goal.reward)) {
-            let index = _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].findIndex(e => e.reward == custom.goal.reward);
-            _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].splice(index, 1);
+        if (!custom.goal.fixed) {
+            if (_tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].find(e => e.reward == custom.goal.reward)) {
+                let index = _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].findIndex(e => e.reward == custom.goal.reward);
+                _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].splice(index, 1);
+            }
+            _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].push(custom.goal);
+            _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].sort((a, b) => a.required - b.required);
+        } else {
+            if (!custom.goal.reward) {
+                custom.goal.reward = "no_reward_freeplay";
+            }
+            custom.goal.shape = custom.goal.shape || {};
+            if (typeof custom.goal.shape != "string") {
+                custom.goal.shape.holeTier = custom.goal.shape.holeTier || 1;
+                custom.goal.shape.shapeTier = custom.goal.shape.shapeTier || 1;
+                custom.goal.shape.colorTier = custom.goal.shape.colorTier || 1;
+                custom.goal.shape.layerTier = custom.goal.shape.layerTier || 1;
+            }
+            custom.goal.minLevel = custom.goal.minLevel || 1;
+            custom.goal.maxLevel = custom.goal.maxLevel || 1;
+            _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["fixedGoals"].push(custom.goal);
         }
-        _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].push(custom.goal);
-        _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].sort((a, b) => a.required - b.required);
+
         if (custom.goal.reward) {
-            if (!custom.goal.reward.startsWith("reward_")) {
+            if (!custom.goal.reward.includes("reward_")) {
                 custom.goal.reward = "reward_" + custom.goal.reward;
             }
             _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["enumHubGoalRewards"][custom.goal.reward] = custom.goal.reward;
             if (!_translations__WEBPACK_IMPORTED_MODULE_3__["T"].storyRewards[custom.goal.reward]) {
                 _translations__WEBPACK_IMPORTED_MODULE_3__["T"].storyRewards[custom.goal.reward] = {
-                    title: custom.goal.Tname || custom.Tname || custom.id,
+                    title: custom.goal.title || custom.Tname || custom.id,
+                    desc: "no description",
                 };
+            }
+            if (custom.goal.desc) {
+                _translations__WEBPACK_IMPORTED_MODULE_3__["T"].storyRewards[custom.goal.reward].desc = custom.goal.desc;
             }
         }
     }
@@ -33447,7 +33570,7 @@ let customDefaults = {
     minChance: 4,
     distChance: 1 / 3,
     maxChance: 12,
-    tier: 3,
+    tier: 2,
 };
 
 registerCustomShape({
@@ -33493,7 +33616,6 @@ registerCustomShape({
         context.arcTo(0, 1, 1, 0, rad);
         context.arcTo(1, 0, 0, 0, rad);
     },
-    tier: 4,
 });
 
 registerCustomShape({
@@ -33555,7 +33677,6 @@ registerCustomShape({
         context.rotate(-Math.PI / 4);
         context.arc(c, 0, b, PI - PI3, PI);
     },
-    tier: 4,
 });
 
 registerCustomShape({
@@ -33612,6 +33733,7 @@ registerCustomShape({
     // },
     draw:
         "120.71 M 0 50 A 50 50 0 1 1 85.355 85.355 A 120.71 120.71 0 0 1 -85.355 85.355 A 50 50 0 0 0 0 50 Z M 40 50 A 10 10 0 1 0 40 49.99 Z",
+    tier: 4,
 });
 
 registerCustomShape({
@@ -34885,6 +35007,15 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
                 this.gainedRewards[reward] = (this.gainedRewards[reward] || 0) + 1;
             }
         }
+        for (let i = 0; i < _tutorial_goals__WEBPACK_IMPORTED_MODULE_9__["fixedGoals"].length; ++i) {
+            if (_tutorial_goals__WEBPACK_IMPORTED_MODULE_9__["fixedGoals"][i].minLevel < this.level) {
+                const reward = _tutorial_goals__WEBPACK_IMPORTED_MODULE_9__["fixedGoals"][i].reward;
+                this.gainedRewards[reward] =
+                    (this.gainedRewards[reward] || 0) +
+                    Math.min(_tutorial_goals__WEBPACK_IMPORTED_MODULE_9__["fixedGoals"][i].maxLevel, this.level) -
+                    _tutorial_goals__WEBPACK_IMPORTED_MODULE_9__["fixedGoals"][i].minLevel;
+            }
+        }
 
         // Compute upgrade improvements
         for (const upgradeId in _upgrades__WEBPACK_IMPORTED_MODULE_10__["UPGRADES"]) {
@@ -34898,15 +35029,7 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
         }
 
         // Compute current goal
-        const goal = _tutorial_goals__WEBPACK_IMPORTED_MODULE_9__["tutorialGoals"][this.level - 1];
-        if (goal) {
-            this.currentGoal = {
-                /** @type {ShapeDefinition} */
-                definition: this.root.shapeDefinitionMgr.getShapeFromShortKey(goal.shape),
-                required: goal.required,
-                reward: goal.reward,
-            };
-        }
+        this.createNextGoal();
     }
 
     /**
@@ -35060,7 +35183,8 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
         if (hash.length % 5 == 4) {
             this.root.signals.shapeDelivered.dispatch(_shape_definition__WEBPACK_IMPORTED_MODULE_8__["ShapeDefinition"].fromShortKey(hash));
         } else {
-            this.root.signals.shapeDelivered.dispatch(_items_color_item__WEBPACK_IMPORTED_MODULE_13__["ColorItem"].createFromHash(hash));
+            // FIXME
+            // this.root.signals.shapeDelivered.dispatch(ColorItem.createFromHash(hash));
         }
 
         // Check if we have enough for the next level
@@ -35089,10 +35213,28 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
             return;
         }
 
+        for (let fixed of _tutorial_goals__WEBPACK_IMPORTED_MODULE_9__["fixedGoals"]) {
+            if (fixed.minLevel > this.level || fixed.maxLevel < this.level) {
+                continue;
+            }
+            let definition = null;
+            if (fixed.shape === "string") {
+                definition = this.root.shapeDefinitionMgr.getShapeFromShortKey(fixed.shape);
+            } else {
+                definition = this.createRandomShapeOfTiers(fixed.shape);
+            }
+            this.currentGoal = {
+                definition,
+                required: fixed.baseCount + (this.level - fixed.minLevel) * fixed.countPerLevel,
+                reward: fixed.reward,
+            };
+            return;
+        }
+
         this.currentGoal = {
             /** @type {ShapeDefinition} */
             definition: this.createRandomShape(),
-            required: 10000 + Object(_core_utils__WEBPACK_IMPORTED_MODULE_2__["findNiceIntegerValue"])(this.level * 2000),
+            required: 5000 + Object(_core_utils__WEBPACK_IMPORTED_MODULE_2__["findNiceIntegerValue"])((this.level - _tutorial_goals__WEBPACK_IMPORTED_MODULE_9__["tutorialGoals"].length) * 200),
             reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_9__["enumHubGoalRewards"].no_reward_freeplay,
         };
     }
@@ -35203,18 +35345,33 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
      * @returns {ShapeDefinition}
      */
     createRandomShape() {
-        const layerCount = Object(_core_utils__WEBPACK_IMPORTED_MODULE_2__["clamp"])(this.level / 25, 2, 4);
+        return this.createRandomShapeOfTiers({
+            holeTier: 4,
+            shapeTier: 4,
+            colorTier: 4,
+            layerTier: 4,
+        });
+    }
+
+    /**
+     * @param {object} arg
+     * @param {number} arg.holeTier
+     * @param {number} arg.shapeTier
+     * @param {number} arg.colorTier
+     * @param {number} arg.layerTier
+     * @returns {ShapeDefinition}
+     */
+    createRandomShapeOfTiers({ holeTier, shapeTier, colorTier, layerTier }) {
+        const layerCount = layerTier;
+
         /** @type {Array<import("./shape_definition").ShapeLayer>} */
         let layers = [];
 
         const rng = new _core_rng__WEBPACK_IMPORTED_MODULE_12__["RandomNumberGenerator"](this.level + "|" + this.root.map.seed);
 
-        const colorTier = 3; // white
-        const shapeTier = 2; // windmill
-        const holeTier = 3; // max 2
-
         // @ts-ignore
         const availableColors = Object.values(_colors__WEBPACK_IMPORTED_MODULE_4__["allColorData"])
+            .filter(e => e.id != _colors__WEBPACK_IMPORTED_MODULE_4__["enumColors"].uncolored)
             .filter(e => e.tier <= colorTier)
             .map(e => e.id);
         // @ts-ignore
@@ -35225,7 +35382,13 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
         const randomColor = () => rng.choice(availableColors);
         const randomShape = () => rng.choice(availableShapes);
 
-        let anyIsMissingTwo = false;
+        let layerWith2Holes = -1;
+        if (holeTier >= 2) {
+            availableColors.push(_colors__WEBPACK_IMPORTED_MODULE_4__["enumColors"].uncolored);
+        }
+        if (holeTier >= 4) {
+            layerWith2Holes = rng.nextIntRange(0, layerCount);
+        }
 
         for (let i = 0; i < layerCount; ++i) {
             /** @type {import("./shape_definition").ShapeLayer} */
@@ -35238,17 +35401,16 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
                 };
             }
 
-            // Sometimes shapes are missing
-            if (rng.next() > 0.85) {
-                layer[Object(_core_utils__WEBPACK_IMPORTED_MODULE_2__["randomInt"])(0, 3)] = null;
-            }
-
-            // Sometimes they actually are missing *two* ones!
-            // Make sure at max only one layer is missing it though, otherwise we could
-            // create an uncreateable shape
-            if (rng.next() > 0.95 && !anyIsMissingTwo) {
-                layer[Object(_core_utils__WEBPACK_IMPORTED_MODULE_2__["randomInt"])(0, 3)] = null;
-                anyIsMissingTwo = true;
+            if (holeTier >= 3) {
+                let holeIndex = rng.nextIntRange(0, 4);
+                layer[holeIndex] = null;
+                if (i == layerWith2Holes) {
+                    let hole2Index = rng.nextIntRange(0, 3);
+                    if (hole2Index == holeIndex) {
+                        hole2Index = 3;
+                    }
+                    layer[hole2Index] = null;
+                }
             }
 
             layers.push(layer);
@@ -38227,7 +38389,7 @@ class HUDDebugInfo extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDP
      */
     onModeChanged(mode) {
         this.element.setAttribute("data-mode", mode);
-        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"bcd0af0"}`;
+        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"bea07c4"}`;
     }
 
     /**
@@ -47047,7 +47209,7 @@ const allShapeData = {
         distChance: 1,
         maxChance: 50,
         draw: "M 0 0 L 0 0.6 1 1 0.6 0 z",
-        tier: 1,
+        tier: 0.5,
     },
     windmill: {
         id: "windmill",
@@ -47060,7 +47222,7 @@ const allShapeData = {
         distChance: 1 / 2,
         maxChance: 26,
         draw: "M 0 0 L 0 0.6 1 1 1 0 z",
-        tier: 2,
+        tier: 1,
     },
 };
 
@@ -50813,13 +50975,14 @@ class RegularGameSpeed extends _base_game_speed__WEBPACK_IMPORTED_MODULE_0__["Ba
 /*!***************************************!*\
   !*** ./src/js/game/tutorial_goals.js ***!
   \***************************************/
-/*! exports provided: enumHubGoalRewards, tutorialGoals */
+/*! exports provided: enumHubGoalRewards, tutorialGoals, fixedGoals */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "enumHubGoalRewards", function() { return enumHubGoalRewards; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tutorialGoals", function() { return tutorialGoals; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fixedGoals", function() { return fixedGoals; });
 /* harmony import */ var _shape_definition__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shape_definition */ "./src/js/game/shape_definition.js");
 /* harmony import */ var _upgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./upgrades */ "./src/js/game/upgrades.js");
 
@@ -50999,6 +51162,8 @@ const tutorialGoals = [
         reward: enumHubGoalRewards.reward_freeplay,
     },
 ];
+
+const fixedGoals = [];
 
 if (true) {
     tutorialGoals.forEach(({ shape }) => {
@@ -51482,8 +51647,8 @@ if (window.coreThreadLoadedCb) {
 // }
 
 console.log(
-    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"bcd0af0"}%c on %c${new Date(
-        1596378323077
+    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"bea07c4"}%c on %c${new Date(
+        1596393511028
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -59440,7 +59605,7 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameSt
 
                     <div class="lower">
                         <button class="resetApp styledButton">Reset App</button>
-                        <i>Build ${"1.2.0"} @ ${"bcd0af0"}</i>
+                        <i>Build ${"1.2.0"} @ ${"bea07c4"}</i>
                     </div>
                 </div>
         `;
@@ -59575,14 +59740,14 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1596378323077;
+        const lastBuildMs = new Date().getTime() - 1596393511028;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
 
         labelVersion.innerHTML = `
             <span class='version'>
-                ${"1.2.0"} @ ${version} @ ${"bcd0af0"}
+                ${"1.2.0"} @ ${version} @ ${"bea07c4"}
             </span>
             <span class='buildTime'>
                 ${_translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.buildDate.replace("<at-date>", lastBuildText)}<br />
