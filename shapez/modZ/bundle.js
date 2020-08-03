@@ -21542,7 +21542,7 @@ function getBuildId() {
     if ( true && _config__WEBPACK_IMPORTED_MODULE_0__["IS_DEBUG"]) {
         return "local-dev";
     } else if (true) {
-        return "dev-" + getPlatformName() + "-" + "bea07c4";
+        return "dev-" + getPlatformName() + "-" + "975abe5";
     } else {}
 }
 
@@ -21945,23 +21945,32 @@ function formatBigNumber(num, separator = _translations__WEBPACK_IMPORTED_MODULE
 
     if (num < 1000) {
         return sign + "" + num;
-    } else {
-        let leadingDigits = num;
-        let suffix = "";
-        for (let suffixIndex = 0; suffixIndex < bigNumberSuffixTranslationKeys.length; ++suffixIndex) {
-            leadingDigits = leadingDigits / 1000;
-            suffix = _translations__WEBPACK_IMPORTED_MODULE_2__["T"].global.suffix[bigNumberSuffixTranslationKeys[suffixIndex]];
-            if (leadingDigits < 1000) {
-                break;
-            }
-        }
-        const leadingDigitsRounded = round1Digit(leadingDigits);
-        const leadingDigitsNoTrailingDecimal = leadingDigitsRounded
-            .toString()
-            .replace(".0", "")
-            .replace(".", separator);
-        return sign + leadingDigitsNoTrailingDecimal + suffix;
     }
+
+    let leadingDigits = num;
+    let suffix = "";
+    for (let suffixIndex = 0; suffixIndex < bigNumberSuffixTranslationKeys.length; ++suffixIndex) {
+        leadingDigits = leadingDigits / 1000;
+        suffix = _translations__WEBPACK_IMPORTED_MODULE_2__["T"].global.suffix[bigNumberSuffixTranslationKeys[suffixIndex]];
+        if (leadingDigits < 1000) {
+            break;
+        }
+    }
+    let mul = 1;
+    while (leadingDigits > 1) {
+        mul *= 10
+        leadingDigits /= 10;
+    }
+    const leadingDigitsRounded = Math.round(+leadingDigits.toFixed(3)*1e4) * mul / 1e4;
+
+    // const leadingDigitsRounded = round1Digit(leadingDigits);
+    // const leadingDigitsRounded = leadingDigits.toFixed();
+    const leadingDigitsNoTrailingDecimal = leadingDigitsRounded
+        .toString()
+        .replace(/\.0*$/, "")
+        .replace(".", separator);
+    return sign + leadingDigitsNoTrailingDecimal + suffix;
+
 }
 
 /**
@@ -23349,6 +23358,18 @@ class BaseItem extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_1__["Bas
     getBackgroundColorAsResource() {
         window.assert(false, 'abstract method called of: ' + (this.name || (this.constructor && this.constructor.name)));;
         return "";
+    }
+
+    static generateAsCanvas(hash, size) {
+        if (hash.length % 9 == 8) {
+            // @ts-ignore
+            return BaseItem.ShapeDefinition.createFromHash(hash).generateAsCanvas(size);
+        }
+        if (hash.length == 1) {
+            // @ts-ignore
+            return BaseItem.ColorItem.createFromHash(hash).generateAsCanvas(size);
+        }
+        window.assert(false, "undrawable item");
     }
 }
 
@@ -31425,14 +31446,14 @@ function targetShapeCheckerProcess({ items, trackProduction, entity, outItems, s
     const tscComponent = entity.components[id];
     if (!tscComponent.isfil && inputItem instanceof _gameData__WEBPACK_IMPORTED_MODULE_0__["ShapeItem"]) {
         // setting filter type:
-        let item = inputItem.definition.getHash();
+        let item = inputItem.getHash();
         // color:
         if (
             item.match(
                 /(.[^u-].[u-].[u-].[u-]|.[u-].[^u-].[u-].[u-]|.[u-].[u-].[^u-].[u-]|.[u-].[u-].[u-].[^u-])$/
             )
         ) {
-            let m = item.match(/([^u])(.u)*$/);
+            let m = item.match(/([^u-])(.[u-])*$/);
             tscComponent.filterType = "color";
             tscComponent.filterIndex = m.index;
             tscComponent.filter = m[0].slice(0, 1);
@@ -32114,7 +32135,7 @@ const painter = {
 const inverter = {
     id: "inverter",
     goal: {
-        shape: "CuCuCuCu",
+        shape: "CuCuCuCu", // <-----------------------------------------
         required: 5000,
         reward: "inverter",
         title: "Inversion",
@@ -32125,7 +32146,7 @@ const inverter = {
 const counter = {
     id: "counter",
     goal: {
-        shape: "RwCwSbCw:RwCwSrCw:RwCwSyCw",
+        shape: "RwCwSbCw:RcCwSrCw:RwCwSyCw", // onion rocket
         required: 5000,
         reward: "counter",
         title: "The Speed Unravelled",
@@ -32136,7 +32157,7 @@ const counter = {
 const checker = {
     id: "checker",
     goal: {
-        shape: "CuCuCuCu",
+        shape: "CuCuCuCu", // <-----------------------------------------
         required: 5000,
         reward: "checker",
         title: "The Full Automation",
@@ -32151,7 +32172,7 @@ const checker = {
 const combiner = {
     id: "combiner",
     goal: {
-        shape: "CuCuCuCu",
+        shape: "CuCuCuCu", // <-----------------------------------------
         required: 5000,
         reward: "combiner",
     },
@@ -32159,15 +32180,17 @@ const combiner = {
 const unstacker = {
     id: "unstacker",
     goal: {
-        shape: "CuCuCuCu",
+        shape: "RyRyRcRc:SyScSySc:ScSyScSy:CyCyCcCc", // cyan-yellow stack
         required: 5000,
         reward: "unstacker",
+        title: "unstacker unlocked",
+        desc: "<strong>unstacker</strong> is unlocked, no comments.",
     },
 };
 const repeater = {
     id: "repeater",
     goal: {
-        shape: "CuCuCuCu",
+        shape: "CuCuCuCu", // <-----------------------------------------
         required: 5000,
         reward: "repeater",
     },
@@ -32208,7 +32231,7 @@ makeFreeplay(25, 25, 1, 1, 1, 1, {
     desc:
         "So, this was the first <strong>Freeplay</strong> level. Nothing really special, just a random shape." +
         " This one was easy, but next ones are going to be harder, slowly becoming harder and harder once a while to keep you stuffed." +
-        " Make sure to use <strong>Checker</strong> and make a fully automated Ultimate Factory that can produce Anywhing! Onwards, to FREEPLAY!!!",
+        " Make sure to use <strong>Checker</strong> and make a fully automated Ultimate Factory that can produce Anywhing! <strong>Onwards, to FREEPLAY!!!</strong>",
 });
 makeFreeplay(26, 29, 1, 2, 1, 1, {
     title: "descriptions are WIP but progression goes",
@@ -35160,7 +35183,7 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
         const hash = definition.getHash();
         this.storedShapes[hash] = (this.storedShapes[hash] || 0) + 1;
 
-        this.root.signals.shapeDelivered.dispatch(definition);
+        this.root.signals.shapeDelivered.dispatch(hash);
 
         // Check if we have enough for the next level
         const targetHash = this.currentGoal.definition.getHash();
@@ -35180,12 +35203,7 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
     handleDeliveredByHash(hash) {
         this.storedShapes[hash] = (this.storedShapes[hash] || 0) + 1;
 
-        if (hash.length % 5 == 4) {
-            this.root.signals.shapeDelivered.dispatch(_shape_definition__WEBPACK_IMPORTED_MODULE_8__["ShapeDefinition"].fromShortKey(hash));
-        } else {
-            // FIXME
-            // this.root.signals.shapeDelivered.dispatch(ColorItem.createFromHash(hash));
-        }
+        this.root.signals.shapeDelivered.dispatch(hash);
 
         // Check if we have enough for the next level
         const targetHash = this.currentGoal.definition.getHash();
@@ -38389,7 +38407,7 @@ class HUDDebugInfo extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDP
      */
     onModeChanged(mode) {
         this.element.setAttribute("data-mode", mode);
-        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"bea07c4"}`;
+        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"975abe5"}`;
     }
 
     /**
@@ -41397,13 +41415,9 @@ class HUDStatistics extends _base_hud_part__WEBPACK_IMPORTED_MODULE_4__["BaseHUD
             let handle = this.activeHandles[shapeKey];
             // TODO TODO TODO TODO TODO TODO TODO TODO TODO
             if (!handle) {
-                const definition =
-                    shapeKey.length > 1
-                        ? this.root.shapeDefinitionMgr.getShapeFromShortKey(shapeKey)
-                        : _game_items_color_item__WEBPACK_IMPORTED_MODULE_8__["ColorItem"].createFromHash(shapeKey);
                 handle = this.activeHandles[shapeKey] = new _statistics_handle__WEBPACK_IMPORTED_MODULE_6__["HUDShapeStatisticsHandle"](
                     this.root,
-                    definition,
+                    shapeKey,
                     this.intersectionObserver
                 );
             }
@@ -41449,6 +41463,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _production_analytics__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../production_analytics */ "./src/js/game/production_analytics.js");
 /* harmony import */ var _root__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../root */ "./src/js/game/root.js");
 /* harmony import */ var _shape_definition__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../shape_definition */ "./src/js/game/shape_definition.js");
+/* harmony import */ var _base_item__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../base_item */ "./src/js/game/base_item.js");
+
 
 
 
@@ -41469,11 +41485,11 @@ const enumDisplayMode = {
 class HUDShapeStatisticsHandle {
     /**
      * @param {GameRoot} root
-     * @param {ShapeDefinition} definition
+     * @param {string} shapeHash
      * @param {IntersectionObserver} intersectionObserver
      */
-    constructor(root, definition, intersectionObserver) {
-        this.definition = definition;
+    constructor(root, shapeHash, intersectionObserver) {
+        this.shapeHash = shapeHash;
         this.root = root;
         this.intersectionObserver = intersectionObserver;
 
@@ -41482,10 +41498,7 @@ class HUDShapeStatisticsHandle {
 
     initElement() {
         this.element = document.createElement("div");
-        this.element.setAttribute(
-            "data-shape-key",
-            typeof this.definition == "string" ? this.definition : this.definition.getHash()
-        );
+        this.element.setAttribute("data-shape-key", this.shapeHash);
 
         this.counter = document.createElement("span");
         this.counter.classList.add("counter");
@@ -41504,7 +41517,7 @@ class HUDShapeStatisticsHandle {
         if (visibility) {
             if (!this.shapeCanvas) {
                 // Create elements
-                this.shapeCanvas = this.definition.generateAsCanvas(100);
+                this.shapeCanvas = _base_item__WEBPACK_IMPORTED_MODULE_7__["BaseItem"].generateAsCanvas(this.shapeHash, 100);
                 this.shapeCanvas.classList.add("icon");
                 this.element.appendChild(this.shapeCanvas);
             }
@@ -41531,14 +41544,14 @@ class HUDShapeStatisticsHandle {
         switch (dataSource) {
             case _production_analytics__WEBPACK_IMPORTED_MODULE_4__["enumAnalyticsDataSource"].stored: {
                 this.counter.innerText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_2__["formatBigNumber"])(
-                    this.root.hubGoals.storedShapes[this.definition.getHash()] || 0
+                    this.root.hubGoals.storedShapes[this.shapeHash] || 0
                 );
                 break;
             }
             case _production_analytics__WEBPACK_IMPORTED_MODULE_4__["enumAnalyticsDataSource"].delivered:
             case _production_analytics__WEBPACK_IMPORTED_MODULE_4__["enumAnalyticsDataSource"].produced: {
                 let rate =
-                    (this.root.productionAnalytics.getCurrentShapeRate(dataSource, this.definition) /
+                    (this.root.productionAnalytics.getCurrentShapeRate(dataSource, this.shapeHash) /
                         _core_config__WEBPACK_IMPORTED_MODULE_1__["globalConfig"].analyticsSliceDurationSeconds) *
                     60;
                 this.counter.innerText = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].ingame.statistics.shapesPerMinute.replace(
@@ -41564,7 +41577,7 @@ class HUDShapeStatisticsHandle {
                 const [canvas, context] = Object(_core_buffer_utils__WEBPACK_IMPORTED_MODULE_0__["makeOffscreenBuffer"])(w * graphDpi, h * graphDpi, {
                     smooth: true,
                     reusable: false,
-                    label: "statgraph-" + this.definition.getHash(),
+                    label: "statgraph-" + this.shapeHash,
                 });
                 context.scale(graphDpi, graphDpi);
                 canvas.classList.add("graph");
@@ -41587,7 +41600,7 @@ class HUDShapeStatisticsHandle {
             for (let i = 0; i < _core_config__WEBPACK_IMPORTED_MODULE_1__["globalConfig"].statisticsGraphSlices - 2; ++i) {
                 const value = this.root.productionAnalytics.getPastShapeRate(
                     dataSource,
-                    this.definition,
+                    this.shapeHash,
                     _core_config__WEBPACK_IMPORTED_MODULE_1__["globalConfig"].statisticsGraphSlices - i - 2
                 );
                 if (value > maxValue) {
@@ -43299,6 +43312,8 @@ class ColorItem extends _base_item__WEBPACK_IMPORTED_MODULE_4__["BaseItem"] {
     }
 }
 
+_base_item__WEBPACK_IMPORTED_MODULE_4__["BaseItem"].ColorItem = ColorItem;
+
 
 /***/ }),
 
@@ -44776,6 +44791,8 @@ class MapChunk {
      */
     generateLowerLayer() {
         const rng = new _core_rng__WEBPACK_IMPORTED_MODULE_12__["RandomNumberGenerator"](this.x + "|" + this.y + "|" + this.root.map.seed);
+        const rng1 = new _core_rng__WEBPACK_IMPORTED_MODULE_12__["RandomNumberGenerator"]("patch1" + this.x + "|" + this.y + "|" + this.root.map.seed);
+        const rng2 = new _core_rng__WEBPACK_IMPORTED_MODULE_12__["RandomNumberGenerator"]("patch2" + this.x + "|" + this.y + "|" + this.root.map.seed);
 
         if (this.generatePredefined(rng)) {
             return;
@@ -45865,10 +45882,9 @@ class ProductionAnalytics extends _savegame_serialization__WEBPACK_IMPORTED_MODU
     }
 
     /**
-     * @param {ShapeDefinition} definition
+     * @param {string} key
      */
-    onShapeDelivered(definition) {
-        const key = definition.getHash();
+    onShapeDelivered(key) {
         const entry = this.history[enumAnalyticsDataSource.delivered];
         entry[entry.length - 1][key] = (entry[entry.length - 1][key] || 0) + 1;
     }
@@ -45877,12 +45893,15 @@ class ProductionAnalytics extends _savegame_serialization__WEBPACK_IMPORTED_MODU
      * @param {BaseItem} item
      */
     onItemProduced(item) {
-        if (item.getItemType() === _base_item__WEBPACK_IMPORTED_MODULE_3__["enumItemType"].shape) {
-            const definition = /** @type {ShapeItem} */ (item).definition;
-            const key = definition.getHash();
-            const entry = this.history[enumAnalyticsDataSource.produced];
-            entry[entry.length - 1][key] = (entry[entry.length - 1][key] || 0) + 1;
-        }
+        // if (item.getItemType() === enumItemType.shape) {
+        //     const definition = /** @type {ShapeItem} */ (item).definition;
+        //     const key = definition.getHash();
+        //     const entry = this.history[enumAnalyticsDataSource.produced];
+        //     entry[entry.length - 1][key] = (entry[entry.length - 1][key] || 0) + 1;
+        // }
+        const key = item.getHash();
+        const entry = this.history[enumAnalyticsDataSource.produced];
+        entry[entry.length - 1][key] = (entry[entry.length - 1][key] || 0) + 1;
     }
 
     /**
@@ -45905,27 +45924,27 @@ class ProductionAnalytics extends _savegame_serialization__WEBPACK_IMPORTED_MODU
     /**
      * Returns the current rate of a given shape
      * @param {enumAnalyticsDataSource} dataSource
-     * @param {ShapeDefinition} definition
+     * @param {string} shapeHash
      */
-    getCurrentShapeRate(dataSource, definition) {
+    getCurrentShapeRate(dataSource, shapeHash) {
         const slices = this.history[dataSource];
-        return slices[slices.length - 2][definition.getHash()] || 0;
+        return slices[slices.length - 2][shapeHash] || 0;
     }
 
     /**
      * Returns the rate of a given shape, <historyOffset> frames ago
      * @param {enumAnalyticsDataSource} dataSource
-     * @param {ShapeDefinition} definition
+     * @param {string} shapeHash
      * @param {number} historyOffset
      */
-    getPastShapeRate(dataSource, definition, historyOffset) {
+    getPastShapeRate(dataSource, shapeHash, historyOffset) {
         window.assert(
             historyOffset >= 0 && historyOffset < _core_config__WEBPACK_IMPORTED_MODULE_2__["globalConfig"].statisticsGraphSlices - 1,
             "Invalid slice offset: " + historyOffset
         );
 
         const slices = this.history[dataSource];
-        return slices[slices.length - 2 - historyOffset][definition.getHash()] || 0;
+        return slices[slices.length - 2 - historyOffset][shapeHash] || 0;
     }
 
     /**
@@ -45942,7 +45961,7 @@ class ProductionAnalytics extends _savegame_serialization__WEBPACK_IMPORTED_MODU
         for (let i = 0; i < 10; ++i) {
             const pastValues = slices[slices.length - i - 3];
             for (const key in pastValues) {
-                baseValues[key] = baseValues[key] || 0;
+                baseValues[key] = (baseValues[key] || 0) + pastValues[key];
             }
         }
 
@@ -46121,7 +46140,7 @@ class GameRoot {
             // Can be used to trigger an async task
             performAsync: /** @type {TypedSignal<[function]>} */ (new _core_signal__WEBPACK_IMPORTED_MODULE_0__["Signal"]()),
 
-            shapeDelivered: /** @type {TypedSignal<[ShapeDefinition]>} */ (new _core_signal__WEBPACK_IMPORTED_MODULE_0__["Signal"]()),
+            shapeDelivered: /** @type {TypedSignal<[string]>} */ (new _core_signal__WEBPACK_IMPORTED_MODULE_0__["Signal"]()),
             itemProduced: /** @type {TypedSignal<[BaseItem]>} */ (new _core_signal__WEBPACK_IMPORTED_MODULE_0__["Signal"]()),
 
             bulkOperationFinished: /** @type {TypedSignal<[]>} */ (new _core_signal__WEBPACK_IMPORTED_MODULE_0__["Signal"]()),
@@ -46214,6 +46233,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _savegame_serialization__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../savegame/serialization */ "./src/js/savegame/serialization.js");
 /* harmony import */ var _colors__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./colors */ "./src/js/game/colors.js");
 /* harmony import */ var _theme__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./theme */ "./src/js/game/theme.js");
+/* harmony import */ var _base_item__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./base_item */ "./src/js/game/base_item.js");
+
 
 
 
@@ -46291,6 +46312,11 @@ class ShapeDefinition extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_7
 
     serialize() {
         return this.getHash();
+    }
+
+    /** @returns {ShapeDefinition} */
+    static createFromHash(hash) {
+        return ShapeDefinition.fromShortKey(hash);
     }
 
     /**
@@ -46836,6 +46862,8 @@ class ShapeDefinition extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_7
         return new ShapeDefinition({ layers: newLayers });
     }
 }
+
+_base_item__WEBPACK_IMPORTED_MODULE_10__["BaseItem"].ShapeDefinition = ShapeDefinition;
 
 
 /***/ }),
@@ -51647,8 +51675,8 @@ if (window.coreThreadLoadedCb) {
 // }
 
 console.log(
-    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"bea07c4"}%c on %c${new Date(
-        1596393511028
+    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"975abe5"}%c on %c${new Date(
+        1596470484181
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -59605,7 +59633,7 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameSt
 
                     <div class="lower">
                         <button class="resetApp styledButton">Reset App</button>
-                        <i>Build ${"1.2.0"} @ ${"bea07c4"}</i>
+                        <i>Build ${"1.2.0"} @ ${"975abe5"}</i>
                     </div>
                 </div>
         `;
@@ -59740,14 +59768,14 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1596393511028;
+        const lastBuildMs = new Date().getTime() - 1596470484181;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
 
         labelVersion.innerHTML = `
             <span class='version'>
-                ${"1.2.0"} @ ${version} @ ${"bea07c4"}
+                ${"1.2.0"} @ ${version} @ ${"975abe5"}
             </span>
             <span class='buildTime'>
                 ${_translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.buildDate.replace("<at-date>", lastBuildText)}<br />
