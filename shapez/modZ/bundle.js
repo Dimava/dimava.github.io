@@ -14048,6 +14048,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CHANGELOG", function() { return CHANGELOG; });
 const CHANGELOG = [
     {
+        version: "modZ 0.9.9",
+        date: "by Dimava",
+        entries: [
+            "Added new buildings: Checker, Counter, Unstacker, Combiner, Repeater, Quaduo Painter",
+            "Added 11 new shapes. Use Combiner to obtain them.",
+            "Made some levels for custom buildings (some are still missing)",
+            "Fixed lower-that-written speeds of producers (tnx isa) and miners",
+            "Added 2nd toolbar for modded buildings, toggle-building, and hotkey to toggle it (key Z)",
+            "Added descriptions, toolbar icons and tutorial images for modded buildings (some are still missing)",
+            "Added Freeplay levels with growing difficulty. Required shape count for freeplay was greatly reduced.",
+            "Reduced required shapes for levels - you have probably finished the main game so you don't have to proof anything exept freeplay builds",
+            "Made numbers longer (3 digits)",
+            "Added debug settings - basically a sandbox mode, as well as F6 key in-game. I highly recommend turning on the \"Show chunk borders\" permanently.",
+        ]
+    },
+
+    {
         version: "1.2.0",
         date: "unreleased",
         entries: [
@@ -21542,7 +21559,7 @@ function getBuildId() {
     if ( true && _config__WEBPACK_IMPORTED_MODULE_0__["IS_DEBUG"]) {
         return "local-dev";
     } else if (true) {
-        return "dev-" + getPlatformName() + "-" + "975abe5";
+        return "dev-" + getPlatformName() + "-" + "1dc3464";
     } else {}
 }
 
@@ -31210,23 +31227,521 @@ class GameCore {
 
 /***/ }),
 
-/***/ "./src/js/game/custom/buildings sync .*\\.js/":
-/*!****************************************************************!*\
-  !*** ./src/js/game/custom/buildings sync nonrecursive .*\.js/ ***!
-  \****************************************************************/
+/***/ "./src/js/game/custom/colors.js":
+/*!**************************************!*\
+  !*** ./src/js/game/custom/colors.js ***!
+  \**************************************/
+/*! exports provided: customColors, registerCustomColor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "customColors", function() { return customColors; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerCustomColor", function() { return registerCustomColor; });
+/** @enum {string} */
+const customColors = [];
+
+/**
+ * @param {Object} colorData
+ * @param {string} colorData.id
+ * @param {string} colorData.code
+ * @param {string} colorData.hex
+ * @param {string[][] | string[]} [colorData.mixingFrom]
+ * @param {Object.<string, string>} [colorData.mixing]
+ * @param {boolean} [colorData.spawnable]
+ * @param {number} [colorData.minDistance]
+ */
+function registerCustomColor(colorData) {
+    customColors.push(colorData);
+}
+
+// registerCustomColor({
+//     id: "black",
+//     code: "k",
+//     hex: "#333333",
+//     mixing: {
+//         white: "uncolored",
+//         uncolored: "uncolored",
+//         any: "black",
+//     },
+//     spawnable: true,
+//     minDistance: 5,
+// });
+
+
+/***/ }),
+
+/***/ "./src/js/game/custom/gameData.js":
+/*!****************************************!*\
+  !*** ./src/js/game/custom/gameData.js ***!
+  \****************************************/
+/*! exports provided: Component, types, gItemRegistry, BaseItem, Vector, enumDirection, globalConfig, ItemAcceptorComponent, ItemEjectorComponent, enumItemProcessorTypes, ItemProcessorComponent, Entity, MetaBuilding, GameRoot, enumHubGoalRewards, T, formatItemsPerSecond, GameSystemWithFilter, DrawParameters, formatBigNumber, lerp, Loader, GameTime, ShapeItem, ColorItem, ShapeDefinition, enumItemType */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../component */ "./src/js/game/component.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Component", function() { return _component__WEBPACK_IMPORTED_MODULE_0__["Component"]; });
+
+/* harmony import */ var _savegame_serialization__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../savegame/serialization */ "./src/js/savegame/serialization.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "types", function() { return _savegame_serialization__WEBPACK_IMPORTED_MODULE_1__["types"]; });
+
+/* harmony import */ var _core_global_registries__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../core/global_registries */ "./src/js/core/global_registries.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "gItemRegistry", function() { return _core_global_registries__WEBPACK_IMPORTED_MODULE_2__["gItemRegistry"]; });
+
+/* harmony import */ var _base_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../base_item */ "./src/js/game/base_item.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "BaseItem", function() { return _base_item__WEBPACK_IMPORTED_MODULE_3__["BaseItem"]; });
+
+/* harmony import */ var _core_vector__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../core/vector */ "./src/js/core/vector.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Vector", function() { return _core_vector__WEBPACK_IMPORTED_MODULE_4__["Vector"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "enumDirection", function() { return _core_vector__WEBPACK_IMPORTED_MODULE_4__["enumDirection"]; });
+
+/* harmony import */ var _core_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../core/config */ "./src/js/core/config.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "globalConfig", function() { return _core_config__WEBPACK_IMPORTED_MODULE_5__["globalConfig"]; });
+
+/* harmony import */ var _components_item_acceptor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/item_acceptor */ "./src/js/game/components/item_acceptor.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ItemAcceptorComponent", function() { return _components_item_acceptor__WEBPACK_IMPORTED_MODULE_6__["ItemAcceptorComponent"]; });
+
+/* harmony import */ var _components_item_ejector__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/item_ejector */ "./src/js/game/components/item_ejector.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ItemEjectorComponent", function() { return _components_item_ejector__WEBPACK_IMPORTED_MODULE_7__["ItemEjectorComponent"]; });
+
+/* harmony import */ var _components_item_processor__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/item_processor */ "./src/js/game/components/item_processor.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "enumItemProcessorTypes", function() { return _components_item_processor__WEBPACK_IMPORTED_MODULE_8__["enumItemProcessorTypes"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ItemProcessorComponent", function() { return _components_item_processor__WEBPACK_IMPORTED_MODULE_8__["ItemProcessorComponent"]; });
+
+/* harmony import */ var _entity__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../entity */ "./src/js/game/entity.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Entity", function() { return _entity__WEBPACK_IMPORTED_MODULE_9__["Entity"]; });
+
+/* harmony import */ var _meta_building__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../meta_building */ "./src/js/game/meta_building.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MetaBuilding", function() { return _meta_building__WEBPACK_IMPORTED_MODULE_10__["MetaBuilding"]; });
+
+/* harmony import */ var _root__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../root */ "./src/js/game/root.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GameRoot", function() { return _root__WEBPACK_IMPORTED_MODULE_11__["GameRoot"]; });
+
+/* harmony import */ var _tutorial_goals__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../tutorial_goals */ "./src/js/game/tutorial_goals.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "enumHubGoalRewards", function() { return _tutorial_goals__WEBPACK_IMPORTED_MODULE_12__["enumHubGoalRewards"]; });
+
+/* harmony import */ var _translations__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../translations */ "./src/js/translations.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "T", function() { return _translations__WEBPACK_IMPORTED_MODULE_13__["T"]; });
+
+/* harmony import */ var _core_utils__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../core/utils */ "./src/js/core/utils.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "formatItemsPerSecond", function() { return _core_utils__WEBPACK_IMPORTED_MODULE_14__["formatItemsPerSecond"]; });
+
+/* harmony import */ var _game_system_with_filter__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../game_system_with_filter */ "./src/js/game/game_system_with_filter.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GameSystemWithFilter", function() { return _game_system_with_filter__WEBPACK_IMPORTED_MODULE_15__["GameSystemWithFilter"]; });
+
+/* harmony import */ var _core_draw_parameters__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../core/draw_parameters */ "./src/js/core/draw_parameters.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DrawParameters", function() { return _core_draw_parameters__WEBPACK_IMPORTED_MODULE_16__["DrawParameters"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "formatBigNumber", function() { return _core_utils__WEBPACK_IMPORTED_MODULE_14__["formatBigNumber"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "lerp", function() { return _core_utils__WEBPACK_IMPORTED_MODULE_14__["lerp"]; });
+
+/* harmony import */ var _core_loader__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../core/loader */ "./src/js/core/loader.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Loader", function() { return _core_loader__WEBPACK_IMPORTED_MODULE_17__["Loader"]; });
+
+/* harmony import */ var _time_game_time__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../time/game_time */ "./src/js/game/time/game_time.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GameTime", function() { return _time_game_time__WEBPACK_IMPORTED_MODULE_18__["GameTime"]; });
+
+/* harmony import */ var _items_shape_item__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../items/shape_item */ "./src/js/game/items/shape_item.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ShapeItem", function() { return _items_shape_item__WEBPACK_IMPORTED_MODULE_19__["ShapeItem"]; });
+
+/* harmony import */ var _items_color_item__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../items/color_item */ "./src/js/game/items/color_item.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ColorItem", function() { return _items_color_item__WEBPACK_IMPORTED_MODULE_20__["ColorItem"]; });
+
+/* harmony import */ var _shape_definition__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../shape_definition */ "./src/js/game/shape_definition.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ShapeDefinition", function() { return _shape_definition__WEBPACK_IMPORTED_MODULE_21__["ShapeDefinition"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "enumItemType", function() { return _base_item__WEBPACK_IMPORTED_MODULE_3__["enumItemType"]; });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./src/js/game/custom/modBuildings.js":
+/*!********************************************!*\
+  !*** ./src/js/game/custom/modBuildings.js ***!
+  \********************************************/
+/*! exports provided: allCustomBuildingData, customBuildingData, getCustomBuildingSystemsNulled, internalInitSystemsAddAt */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allCustomBuildingData", function() { return allCustomBuildingData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "customBuildingData", function() { return customBuildingData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCustomBuildingSystemsNulled", function() { return getCustomBuildingSystemsNulled; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "internalInitSystemsAddAt", function() { return internalInitSystemsAddAt; });
+/* harmony import */ var _hud_parts_buildings_toolbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../hud/parts/buildings_toolbar */ "./src/js/game/hud/parts/buildings_toolbar.js");
+/* harmony import */ var _hud_parts_tools_toolbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hud/parts/tools_toolbar */ "./src/js/game/hud/parts/tools_toolbar.js");
+/* harmony import */ var _components_item_processor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/item_processor */ "./src/js/game/components/item_processor.js");
+/* harmony import */ var _translations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../translations */ "./src/js/translations.js");
+/* harmony import */ var _modSpriteDrawer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modSpriteDrawer */ "./src/js/game/custom/modSpriteDrawer.js");
+/* harmony import */ var _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../tutorial_goals */ "./src/js/game/tutorial_goals.js");
+/* harmony import */ var _hud_parts_interactive_tutorial__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../hud/parts/interactive_tutorial */ "./src/js/game/hud/parts/interactive_tutorial.js");
+/* harmony import */ var _gameData__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./gameData */ "./src/js/game/custom/gameData.js");
+
+
+
+
+
+
+
+
+
+
+
+let allCustomBuildingData = [];
+const customBuildingData = {};
+
+const localMods = __webpack_require__("./src/js/game/custom/mods sync .*\\.js/");
+for (let key of localMods.keys()) {
+    let mod = localMods(key).default;
+    if (!Array.isArray(mod)) {
+        mod = [mod];
+    }
+    for (let entry of mod) {
+        allCustomBuildingData.push(entry);
+    }
+}
+
+for (let custom of allCustomBuildingData) {
+    if (!customBuildingData[custom.id]) {
+        customBuildingData[custom.id] = custom;
+    } else {
+        customBuildingData[custom.id] = Object.assign({}, customBuildingData[custom.id], custom);
+    }
+}
+allCustomBuildingData = Object.values(customBuildingData);
+allCustomBuildingData.sort((a, b) => (a.variantId || 1e4) - (b.variantId || 1e4));
+
+for (let custom of allCustomBuildingData) {
+    addCustom(custom);
+}
+
+globalThis.addCustom = addCustom;
+globalThis.gameData = _gameData__WEBPACK_IMPORTED_MODULE_7__;
+globalThis.addMod = addMod;
+
+function addMod(mod) {
+    addCustom(mod(_gameData__WEBPACK_IMPORTED_MODULE_7__));
+}
+
+function addCustom(custom) {
+    Object.assign(customBuildingData[custom.id], custom);
+
+    if (custom.goal) {
+        if (!custom.goal.fixed) {
+            if (_tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].find(e => e.reward == custom.goal.reward)) {
+                let index = _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].findIndex(e => e.reward == custom.goal.reward);
+                _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].splice(index, 1);
+            }
+            _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].push(custom.goal);
+            _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].sort((a, b) => (a.sort_index || a.required) - (b.sort_index || b.required));
+        } else {
+            if (!custom.goal.reward) {
+                custom.goal.reward = "no_reward_freeplay";
+            }
+            custom.goal.shape = custom.goal.shape || {};
+            if (typeof custom.goal.shape != "string") {
+                custom.goal.shape.holeTier = custom.goal.shape.holeTier || 1;
+                custom.goal.shape.shapeTier = custom.goal.shape.shapeTier || 1;
+                custom.goal.shape.colorTier = custom.goal.shape.colorTier || 1;
+                custom.goal.shape.layerTier = custom.goal.shape.layerTier || 1;
+            }
+            custom.goal.minLevel = custom.goal.minLevel || 1;
+            custom.goal.maxLevel = custom.goal.maxLevel || 1;
+            _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["fixedGoals"].push(custom.goal);
+        }
+
+        if (custom.goal.reward) {
+            if (!custom.goal.reward.includes("reward_")) {
+                custom.goal.reward = "reward_" + custom.goal.reward;
+            }
+            _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["enumHubGoalRewards"][custom.goal.reward] = custom.goal.reward;
+            if (!_translations__WEBPACK_IMPORTED_MODULE_3__["T"].storyRewards[custom.goal.reward]) {
+                _translations__WEBPACK_IMPORTED_MODULE_3__["T"].storyRewards[custom.goal.reward] = {
+                    title: custom.goal.title || custom.Tname || custom.id,
+                    desc: "no description",
+                };
+            }
+            if (custom.goal.desc) {
+                _translations__WEBPACK_IMPORTED_MODULE_3__["T"].storyRewards[custom.goal.reward].desc = custom.goal.desc;
+            }
+        }
+    }
+
+    if (custom.building) {
+        if (!custom.variant) {
+            custom.variant = "default";
+        }
+
+        if (custom.process) {
+            _components_item_processor__WEBPACK_IMPORTED_MODULE_2__["enumItemProcessorTypes"][custom.id] = custom.id;
+        }
+
+        if (!custom.Tname) {
+            custom.Tname = custom.id;
+        }
+        if (!custom.Tdesc) {
+            custom.Tdesc = "";
+        }
+        if (!_translations__WEBPACK_IMPORTED_MODULE_3__["T"].buildings[custom.id]) {
+            _translations__WEBPACK_IMPORTED_MODULE_3__["T"].buildings[custom.id] = {};
+        }
+        _translations__WEBPACK_IMPORTED_MODULE_3__["T"].buildings[custom.id][custom.variant] = {
+            name: custom.Tname,
+            description: custom.Tdesc,
+        };
+
+        if (!custom.speed) {
+            custom.speed = 1;
+        }
+        if (!custom.speedClass) {
+            custom.speedClass = "belt";
+        }
+
+        if (custom.meta && custom.toolbar == 0) {
+            _hud_parts_buildings_toolbar__WEBPACK_IMPORTED_MODULE_0__["supportedBuildings"].push(custom.meta);
+        }
+        if (custom.meta && custom.toolbar == 2) {
+            _hud_parts_tools_toolbar__WEBPACK_IMPORTED_MODULE_1__["supportedBuildings"].push(custom.meta);
+        }
+    }
+
+    if (custom.sprite) {
+        (custom.sprite[0] || custom.sprite).sprite = `sprites/buildings/${custom.id}${
+            custom.variant == "default" ? "" : "-" + custom.variant
+        }.png`;
+        Object(_modSpriteDrawer__WEBPACK_IMPORTED_MODULE_4__["addSprite"])(custom.sprite);
+        (custom.spriteBp[0] || custom.spriteBp).sprite = `sprites/blueprints/${custom.id}${
+            custom.variant == "default" ? "" : "-" + custom.variant
+        }.png`;
+        custom.spriteBp.transparent = true;
+        Object(_modSpriteDrawer__WEBPACK_IMPORTED_MODULE_4__["addSprite"])(custom.spriteBp);
+    }
+}
+
+function getCustomBuildingSystemsNulled() {
+    let r = {};
+    for (let k in allCustomBuildingData) {
+        let data = allCustomBuildingData[k];
+        if (!data.system) {
+            continue;
+        }
+        r[data.id] = null;
+    }
+    return r;
+}
+
+/**
+ * @param {number} order
+ */
+function internalInitSystemsAddAt(order, add) {
+    let systems = Object.values(allCustomBuildingData).filter(data => {
+        if (!data.system) return false;
+        if (order <= 0) return data.sysOrder && data.sysOrder < order;
+        if (order) return data.sysOrder && order <= data.sysOrder && data.sysOrder < order + 1;
+        // NaN/undefined goes here
+        return !data.sysOrder;
+    });
+    systems.sort((a, b) => a.sysOrder - b.sysOrder);
+    for (let data of systems) {
+        add(data.id, data.system);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/js/game/custom/modSpriteDrawer.js":
+/*!***********************************************!*\
+  !*** ./src/js/game/custom/modSpriteDrawer.js ***!
+  \***********************************************/
+/*! exports provided: addSprite */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addSprite", function() { return addSprite; });
+/* harmony import */ var _core_loader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/loader */ "./src/js/core/loader.js");
+
+
+/**
+ * draws building base on 192m*192n cells context
+ * @param {CanvasRenderingContext2D} ctx
+ * @param {string} path
+ */
+function drawBaseLayer(ctx, path, bp) {
+    let p = new Path2D(path);
+    ctx.save();
+    // shadow:
+    ctx.save();
+    ctx.fillStyle = "#91949e";
+    ctx.globalAlpha = 0.2;
+    ctx.translate(6, 8);
+    ctx.fill(p);
+    ctx.restore();
+    // base:
+    ctx.fillStyle = !bp ? "#dee1ea" : "#6CD1FF";
+    ctx.strokeStyle = !bp ? "#64666e" : "#56A7D8";
+    ctx.lineWidth = 6;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.miterLimit = 4;
+    ctx.fill(p);
+    ctx.stroke(p);
+    ctx.restore();
+}
+/**
+ * draws a color-filled path on 192m*192n cells context
+ * @param {CanvasRenderingContext2D} ctx
+ * @param {string} path
+ */
+function drawfillShape(ctx, path, color) {
+    let p = new Path2D(path);
+    ctx.save();
+    // shadow:
+    ctx.save();
+    ctx.fillStyle = "#91949e";
+    ctx.globalAlpha = 0.2;
+    ctx.translate(6, 8);
+    ctx.fill(p);
+    ctx.restore();
+    // base:
+    ctx.fillStyle = color;
+    ctx.strokeStyle = "#64666e";
+    ctx.lineWidth = 10;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.miterLimit = 4;
+    ctx.stroke(p);
+    ctx.fill(p);
+    ctx.restore();
+}
+function drawShape(ctx, path, color1, color2) {
+    let p = new Path2D(path);
+    ctx.save();
+    // base:
+    ctx.fillStyle = color1;
+    ctx.strokeStyle = color2;
+    ctx.lineWidth = 10;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.miterLimit = 4;
+    ctx.stroke(p);
+    ctx.fill(p);
+    ctx.restore();
+}
+
+function addSprite(data) {
+    let info = data[0] || data;
+    if (info.url) {
+        drawSpriteFromImage(info.sprite, info.url, info);
+        return;
+    }
+    let layers = data.layers || data.slice(1);
+    drawSpriteFromJson(info.sprite, layers, info);
+}
+
+function drawSpriteFromJson(sprite, layers, info) {
+    function draw({ context, canvas2, context2 }) {
+        if (info.transparent) {
+            for (let layer of layers) {
+                if (layer.fill && layer.stroke) {
+                    drawShape(context2, layer.path, layer.fill, layer.stroke);
+                } else if (layer.fill) {
+                    drawfillShape(context, layer.path, layer.fill);
+                } else if (layer.stroke) {
+                    throw "not implemented";
+                } else {
+                    drawBaseLayer(context, layer.path, true);
+                }
+            }
+            context.save();
+            context.globalAlpha = 0x99 / 0xff;
+            context.drawImage(canvas2, 0, 0);
+            context.restore();
+
+            return;
+        }
+
+        for (let layer of layers) {
+            if (layer.fill && layer.stroke) {
+                drawShape(context, layer.path, layer.fill, layer.stroke);
+            } else if (layer.fill) {
+                drawfillShape(context, layer.path, layer.fill);
+            } else if (layer.stroke) {
+                throw "not implemented";
+            } else {
+                drawBaseLayer(context, layer.path);
+            }
+        }
+    }
+    _core_loader__WEBPACK_IMPORTED_MODULE_0__["Loader"].drawSprite(sprite, draw, { w: info.w, h: info.h });
+}
+
+function drawSpriteFromImage(sprite, url, { w, h }) {
+    function draw({ context }) {
+        let img = new Image();
+        img.onload = function () {
+            context.drawImage(img, 0, 0);
+        };
+        img.src = url;
+    }
+    _core_loader__WEBPACK_IMPORTED_MODULE_0__["Loader"].drawSprite(sprite, draw, { w, h });
+}
+
+
+/***/ }),
+
+/***/ "./src/js/game/custom/mods sync .*\\.js/":
+/*!***********************************************************!*\
+  !*** ./src/js/game/custom/mods sync nonrecursive .*\.js/ ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./checker.js": "./src/js/game/custom/buildings/checker.js",
-	"./combiner.js": "./src/js/game/custom/buildings/combiner.js",
-	"./counter.js": "./src/js/game/custom/buildings/counter.js",
-	"./levels.js": "./src/js/game/custom/buildings/levels.js",
-	"./painter1.js": "./src/js/game/custom/buildings/painter1.js",
-	"./painter2.js": "./src/js/game/custom/buildings/painter2.js",
-	"./quaduo.js": "./src/js/game/custom/buildings/quaduo.js",
-	"./repeater.js": "./src/js/game/custom/buildings/repeater.js",
-	"./unstacker.js": "./src/js/game/custom/buildings/unstacker.js"
+	"./checker.js": "./src/js/game/custom/mods/checker.js",
+	"./combiner.js": "./src/js/game/custom/mods/combiner.js",
+	"./counter.js": "./src/js/game/custom/mods/counter.js",
+	"./levels.js": "./src/js/game/custom/mods/levels.js",
+	"./painter1.js": "./src/js/game/custom/mods/painter1.js",
+	"./painter2.js": "./src/js/game/custom/mods/painter2.js",
+	"./quaduo.js": "./src/js/game/custom/mods/quaduo.js",
+	"./repeater.js": "./src/js/game/custom/mods/repeater.js",
+	"./unstacker.js": "./src/js/game/custom/mods/unstacker.js"
 };
 
 
@@ -31247,14 +31762,14 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = "./src/js/game/custom/buildings sync .*\\.js/";
+webpackContext.id = "./src/js/game/custom/mods sync .*\\.js/";
 
 /***/ }),
 
-/***/ "./src/js/game/custom/buildings/checker.js":
-/*!*************************************************!*\
-  !*** ./src/js/game/custom/buildings/checker.js ***!
-  \*************************************************/
+/***/ "./src/js/game/custom/mods/checker.js":
+/*!********************************************!*\
+  !*** ./src/js/game/custom/mods/checker.js ***!
+  \********************************************/
 /*! exports provided: TargetShapeCheckerComponent, MetaTargetShapeCheckerBuilding, TargetShapeCheckerSystem, targetShapeCheckerProcess, tscSprite, tscSpriteBp, checker, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -31589,6 +32104,30 @@ const tscSpriteBp = [
     },
 ];
 
+const tutorial = [
+    {
+        id: "checker_1",
+        /** @param {GameRoot} root */
+        condition(root) {
+            return root.entityMgr.getAllWithComponent(TargetShapeCheckerComponent).length === 0;
+        },
+    },
+];
+
+const goal = {
+    shape: "RuCrSgWb:CcRmWySu:SwWwRwCw",
+    required: 40e3,
+    reward: "checker",
+    title: "The Full Automation",
+    desc:
+        "Say hello to the <strong>Checker</strong>, the king of Automation." +
+        " - Set it a simple filter - a <strong>shape quad</strong> or a <strong>colored quad</strong>" +
+        " and it will <strong>select path</strong> depending on <strong>current Hub Goal</strong>, itself, forever!" +
+        " In case you need some more advanced options, <strong>layer</strong> quads to filter a higher layer," +
+        " color 3 of 4 quads for <strong>uncolored</strong> or leave a single <strong>hole</strong> to get a hole one",
+    tutorial
+};
+
 const checker = {
     id: "checker",
     component: TargetShapeCheckerComponent,
@@ -31597,7 +32136,6 @@ const checker = {
     system: TargetShapeCheckerSystem,
     sysOrder: 4.5,
     process: targetShapeCheckerProcess,
-    speed: 100,
     draw: true,
     sprite: tscSprite,
     spriteBp: tscSpriteBp,
@@ -31609,6 +32147,8 @@ const checker = {
     Tname: "Checker",
     Tdesc:
         "Toggles output direction depending on current hub goal shape, allowing automation of random levels.",
+
+    goal,
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (checker);
@@ -31616,10 +32156,10 @@ const checker = {
 
 /***/ }),
 
-/***/ "./src/js/game/custom/buildings/combiner.js":
-/*!**************************************************!*\
-  !*** ./src/js/game/custom/buildings/combiner.js ***!
-  \**************************************************/
+/***/ "./src/js/game/custom/mods/combiner.js":
+/*!*********************************************!*\
+  !*** ./src/js/game/custom/mods/combiner.js ***!
+  \*********************************************/
 /*! exports provided: MetaCombinerBuilding, CombinerProcess, Sprite, SpriteBp, unstackerBuildingData, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -31837,10 +32377,10 @@ const unstackerBuildingData = {
 
 /***/ }),
 
-/***/ "./src/js/game/custom/buildings/counter.js":
-/*!*************************************************!*\
-  !*** ./src/js/game/custom/buildings/counter.js ***!
-  \*************************************************/
+/***/ "./src/js/game/custom/mods/counter.js":
+/*!********************************************!*\
+  !*** ./src/js/game/custom/mods/counter.js ***!
+  \********************************************/
 /*! exports provided: ItemCounterComponent, CounterSystem, MetaCounterBuilding, counterProcess, counterSprite, counterSpriteBp, counterBuildingData, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -32113,21 +32653,21 @@ const counterBuildingData = {
 
 /***/ }),
 
-/***/ "./src/js/game/custom/buildings/levels.js":
-/*!************************************************!*\
-  !*** ./src/js/game/custom/buildings/levels.js ***!
-  \************************************************/
+/***/ "./src/js/game/custom/mods/levels.js":
+/*!*******************************************!*\
+  !*** ./src/js/game/custom/mods/levels.js ***!
+  \*******************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 const painter = {
-    id: "painter4",
+    id: "painter42",
     goal: {
-        shape: "CuCuCuCu",
-        required: 5000,
-        reward: "painter_quad",
+        shape: "CwCcCmCy:RwRcRmRy:SwScSmSy:WwWcWmWy",
+        required: 25e3,
+        reward: "quaduo",
         title: "Ultimate painting",
         desc: "You have unlocked the <strong>Quaduo painter</strong> - It can paints a whole belt.",
     },
@@ -32135,8 +32675,8 @@ const painter = {
 const inverter = {
     id: "inverter",
     goal: {
-        shape: "CuCuCuCu", // <-----------------------------------------
-        required: 5000,
+        shape: "CwCrCgCb:CuCcCmCy:CwCrCgCb:CuCcCmCy",
+        required: 30e3,
         reward: "inverter",
         title: "Inversion",
         desc:
@@ -32147,33 +32687,18 @@ const counter = {
     id: "counter",
     goal: {
         shape: "RwCwSbCw:RcCwSrCw:RwCwSyCw", // onion rocket
-        required: 5000,
+        required: 12.5e3,
         reward: "counter",
         title: "The Speed Unravelled",
         desc:
             "The <strong>Counter</strong> will allow you to see the speed not onli as a blinking of insanely fast shapes.",
     },
 };
-const checker = {
-    id: "checker",
-    goal: {
-        shape: "CuCuCuCu", // <-----------------------------------------
-        required: 5000,
-        reward: "checker",
-        title: "The Full Automation",
-        desc:
-            "Say hello to the <strong>Checker</strong>, the king of Automation." +
-            " - Set it a simple filter - a <strong>shape quad</strong> or a <strong>colored quad</strong>" +
-            " and it will <strong>select path</strong> depending on <strong>current Hub Goal</strong>, itself, forever!" +
-            " In case you need some more advanced options, <strong>layer</strong> quads to filter a higher layer," +
-            " color 3 of 4 quads for <strong>uncolored</strong> or leave a single <strong>hole</strong> to get a hole one",
-    },
-};
 const combiner = {
     id: "combiner",
     goal: {
-        shape: "CuCuCuCu", // <-----------------------------------------
-        required: 5000,
+        shape: "CuRuSuWu:RrSrWrCr:SgWgCgRg:WbCbRbSb",
+        required: 35e3,
         reward: "combiner",
     },
 };
@@ -32181,28 +32706,28 @@ const unstacker = {
     id: "unstacker",
     goal: {
         shape: "RyRyRcRc:SyScSySc:ScSyScSy:CyCyCcCc", // cyan-yellow stack
-        required: 5000,
+        required: 20e3,
         reward: "unstacker",
-        title: "unstacker unlocked",
+        title: "unstacker",
         desc: "<strong>unstacker</strong> is unlocked, no comments.",
     },
 };
 const repeater = {
     id: "repeater",
     goal: {
-        shape: "CuCuCuCu", // <-----------------------------------------
-        required: 5000,
+        shape: "CuRuSuWu:CuRuSuWu:CuRuSuWu:CuRuSuWu", // <-----------------------------------------
+        required: 7.5e3,
         reward: "repeater",
     },
 };
 
-const levels = [inverter, counter, checker, combiner, unstacker];
+const levels = [inverter, counter, combiner, unstacker, painter, repeater];
 
 let baseCount = 1000;
 let countPerLevel = 200;
 
 let freeplayIndex = 1;
-function makeFreeplay(minLevel, maxLevel, holeTier, shapeTier, colorTier, layerTier, etc) {
+function makeFreeplay(minLevel, maxLevel, holeTier, colorTier, shapeTier, layerTier, etc) {
     let freeplayGoal = {
         id: `freeplay_${freeplayIndex}`,
         goal: {
@@ -32226,52 +32751,48 @@ function makeFreeplay(minLevel, maxLevel, holeTier, shapeTier, colorTier, layerT
     ++freeplayIndex;
 }
 
-makeFreeplay(25, 25, 1, 1, 1, 1, {
-    title: "The Freeplay",
-    desc:
-        "So, this was the first <strong>Freeplay</strong> level. Nothing really special, just a random shape." +
-        " This one was easy, but next ones are going to be harder, slowly becoming harder and harder once a while to keep you stuffed." +
-        " Make sure to use <strong>Checker</strong> and make a fully automated Ultimate Factory that can produce Anywhing! <strong>Onwards, to FREEPLAY!!!</strong>",
-});
-makeFreeplay(26, 29, 1, 2, 1, 1, {
-    title: "descriptions are WIP but progression goes",
-    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
-});
-makeFreeplay(30, 34, 1, 3, 1, 1, {
-    title: "descriptions are WIP but progression goes",
-    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
-});
-makeFreeplay(35, 39, 2, 3, 2, 1, {
-    title: "descriptions are WIP but progression goes",
-    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
-});
-makeFreeplay(40, 44, 2, 4, 2, 2, {
-    title: "descriptions are WIP but progression goes",
-    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
-});
-makeFreeplay(45, 49, 3, 4, 2, 2, {
-    title: "descriptions are WIP but progression goes",
-    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
-});
-makeFreeplay(50, 54, 3, 4, 2, 3, {
-    title: "descriptions are WIP but progression goes",
-    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
-});
-makeFreeplay(55, 59, 3, 4, 3, 3, {
-    title: "descriptions are WIP but progression goes",
-    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
-});
-makeFreeplay(60, 64, 4, 4, 3, 3, {
-    title: "descriptions are WIP but progression goes",
-    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
-});
-makeFreeplay(65, 74, 4, 4, 3, 4, {
-    title: "descriptions are WIP but progression goes",
-    desc: "I, Dimava, have not wrote all the descriptions yet. Harder levels are to come...",
-});
-makeFreeplay(75, 100, 4, 4, 4, 4, {
-    title: "descriptions are WIP but progression goes",
-    desc: "I, Dimava, have not wrote all the descriptions yet. This is the TOP hardness so far.",
+levels.push({
+    id: "freeplay",
+    goal: {
+        reward: "freeplay",
+        title: "The Freeplay",
+        desc:
+            "So, this was the first <strong>Freeplay</strong> level. Nothing really special, just a random shape." +
+            " This one was easy, but next ones are going to be harder, slowly becoming harder and harder once a while to keep you stuffed." +
+            " Make sure to use <strong>Checker</strong> and make a fully automated Ultimate Factory that can produce Anywhing! <strong>Onwards, to FREEPLAY!!!</strong>",
+        shape: "CwRrSgWb",
+        required: 5000,
+        sort_index: 100e3,
+    }
+})
+
+
+function makeNoDescFreeplay(minLevel, maxLevel, holeTier, colorTier, shapeTier, layerTier) {
+    let args = [holeTier, colorTier, shapeTier, layerTier];
+    return makeFreeplay(minLevel, maxLevel, holeTier, colorTier, shapeTier, layerTier, {
+        title: `Freeplay [${args}]`,
+        desc: `I, Dimava, have not wrote all the descriptions yet. Hardness id [${args}]. Harder levels are to come...`,
+    })
+}
+
+
+
+
+let n = 25, h, c, s, l;
+makeNoDescFreeplay(25,   n=34, h=1, c=1, s=1, l=1); // base
+makeNoDescFreeplay(n+=1, n+=4, h,   c=2, s,   l  ); // +cmy
+makeNoDescFreeplay(n+=1, n+=4, h,   c=3, s,   l  ); // +w
+makeNoDescFreeplay(n+=1, n+=4, h=2, c,   s=2, l  ); // +uk +shape +COMBINER
+makeNoDescFreeplay(n+=1, n+=4, h,   c=4, s,   l=2); // +black +layer +INVERTOR
+makeNoDescFreeplay(n+=1, n+=4, h=3, c,   s,   l  ); // +hole
+makeNoDescFreeplay(n+=1, n+=4, h,   c,   s,   l=3); // +
+makeNoDescFreeplay(n+=1, n+=4, h,   c,   s=3, l  ); // +shape3
+makeNoDescFreeplay(n+=1, n+=4, h=4, c,   s,   l  ); // +hole*2
+makeNoDescFreeplay(n+=1, n+=4, h,   c,   s,   l=4); // +layer
+makeFreeplay(
+    n+=1, Math.max(100, n+=4), h,   c,   s=4, l , { // +shape4
+    title: "Freeplay [4, 4, 4, 4]",
+    desc: "I, Dimava, have not wrote all the descriptions yet. Hardness id [4, 4, 4, 4]. This is the TOP hardness so far.",
 });
 
 /* harmony default export */ __webpack_exports__["default"] = (levels);
@@ -32279,10 +32800,10 @@ makeFreeplay(75, 100, 4, 4, 4, 4, {
 
 /***/ }),
 
-/***/ "./src/js/game/custom/buildings/painter1.js":
-/*!**************************************************!*\
-  !*** ./src/js/game/custom/buildings/painter1.js ***!
-  \**************************************************/
+/***/ "./src/js/game/custom/mods/painter1.js":
+/*!*********************************************!*\
+  !*** ./src/js/game/custom/mods/painter1.js ***!
+  \*********************************************/
 /*! exports provided: Painter1Process, BuildingData, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -32339,10 +32860,10 @@ const BuildingData = {
 
 /***/ }),
 
-/***/ "./src/js/game/custom/buildings/painter2.js":
-/*!**************************************************!*\
-  !*** ./src/js/game/custom/buildings/painter2.js ***!
-  \**************************************************/
+/***/ "./src/js/game/custom/mods/painter2.js":
+/*!*********************************************!*\
+  !*** ./src/js/game/custom/mods/painter2.js ***!
+  \*********************************************/
 /*! exports provided: Painter2Process, BuildingData, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -32403,10 +32924,10 @@ const BuildingData = {
 
 /***/ }),
 
-/***/ "./src/js/game/custom/buildings/quaduo.js":
-/*!************************************************!*\
-  !*** ./src/js/game/custom/buildings/quaduo.js ***!
-  \************************************************/
+/***/ "./src/js/game/custom/mods/quaduo.js":
+/*!*******************************************!*\
+  !*** ./src/js/game/custom/mods/quaduo.js ***!
+  \*******************************************/
 /*! exports provided: MetaQuaduoPainterBuilding, QuaduoPainterProcess, Sprite, SpriteBp, unstackerBuildingData, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -32586,10 +33107,10 @@ const unstackerBuildingData = {
 
 /***/ }),
 
-/***/ "./src/js/game/custom/buildings/repeater.js":
-/*!**************************************************!*\
-  !*** ./src/js/game/custom/buildings/repeater.js ***!
-  \**************************************************/
+/***/ "./src/js/game/custom/mods/repeater.js":
+/*!*********************************************!*\
+  !*** ./src/js/game/custom/mods/repeater.js ***!
+  \*********************************************/
 /*! exports provided: RepeaterComponent, MetaRepeaterBuilding, RepeaterSystem, repeaterProcess, tscSprite, tscSpriteBp, repeater, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -32897,10 +33418,10 @@ const repeater = {
 
 /***/ }),
 
-/***/ "./src/js/game/custom/buildings/unstacker.js":
-/*!***************************************************!*\
-  !*** ./src/js/game/custom/buildings/unstacker.js ***!
-  \***************************************************/
+/***/ "./src/js/game/custom/mods/unstacker.js":
+/*!**********************************************!*\
+  !*** ./src/js/game/custom/mods/unstacker.js ***!
+  \**********************************************/
 /*! exports provided: MetaUnstackerBuilding, UnstackerProcess, Sprite, SpriteBp, unstackerBuildingData, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -33044,502 +33565,6 @@ const unstackerBuildingData = {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (unstackerBuildingData);
-
-
-/***/ }),
-
-/***/ "./src/js/game/custom/colors.js":
-/*!**************************************!*\
-  !*** ./src/js/game/custom/colors.js ***!
-  \**************************************/
-/*! exports provided: customColors, registerCustomColor */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "customColors", function() { return customColors; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerCustomColor", function() { return registerCustomColor; });
-/** @enum {string} */
-const customColors = [];
-
-/**
- * @param {Object} colorData
- * @param {string} colorData.id
- * @param {string} colorData.code
- * @param {string} colorData.hex
- * @param {string[][] | string[]} [colorData.mixingFrom]
- * @param {Object.<string, string>} [colorData.mixing]
- * @param {boolean} [colorData.spawnable]
- * @param {number} [colorData.minDistance]
- */
-function registerCustomColor(colorData) {
-    customColors.push(colorData);
-}
-
-// registerCustomColor({
-//     id: "black",
-//     code: "k",
-//     hex: "#333333",
-//     mixing: {
-//         white: "uncolored",
-//         uncolored: "uncolored",
-//         any: "black",
-//     },
-//     spawnable: true,
-//     minDistance: 5,
-// });
-
-
-/***/ }),
-
-/***/ "./src/js/game/custom/gameData.js":
-/*!****************************************!*\
-  !*** ./src/js/game/custom/gameData.js ***!
-  \****************************************/
-/*! exports provided: Component, types, gItemRegistry, BaseItem, Vector, enumDirection, globalConfig, ItemAcceptorComponent, ItemEjectorComponent, enumItemProcessorTypes, ItemProcessorComponent, Entity, MetaBuilding, GameRoot, enumHubGoalRewards, T, formatItemsPerSecond, GameSystemWithFilter, DrawParameters, formatBigNumber, lerp, Loader, GameTime, ShapeItem, ColorItem, ShapeDefinition, enumItemType */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../component */ "./src/js/game/component.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Component", function() { return _component__WEBPACK_IMPORTED_MODULE_0__["Component"]; });
-
-/* harmony import */ var _savegame_serialization__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../savegame/serialization */ "./src/js/savegame/serialization.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "types", function() { return _savegame_serialization__WEBPACK_IMPORTED_MODULE_1__["types"]; });
-
-/* harmony import */ var _core_global_registries__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../core/global_registries */ "./src/js/core/global_registries.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "gItemRegistry", function() { return _core_global_registries__WEBPACK_IMPORTED_MODULE_2__["gItemRegistry"]; });
-
-/* harmony import */ var _base_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../base_item */ "./src/js/game/base_item.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "BaseItem", function() { return _base_item__WEBPACK_IMPORTED_MODULE_3__["BaseItem"]; });
-
-/* harmony import */ var _core_vector__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../core/vector */ "./src/js/core/vector.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Vector", function() { return _core_vector__WEBPACK_IMPORTED_MODULE_4__["Vector"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "enumDirection", function() { return _core_vector__WEBPACK_IMPORTED_MODULE_4__["enumDirection"]; });
-
-/* harmony import */ var _core_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../core/config */ "./src/js/core/config.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "globalConfig", function() { return _core_config__WEBPACK_IMPORTED_MODULE_5__["globalConfig"]; });
-
-/* harmony import */ var _components_item_acceptor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/item_acceptor */ "./src/js/game/components/item_acceptor.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ItemAcceptorComponent", function() { return _components_item_acceptor__WEBPACK_IMPORTED_MODULE_6__["ItemAcceptorComponent"]; });
-
-/* harmony import */ var _components_item_ejector__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/item_ejector */ "./src/js/game/components/item_ejector.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ItemEjectorComponent", function() { return _components_item_ejector__WEBPACK_IMPORTED_MODULE_7__["ItemEjectorComponent"]; });
-
-/* harmony import */ var _components_item_processor__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/item_processor */ "./src/js/game/components/item_processor.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "enumItemProcessorTypes", function() { return _components_item_processor__WEBPACK_IMPORTED_MODULE_8__["enumItemProcessorTypes"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ItemProcessorComponent", function() { return _components_item_processor__WEBPACK_IMPORTED_MODULE_8__["ItemProcessorComponent"]; });
-
-/* harmony import */ var _entity__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../entity */ "./src/js/game/entity.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Entity", function() { return _entity__WEBPACK_IMPORTED_MODULE_9__["Entity"]; });
-
-/* harmony import */ var _meta_building__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../meta_building */ "./src/js/game/meta_building.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MetaBuilding", function() { return _meta_building__WEBPACK_IMPORTED_MODULE_10__["MetaBuilding"]; });
-
-/* harmony import */ var _root__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../root */ "./src/js/game/root.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GameRoot", function() { return _root__WEBPACK_IMPORTED_MODULE_11__["GameRoot"]; });
-
-/* harmony import */ var _tutorial_goals__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../tutorial_goals */ "./src/js/game/tutorial_goals.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "enumHubGoalRewards", function() { return _tutorial_goals__WEBPACK_IMPORTED_MODULE_12__["enumHubGoalRewards"]; });
-
-/* harmony import */ var _translations__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../translations */ "./src/js/translations.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "T", function() { return _translations__WEBPACK_IMPORTED_MODULE_13__["T"]; });
-
-/* harmony import */ var _core_utils__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../core/utils */ "./src/js/core/utils.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "formatItemsPerSecond", function() { return _core_utils__WEBPACK_IMPORTED_MODULE_14__["formatItemsPerSecond"]; });
-
-/* harmony import */ var _game_system_with_filter__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../game_system_with_filter */ "./src/js/game/game_system_with_filter.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GameSystemWithFilter", function() { return _game_system_with_filter__WEBPACK_IMPORTED_MODULE_15__["GameSystemWithFilter"]; });
-
-/* harmony import */ var _core_draw_parameters__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../core/draw_parameters */ "./src/js/core/draw_parameters.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DrawParameters", function() { return _core_draw_parameters__WEBPACK_IMPORTED_MODULE_16__["DrawParameters"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "formatBigNumber", function() { return _core_utils__WEBPACK_IMPORTED_MODULE_14__["formatBigNumber"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "lerp", function() { return _core_utils__WEBPACK_IMPORTED_MODULE_14__["lerp"]; });
-
-/* harmony import */ var _core_loader__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../core/loader */ "./src/js/core/loader.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Loader", function() { return _core_loader__WEBPACK_IMPORTED_MODULE_17__["Loader"]; });
-
-/* harmony import */ var _time_game_time__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../time/game_time */ "./src/js/game/time/game_time.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GameTime", function() { return _time_game_time__WEBPACK_IMPORTED_MODULE_18__["GameTime"]; });
-
-/* harmony import */ var _items_shape_item__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../items/shape_item */ "./src/js/game/items/shape_item.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ShapeItem", function() { return _items_shape_item__WEBPACK_IMPORTED_MODULE_19__["ShapeItem"]; });
-
-/* harmony import */ var _items_color_item__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../items/color_item */ "./src/js/game/items/color_item.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ColorItem", function() { return _items_color_item__WEBPACK_IMPORTED_MODULE_20__["ColorItem"]; });
-
-/* harmony import */ var _shape_definition__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../shape_definition */ "./src/js/game/shape_definition.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ShapeDefinition", function() { return _shape_definition__WEBPACK_IMPORTED_MODULE_21__["ShapeDefinition"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "enumItemType", function() { return _base_item__WEBPACK_IMPORTED_MODULE_3__["enumItemType"]; });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/***/ }),
-
-/***/ "./src/js/game/custom/modBuildings.js":
-/*!********************************************!*\
-  !*** ./src/js/game/custom/modBuildings.js ***!
-  \********************************************/
-/*! exports provided: allCustomBuildingData, customBuildingData, getCustomBuildingSystemsNulled, internalInitSystemsAddAt */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allCustomBuildingData", function() { return allCustomBuildingData; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "customBuildingData", function() { return customBuildingData; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCustomBuildingSystemsNulled", function() { return getCustomBuildingSystemsNulled; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "internalInitSystemsAddAt", function() { return internalInitSystemsAddAt; });
-/* harmony import */ var _hud_parts_buildings_toolbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../hud/parts/buildings_toolbar */ "./src/js/game/hud/parts/buildings_toolbar.js");
-/* harmony import */ var _hud_parts_tools_toolbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hud/parts/tools_toolbar */ "./src/js/game/hud/parts/tools_toolbar.js");
-/* harmony import */ var _components_item_processor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/item_processor */ "./src/js/game/components/item_processor.js");
-/* harmony import */ var _translations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../translations */ "./src/js/translations.js");
-/* harmony import */ var _modSpriteDrawer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modSpriteDrawer */ "./src/js/game/custom/modSpriteDrawer.js");
-/* harmony import */ var _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../tutorial_goals */ "./src/js/game/tutorial_goals.js");
-/* harmony import */ var _gameData__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./gameData */ "./src/js/game/custom/gameData.js");
-
-
-
-
-
-
-
-
-
-
-let allCustomBuildingData = [];
-const customBuildingData = {};
-
-const localMods = __webpack_require__("./src/js/game/custom/buildings sync .*\\.js/");
-for (let key of localMods.keys()) {
-    let mod = localMods(key).default;
-    if (!Array.isArray(mod)) {
-        mod = [mod];
-    }
-    for (let entry of mod) {
-        allCustomBuildingData.push(entry);
-    }
-}
-
-for (let custom of allCustomBuildingData) {
-    if (!customBuildingData[custom.id]) {
-        customBuildingData[custom.id] = custom;
-    } else {
-        customBuildingData[custom.id] = Object.assign({}, customBuildingData[custom.id], custom);
-    }
-}
-allCustomBuildingData = Object.values(customBuildingData);
-allCustomBuildingData.sort((a, b) => (a.variantId || 1e4) - (b.variantId || 1e4));
-
-for (let custom of allCustomBuildingData) {
-    addCustom(custom);
-}
-
-globalThis.addCustom = addCustom;
-globalThis.gameData = _gameData__WEBPACK_IMPORTED_MODULE_6__;
-globalThis.addMod = addMod;
-
-function addMod(mod) {
-    addCustom(mod(_gameData__WEBPACK_IMPORTED_MODULE_6__));
-}
-
-function addCustom(custom) {
-    Object.assign(customBuildingData[custom.id], custom);
-
-    if (custom.goal) {
-        if (!custom.goal.fixed) {
-            if (_tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].find(e => e.reward == custom.goal.reward)) {
-                let index = _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].findIndex(e => e.reward == custom.goal.reward);
-                _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].splice(index, 1);
-            }
-            _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].push(custom.goal);
-            _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["tutorialGoals"].sort((a, b) => a.required - b.required);
-        } else {
-            if (!custom.goal.reward) {
-                custom.goal.reward = "no_reward_freeplay";
-            }
-            custom.goal.shape = custom.goal.shape || {};
-            if (typeof custom.goal.shape != "string") {
-                custom.goal.shape.holeTier = custom.goal.shape.holeTier || 1;
-                custom.goal.shape.shapeTier = custom.goal.shape.shapeTier || 1;
-                custom.goal.shape.colorTier = custom.goal.shape.colorTier || 1;
-                custom.goal.shape.layerTier = custom.goal.shape.layerTier || 1;
-            }
-            custom.goal.minLevel = custom.goal.minLevel || 1;
-            custom.goal.maxLevel = custom.goal.maxLevel || 1;
-            _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["fixedGoals"].push(custom.goal);
-        }
-
-        if (custom.goal.reward) {
-            if (!custom.goal.reward.includes("reward_")) {
-                custom.goal.reward = "reward_" + custom.goal.reward;
-            }
-            _tutorial_goals__WEBPACK_IMPORTED_MODULE_5__["enumHubGoalRewards"][custom.goal.reward] = custom.goal.reward;
-            if (!_translations__WEBPACK_IMPORTED_MODULE_3__["T"].storyRewards[custom.goal.reward]) {
-                _translations__WEBPACK_IMPORTED_MODULE_3__["T"].storyRewards[custom.goal.reward] = {
-                    title: custom.goal.title || custom.Tname || custom.id,
-                    desc: "no description",
-                };
-            }
-            if (custom.goal.desc) {
-                _translations__WEBPACK_IMPORTED_MODULE_3__["T"].storyRewards[custom.goal.reward].desc = custom.goal.desc;
-            }
-        }
-    }
-
-    if (custom.building) {
-        if (!custom.variant) {
-            custom.variant = "default";
-        }
-
-        if (custom.process) {
-            _components_item_processor__WEBPACK_IMPORTED_MODULE_2__["enumItemProcessorTypes"][custom.id] = custom.id;
-        }
-
-        if (!custom.Tname) {
-            custom.Tname = custom.id;
-        }
-        if (!custom.Tdesc) {
-            custom.Tdesc = "";
-        }
-        if (!_translations__WEBPACK_IMPORTED_MODULE_3__["T"].buildings[custom.id]) {
-            _translations__WEBPACK_IMPORTED_MODULE_3__["T"].buildings[custom.id] = {};
-        }
-        _translations__WEBPACK_IMPORTED_MODULE_3__["T"].buildings[custom.id][custom.variant] = {
-            name: custom.Tname,
-            description: custom.Tdesc,
-        };
-
-        if (!custom.speed) {
-            custom.speed = 1;
-        }
-        if (!custom.speedClass) {
-            custom.speedClass = "belt";
-        }
-
-        if (custom.meta && custom.toolbar == 0) {
-            _hud_parts_buildings_toolbar__WEBPACK_IMPORTED_MODULE_0__["supportedBuildings"].push(custom.meta);
-        }
-        if (custom.meta && custom.toolbar == 2) {
-            _hud_parts_tools_toolbar__WEBPACK_IMPORTED_MODULE_1__["supportedBuildings"].push(custom.meta);
-        }
-    }
-
-    if (custom.sprite) {
-        (custom.sprite[0] || custom.sprite).sprite = `sprites/buildings/${custom.id}${
-            custom.variant == "default" ? "" : "-" + custom.variant
-        }.png`;
-        Object(_modSpriteDrawer__WEBPACK_IMPORTED_MODULE_4__["addSprite"])(custom.sprite);
-        (custom.spriteBp[0] || custom.spriteBp).sprite = `sprites/blueprints/${custom.id}${
-            custom.variant == "default" ? "" : "-" + custom.variant
-        }.png`;
-        custom.spriteBp.transparent = true;
-        Object(_modSpriteDrawer__WEBPACK_IMPORTED_MODULE_4__["addSprite"])(custom.spriteBp);
-    }
-}
-
-function getCustomBuildingSystemsNulled() {
-    let r = {};
-    for (let k in allCustomBuildingData) {
-        let data = allCustomBuildingData[k];
-        if (!data.system) {
-            continue;
-        }
-        r[data.id] = null;
-    }
-    return r;
-}
-
-/**
- * @param {number} order
- */
-function internalInitSystemsAddAt(order, add) {
-    let systems = Object.values(allCustomBuildingData).filter(data => {
-        if (!data.system) return false;
-        if (order <= 0) return data.sysOrder && data.sysOrder < order;
-        if (order) return data.sysOrder && order <= data.sysOrder && data.sysOrder < order + 1;
-        // NaN/undefined goes here
-        return !data.sysOrder;
-    });
-    systems.sort((a, b) => a.sysOrder - b.sysOrder);
-    for (let data of systems) {
-        add(data.id, data.system);
-    }
-}
-
-
-/***/ }),
-
-/***/ "./src/js/game/custom/modSpriteDrawer.js":
-/*!***********************************************!*\
-  !*** ./src/js/game/custom/modSpriteDrawer.js ***!
-  \***********************************************/
-/*! exports provided: addSprite */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addSprite", function() { return addSprite; });
-/* harmony import */ var _core_loader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/loader */ "./src/js/core/loader.js");
-
-
-/**
- * draws building base on 192m*192n cells context
- * @param {CanvasRenderingContext2D} ctx
- * @param {string} path
- */
-function drawBaseLayer(ctx, path, bp) {
-    let p = new Path2D(path);
-    ctx.save();
-    // shadow:
-    ctx.save();
-    ctx.fillStyle = "#91949e";
-    ctx.globalAlpha = 0.2;
-    ctx.translate(6, 8);
-    ctx.fill(p);
-    ctx.restore();
-    // base:
-    ctx.fillStyle = !bp ? "#dee1ea" : "#6CD1FF";
-    ctx.strokeStyle = !bp ? "#64666e" : "#56A7D8";
-    ctx.lineWidth = 6;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.miterLimit = 4;
-    ctx.fill(p);
-    ctx.stroke(p);
-    ctx.restore();
-}
-/**
- * draws a color-filled path on 192m*192n cells context
- * @param {CanvasRenderingContext2D} ctx
- * @param {string} path
- */
-function drawfillShape(ctx, path, color) {
-    let p = new Path2D(path);
-    ctx.save();
-    // shadow:
-    ctx.save();
-    ctx.fillStyle = "#91949e";
-    ctx.globalAlpha = 0.2;
-    ctx.translate(6, 8);
-    ctx.fill(p);
-    ctx.restore();
-    // base:
-    ctx.fillStyle = color;
-    ctx.strokeStyle = "#64666e";
-    ctx.lineWidth = 10;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.miterLimit = 4;
-    ctx.stroke(p);
-    ctx.fill(p);
-    ctx.restore();
-}
-function drawShape(ctx, path, color1, color2) {
-    let p = new Path2D(path);
-    ctx.save();
-    // base:
-    ctx.fillStyle = color1;
-    ctx.strokeStyle = color2;
-    ctx.lineWidth = 10;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.miterLimit = 4;
-    ctx.stroke(p);
-    ctx.fill(p);
-    ctx.restore();
-}
-
-function addSprite(data) {
-    let info = data[0] || data;
-    if (info.url) {
-        drawSpriteFromImage(info.sprite, info.url, info);
-        return;
-    }
-    let layers = data.layers || data.slice(1);
-    drawSpriteFromJson(info.sprite, layers, info);
-}
-
-function drawSpriteFromJson(sprite, layers, info) {
-    function draw({ context, canvas2, context2 }) {
-        if (info.transparent) {
-            for (let layer of layers) {
-                if (layer.fill && layer.stroke) {
-                    drawShape(context2, layer.path, layer.fill, layer.stroke);
-                } else if (layer.fill) {
-                    drawfillShape(context, layer.path, layer.fill);
-                } else if (layer.stroke) {
-                    throw "not implemented";
-                } else {
-                    drawBaseLayer(context, layer.path, true);
-                }
-            }
-            context.save();
-            context.globalAlpha = 0x99 / 0xff;
-            context.drawImage(canvas2, 0, 0);
-            context.restore();
-
-            return;
-        }
-
-        for (let layer of layers) {
-            if (layer.fill && layer.stroke) {
-                drawShape(context, layer.path, layer.fill, layer.stroke);
-            } else if (layer.fill) {
-                drawfillShape(context, layer.path, layer.fill);
-            } else if (layer.stroke) {
-                throw "not implemented";
-            } else {
-                drawBaseLayer(context, layer.path);
-            }
-        }
-    }
-    _core_loader__WEBPACK_IMPORTED_MODULE_0__["Loader"].drawSprite(sprite, draw, { w: info.w, h: info.h });
-}
-
-function drawSpriteFromImage(sprite, url, { w, h }) {
-    function draw({ context }) {
-        let img = new Image();
-        img.onload = function () {
-            context.drawImage(img, 0, 0);
-        };
-        img.src = url;
-    }
-    _core_loader__WEBPACK_IMPORTED_MODULE_0__["Loader"].drawSprite(sprite, draw, { w, h });
-}
 
 
 /***/ }),
@@ -35420,13 +35445,13 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
             }
 
             if (holeTier >= 3) {
-                let holeIndex = rng.nextIntRange(0, 4);
-                layer[holeIndex] = null;
+                let holeIndex = rng.nextIntRange(0, 8);
+                if (holeIndex < 4) {
+                    layer[holeIndex] = null;
+                }
                 if (i == layerWith2Holes) {
-                    let hole2Index = rng.nextIntRange(0, 3);
-                    if (hole2Index == holeIndex) {
-                        hole2Index = 3;
-                    }
+                    layer[holeIndex % 4] = null;
+                    let hole2Index = rng.nextIntRange(0, 4);
                     layer[hole2Index] = null;
                 }
             }
@@ -38407,7 +38432,7 @@ class HUDDebugInfo extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDP
      */
     onModeChanged(mode) {
         this.element.setAttribute("data-mode", mode);
-        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"975abe5"}`;
+        this.versionElement.innerText = `${"modZ 1.0.0"} @ ${"dev"} @ ${"1dc3464"}`;
     }
 
     /**
@@ -38776,11 +38801,12 @@ class HUDGameMenu extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDPa
 /*!*******************************************************!*\
   !*** ./src/js/game/hud/parts/interactive_tutorial.js ***!
   \*******************************************************/
-/*! exports provided: HUDInteractiveTutorial */
+/*! exports provided: tutorialsByLevel, HUDInteractiveTutorial */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tutorialsByLevel", function() { return tutorialsByLevel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HUDInteractiveTutorial", function() { return HUDInteractiveTutorial; });
 /* harmony import */ var _base_hud_part__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../base_hud_part */ "./src/js/game/hud/base_hud_part.js");
 /* harmony import */ var _core_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../core/utils */ "./src/js/core/utils.js");
@@ -38790,6 +38816,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_tracked_state__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../core/tracked_state */ "./src/js/core/tracked_state.js");
 /* harmony import */ var _core_cachebust__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../core/cachebust */ "./src/js/core/cachebust.js");
 /* harmony import */ var _translations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../translations */ "./src/js/translations.js");
+/* harmony import */ var _tutorial_goals__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../tutorial_goals */ "./src/js/game/tutorial_goals.js");
+
 
 
 
@@ -38842,6 +38870,11 @@ class HUDInteractiveTutorial extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__
     initialize() {
         this.domAttach = new _dynamic_dom_attach__WEBPACK_IMPORTED_MODULE_4__["DynamicDomAttach"](this.root, this.element);
         this.currentHintId = new _core_tracked_state__WEBPACK_IMPORTED_MODULE_5__["TrackedState"](this.onHintChanged, this);
+        for (let i = 0; i < _tutorial_goals__WEBPACK_IMPORTED_MODULE_8__["tutorialGoals"].length; ++i) {
+            if (_tutorial_goals__WEBPACK_IMPORTED_MODULE_8__["tutorialGoals"][i].tutorial) {
+                tutorialsByLevel[i+1] = _tutorial_goals__WEBPACK_IMPORTED_MODULE_8__["tutorialGoals"][i].tutorial;
+            }
+        }
     }
 
     onHintChanged(hintId) {
@@ -47221,7 +47254,7 @@ const allShapeData = {
         maxQuarters: 4,
         minDistance: 0,
         minChance: 50,
-        distChance: 2,
+        distChance: 15,
         maxChance: 100,
         draw: "M 0 0 l 1 0 a 1 1 0 0 1 -1 1 z ",
         tier: 0,
@@ -47232,10 +47265,10 @@ const allShapeData = {
         spawnable: true,
         spawnColor: "uncolored",
         maxQuarters: 4,
-        minDistance: 7,
-        minChance: 20 + 7,
-        distChance: 1,
-        maxChance: 50,
+        minDistance: 5,
+        minChance: 20,
+        distChance: 10,
+        maxChance: 100,
         draw: "M 0 0 L 0 0.6 1 1 0.6 0 z",
         tier: 0.5,
     },
@@ -47244,11 +47277,11 @@ const allShapeData = {
         code: "W",
         spawnable: true,
         spawnColor: "uncolored",
-        maxQuarters: 2,
+        maxQuarters: 3,
         minDistance: 7,
-        minChance: 6 + 7 / 2,
-        distChance: 1 / 2,
-        maxChance: 26,
+        minChance: 20,
+        distChance: 5,
+        maxChance: 100,
         draw: "M 0 0 L 0 0.6 1 1 1 0 z",
         tier: 1,
     },
@@ -51183,12 +51216,12 @@ const tutorialGoals = [
         reward: enumHubGoalRewards.reward_painter_quad,
     },
 
-    // 18
-    {
-        shape: _upgrades__WEBPACK_IMPORTED_MODULE_1__["finalGameShape"],
-        required: 250000,
-        reward: enumHubGoalRewards.reward_freeplay,
-    },
+    // // 18
+    // {
+    //     shape: finalGameShape,
+    //     required: 250000,
+    //     reward: enumHubGoalRewards.reward_freeplay,
+    // },
 ];
 
 const fixedGoals = [];
@@ -51327,7 +51360,7 @@ const UPGRADES = {
                 improvement: 2,
             },
             {
-                required: [{ shape: finalGameShape, amount: 150000 }],
+                required: [{ shape: finalGameShape, amount: 50000 }],
                 improvement: 5,
                 excludePrevious: true,
             },
@@ -51357,7 +51390,7 @@ const UPGRADES = {
                 improvement: 2,
             },
             {
-                required: [{ shape: finalGameShape, amount: 150000 }],
+                required: [{ shape: finalGameShape, amount: 50000 }],
                 improvement: 5,
                 excludePrevious: true,
             },
@@ -51387,7 +51420,7 @@ const UPGRADES = {
                 improvement: 2,
             },
             {
-                required: [{ shape: finalGameShape, amount: 150000 }],
+                required: [{ shape: finalGameShape, amount: 50000 }],
                 improvement: 5,
                 excludePrevious: true,
             },
@@ -51417,7 +51450,7 @@ const UPGRADES = {
                 improvement: 2,
             },
             {
-                required: [{ shape: finalGameShape, amount: 150000 }],
+                required: [{ shape: finalGameShape, amount: 50000 }],
                 improvement: 5,
                 excludePrevious: true,
             },
@@ -51675,8 +51708,8 @@ if (window.coreThreadLoadedCb) {
 // }
 
 console.log(
-    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"975abe5"}%c on %c${new Date(
-        1596470484181
+    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"1dc3464"}%c on %c${new Date(
+        1596649553022
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -52170,7 +52203,7 @@ class ShapezGameAnalytics extends _game_analytics__WEBPACK_IMPORTED_MODULE_4__["
             environment: this.environment,
             category,
             value,
-            version: "1.2.0",
+            version: "modZ 1.0.0",
             level: root.hubGoals.level,
             gameDump: this.generateGameDump(root),
         });
@@ -55025,6 +55058,7 @@ class Savegame extends _core_read_write_proxy__WEBPACK_IMPORTED_MODULE_0__["Read
         shadowData.dump = dump;
         shadowData.lastUpdate = new Date().getTime();
         shadowData.version = this.getCurrentVersion();
+        shadowData.lastVersion = "modZ 1.0.0";
 
         const reader = this.getDumpReaderForExternalData(shadowData);
 
@@ -55053,6 +55087,7 @@ class Savegame extends _core_read_write_proxy__WEBPACK_IMPORTED_MODULE_0__["Read
     saveMetadata() {
         this.metaDataRef.lastUpdate = new Date().getTime();
         this.metaDataRef.version = this.getCurrentVersion();
+        this.metaDataRef.lastVersion = "modZ 1.0.0";
         if (!this.hasGameDump()) {
             this.metaDataRef.level = 0;
         } else {
@@ -55526,6 +55561,7 @@ class SavegameManager extends _core_read_write_proxy__WEBPACK_IMPORTED_MODULE_2_
      * @param {SavegameMetadata} game
      */
     deleteSavegame(game) {
+//        debugger;
         const handle = new _savegame__WEBPACK_IMPORTED_MODULE_4__["Savegame"](this.app, {
             internalId: game.internalId,
             metaDataRef: game,
@@ -55550,6 +55586,7 @@ class SavegameManager extends _core_read_write_proxy__WEBPACK_IMPORTED_MODULE_2_
      * @returns {SavegameMetadata}
      */
     getGameMetaDataByInternalId(id) {
+//        debugger;
         for (let i = 0; i < this.currentData.savegames.length; ++i) {
             const data = this.currentData.savegames[i];
             if (data.internalId === id) {
@@ -55603,6 +55640,7 @@ class SavegameManager extends _core_read_write_proxy__WEBPACK_IMPORTED_MODULE_2_
      * @returns {Promise<any>}
      */
     sortSavegames() {
+//        debugger;
         this.currentData.savegames.sort((a, b) => b.lastUpdate - a.lastUpdate);
         let promiseChain = Promise.resolve();
         while (this.currentData.savegames.length > 30) {
@@ -58818,7 +58856,7 @@ class MainMenuState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameS
 
             <div class="logo">
                 <img src="${Object(_core_cachebust__WEBPACK_IMPORTED_MODULE_1__["cachebust"])("res/logo.png")}" alt="shapez.io Logo">
-                <span class="updateLabel">Wires update!</span>
+                <span class="updateLabel bigger">MODZ</span>
             </div>
 
 
@@ -58862,7 +58900,7 @@ class MainMenuState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameS
 
                 <div class="author">${_translations__WEBPACK_IMPORTED_MODULE_6__["T"].mainMenu.madeBy.replace(
                     "<author-link>",
-                    '<a class="producerLink" target="_blank">Tobias Springer</a>'
+                    '<a class="producerLink" target="_blank">Tobspr & modded by Dimava</a>'
                 )}</div>
 
             </div>
@@ -59134,6 +59172,15 @@ class MainMenuState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameS
                     games[i].level
                         ? _translations__WEBPACK_IMPORTED_MODULE_6__["T"].mainMenu.savegameLevel.replace("<x>", "" + games[i].level)
                         : _translations__WEBPACK_IMPORTED_MODULE_6__["T"].mainMenu.savegameLevelUnknown
+                );
+
+                let TlastVersion = "@<x>";
+
+                Object(_core_utils__WEBPACK_IMPORTED_MODULE_3__["makeDiv"])(
+                    elem,
+                    null,
+                    ["version"],
+                    TlastVersion.replace("<x>", "" + games[i].lastVersion)
                 );
 
                 const deleteButton = document.createElement("button");
@@ -59534,11 +59581,11 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameSt
                     .readFileAsync("lastversion.bin")
                     .catch(err => {
                         logger.warn("Failed to read lastversion:", err);
-                        return "1.2.0";
+                        return "modZ 1.0.0";
                     })
                     .then(version => {
-                        logger.log("Last version:", version, "App version:", "1.2.0");
-                        this.app.storage.writeFileAsync("lastversion.bin", "1.2.0");
+                        logger.log("Last version:", version, "App version:", "modZ 1.0.0");
+                        this.app.storage.writeFileAsync("lastversion.bin", "modZ 1.0.0");
                         return version;
                     })
                     .then(version => {
@@ -59633,7 +59680,7 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameSt
 
                     <div class="lower">
                         <button class="resetApp styledButton">Reset App</button>
-                        <i>Build ${"1.2.0"} @ ${"975abe5"}</i>
+                        <i>Build ${"modZ 1.0.0"} @ ${"1dc3464"}</i>
                     </div>
                 </div>
         `;
@@ -59768,14 +59815,14 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1596470484181;
+        const lastBuildMs = new Date().getTime() - 1596649553022;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
 
         labelVersion.innerHTML = `
             <span class='version'>
-                ${"1.2.0"} @ ${version} @ ${"975abe5"}
+                ${"modZ 1.0.0"} @ ${version} @ ${"1dc3464"}
             </span>
             <span class='buildTime'>
                 ${_translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.buildDate.replace("<at-date>", lastBuildText)}<br />
