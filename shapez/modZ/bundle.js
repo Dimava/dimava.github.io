@@ -21571,7 +21571,7 @@ function getBuildId() {
     if ( true && _config__WEBPACK_IMPORTED_MODULE_0__["IS_DEBUG"]) {
         return "local-dev";
     } else if (true) {
-        return "dev-" + getPlatformName() + "-" + "f653143";
+        return "dev-" + getPlatformName() + "-" + "85d11d4";
     } else {}
 }
 
@@ -38444,7 +38444,7 @@ class HUDDebugInfo extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDP
      */
     onModeChanged(mode) {
         this.element.setAttribute("data-mode", mode);
-        this.versionElement.innerText = `${"modZ.0.9.9"} @ ${"dev"} @ ${"f653143"}`;
+        this.versionElement.innerText = `${"modZ.0.9.9"} @ ${"dev"} @ ${"85d11d4"}`;
     }
 
     /**
@@ -51720,8 +51720,8 @@ if (window.coreThreadLoadedCb) {
 // }
 
 console.log(
-    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"f653143"}%c on %c${new Date(
-        1596729177498
+    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"85d11d4"}%c on %c${new Date(
+        1596734451092
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -59708,7 +59708,7 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameSt
 
                     <div class="lower">
                         <button class="resetApp styledButton">Reset App</button>
-                        <i>Build ${"modZ.0.9.9"} @ ${"f653143"}</i>
+                        <i>Build ${"modZ.0.9.9"} @ ${"85d11d4"}</i>
                     </div>
                 </div>
         `;
@@ -59843,14 +59843,14 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1596729177498;
+        const lastBuildMs = new Date().getTime() - 1596734451092;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
 
         labelVersion.innerHTML = `
             <span class='version'>
-                ${"modZ.0.9.9"} @ ${version} @ ${"f653143"}
+                ${"modZ.0.9.9"} @ ${version} @ ${"85d11d4"}
             </span>
             <span class='buildTime'>
                 ${_translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.buildDate.replace("<at-date>", lastBuildText)}<br />
