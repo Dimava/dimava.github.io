@@ -21571,7 +21571,7 @@ function getBuildId() {
     if ( true && _config__WEBPACK_IMPORTED_MODULE_0__["IS_DEBUG"]) {
         return "local-dev";
     } else if (true) {
-        return "dev-" + getPlatformName() + "-" + "85d11d4";
+        return "dev-" + getPlatformName() + "-" + "1006751";
     } else {}
 }
 
@@ -31510,6 +31510,11 @@ function addCustom(custom) {
                 _translations__WEBPACK_IMPORTED_MODULE_3__["T"].storyRewards[custom.goal.reward].desc = custom.goal.desc;
             }
         }
+        if (custom.goal.tutorial) {
+            for (let step of custom.goal.tutorial) {
+                _translations__WEBPACK_IMPORTED_MODULE_3__["T"].ingame.interactiveTutorial.hints[step.id] = step.Tdesc;
+            }
+        }
     }
 
     if (custom.building) {
@@ -32117,11 +32122,52 @@ const tscSpriteBp = [
 
 const tutorial = [
     {
-        id: "checker_1",
+        id: `checker_build`,
         /** @param {GameRoot} root */
         condition(root) {
-            return root.entityMgr.getAllWithComponent(TargetShapeCheckerComponent).length === 0;
+            let entities = root.entityMgr.getAllWithComponent(TargetShapeCheckerComponent);
+            return !entities.length;
         },
+        Tdesc: "Checker is VERY HARD TO EXPLAIN so here's tutorial. Build one for a start.",
+    },
+    {
+        id: `checker_shapes`,
+        /** @param {GameRoot} root */
+        condition(root) {
+            let entities = root.entityMgr.getAllWithComponent(TargetShapeCheckerComponent);
+            return !entities.find(e => e.components[id].filter == 'C' && e.components[id].filterIndex == 0) ||
+                !entities.find(e => e.components[id].filter == 'R' && e.components[id].filterIndex == 0);
+        },
+        Tdesc: "Put in a single quad of a shape to make a SHAPE filter. Make circle and square filters to proceed.",
+    },
+    {
+        id: `checker_colors`,
+        /** @param {GameRoot} root */
+        condition(root) {
+            let entities = root.entityMgr.getAllWithComponent(TargetShapeCheckerComponent);
+            return !entities.find(e => e.components[id].filter == 'r' && e.components[id].filterIndex == 1) ||
+                !entities.find(e => e.components[id].filter == 'g' && e.components[id].filterIndex == 1);
+        },
+        Tdesc: "Put in a single quad of a colored shape to make a COLOR filter. Make red and greed filters to proceed.",
+    },
+    {
+        id: `checker_lines`,
+        /** @param {GameRoot} root */
+        condition(root) {
+            let entities = root.entityMgr.getAllWithComponent(TargetShapeCheckerComponent);
+            return !entities.find(e => e.components[id].filter == 'w');
+        },
+        Tdesc: "Checkers choose their output based on current goal. Any input is accepted. Make a white filter to proceed.",
+    },
+    {
+        id: `checker_advanced`,
+        /** @param {GameRoot} root */
+        condition(root) { // AaAaAaAa:BbBbBbBb:CcCcCcCc:DdDdDdDd
+            let entities = root.entityMgr.getAllWithComponent(TargetShapeCheckerComponent);
+            return !entities.find(e => e.components[id].filter == '-' && e.components[id].filterIndex > 17 && e.components[id].filterIndex < 27) ||
+            !entities.find(e => e.components[id].filter == 'u' && e.components[id].filterIndex > 27);
+        },
+        Tdesc: ". Make filters for a hole on 3rd layer and for uncolored quad on 4th to finish tutorial.",
     },
 ];
 
@@ -32771,7 +32817,7 @@ levels.push({
             "So, this was the first <strong>Freeplay</strong> level. Nothing really special, just a random shape." +
             " This one was easy, but next ones are going to be harder, slowly becoming harder and harder once a while to keep you stuffed." +
             " Make sure to use <strong>Checker</strong> and make a fully automated Ultimate Factory that can produce Anywhing! <strong>Onwards, to FREEPLAY!!!</strong>",
-        shape: "CwRrSgWb",
+        shape: "CrRgSbWw",
         required: 5000,
         sort_index: 100e3,
     },
@@ -38444,7 +38490,7 @@ class HUDDebugInfo extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDP
      */
     onModeChanged(mode) {
         this.element.setAttribute("data-mode", mode);
-        this.versionElement.innerText = `${"modZ.0.9.9"} @ ${"dev"} @ ${"85d11d4"}`;
+        this.versionElement.innerText = `${"modZ.0.9.9"} @ ${"dev"} @ ${"1006751"}`;
     }
 
     /**
@@ -51720,8 +51766,8 @@ if (window.coreThreadLoadedCb) {
 // }
 
 console.log(
-    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"85d11d4"}%c on %c${new Date(
-        1596734451092
+    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"1006751"}%c on %c${new Date(
+        1596749769072
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -59708,7 +59754,7 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameSt
 
                     <div class="lower">
                         <button class="resetApp styledButton">Reset App</button>
-                        <i>Build ${"modZ.0.9.9"} @ ${"85d11d4"}</i>
+                        <i>Build ${"modZ.0.9.9"} @ ${"1006751"}</i>
                     </div>
                 </div>
         `;
@@ -59843,14 +59889,14 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1596734451092;
+        const lastBuildMs = new Date().getTime() - 1596749769072;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
 
         labelVersion.innerHTML = `
             <span class='version'>
-                ${"modZ.0.9.9"} @ ${version} @ ${"85d11d4"}
+                ${"modZ.0.9.9"} @ ${version} @ ${"1006751"}
             </span>
             <span class='buildTime'>
                 ${_translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.buildDate.replace("<at-date>", lastBuildText)}<br />
