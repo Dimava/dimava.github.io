@@ -1,7 +1,9 @@
 
-rmdir "./shapez/modZ" /S /Q
+git pull --ff-only
 
-xcopy "../shapez.io/build" "./shapez/modZ" /E /H /C /I
+robocopy "../shapez.io/src/" "./" "index.html"
+
+robocopy "../shapez.io/build" "./shapez/modZ" /S
 
 git add -A
 
