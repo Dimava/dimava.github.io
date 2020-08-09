@@ -31783,6 +31783,7 @@ var map = {
 	"./painter2.js": "./src/js/game/custom/mods/painter2.js",
 	"./quaduo.js": "./src/js/game/custom/mods/quaduo.js",
 	"./repeater.js": "./src/js/game/custom/mods/repeater.js",
+	"./test_levels.js": "./src/js/game/custom/mods/test_levels.js",
 	"./unstacker.js": "./src/js/game/custom/mods/unstacker.js"
 };
 
@@ -33532,6 +33533,65 @@ const repeater = {
 
 /* harmony default export */ __webpack_exports__["default"] = (repeater);
 
+
+/***/ }),
+
+/***/ "./src/js/game/custom/mods/test_levels.js":
+/*!************************************************!*\
+  !*** ./src/js/game/custom/mods/test_levels.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+let levels = [];
+
+let lvl = 100;
+
+let colors = "rgbcmywku";
+
+
+for (let c of colors) {
+    let shape = `C${c}C${c}C${c}C${c}:`.repeat(4).slice(0, -1);
+    levels.push({
+        id: "test_freeplay_" + c,
+        goal: {
+            fixed: true,
+            title: "Test level [" + c + "]",
+            desc: "a test level",
+            minLevel: ++lvl,
+            maxLevel: lvl,
+            baseCount: 1000,
+            countPerLevel: 0,
+            shape,
+            reward: "no_reward_test_freeplay_" + c,
+        }
+    })
+}
+
+
+let shapes = "RCSWBDOFUMPLTZY";
+
+for (let c of shapes) {
+    let shape = `${c}u${c}u${c}u${c}u:`.repeat(4).slice(0, -1);
+    levels.push({
+        id: "test_freeplay_" + c,
+        goal: {
+            fixed: true,
+            title: "Test level [" + c + "]",
+            desc: "a test level",
+            minLevel: ++lvl,
+            maxLevel: lvl,
+            baseCount: 1000,
+            countPerLevel: 0,
+            shape,
+            reward: "no_reward_test_freeplay_" + c,
+        }
+    })
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (levels);
 
 /***/ }),
 
@@ -35381,7 +35441,7 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
                 continue;
             }
             let definition = null;
-            if (fixed.shape === "string") {
+            if (typeof fixed.shape === "string") {
                 definition = this.root.shapeDefinitionMgr.getShapeFromShortKey(fixed.shape);
             } else {
                 definition = this.createRandomShapeOfTiers(fixed.shape);
@@ -51844,7 +51904,7 @@ if (window.coreThreadLoadedCb) {
 
 console.log(
     `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"f68abc0"}%c on %c${new Date(
-        1596983635449
+        1596987891306
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -59966,7 +60026,7 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1596983635449;
+        const lastBuildMs = new Date().getTime() - 1596987891306;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
