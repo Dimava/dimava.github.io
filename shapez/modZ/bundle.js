@@ -21571,7 +21571,7 @@ function getBuildId() {
     if ( true && _config__WEBPACK_IMPORTED_MODULE_0__["IS_DEBUG"]) {
         return "local-dev";
     } else if (true) {
-        return "dev-" + getPlatformName() + "-" + "f68abc0";
+        return "dev-" + getPlatformName() + "-" + "0ebf043";
     } else {}
 }
 
@@ -32919,7 +32919,7 @@ function colorShape(shape, color) {
 
     let layers = shape.split(":").map(e => e.split(""));
     for (let i = 0; i < 4; i++) {
-        let charges = 4;
+        let charges = 3;
         for (let j = layers.length - 1; j >= 0; --j) {
             if (layers[j][2 * i] != "-") {
                 layers[j][2 * i + 1] = color;
@@ -33562,7 +33562,7 @@ for (let c of colors) {
             desc: "a test level",
             minLevel: ++lvl,
             maxLevel: lvl,
-            baseCount: 1000,
+            baseCount: 100,
             countPerLevel: 0,
             shape,
             reward: "no_reward_test_freeplay_" + c,
@@ -33583,7 +33583,7 @@ for (let c of shapes) {
             desc: "a test level",
             minLevel: ++lvl,
             maxLevel: lvl,
-            baseCount: 1000,
+            baseCount: 100,
             countPerLevel: 0,
             shape,
             reward: "no_reward_test_freeplay_" + c,
@@ -38612,7 +38612,7 @@ class HUDDebugInfo extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDP
      */
     onModeChanged(mode) {
         this.element.setAttribute("data-mode", mode);
-        this.versionElement.innerText = `${"modZ 1.0.0"} @ ${"dev"} @ ${"f68abc0"}`;
+        this.versionElement.innerText = `${"modZ 1.0.0"} @ ${"dev"} @ ${"0ebf043"}`;
     }
 
     /**
@@ -50467,15 +50467,15 @@ class UndergroundBeltSystem extends _game_system_with_filter__WEBPACK_IMPORTED_M
                 continue;
             }
 
+            if (receiverUndergroundComp.mode !== _components_underground_belt__WEBPACK_IMPORTED_MODULE_5__["enumUndergroundBeltMode"].receiver) {
+                // Not a receiver
+                continue;
+            }
+
             const receiverStaticComp = potentialReceiver.components.StaticMapEntity;
             if (receiverStaticComp.rotation !== targetRotation) {
                 // Wrong rotation
                 continue;
-            }
-
-            if (receiverUndergroundComp.mode !== _components_underground_belt__WEBPACK_IMPORTED_MODULE_5__["enumUndergroundBeltMode"].receiver) {
-                // Not a receiver, but a sender -> Abort to make sure we don't deliver double
-                break;
             }
 
             return { entity: potentialReceiver, distance: searchOffset };
@@ -51903,8 +51903,8 @@ if (window.coreThreadLoadedCb) {
 // }
 
 console.log(
-    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"f68abc0"}%c on %c${new Date(
-        1596987891306
+    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"0ebf043"}%c on %c${new Date(
+        1597080878603
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -59891,7 +59891,7 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameSt
 
                     <div class="lower">
                         <button class="resetApp styledButton">Reset App</button>
-                        <i>Build ${"modZ 1.0.0"} @ ${"f68abc0"}</i>
+                        <i>Build ${"modZ 1.0.0"} @ ${"0ebf043"}</i>
                     </div>
                 </div>
         `;
@@ -60026,14 +60026,14 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1596987891306;
+        const lastBuildMs = new Date().getTime() - 1597080878603;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
 
         labelVersion.innerHTML = `
             <span class='version'>
-                ${"modZ 1.0.0"} @ ${version} @ ${"f68abc0"}
+                ${"modZ 1.0.0"} @ ${version} @ ${"0ebf043"}
             </span>
             <span class='buildTime'>
                 ${_translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.buildDate.replace("<at-date>", lastBuildText)}<br />
@@ -60287,7 +60287,7 @@ function updateApplicationLanguage(id) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Users\dimava\Desktop\projects\shapez.io\src\js\main.js */"./src/js/main.js");
+module.exports = __webpack_require__(/*! C:\Users\Dimava\Desktop\projects\shapez.io\src\js\main.js */"./src/js/main.js");
 
 
 /***/ })
