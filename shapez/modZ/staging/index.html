@@ -27,7 +27,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="canonical" href="https://shapez.io">
     <link rel="preconnect" href="https://api-staging.shapez.io" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="none" onload="this.media=&#34;all&#34;" href="main.css" integrity="sha256-uXJ9kGxPlKy/PcVuajYgCNEL2cOis2gK3x2p8WzFxco=">
+    <link rel="stylesheet" type="text/css" media="none" onload="this.media=&#34;all&#34;" href="main.css" integrity="sha256-AyW9nDNCp2fTqiARDN/+PAmbWDA7pvHyo/EbX+U8j7o=">
     <script src="https://www.googletagmanager.com/gtag/js?id=UA-165342524-1" async></script>
     <script>
         function gtag() {
@@ -92,53 +92,53 @@
     <script type="text/javascript">
         var bundleSrc = "bundle.js",
             bundleSrcTranspiled = "bundle-transpiled.js",
-            bundleIntegrity = "sha256-CXdgoEt3RvX42BR/9eAjE4njSy1LNTCpXHDE9piUtGY=",
-            bundleIntegrityTranspiled = "sha256-2kty5t9saIuSYe5e8GYbgsboBcKsUI09z0GImOAlUQ8=";
+            bundleIntegrity = "sha256-asriaSj7nYz+Sv5MyECtEuofYwY3B9MTTnDHAtbnx7c=",
+            bundleIntegrityTranspiled = "sha256-i0k/tChSL3KlekAgA/2ChXWmtlg2Xx8b1vIKVbyc2ZE=";
         ! function() {
             var e = null,
                 n = !1;
 
-            function t(e, n, t, r, o) {
-                console.error("👀 Init Error:", e, n, t, r, o);
-                var d = document.createElement("div");
-                d.style.position = "fixed", d.style.top = "0", d.style.right = "0", d.style.bottom = "0", d.style.left = "0", d.style.zIndex = "29999", d.style.backgroundColor = "#222429", d.style.display = "flex", d.style.justifyContent = "center", d.style.alignItems = "center";
+            function r(e, n, r, t, o) {
+                console.error("👀 Init Error:", e, n, r, t, o);
                 var l = document.createElement("div");
-                l.style.color = "#fff", l.style.fontFamily = "GameFont, sans-serif", l.style.fontSize = "15px", l.style.padding = "30px", l.style.textAlign = "center", d.appendChild(l);
+                l.style.position = "fixed", l.style.top = "0", l.style.right = "0", l.style.bottom = "0", l.style.left = "0", l.style.zIndex = "29999", l.style.backgroundColor = "#222429", l.style.display = "flex", l.style.justifyContent = "center", l.style.alignItems = "center";
+                var d = document.createElement("div");
+                d.style.color = "#fff", d.style.fontFamily = "GameFont, sans-serif", d.style.fontSize = "15px", d.style.padding = "30px", d.style.textAlign = "center", l.appendChild(d);
                 var a = document.createElement("h3");
-                a.style.color = "#ef5072", a.innerText = "Error", a.style.marginBottom = "40px", a.style.fontSize = "45px", l.appendChild(a);
+                a.style.color = "#ef5072", a.innerText = "Error", a.style.marginBottom = "40px", a.style.fontSize = "45px", d.appendChild(a);
                 var i = document.createElement("p");
-                if (i.style.color = "#eee", i.innerText = o || e && e.message || e || "Unknown Error", l.appendChild(i), n) {
+                if (i.style.color = "#eee", i.innerText = o || e && e.message || e || "Unknown Error", d.appendChild(i), n) {
                     var s = document.createElement("p");
-                    s.style.color = "#777", s.innerText = s + ":" + t + ":" + r, l.appendChild(s)
+                    s.style.color = "#777", s.innerText = s + ":" + r + ":" + t, d.appendChild(s)
                 }
-                document.documentElement.appendChild(d)
+                document.documentElement.appendChild(l)
             }
 
-            function r(e, n) {
-                var t = document.createElement("script");
-                return t.src = e, t.type = "text/javascript", t.charset = "utf-8", t.defer = !0, t
+            function t(e, n) {
+                var r = document.createElement("script");
+                return r.src = e, r.type = "text/javascript", r.charset = "utf-8", r.defer = !0, r
             }
 
             function o(e) {
                 throw console.error("👀 Failed to load bundle!"), console.error("👀 Error was:", e), new Error("Core load failed.")
             }
 
-            function d() {
+            function l() {
                 if (!n) throw console.error("👀 Got no core callback"), new Error("Core thread failed to respond within time.")
             }
 
-            function l() {
-                console.log("👀 Core loaded at", Math.floor(performance.now()), "ms"), e = setTimeout(d, 15e3), window.removeEventListener("error", t), window.removeEventListener("unhandledrejection", t)
+            function d() {
+                console.log("👀 Core loaded at", Math.floor(performance.now()), "ms"), e = setTimeout(l, 15e3), window.removeEventListener("error", r), window.removeEventListener("unhandledrejection", r)
             }
-            window.addEventListener("error", t), window.addEventListener("unhandledrejection", t), window.coreThreadLoadedCb = function() {
+            window.addEventListener("error", r), window.addEventListener("unhandledrejection", r), window.coreThreadLoadedCb = function() {
                 console.log("👀 Core responded at", Math.floor(performance.now()), "ms"), clearTimeout(e), n = !(e = null)
             };
-            var a = r(bundleSrc);
+            var a = t(bundleSrc);
             a.addEventListener("error", function(e) {
                 console.warn("👀 ES6 Script not supported, loading transpiled code."), console.warn("👀 Error was:", e);
-                var n = r(bundleSrcTranspiled);
-                n.addEventListener("error", o), n.addEventListener("load", l), document.head.appendChild(n)
-            }), a.addEventListener("load", l), document.head.appendChild(a)
+                var n = t(bundleSrcTranspiled);
+                n.addEventListener("error", o), n.addEventListener("load", d), document.head.appendChild(n)
+            }), a.addEventListener("load", d), document.head.appendChild(a)
         }()
     </script>
 </head>
