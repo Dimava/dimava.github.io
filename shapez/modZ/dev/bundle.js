@@ -15337,6 +15337,7 @@ webpackContext.id = "./res_built/atlas sync .*\\.json/";
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"./adder.png": "./res_built/atlas/adder.png",
 	"./atlas0_hq": "./res_built/atlas/atlas0_hq.json",
 	"./atlas0_hq.json": "./res_built/atlas/atlas0_hq.json",
 	"./atlas0_hq.png": "./res_built/atlas/atlas0_hq.png",
@@ -15346,11 +15347,12 @@ var map = {
 	"./atlas0_mq": "./res_built/atlas/atlas0_mq.json",
 	"./atlas0_mq.json": "./res_built/atlas/atlas0_mq.json",
 	"./atlas0_mq.png": "./res_built/atlas/atlas0_mq.png",
-	"./colorsplitter.png": "./res_built/atlas/colorsplitter.png",
 	"./combiner-bp.png": "./res_built/atlas/combiner-bp.png",
 	"./combiner.png": "./res_built/atlas/combiner.png",
 	"./counter-bp.png": "./res_built/atlas/counter-bp.png",
 	"./counter.png": "./res_built/atlas/counter.png",
+	"./inverter-bp.png": "./res_built/atlas/inverter-bp.png",
+	"./inverter.png": "./res_built/atlas/inverter.png",
 	"./quaduo.png": "./res_built/atlas/quaduo.png",
 	"./unstacker-bp.png": "./res_built/atlas/unstacker-bp.png",
 	"./unstacker.png": "./res_built/atlas/unstacker.png"
@@ -15375,6 +15377,17 @@ webpackContext.keys = function webpackContextKeys() {
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
 webpackContext.id = "./res_built/atlas sync recursive ^\\.\\/.*$";
+
+/***/ }),
+
+/***/ "./res_built/atlas/adder.png":
+/*!***********************************!*\
+  !*** ./res_built/atlas/adder.png ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
 
 /***/ }),
 
@@ -15450,17 +15463,6 @@ module.exports = (function() {
 
 /***/ }),
 
-/***/ "./res_built/atlas/colorsplitter.png":
-/*!*******************************************!*\
-  !*** ./res_built/atlas/colorsplitter.png ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
-
 /***/ "./res_built/atlas/combiner-bp.png":
 /*!*****************************************!*\
   !*** ./res_built/atlas/combiner-bp.png ***!
@@ -15498,6 +15500,28 @@ module.exports = (function() {
 /*!*************************************!*\
   !*** ./res_built/atlas/counter.png ***!
   \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ "./res_built/atlas/inverter-bp.png":
+/*!*****************************************!*\
+  !*** ./res_built/atlas/inverter-bp.png ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ "./res_built/atlas/inverter.png":
+/*!**************************************!*\
+  !*** ./res_built/atlas/inverter.png ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -19911,7 +19935,7 @@ class LoaderImpl {
     /**
      * Draw sprite with function
      */
-    drawSprite(name, callback, { w = 128, h = 128, smooth = false, mipmap = false }) {
+    drawSprite(name, callback, { w = 128, h = 128, smooth = false, mipmap = false }, url) {
         // TODO: mipmap
         const [canvas, context] = Object(_buffer_utils__WEBPACK_IMPORTED_MODULE_0__["makeOffscreenBuffer"])(w, h, {
             smooth,
@@ -19931,9 +19955,7 @@ class LoaderImpl {
         callback({ canvas, context, canvas2, context2, w, h, smooth, mipmap, resolution });
 
         const resolutions = ["0.1", "0.25", "0.5", "0.75", "1"];
-        const sprite = new _sprites__WEBPACK_IMPORTED_MODULE_1__["AtlasSprite"]({
-            spriteName: name,
-        });
+        const sprite = new _sprites__WEBPACK_IMPORTED_MODULE_1__["AtlasSprite"](name);
         // TODO: remake for mipmapping
         for (let i = 0; i < resolutions.length; ++i) {
             const res = resolutions[i];
@@ -19953,6 +19975,7 @@ class LoaderImpl {
 
         context.restore();
         this.sprites.set(name, sprite);
+        canvas.src = url
     }
 }
 
@@ -34172,15 +34195,21 @@ function addCustom(custom) {
     }
 
     if (custom.sprite) {
-        (custom.sprite[0] || custom.sprite).sprite = `sprites/buildings/${custom.id}${
-            custom.variant == "default" ? "" : "-" + custom.variant
-        }.png`;
+        if (!(custom.sprite[0] || custom.sprite).sprite) {
+            (custom.sprite[0] || custom.sprite).sprite = `sprites/buildings/${custom.id}${
+                custom.variant == "default" ? "" : "-" + custom.variant
+                }.png`;
+        }
         Object(_modSpriteDrawer__WEBPACK_IMPORTED_MODULE_4__["addSprite"])(custom.sprite);
-        (custom.spriteBp[0] || custom.spriteBp).sprite = `sprites/blueprints/${custom.id}${
-            custom.variant == "default" ? "" : "-" + custom.variant
-        }.png`;
-        custom.spriteBp.transparent = true;
-        Object(_modSpriteDrawer__WEBPACK_IMPORTED_MODULE_4__["addSprite"])(custom.spriteBp);
+        if (custom.spriteBp) {
+            if (!(custom.spriteBp[0] || custom.spriteBp).sprite) {
+                (custom.spriteBp[0] || custom.spriteBp).sprite = `sprites/blueprints/${custom.id}${
+                    custom.variant == "default" ? "" : "-" + custom.variant
+                    }.png`;
+            }
+            (custom.spriteBp[0] || custom.spriteBp).blueprint = true;
+            Object(_modSpriteDrawer__WEBPACK_IMPORTED_MODULE_4__["addSprite"])(custom.spriteBp);
+        }
     }
 }
 
@@ -34370,7 +34399,7 @@ function drawSpriteFromImage(sprite, url, { w, h }) {
         };
         img.src = url;
     }
-    _core_loader__WEBPACK_IMPORTED_MODULE_0__["Loader"].drawSprite(sprite, draw, { w, h });
+    _core_loader__WEBPACK_IMPORTED_MODULE_0__["Loader"].drawSprite(sprite, draw, { w, h }, url);
 }
 
 
@@ -34386,12 +34415,10 @@ function drawSpriteFromImage(sprite, url, { w, h }) {
 var map = {
 	"./adder.js": "./src/js/game/custom/mods/adder.js",
 	"./checker.js": "./src/js/game/custom/mods/checker.js",
-	"./colsplitter.js": "./src/js/game/custom/mods/colsplitter.js",
 	"./combiner.js": "./src/js/game/custom/mods/combiner.js",
 	"./counter.js": "./src/js/game/custom/mods/counter.js",
 	"./inverter.js": "./src/js/game/custom/mods/inverter.js",
 	"./levels.js": "./src/js/game/custom/mods/levels.js",
-	"./mirror.js": "./src/js/game/custom/mods/mirror.js",
 	"./painter1.js": "./src/js/game/custom/mods/painter1.js",
 	"./painter2.js": "./src/js/game/custom/mods/painter2.js",
 	"./quaduo.js": "./src/js/game/custom/mods/quaduo.js",
@@ -34426,19 +34453,69 @@ webpackContext.id = "./src/js/game/custom/mods sync .*\\.js/";
 /*!******************************************!*\
   !*** ./src/js/game/custom/mods/adder.js ***!
   \******************************************/
-/*! exports provided: default */
+/*! exports provided: Sprite, SpriteBp, data, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Sprite", function() { return Sprite; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SpriteBp", function() { return SpriteBp; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "data", function() { return data; });
 /* harmony import */ var _gameData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../gameData */ "./src/js/game/custom/gameData.js");
 
 
 _gameData__WEBPACK_IMPORTED_MODULE_0__["T"].buildings.virtual_processor.adder = {
     name: "Adder",
+    description: "Stacks shapes, paints shapes, mixes colors"
 };
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+
+const Sprite = {
+    sprite: "sprites/buildings/virtual_processor-adder.png",
+    url: "./res/adder.png",
+    w: 142,
+    h: 142,
+};
+const SpriteBp = {
+    sprite: "sprites/blueprints/virtual_processor-adder.png",
+    url: "./res/adder.png",
+    w: 142,
+    h: 142,
+};
+
+// TODO: keyCode, toolbarIndex
+/** @type {ModData} */
+const data = {
+	id: "adder",
+    sprite: Sprite,
+    spriteBp: SpriteBp,
+};
+
+const color_magenta = {
+	id: "magenta",
+	sprite: [{
+		w: 49,
+		h: 49,
+		sprite: "sprites/wires/display/magenta.png",
+	}, {
+		path: "M 1 1 L 1 48 48 48 48 1 Z",
+		fill: "magenta",
+	}],
+}
+
+const color_black = {
+	id: "black",
+	sprite: [{
+		w: 49,
+		h: 49,
+		sprite: "sprites/wires/display/black.png",
+	}, {
+		path: "M 1 1 L 1 48 48 48 48 1 Z",
+		fill: "black",
+	}],
+}
+
+/* harmony default export */ __webpack_exports__["default"] = ([data, color_magenta, color_black]);
 
 
 /***/ }),
@@ -34728,7 +34805,6 @@ function targetShapeCheckerProcess({ items, trackProduction, entity, outItems, s
 const tscSprite = [
     {
         // data:
-        sprite: "sprites/buildings/targetShapeChecker.png",
         w: 192,
         h: 192,
     },
@@ -34750,7 +34826,6 @@ const tscSprite = [
 const tscSpriteBp = [
     {
         // data:
-        sprite: "sprites/blueprints/targetShapeChecker.png",
         w: 192,
         h: 192,
         transparent: true,
@@ -34880,189 +34955,6 @@ const checker = {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (checker);
-
-
-/***/ }),
-
-/***/ "./src/js/game/custom/mods/colsplitter.js":
-/*!************************************************!*\
-  !*** ./src/js/game/custom/mods/colsplitter.js ***!
-  \************************************************/
-/*! exports provided: MetaColorSplitterBuilding, ColorSplitterProcess, Sprite, SpriteBp, unstackerBuildingData, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MetaColorSplitterBuilding", function() { return MetaColorSplitterBuilding; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ColorSplitterProcess", function() { return ColorSplitterProcess; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Sprite", function() { return Sprite; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SpriteBp", function() { return SpriteBp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "unstackerBuildingData", function() { return unstackerBuildingData; });
-/* harmony import */ var _gameData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../gameData */ "./src/js/game/custom/gameData.js");
-
-/** @typedef {import('../gameData').ModData} ModData */
-/** @typedef {import('../gameData').ModProcessData} ModProcessData */
-
-const id = "colorsplitter";
-const color = "";
-
-class MetaColorSplitterBuilding extends _gameData__WEBPACK_IMPORTED_MODULE_0__["MetaBuilding"] {
-    constructor() {
-        super(id);
-    }
-
-    getDimensions() {
-        return new _gameData__WEBPACK_IMPORTED_MODULE_0__["Vector"](2, 2);
-    }
-
-    getSilhouetteColor() {
-        return "#ff6000";
-    }
-
-    /**
-     * @param {GameRoot} root
-     */
-    getIsUnlocked(root) {
-        return root.hubGoals.isRewardUnlocked(`reward_${id}`);
-    }
-
-    /**
-     * @param {GameRoot} root
-     * @param {string} variant
-     * @returns {Array<[string, string]>}
-     */
-    getAdditionalStatistics(root, variant) {
-        const speed = root.hubGoals.getProcessorBaseSpeed(id);
-        return [[_gameData__WEBPACK_IMPORTED_MODULE_0__["T"].ingame.buildingPlacement.infoTexts.speed, Object(_gameData__WEBPACK_IMPORTED_MODULE_0__["formatItemsPerSecond"])(speed, true)]];
-    }
-
-    /**
-     * Creates the entity at the given location
-     * @param {Entity} entity
-     */
-    setupEntityComponents(entity) {
-        entity.addComponent(
-            new _gameData__WEBPACK_IMPORTED_MODULE_0__["ItemProcessorComponent"]({
-                inputsPerCharge: 1,
-                processorType: id,
-            })
-        );
-        entity.addComponent(
-            new _gameData__WEBPACK_IMPORTED_MODULE_0__["ItemEjectorComponent"]({
-                slots: [
-                    {
-                        pos: new _gameData__WEBPACK_IMPORTED_MODULE_0__["Vector"](0, 0),
-                        direction: "left",
-                    },
-                    {
-                        pos: new _gameData__WEBPACK_IMPORTED_MODULE_0__["Vector"](1, 0),
-                        direction: "top",
-                    },
-                    {
-                        pos: new _gameData__WEBPACK_IMPORTED_MODULE_0__["Vector"](1, 1),
-                        direction: "right",
-                    },
-                    {
-                        pos: new _gameData__WEBPACK_IMPORTED_MODULE_0__["Vector"](0, 1),
-                        direction: "bottom",
-                    },
-                ],
-            })
-        );
-        entity.addComponent(
-            new _gameData__WEBPACK_IMPORTED_MODULE_0__["ItemAcceptorComponent"]({
-                slots: [
-                    {
-                        pos: new _gameData__WEBPACK_IMPORTED_MODULE_0__["Vector"](0, 0),
-                        directions: ["top"],
-                        filter: "color",
-                    },
-                    {
-                        pos: new _gameData__WEBPACK_IMPORTED_MODULE_0__["Vector"](1, 0),
-                        directions: ["right"],
-                        filter: "color",
-                    },
-                    {
-                        pos: new _gameData__WEBPACK_IMPORTED_MODULE_0__["Vector"](1, 1),
-                        directions: ["bottom"],
-                        filter: "color",
-                    },
-                    {
-                        pos: new _gameData__WEBPACK_IMPORTED_MODULE_0__["Vector"](0, 1),
-                        directions: ["left"],
-                        filter: "color",
-                    },
-                ],
-            })
-        );
-    }
-}
-
-// outs are rgbw
-const recipes = {
-    r: "r--- r--- r--- r---".split(" "),
-    g: "-g-- -g-- -g-- -g--".split(" "),
-    b: "--b- --b- --b- --b-".split(" "),
-    c: "-gb- -gb- -gb- -gb-".split(" "),
-    m: "r-b- r-b- r-b- r-b-".split(" "),
-    y: "rg-- rg-- rg-- rg--".split(" "),
-    w: "rgb- rgb- rgb- rgb-".split(" "),
-    k: "rgb- rgb- rgb- rgb-".split(" "),
-    u: "-k-w -k-w -k-w -k-w".split(" "),
-};
-
-/** @param {ModProcessData} */
-function ColorSplitterProcess({ items, itemsRaw, trackProduction, entity, outItems }) {
-    // console.log("ColorSplitter PROCESSES");
-
-    let recipe = recipes[itemsRaw[0].item.getHash()][itemsRaw[0].sourceSlot];
-
-    for (let i = 0; i < 4; i++) {
-        if (recipe[i] == "-") continue;
-        outItems.push({
-            item: _gameData__WEBPACK_IMPORTED_MODULE_0__["ColorItem"].createFromHash(recipe[i]),
-            requiredSlot: i,
-        });
-    }
-
-    // trackProduction
-    return true;
-}
-
-const Sprite = {
-    sprite: `sprites/buildings/${id}.png`,
-    url: `./res/${id}.png`,
-    w: 192 * 2,
-    h: 192 * 2,
-};
-const SpriteBp = {
-    sprite: `sprites/blueprints/${id}.png`,
-    url: `./res/${id}.png`, // NOT BP ATM
-    w: 192 * 2,
-    h: 192 * 2,
-};
-
-const unstackerBuildingData = {
-    id,
-    building: MetaColorSplitterBuilding,
-    toolbar: 2,
-    sprite: Sprite,
-    spriteBp: SpriteBp,
-    process: ColorSplitterProcess,
-    // TODO: keybinding in KEYMAPPINGS
-    // TODO: T
-    Tname: "ColorSplitter",
-    Tdesc: "Splits colors.",
-    speed: 1,
-    speedClass: "processors",
-    meta: MetaColorSplitterBuilding,
-    variantId: 580,
-
-    keyCode: "9",
-    toolbarIndex: 9,
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (unstackerBuildingData);
 
 
 /***/ }),
@@ -35503,20 +35395,22 @@ const counterBuildingData = {
 /*!*********************************************!*\
   !*** ./src/js/game/custom/mods/inverter.js ***!
   \*********************************************/
-/*! exports provided: MetaInverterBuilding, Process, data, default */
+/*! exports provided: MetaInverterBuilding, Process, Sprite, SpriteBp, data, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MetaInverterBuilding", function() { return MetaInverterBuilding; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Process", function() { return Process; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Sprite", function() { return Sprite; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SpriteBp", function() { return SpriteBp; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "data", function() { return data; });
 /* harmony import */ var _gameData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../gameData */ "./src/js/game/custom/gameData.js");
 
 /** @typedef {import('../gameData').ModData} ModData */
 /** @typedef {import('../gameData').ModProcessData} ModProcessData */
 
-const id = "advanced_processor";
+const id = "inverter";
 
 class MetaInverterBuilding extends _gameData__WEBPACK_IMPORTED_MODULE_0__["MetaBuilding"] {
     constructor() {
@@ -35599,6 +35493,7 @@ class MetaInverterBuilding extends _gameData__WEBPACK_IMPORTED_MODULE_0__["MetaB
                     {
                         pos: new _gameData__WEBPACK_IMPORTED_MODULE_0__["Vector"](0, 1),
                         directions: ["left"],
+                        filter: "color",
                     },
                     // {
                     //     pos: new Vector(0, 0),
@@ -35651,6 +35546,17 @@ function Process({ items, itemsBySlot, trackProduction, entity, outItems, system
     return trackProduction;
 }
 
+const Sprite = {
+    url: "./res/inverter.png",
+    w: 384,
+    h: 384,
+};
+const SpriteBp = {
+    url: "./res/inverter-bp.png",
+    w: 384,
+    h: 384,
+};
+
 // TODO: keyCode, toolbarIndex
 /** @type {ModData} */
 const data = {
@@ -35662,6 +35568,9 @@ const data = {
     speedClass: "processors",
     meta: MetaInverterBuilding,
     variantId: 310,
+
+    sprite: Sprite,
+    spriteBp: SpriteBp,
 
     Tname: "Inverter",
     Tdesc: "Inverts colors of shapes and paints using flat Circles. Inverts 1 item per circle quad.",
@@ -35825,73 +35734,6 @@ makeFreeplay((n += 1), Math.max(100, (n += 4)), h, c, (s = 4), l, {
 });
 
 /* harmony default export */ __webpack_exports__["default"] = (levels);
-
-
-/***/ }),
-
-/***/ "./src/js/game/custom/mods/mirror.js":
-/*!*******************************************!*\
-  !*** ./src/js/game/custom/mods/mirror.js ***!
-  \*******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _blueprint__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../blueprint */ "./src/js/game/blueprint.js");
-/* harmony import */ var _gameData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../gameData */ "./src/js/game/custom/gameData.js");
-
-
-
-_blueprint__WEBPACK_IMPORTED_MODULE_0__["Blueprint"].prototype.rotateCcw = function () {
-    for (let i = 0; i < this.entities.length; ++i) {
-        const entity = this.entities[i];
-        const staticComp = entity.components.StaticMapEntity;
-
-        let size = staticComp.getTileSize().copy().subInplace(new _gameData__WEBPACK_IMPORTED_MODULE_1__["Vector"](1, 1));
-        let halfSize = size.multiplyScalar(0.5);
-
-        let r = staticComp.rotation;
-
-        let o = staticComp.origin.copy();
-        // o.subInplace()
-        o.x *= -1;
-
-        if (r == 0) {
-            o.x -= size.x;
-        } else if (r == 90) {
-            o.y += size.x;
-        } else if (r == 180) {
-            o.x += size.x;
-        } else if (r == 270) {
-            o.y -= size.x;
-        }
-
-        staticComp.origin = o;
-        // debugger;
-        if (staticComp.rotation % 180) staticComp.rotation = (staticComp.rotation + 180) % 360;
-        if (staticComp.originalRotation % 180)
-            staticComp.originalRotation = (staticComp.originalRotation + 180) % 360;
-
-        let belt = entity.components.Belt;
-        if (belt) {
-            switch (belt.direction) {
-                case "left":
-                    belt.direction = "right";
-                    staticComp.code = 3;
-                    break;
-                case "right":
-                    belt.direction = "left";
-                    staticComp.code = 2;
-                    break;
-            }
-        }
-    }
-
-    console.log(this.entities);
-};
-
-/* harmony default export */ __webpack_exports__["default"] = ({});
 
 
 /***/ }),
@@ -39023,6 +38865,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 class GameHUD {
     /**
      * @param {GameRoot} root
@@ -39108,7 +38951,7 @@ class GameHUD {
             this.parts.colorBlindHelper = new _parts_color_blind_helper__WEBPACK_IMPORTED_MODULE_28__["HUDColorBlindHelper"](this.root);
         }
 
-        if (_core_query_parameters__WEBPACK_IMPORTED_MODULE_32__["queryParamOptions"].sandboxMode || true) {
+        if (_core_query_parameters__WEBPACK_IMPORTED_MODULE_32__["queryParamOptions"].sandboxMode || _core_config__WEBPACK_IMPORTED_MODULE_10__["IS_DEBUG"]) {
             this.parts.sandboxController = new _parts_sandbox_controller__WEBPACK_IMPORTED_MODULE_33__["HUDSandboxController"](this.root);
         }
 
@@ -41543,7 +41386,7 @@ class HUDDebugInfo extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDP
      */
     onModeChanged(mode) {
         this.element.setAttribute("data-mode", mode);
-        this.versionElement.innerText = `${"modZ 1.0.0"} @ ${"dev"} @ ${"ad45aa6a"}`;
+        this.versionElement.innerText = `${"modZ 1.0.3"} @ ${"dev"} @ ${"4bbf0823"}`;
     }
 
     /**
@@ -57060,8 +56903,8 @@ if (window.coreThreadLoadedCb) {
 // }
 
 console.log(
-    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"ad45aa6a"}%c on %c${new Date(
-        1597908249509
+    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"4bbf0823"}%c on %c${new Date(
+        1597923930664
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -57560,7 +57403,7 @@ class ShapezGameAnalytics extends _game_analytics__WEBPACK_IMPORTED_MODULE_4__["
             environment: this.environment,
             category,
             value,
-            version: "modZ 1.0.0",
+            version: "modZ 1.0.3",
             level: root.hubGoals.level,
             gameDump: this.generateGameDump(root),
         });
@@ -60439,7 +60282,7 @@ class Savegame extends _core_read_write_proxy__WEBPACK_IMPORTED_MODULE_0__["Read
         shadowData.dump = dump;
         shadowData.lastUpdate = new Date().getTime();
         shadowData.version = this.getCurrentVersion();
-        shadowData.lastVersion = "modZ 1.0.0";
+        shadowData.lastVersion = "modZ 1.0.3";
 
         const reader = this.getDumpReaderForExternalData(shadowData);
 
@@ -60468,7 +60311,7 @@ class Savegame extends _core_read_write_proxy__WEBPACK_IMPORTED_MODULE_0__["Read
     saveMetadata() {
         this.metaDataRef.lastUpdate = new Date().getTime();
         this.metaDataRef.version = this.getCurrentVersion();
-        this.metaDataRef.lastVersion = "modZ 1.0.0";
+        this.metaDataRef.lastVersion = "modZ 1.0.3";
         if (!this.hasGameDump()) {
             this.metaDataRef.level = 0;
         } else {
@@ -65152,11 +64995,11 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameSt
                     .readFileAsync("lastversion.bin")
                     .catch(err => {
                         logger.warn("Failed to read lastversion:", err);
-                        return "modZ 1.0.0";
+                        return "modZ 1.0.3";
                     })
                     .then(version => {
-                        logger.log("Last version:", version, "App version:", "modZ 1.0.0");
-                        this.app.storage.writeFileAsync("lastversion.bin", "modZ 1.0.0");
+                        logger.log("Last version:", version, "App version:", "modZ 1.0.3");
+                        this.app.storage.writeFileAsync("lastversion.bin", "modZ 1.0.3");
                         return version;
                     })
                     .then(version => {
@@ -65247,7 +65090,7 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameSt
 
                     <div class="lower">
                         <button class="resetApp styledButton">Reset App</button>
-                        <i>Build ${"modZ 1.0.0"} @ ${"ad45aa6a"}</i>
+                        <i>Build ${"modZ 1.0.3"} @ ${"4bbf0823"}</i>
                     </div>
                 </div>
         `;
@@ -65377,14 +65220,14 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1597908249509;
+        const lastBuildMs = new Date().getTime() - 1597923930664;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
 
         labelVersion.innerHTML = `
             <span class='version'>
-                ${"modZ 1.0.0"} @ ${version} @ ${"ad45aa6a"}
+                ${"modZ 1.0.3"} @ ${version} @ ${"4bbf0823"}
             </span>
             <span class='buildTime'>
                 ${_translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.buildDate.replace("<at-date>", lastBuildText)}<br />
