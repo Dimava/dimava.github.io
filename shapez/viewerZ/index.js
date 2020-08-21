@@ -1,5 +1,3 @@
-const Canvas = require('canvas');
-
 /*
  * Lots of code here is copied 1:1 from actual game files
  *
@@ -689,3 +687,225 @@ function internalGenerateShapeBuffer(layers, canvas, context, w, h, dpi) {
 }
 
 /////////////////////////////////////////////////////
+
+function initVariants() {
+	// <ul id="shapeCodes">
+	//   <li><code>C</code> Circle</li>
+	const ulShapes = document.querySelector('#shapeCodes');
+	ulShapes.innerHTML = '';
+	for (let shape of Object.values(enumSubShape)) {
+		let li = document.createElement('li');
+		li.innerHTML = `
+			<code>${enumSubShapeToShortcode[shape]}</code>
+			<canvas width="16" height="16"></canvas>
+			${shape[0].toUpperCase() + shape.slice(1)}
+		`;
+		li.onclick = () => selectVariant(enumSubShapeToShortcode[shape]);
+		let cv = li.querySelector('canvas');
+		let ctx = cv.getContext('2d');
+		internalGenerateShapeBuffer(formLayers([parseShortKey(enumSubShapeToShortcode[shape])]), cv, ctx, 16, 16, 1);
+		ulShapes.append(li);
+	}
+	// <ul id="colorCodes">
+	//   <li>
+	//     <code>r</code>
+	//     <span class="colorPreview" style="background: #ff666a;"></span>
+	//     Red
+	//   </li>
+	const ulColors = document.querySelector('#colorCodes');
+	ulColors.innerHTML = '';
+	for (let color of Object.values(enumColors)) {
+		let li = document.createElement('li');
+		li.innerHTML = `
+    		<code>${enumColorToShortcode[color]}</code>
+    		<span class="colorPreview" style="background: ${enumColorsToHexCode[color]};"></span>
+    		${color[0].toUpperCase() + color.slice(1)}
+    	`;
+		li.onclick = () => selectVariant(enumSubShapeToShortcode[enumSubShape.circle] + enumColorToShortcode[color]);
+		ulColors.append(li);
+	}
+}
+
+
+function initEditor() {
+	const infoBox = document.querySelector('.infoBox');
+	for (let el of document.querySelectorAll('.infoBox>p, .infoBox>br, .infoBox>h2, .infoBox>p+h3')) {
+		el.remove();
+	}
+	const ta = document.createElement('textarea');
+	ta.style.width = '500px';
+	ta.style.height = '300px';
+	infoBox.prepend(ta);
+	ta.value = `
+		addColor("orange", "o", "orange")
+		<!-->
+		addSubShape("newShape", "N", {
+			size: 1,
+			color: 'o',
+			draw(ctx, layerIndex, quarterIndex) {
+				with (ctx) { with (Math) {
+		////////////////////////
+		// draw mostly in [0,1]x[0,1] square
+
+
+		moveTo(0, 0)
+		lineTo(1, 1)
+		lineTo(1, 0)
+
+
+		////////////////////////
+				} }
+			}
+		})
+	`.replace(/\n\t\t/g, '\n').slice(1, -2); // .replace(/\t/g, '');
+	ta.oninput = updateEditor;
+	loadVariants();
+	if (!enumShortcodeToSubShape["N"]) {
+		updateEditor();
+	}
+	selectVariant("No");
+	updateEditor();
+	document.querySelector('.infoBox').ondblclick = null;
+
+}
+
+
+function updateEditor() {
+	try {
+		showError(null);
+		const ta = document.querySelector('textarea');
+		const vals = ta.value.split(/<!-->/);
+		for (let val of vals) {
+			val = val.trim();
+			const code = eval(val);
+			if (
+				typeof code == 'string' &&
+				code.length < 44 &&
+				!document.getElementById("code").value.includes(code)
+			) {
+				document.getElementById("code").value = code;
+			}
+			generate();
+			initVariants();
+			const errorDiv = document.getElementById("error");
+			if (errorDiv.innerText == "Shape generated") {
+				saveVariant(code.slice(-1), val);
+			}
+		}
+	} catch(err) {
+		showError(err);
+	}
+}
+
+function saveVariant(code, val) {
+	let allVariants = localStorage.getItem('shapezCustomShapeCodes') || "";
+	if (!allVariants.includes(code)) {
+		localStorage.setItem('shapezCustomShapeCodes', allVariants + code);
+	}
+	localStorage.setItem('shapezCustomShapes_' + code, val);
+}
+
+function loadVariants() {
+	let allVariants = localStorage.getItem("shapezCustomShapeCodes") || "";
+	for (let code of allVariants) {
+		let val = localStorage.getItem('shapezCustomShapes_' + code);
+		try {
+			eval(val);
+		} catch(err) {
+			showError(err);
+		}
+	}
+}
+
+function selectVariant(key) {
+	const ta = document.querySelector('textarea');
+	const valsS = key.split('').filter(c => customSubShape[enumShortcodeToSubShape[c]]);
+	const valsC = key.split('').filter(c => enumShortcodeToColor[c]);
+	let ar = [];
+	ar.push(...valsC.map(c => localStorage.getItem('shapezCustomShapes_' + c) || ""));
+	ar.push(...valsS.map(c => localStorage.getItem('shapezCustomShapes_' + c) || ""));
+	ta.value = ar.filter(Boolean).join('\n<!-->\n');
+
+	document.getElementById("code").value = key;
+	generate();
+}
+
+function showError(msg) {
+	const errorDiv = document.getElementById("error");
+	errorDiv.classList.toggle("hasError", !!msg);
+	if (msg) {
+		if (errorDiv.innerText == "Shape generated") {
+			errorDiv.innerHTML = msg;
+		} else {
+			errorDiv.innerHTML += '<br>' + msg;
+		}
+		console.error(msg);
+	} else {
+		errorDiv.innerText = "Shape generated";
+	}
+}
+
+// @ts-ignore
+window.generate = () => {
+	showError(null);
+	// @ts-ignore
+	const code = document.getElementById("code").value.trim();
+
+	let parsed = null;
+	try {
+		parsed = fromShortKey(code);
+	} catch (ex) {
+		showError(ex);
+		return;
+	}
+
+	renderShape(parsed);
+};
+
+// @ts-ignore
+window.debounce = (fn) => {
+	setTimeout(fn, 0);
+};
+
+// @ts-ignore
+window.addEventListener("load", () => {
+	initVariants();
+	document.querySelector('.infoBox').ondblclick = initEditor;
+	if (localStorage.getItem("shapezCustomShapeCodes")) {
+		initEditor();
+	}
+	if (window.location.search) {
+		const key = window.location.search.substr(1);
+		document.getElementById("code").value = key;
+	}
+	generate();
+});
+
+window.exportShape = () => {
+	const canvas = document.getElementById("result");
+	const imageURL = canvas.toDataURL("image/png");
+
+	const dummyLink = document.createElement("a");
+	dummyLink.download = "shape.png";
+	dummyLink.href = imageURL;
+	dummyLink.dataset.downloadurl = [
+		"image/png",
+		dummyLink.download,
+		dummyLink.href,
+	].join(":");
+
+	document.body.appendChild(dummyLink);
+	dummyLink.click();
+	document.body.removeChild(dummyLink);
+};
+
+window.viewShape = (key) => {
+	document.getElementById("code").value = key;
+	generate();
+};
+
+window.shareShape = () => {
+	const code = document.getElementById("code").value.trim();
+	const url = "https://viewer.shapez.io?" + code;
+	alert("You can share this url: " + url);
+};
