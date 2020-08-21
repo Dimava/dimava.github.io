@@ -17,6 +17,6 @@ robocopy "../shapez.io/build/" "./shapez/modZ/dev/" /S
 
 git add -A
 
-git commit -m "_push"
+git commit -m "_push-dev"
 
 git push

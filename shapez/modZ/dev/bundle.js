@@ -15351,6 +15351,8 @@ var map = {
 	"./combiner.png": "./res_built/atlas/combiner.png",
 	"./counter-bp.png": "./res_built/atlas/counter-bp.png",
 	"./counter.png": "./res_built/atlas/counter.png",
+	"./display_black.png": "./res_built/atlas/display_black.png",
+	"./display_magenta.png": "./res_built/atlas/display_magenta.png",
 	"./inverter-bp.png": "./res_built/atlas/inverter-bp.png",
 	"./inverter.png": "./res_built/atlas/inverter.png",
 	"./quaduo.png": "./res_built/atlas/quaduo.png",
@@ -15500,6 +15502,28 @@ module.exports = (function() {
 /*!*************************************!*\
   !*** ./res_built/atlas/counter.png ***!
   \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ "./res_built/atlas/display_black.png":
+/*!*******************************************!*\
+  !*** ./res_built/atlas/display_black.png ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ "./res_built/atlas/display_magenta.png":
+/*!*********************************************!*\
+  !*** ./res_built/atlas/display_magenta.png ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -34473,14 +34497,14 @@ _gameData__WEBPACK_IMPORTED_MODULE_0__["T"].buildings.virtual_processor.adder = 
 const Sprite = {
     sprite: "sprites/buildings/virtual_processor-adder.png",
     url: "./res/adder.png",
-    w: 142,
-    h: 142,
+    w: 192,
+    h: 192,
 };
 const SpriteBp = {
     sprite: "sprites/blueprints/virtual_processor-adder.png",
     url: "./res/adder.png",
-    w: 142,
-    h: 142,
+    w: 192,
+    h: 192,
 };
 
 // TODO: keyCode, toolbarIndex
@@ -34493,26 +34517,22 @@ const data = {
 
 const color_magenta = {
 	id: "magenta",
-	sprite: [{
-		w: 49,
-		h: 49,
+	sprite: {
+		w: 65,
+		h: 65,
 		sprite: "sprites/wires/display/magenta.png",
-	}, {
-		path: "M 1 1 L 1 48 48 48 48 1 Z",
-		fill: "magenta",
-	}],
+		url: "./res/display_magenta.png"
+	},
 }
 
 const color_black = {
 	id: "black",
-	sprite: [{
-		w: 49,
-		h: 49,
+	sprite: {
+		w: 65,
+		h: 65,
 		sprite: "sprites/wires/display/black.png",
-	}, {
-		path: "M 1 1 L 1 48 48 48 48 1 Z",
-		fill: "black",
-	}],
+		url: "./res/display_black.png"
+	},
 }
 
 /* harmony default export */ __webpack_exports__["default"] = ([data, color_magenta, color_black]);
@@ -41386,7 +41406,7 @@ class HUDDebugInfo extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDP
      */
     onModeChanged(mode) {
         this.element.setAttribute("data-mode", mode);
-        this.versionElement.innerText = `${"modZ 1.0.3"} @ ${"dev"} @ ${"4bbf0823"}`;
+        this.versionElement.innerText = `${"modZ 1.0.3"} @ ${"dev"} @ ${"9a449de1"}`;
     }
 
     /**
@@ -56903,8 +56923,8 @@ if (window.coreThreadLoadedCb) {
 // }
 
 console.log(
-    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"4bbf0823"}%c on %c${new Date(
-        1597923930664
+    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"9a449de1"}%c on %c${new Date(
+        1598000230836
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -65090,7 +65110,7 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_0__["GameSt
 
                     <div class="lower">
                         <button class="resetApp styledButton">Reset App</button>
-                        <i>Build ${"modZ 1.0.3"} @ ${"4bbf0823"}</i>
+                        <i>Build ${"modZ 1.0.3"} @ ${"9a449de1"}</i>
                     </div>
                 </div>
         `;
@@ -65220,14 +65240,14 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1597923930664;
+        const lastBuildMs = new Date().getTime() - 1598000230836;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
 
         labelVersion.innerHTML = `
             <span class='version'>
-                ${"modZ 1.0.3"} @ ${version} @ ${"4bbf0823"}
+                ${"modZ 1.0.3"} @ ${version} @ ${"9a449de1"}
             </span>
             <span class='buildTime'>
                 ${_translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.buildDate.replace("<at-date>", lastBuildText)}<br />
