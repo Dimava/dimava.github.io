@@ -26,8 +26,18 @@
     <meta http-equiv="Expires" content="0">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="canonical" href="https://shapez.io">
-    <link rel="preconnect" href="http://localhost:5005" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="none" onload="this.media=&#34;all&#34;" href="main.css">
+    <link rel="preconnect" href="https://analytics.shapez.io" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="none" onload="this.media=&#34;all&#34;" href="main.css" integrity="sha256-ccVGoj/K/sNk0zE10HbJfThFMT1fJ4jzJ93u176lQG0=">
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-165342524-1" async></script>
+    <script>
+        function gtag() {
+            dataLayer.push(arguments)
+        }
+        window.dataLayer = window.dataLayer || [], gtag("js", new Date), gtag("config", "UA-165342524-1", {
+            anonymize_ip: !0
+        })
+    </script>
+    <script src="https://www.googleoptimize.com/optimize.js?id=OPT-M5NHCV7" async></script>
     <link rel="preload" href="res/fonts/GameFont.woff2" crossorigin="anonymous" as="font">
     <style type="text/css">
         @font-face {
@@ -82,26 +92,26 @@
     <script type="text/javascript">
         var bundleSrc = "bundle.js",
             bundleSrcTranspiled = "bundle-transpiled.js",
-            bundleIntegrity = null,
-            bundleIntegrityTranspiled = null;
+            bundleIntegrity = "sha256-/fnrSZ9VJGH0fHS+igiOzMk48rDV2C31rT2Tn6dwUEw=",
+            bundleIntegrityTranspiled = "sha256-gBDj7a+WQkn1aUfyykdw8xi+zGuAJoY5reWQeEiQMaI=";
         ! function() {
             var e = null,
                 n = !1;
 
             function r(e, n, r, t, o) {
                 console.error("👀 Init Error:", e, n, r, t, o);
-                var l = document.createElement("div");
-                l.style.position = "fixed", l.style.top = "0", l.style.right = "0", l.style.bottom = "0", l.style.left = "0", l.style.zIndex = "29999", l.style.backgroundColor = "#222429", l.style.display = "flex", l.style.justifyContent = "center", l.style.alignItems = "center";
                 var d = document.createElement("div");
-                d.style.color = "#fff", d.style.fontFamily = "GameFont, sans-serif", d.style.fontSize = "15px", d.style.padding = "30px", d.style.textAlign = "center", l.appendChild(d);
+                d.style.position = "fixed", d.style.top = "0", d.style.right = "0", d.style.bottom = "0", d.style.left = "0", d.style.zIndex = "29999", d.style.backgroundColor = "#222429", d.style.display = "flex", d.style.justifyContent = "center", d.style.alignItems = "center";
+                var l = document.createElement("div");
+                l.style.color = "#fff", l.style.fontFamily = "GameFont, sans-serif", l.style.fontSize = "15px", l.style.padding = "30px", l.style.textAlign = "center", d.appendChild(l);
                 var a = document.createElement("h3");
-                a.style.color = "#ef5072", a.innerText = "Error", a.style.marginBottom = "40px", a.style.fontSize = "45px", d.appendChild(a);
+                a.style.color = "#ef5072", a.innerText = "Error", a.style.marginBottom = "40px", a.style.fontSize = "45px", l.appendChild(a);
                 var i = document.createElement("p");
-                if (i.style.color = "#eee", i.innerText = o || e && e.message || e || "Unknown Error", d.appendChild(i), n) {
+                if (i.style.color = "#eee", i.innerText = o || e && e.message || e || "Unknown Error", l.appendChild(i), n) {
                     var s = document.createElement("p");
-                    s.style.color = "#777", s.innerText = s + ":" + r + ":" + t, d.appendChild(s)
+                    s.style.color = "#777", s.innerText = s + ":" + r + ":" + t, l.appendChild(s)
                 }
-                document.documentElement.appendChild(l)
+                document.documentElement.appendChild(d)
             }
 
             function t(e, n) {
@@ -113,12 +123,12 @@
                 throw console.error("👀 Failed to load bundle!"), console.error("👀 Error was:", e), new Error("Core load failed.")
             }
 
-            function l() {
+            function d() {
                 if (!n) throw console.error("👀 Got no core callback"), new Error("Core thread failed to respond within time.")
             }
 
-            function d() {
-                console.log("👀 Core loaded at", Math.floor(performance.now()), "ms"), e = setTimeout(l, 15e3), window.removeEventListener("error", r), window.removeEventListener("unhandledrejection", r)
+            function l() {
+                console.log("👀 Core loaded at", Math.floor(performance.now()), "ms"), e = setTimeout(d, 15e3), window.removeEventListener("error", r), window.removeEventListener("unhandledrejection", r)
             }
             window.addEventListener("error", r), window.addEventListener("unhandledrejection", r), window.coreThreadLoadedCb = function() {
                 console.log("👀 Core responded at", Math.floor(performance.now()), "ms"), clearTimeout(e), n = !(e = null)
@@ -127,8 +137,8 @@
             a.addEventListener("error", function(e) {
                 console.warn("👀 ES6 Script not supported, loading transpiled code."), console.warn("👀 Error was:", e);
                 var n = t(bundleSrcTranspiled);
-                n.addEventListener("error", o), n.addEventListener("load", d), document.head.appendChild(n)
-            }), a.addEventListener("load", d), document.head.appendChild(a)
+                n.addEventListener("error", o), n.addEventListener("load", l), document.head.appendChild(n)
+            }), a.addEventListener("load", l), document.head.appendChild(a)
         }()
     </script>
 </head>
