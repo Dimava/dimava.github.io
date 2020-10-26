@@ -43715,7 +43715,7 @@ class HUDDebugInfo extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDP
      */
     onModeChanged(mode) {
         this.element.setAttribute("data-mode", mode);
-        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"b3c6d035"}`;
+        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"a04a0ac3"}`;
     }
 
     /**
@@ -50125,12 +50125,16 @@ class ShapestLayer {
         return _colors__WEBPACK_IMPORTED_MODULE_7__["enumColorsToHexCode"][_colors__WEBPACK_IMPORTED_MODULE_7__["enumShortcodeToColor"][this.color(i)]];
     }
 
+    sameLayerAs(layer) {
+        return this.layerHash() == layer.layerHash();
+    }
+
     draw(context) { window.assert(false, 'abstract method called of: ' + (this.name || (this.constructor && this.constructor.name)));; }
+    can_fall_through(layer) { return this.can_stack_with(layer); }
+    can_stack_with(layer) { return this.sameLayerAs(layer); }
+    do_stack_with(layer) { window.assert(false, 'abstract method called of: ' + (this.name || (this.constructor && this.constructor.name)));; }
     do_paint(clr) { window.assert(false, 'abstract method called of: ' + (this.name || (this.constructor && this.constructor.name)));; }
     do_rotate(rot) { window.assert(false, 'abstract method called of: ' + (this.name || (this.constructor && this.constructor.name)));; }
-    can_fall_through(layer) { return false; }
-    can_stack_with(layer) { return this.hash[0] == layer.hash[0]; }
-    do_stack_with(layer) { window.assert(false, 'abstract method called of: ' + (this.name || (this.constructor && this.constructor.name)));; }
 
 }
 
@@ -50144,8 +50148,8 @@ class NumberLayer extends ShapestLayer {
         return hash[0] == this.layerHash() && Number.isInteger(+hash.slice(2));
     }
 
-    get color() {
-        return _colors__WEBPACK_IMPORTED_MODULE_7__["enumColorsToHexCode"][_colors__WEBPACK_IMPORTED_MODULE_7__["enumShortcodeToColor"][this.hash[1]]];
+    color() {
+        return this.hash[1];
     }
 
     get value() {
@@ -50157,13 +50161,35 @@ class NumberLayer extends ShapestLayer {
      */
     draw(ctx) {
 
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = this.colorHex(0);
 
         ctx.font = `${this.scale}px Sans-serif`;
 
         ctx.strokeText(this.value + '', 0, 0, 20);
         ctx.fillText(this.value + '', 0, 0, 20);
 
+    }
+
+    toTextLayer() {
+        let value = this.value.toString().split('').map(e => e + this.color()).join('');
+        return new TextLayer('t' + value, this.layer);
+    }
+
+    can_fall_through(layer) {
+        return this.sameLayerAs(layer) || layer.layerHash() == 't';
+    }
+
+    do_stack_with(layer) {
+        if (layer.layerHash() == 't') return this.toTextLayer().do_stack_with(layer);
+        if (!this.sameLayerAs(layer) || this.color() != layer.color()) return ERROR;
+        return new NumberLayer(`n${this.color()}${this.value + layer.value}`, this.layer);
+    }
+    do_paint(clr) {
+        return new NumberLayer(`n${clr}${this.value}`, this.layer);
+    }
+    do_rotate(rot) {
+        let value = rot == 1 ? this.value + 1 : rot == -1 ? this.value - 1 : -this.value;
+        return new NumberLayer(`n${this.color()}${value}`, this.layer);
     }
 
 }
@@ -50183,11 +50209,12 @@ class TextLayer extends ShapestLayer {
     }
 
     color(i) {
-        return _colors__WEBPACK_IMPORTED_MODULE_7__["enumColorsToHexCode"][_colors__WEBPACK_IMPORTED_MODULE_7__["enumShortcodeToColor"][this.hash[2 + 2 * i]]];
+        return this.hash[2 + 2 * i];
     }
 
     shape(i) {
-        return this.hash[1 + 2 * i];
+        let l = this.hash[1 + 2 * i]
+        return l != '_' ? l : i == 0 || i == this.length - 1 ? ' ' : l;
     }
 
     get value() {
@@ -50199,33 +50226,75 @@ class TextLayer extends ShapestLayer {
      */
     draw(ctx) {
 
-        ctx.fillStyle = this.color(0);
-
         ctx.font = `${this.scale}px Sans-serif`;
 
+        let actw = ctx.measureText(this.value).width;
         let fullw = 0;
         for (let i = 0; i < this.length; i++) {
             fullw += ctx.measureText(this.shape(i)).width;
         }
+        let mul = Math.min(fullw, 20) / fullw;
         let x = -fullw / 2;
         for (let i = 0; i < this.length; i++) {
             let w = ctx.measureText(this.shape(i)).width;
             x += w / 2;
-            ctx.strokeText(this.shape(i), x, 0, 20);
-            ctx.fillText(this.shape(i), x, 0, 20);
+            ctx.fillStyle = this.colorHex(i);
+            ctx.strokeText(this.shape(i), x * mul, 0, w * mul);
+            ctx.fillText(this.shape(i), x * mul, 0, w * mul);
             x += w / 2;
         }
-
 
     }
 
     can_fall_through(layer) {
-        return layer.layerHash() == this.layerHash();
+        return this.sameLayerAs(layer) || layer.layerHash() == 'n';
     }
 
     do_stack_with(layer) {
-        if (layer.layerHash() != this.layerHash()) return ERROR;
+        if (layer.layerHash() == 'n') return this.do_stack_with(layer.toTextLayer());
+        if (!this.sameLayerAs(layer)) return ERROR;
         return this.hash + layer.hash.slice(1);
+    }
+    do_paint(clr) {
+        let s = this.layerHash();
+        for (let i = 0; i < this.length; i++) {
+            s += this.shape(i) + clr;
+        }
+        return new TextLayer(s, this.layer);
+    }
+    do_rotate(rot) {
+        // !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+        let list_low = 'abcdefghijklmnopqrstuvwxyz';
+        let list_high = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let list_sym = '_!"#$%&\'()*+,-./<=>?[]^{|}';
+
+        window.assert(list_low.length == list_high.length && list_high.length == list_sym.length);
+
+        if (this.length != 1) {
+            let list = this.hash.slice(1).match(/[^][^]/g);
+            if (rot == 1) {
+                list.push(list.shift());
+            } else if (rot == -1) {
+                list.unshift(list.pop());
+            } else if (rot == 0) {
+                list.reverse();
+            }
+            return new TextLayer(`t${list.join('')}`, this.layer);
+        } else {
+            let dblist = list_low + list_low + list_high + list_high + list_sym + list_sym;
+            let qlist = list_low + list_high + list_sym + list_low;
+
+            let letter = this.shape(0);
+            if (rot == 1) {
+                letter = dblist[dblist.indexOf(letter) + 1];
+            } else if (rot == -1) {
+                letter = dblist[dblist.lastIndexOf(letter) - 1];
+            } else if (rot == 0) {
+                letter = qlist[qlist.indexOf(letter) + list_low.length];
+            }
+            return new TextLayer(`t${letter}${this.color(0)}`, this.layer);
+        }
+
     }
 
 }
@@ -50260,10 +50329,10 @@ class EmojiLayer extends ShapestLayer {
 }
 
 const shape4svg = {
-    R: "M 0 0 v 1 h 1 v -1 z",
-    C: "M 0 0 l 1 0 a 1 1 0 0 1 -1 1 z ",
-    S: "M 0 0 L 0 0.6 1 1 0.6 0 z",
-    W: "M 0 0 L 0 0.6 1 1 1 0 z",
+    R: "M 0 0 L 1 0 L 1 1 L 0 1 Z",
+    C: "M 0 0 L 1 0 A 1 1 0 0 1 0 1 Z",
+    S: "M 0 0 L 0 0.6 L 1 1 L 0.6 0 Z",
+    W: "M 0 0 L 0 0.6 L 1 1 L 1 0 Z",
     "-": "M 0 0",
 }
 
@@ -50340,15 +50409,49 @@ class Shape4Layer extends ShapestLayer {
         return s;
     }
 
+    do_paint(clr) {
+        let s = this.layerHash();
+        for (let i = 0; i < this.length; i++) {
+            s += this.shape(i) + clr;
+        }
+        return new Shape4Layer(s, this.layer);
+    }
+    do_rotate(rot) {
+        let value = this.hash.slice(1);
+        if (rot == 1) {
+            value = value.slice(2) + value.slice(0, 2);
+        } else if (rot == -1) {
+            value = value.slice(0, -2) + value.slice(-2);
+        } else if (rot == 0) {
+            value = value.slice(this.length) + value.slice(0, this.length);
+        }
+        return new Shape4Layer(this.layerHash() + value, this.layer);
+    }
+
 }
 
+function dotPos(l, a) {
+    return `${ l * Math.cos(Math.PI / a)} ${ l * Math.sin(Math.PI / a)}`;
+}
+
+function sinPiBy(a) {
+    return Math.sin(Math.PI / a);
+}
+function cosPiBy(a) {
+    return Math.cos(Math.PI / a);
+}
+
+let sahpe6long = 1 / cosPiBy(6);
+
 const shape6svg = {
-    R: `M 0 0 L 1 0 1 ${Math.sin(Math.PI / 6) / Math.cos(Math.PI / 6)} ${Math.cos(Math.PI / 3)} ${Math.sin(Math.PI / 3)} Z`,
-    C: "M 0 0 l 1 0 a 1 1 0 0 1 -1 1 z ",
-    S: "M 0 0 L 0 0.6 1 1 0.6 0 z",
-    W: "M 0 0 L 0 0.6 1 1 1 0 z",
+    R: `M 0 0 L 1 0 L ${dotPos(sahpe6long, 6)} L ${dotPos(1, 3)} Z`,
+    C: `M 0 0 L 1 0 A 1 1 0 0 1 ${dotPos(1, 3)} Z`,
+    S: `M 0 0 L 0.6 0 L ${dotPos(sahpe6long, 6)} L ${dotPos(0.6, 3)} Z`,
+    W: `M 0 0 L 0.6 0 L ${dotPos(sahpe6long, 6)} L ${dotPos(1, 3)} Z`,
     "-": "M 0 0",
 }
+
+console.log(shape6svg);
 
 // 6CwCrCgCbRcRy
 class Shape6Layer extends ShapestLayer {
@@ -50365,7 +50468,7 @@ class Shape6Layer extends ShapestLayer {
     }
 
     color(i) {
-        return _colors__WEBPACK_IMPORTED_MODULE_7__["enumColorsToHexCode"][_colors__WEBPACK_IMPORTED_MODULE_7__["enumShortcodeToColor"][this.hash[2 + 2 * i]]];
+        return this.hash[2 + 2 * i];
     }
 
     shape(i) {
@@ -50383,7 +50486,7 @@ class Shape6Layer extends ShapestLayer {
 
         for (let i = 0; i < 6; i++) {
             let p = new Path2D(shape6svg[this.shape(i)]);
-            ctx.fillStyle = this.color(i);
+            ctx.fillStyle = this.colorHex(i);
             ctx.fill(p);
             ctx.stroke(p);
             ctx.rotate(Math.PI / 3);
@@ -50394,7 +50497,7 @@ class Shape6Layer extends ShapestLayer {
     can_fall_through(layer) {
         switch (layer.layerHash()) {
             case "6": {
-                for (let i = 0; i < 6; i++)
+                for (let i = 0; i < this.length; i++)
                     if (this.shape(i) != '-' && layer.shape(i) != '-') return false;
                 return true;
             }
@@ -50408,7 +50511,7 @@ class Shape6Layer extends ShapestLayer {
 
     do_stack_with(layer) {
         if (layer.layerHash() != this.layerHash()) return ERROR;
-        let s = '6';
+        let s = this.layerHash();
         for (let i = 0; i < this.length; i++) {
             if (this.shape(i) != '-') {
                 s += this.shape(i) + this.color(i);
@@ -50419,11 +50522,31 @@ class Shape6Layer extends ShapestLayer {
         return s;
     }
 
+    do_paint(clr) {
+        let s = this.layerHash();
+        for (let i = 0; i < this.length; i++) {
+            s += this.shape(i) + clr;
+        }
+        return new Shape6Layer(s, this.layer);
+    }
+    do_rotate(rot) {
+        let value = this.hash.slice(1);
+        if (rot == 1) {
+            value = value.slice(-2) + value.slice(0, -2);
+        } else if (rot == -1) {
+            value = value.slice(2) + value.slice(0, 2);
+        } else if (rot == 0) {
+            value = value.slice(this.length) + value.slice(0, this.length);
+        }
+        return new Shape6Layer(this.layerHash() + value, this.layer);
+    }
 }
 
 
 const cache = {
     do_stack: new Map(),
+    do_rotate: new Map(),
+    do_paint: new Map(),
 };
 
 
@@ -50474,11 +50597,48 @@ class ShapestItemDefinition {
             }
         }
 
-        let result = new ShapestItem(resultLayers.join(':'));
+        let resultItem = new ShapestItem(resultLayers.join(':'));
 
-        return this.addCached('do_stack', lowerItem + ':::' + upperItem, result);
+        return this.addCached('do_stack', lowerItem + ':::' + upperItem, resultItem);
+    }
+
+    static do_rotate(item, dir) {
+        if (this.getCached('do_rotate', item + ':::' + dir)) return this.lastCached;
+
+        let layers = new ShapestItem(item).layers;
+
+        let resultLayers = layers.map(e => e.do_rotate(dir));
+
+        let resultItem = new ShapestItem(resultLayers.join(':'));
+
+        return this.addCached('do_rotate', item + ':::' + dir, resultItem);
+    }
+
+    static do_paint(item, clr) {
+        if (this.getCached('do_paint', item + ':::' + clr)) return this.lastCached;
+
+        let layers = new ShapestItem(item).layers;
+
+        let resultLayers = layers.map(e => e.do_paint(clr));
+
+        let resultItem = new ShapestItem(resultLayers.join(':'));
+
+        return this.addCached('do_paint', item + ':::' + clr, resultItem);
     }
 }
+
+/// DEBUG:
+
+
+globalThis.shape6 = shape6svg;
+
+globalThis.clearCaches = function(){
+    for (let k in cache) {
+        cache[k].clear();
+    }
+}
+
+globalThis.cache = cache;
 
 /***/ }),
 
@@ -57751,13 +57911,11 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
      * @param {ProcessorImplementationPayload} payload
      */
     process_ROTATER(payload) {
-        const inputItem = /** @type {ShapeItem} */ (payload.items[0].item);
-        window.assert(inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for rotation is not a shape");
-        const inputDefinition = inputItem.definition;
+        const inputItem = /** @type {ShapestItem} */ (payload.items[0].item);
+        window.assert(inputItem instanceof _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItem"], "Input for rotation is not a shape");
 
-        const rotatedDefinition = this.root.shapeDefinitionMgr.shapeActionRotateCW(inputDefinition);
         payload.outItems.push({
-            item: this.root.shapeDefinitionMgr.getShapeItemFromDefinition(rotatedDefinition),
+            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_rotate(inputItem.hash, 1),
         });
     }
 
@@ -57765,13 +57923,11 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
      * @param {ProcessorImplementationPayload} payload
      */
     process_ROTATER_CCW(payload) {
-        const inputItem = /** @type {ShapeItem} */ (payload.items[0].item);
-        window.assert(inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for rotation is not a shape");
-        const inputDefinition = inputItem.definition;
+        const inputItem = /** @type {ShapestItem} */ (payload.items[0].item);
+        window.assert(inputItem instanceof _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItem"], "Input for rotation is not a shape");
 
-        const rotatedDefinition = this.root.shapeDefinitionMgr.shapeActionRotateCCW(inputDefinition);
         payload.outItems.push({
-            item: this.root.shapeDefinitionMgr.getShapeItemFromDefinition(rotatedDefinition),
+            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_rotate(inputItem.hash, -1),
         });
     }
 
@@ -57779,13 +57935,11 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
      * @param {ProcessorImplementationPayload} payload
      */
     process_ROTATER_180(payload) {
-        const inputItem = /** @type {ShapeItem} */ (payload.items[0].item);
-        window.assert(inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for rotation is not a shape");
-        const inputDefinition = inputItem.definition;
+        const inputItem = /** @type {ShapestItem} */ (payload.items[0].item);
+        window.assert(inputItem instanceof _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItem"], "Input for rotation is not a shape");
 
-        const rotatedDefinition = this.root.shapeDefinitionMgr.shapeActionRotate180(inputDefinition);
         payload.outItems.push({
-            item: this.root.shapeDefinitionMgr.getShapeItemFromDefinition(rotatedDefinition),
+            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_rotate(inputItem.hash, 0),
         });
     }
 
@@ -57796,8 +57950,8 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
         const lowerItem = /** @type {ShapestItem} */ (payload.itemsBySlot[0]);
         const upperItem = /** @type {ShapestItem} */ (payload.itemsBySlot[1]);
 
-        window.assert(lowerItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for lower stack is not a shape");
-        window.assert(upperItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for upper stack is not a shape");
+        window.assert(lowerItem instanceof _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItem"], "Input for lower stack is not a shape");
+        window.assert(upperItem instanceof _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItem"], "Input for upper stack is not a shape");
 
         payload.outItems.push({
             item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_stack(lowerItem.hash, upperItem.hash),
@@ -57839,16 +57993,11 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
      * @param {ProcessorImplementationPayload} payload
      */
     process_PAINTER(payload) {
-        const shapeItem = /** @type {ShapeItem} */ (payload.itemsBySlot[0]);
+        const shapeItem = /** @type {ShapestItem} */ (payload.itemsBySlot[0]);
         const colorItem = /** @type {ColorItem} */ (payload.itemsBySlot[1]);
 
-        const colorizedDefinition = this.root.shapeDefinitionMgr.shapeActionPaintWith(
-            shapeItem.definition,
-            colorItem.color
-        );
-
         payload.outItems.push({
-            item: this.root.shapeDefinitionMgr.getShapeItemFromDefinition(colorizedDefinition),
+            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_paint(shapeItem.hash, _colors__WEBPACK_IMPORTED_MODULE_1__["enumColorToShortcode"][colorItem.color]),
         });
     }
 
@@ -61359,8 +61508,8 @@ if (window.coreThreadLoadedCb) {
 // }
 
 console.log(
-    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"b3c6d035"}%c on %c${new Date(
-        1603568514651
+    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"a04a0ac3"}%c on %c${new Date(
+        1603712553434
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -70110,7 +70259,7 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_3__["GameSt
 
                     <div class="lower">
                         <button class="resetApp styledButton">Reset App</button>
-                        <i>Build ${"1.2.0"} @ ${"b3c6d035"}</i>
+                        <i>Build ${"1.2.0"} @ ${"a04a0ac3"}</i>
                     </div>
                 </div>
         `;
@@ -70242,14 +70391,14 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1603568514651;
+        const lastBuildMs = new Date().getTime() - 1603712553434;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
 
         labelVersion.innerHTML = `
             <span class='version'>
-                ${"1.2.0"} @ ${version} @ ${"b3c6d035"}
+                ${"1.2.0"} @ ${version} @ ${"a04a0ac3"}
             </span>
             <span class='buildTime'>
                 ${_translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.buildDate.replace("<at-date>", lastBuildText)}<br />
