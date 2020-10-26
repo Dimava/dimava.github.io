@@ -50154,9 +50154,10 @@ class ShapestLayer {
     draw(context) { window.assert(false, 'abstract method called of: ' + (this.name || (this.constructor && this.constructor.name)));; }
     can_fall_through(layer) { return this.can_stack_with(layer); }
     can_stack_with(layer) { return this.sameLayerAs(layer); }
-    do_stack_with(layer) { window.assert(false, 'abstract method called of: ' + (this.name || (this.constructor && this.constructor.name)));; }
-    do_paint(clr) { window.assert(false, 'abstract method called of: ' + (this.name || (this.constructor && this.constructor.name)));; }
-    do_rotate(rot) { window.assert(false, 'abstract method called of: ' + (this.name || (this.constructor && this.constructor.name)));; }
+    /** @returns {any} */ do_stack_with(layer) { return ERROR; }
+    /** @returns {any} */ do_paint(clr) { return ERROR; }
+    /** @returns {any} */ do_rotate(rot) { return ERROR; }
+    /** @returns {any} */ do_cut2() { return [ERROR, ERROR]; }
     virt_analyze() { return [null, null, null]; }
 
 }
@@ -50450,6 +50451,13 @@ class Shape4Layer extends ShapestLayer {
         }
         return new Shape4Layer(this.layerHash() + value, this.layer);
     }
+    do_cut2() {
+        let half1 = this.hash.slice(1, this.length + 1);
+        let half2 = this.hash.slice(this.length + 1);
+        if (half1 == '-'.repeat(this.length)) half1 = null;
+        if (half2 == '-'.repeat(this.length)) half2 = null;
+        return [half1 && new Shape4Layer(this.layerHash() + half1 + '-'.repeat(this.length), 0), half2 && new Shape4Layer(this.layerHash() + '-'.repeat(this.length) + half2, 0)];
+    }
 
     virt_analyze() {
         return [new Shape4Layer(this.layerHash() + (this.shape(0) + 'u').repeat(this.length), 0), this.color(0)];
@@ -50566,6 +50574,13 @@ class Shape6Layer extends ShapestLayer {
         }
         return new Shape6Layer(this.layerHash() + value, this.layer);
     }
+    do_cut2() {
+        let half1 = this.hash.slice(1, this.length + 1);
+        let half2 = this.hash.slice(this.length + 1);
+        if (half1 == '-'.repeat(this.length)) half1 = null;
+        if (half2 == '-'.repeat(this.length)) half2 = null;
+        return [half1 && new Shape6Layer(this.layerHash() + half1 + '-'.repeat(this.length), 0), half2 && new Shape6Layer(this.layerHash() + '-'.repeat(this.length) + half2, 0)];
+    }
     virt_analyze() {
         return [new Shape6Layer(this.layerHash() + (this.shape(0) + 'u').repeat(this.length), 0), this.color(0)];
     }
@@ -50576,6 +50591,7 @@ const cache = {
     do_stack: new Map(),
     do_rotate: new Map(),
     do_paint: new Map(),
+    do_cut2: new Map(),
     virt_unstack_bottom: new Map(),
     virt_analyze: new Map(),
 };
@@ -50655,6 +50671,20 @@ class ShapestItemDefinition {
         let resultItem = new ShapestItem(resultLayers.join(':'));
 
         return this.addCached('do_paint', item + ':::' + clr, resultItem);
+    }
+
+    static do_cut2(item) {
+        if (this.getCached('do_cut2', item)) return this.lastCached;
+
+        let layers = new ShapestItem(item).layers;
+
+        let resultLayers1 = layers.map(e => e.do_cut2()[0]).filter(Boolean);
+        let resultLayers2 = layers.map(e => e.do_cut2()[1]).filter(Boolean);
+
+        let resultItem1 = resultLayers1.length ? new ShapestItem(resultLayers1.join(':')) : null;
+        let resultItem2 = resultLayers2.length ? new ShapestItem(resultLayers2.join(':')) : null;
+
+        return this.addCached('do_cut2', item, [resultItem1, resultItem2]);
     }
 
     static virt_unstack_bottom(item) {
@@ -57925,21 +57955,18 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
      * @param {ProcessorImplementationPayload} payload
      */
     process_CUTTER(payload) {
-        const inputItem = /** @type {ShapeItem} */ (payload.items[0].item);
-        window.assert(inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for cut is not a shape");
-        const inputDefinition = inputItem.definition;
+        const inputItem = /** @type {ShapestItem} */ (payload.items[0].item);
+        window.assert(inputItem instanceof _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItem"], "Input for cut is not a shape");
 
-        const cutDefinitions = this.root.shapeDefinitionMgr.shapeActionCutHalf(inputDefinition);
-
-        for (let i = 0; i < cutDefinitions.length; ++i) {
-            const definition = cutDefinitions[i];
-            if (!definition.isEntirelyEmpty()) {
-                payload.outItems.push({
-                    item: this.root.shapeDefinitionMgr.getShapeItemFromDefinition(definition),
-                    requiredSlot: i,
-                });
-            }
-        }
+        let result = _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_cut2(inputItem.getHash())
+        result[0] && payload.outItems.push({
+            item: result[0],
+            requiredSlot: 0,
+        });
+        result[1] && payload.outItems.push({
+            item: result[1],
+            requiredSlot: 1,
+        });
     }
 
     /**
@@ -58645,18 +58672,8 @@ class LogicGateSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MODULE_
         if (!item || item.getItemType() !== "shape") {
             // Not a shape
             return [null, null];
-        }
-
-        const definition = /** @type {ShapeItem} */ (item).definition;
-        const result = this.root.shapeDefinitionMgr.shapeActionCutHalf(definition);
-        return [
-            result[0].isEntirelyEmpty()
-                ? null
-                : this.root.shapeDefinitionMgr.getShapeItemFromDefinition(result[0]),
-            result[1].isEntirelyEmpty()
-                ? null
-                : this.root.shapeDefinitionMgr.getShapeItemFromDefinition(result[1]),
-        ];
+        }        
+        return _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_cut2(item.getHash());
     }
 
     /**
