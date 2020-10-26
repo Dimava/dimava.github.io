@@ -49695,6 +49695,10 @@ class ColorItem extends _base_item__WEBPACK_IMPORTED_MODULE_4__["BaseItem"] {
         return "color";
     }
 
+    getHash() {
+        return _colors__WEBPACK_IMPORTED_MODULE_5__["enumColorToShortcode"][this.color];
+    }
+
     /**
      * @returns {string}
      */
@@ -49806,6 +49810,10 @@ class ShapeItem extends _base_item__WEBPACK_IMPORTED_MODULE_2__["BaseItem"] {
         return "shape";
     }
 
+    getHash() {
+        return this.definition.getHash();
+    }
+
     /**
      * @returns {string}
      */
@@ -49879,6 +49887,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_dpi_manager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../core/dpi_manager */ "./src/js/core/dpi_manager.js");
 /* harmony import */ var _colors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../colors */ "./src/js/game/colors.js");
 /* harmony import */ var _shape_item__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./shape_item */ "./src/js/game/items/shape_item.js");
+/* harmony import */ var _items_color_item__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../items/color_item */ "./src/js/game/items/color_item.js");
+
 
 
 
@@ -50105,6 +50115,12 @@ class ShapestLayer {
             case "e": return new EmojiLayer(hash, layer);
             case "4": return new Shape4Layer(hash, layer);
             case "6": return new Shape6Layer(hash, layer);
+
+            case "-":
+            case "R":
+            case "C":
+            case "S":
+            case "W": return new Shape4Layer("4" + hash, layer);
         }
         throw new Error('can\'t create layer ' + hash);
     }
@@ -50116,6 +50132,12 @@ class ShapestLayer {
             case "e": return EmojiLayer.isValidKey(hash);
             case "4": return Shape4Layer.isValidKey(hash);
             case "6": return Shape6Layer.isValidKey(hash);
+
+            case "-":
+            case "R":
+            case "C":
+            case "S":
+            case "W": return Shape4Layer.isValidKey("4" + hash);
         }
         return false;
     }
@@ -50135,6 +50157,7 @@ class ShapestLayer {
     do_stack_with(layer) { window.assert(false, 'abstract method called of: ' + (this.name || (this.constructor && this.constructor.name)));; }
     do_paint(clr) { window.assert(false, 'abstract method called of: ' + (this.name || (this.constructor && this.constructor.name)));; }
     do_rotate(rot) { window.assert(false, 'abstract method called of: ' + (this.name || (this.constructor && this.constructor.name)));; }
+    virt_analyze() { return [null, null, null]; }
 
 }
 
@@ -50428,10 +50451,13 @@ class Shape4Layer extends ShapestLayer {
         return new Shape4Layer(this.layerHash() + value, this.layer);
     }
 
+    virt_analyze() {
+        return [new Shape4Layer(this.layerHash() + (this.shape(0) + 'u').repeat(this.length), 0), this.color(0)];
+    }
 }
 
 function dotPos(l, a) {
-    return `${ l * Math.cos(Math.PI / a)} ${ l * Math.sin(Math.PI / a)}`;
+    return `${l * Math.cos(Math.PI / a)} ${l * Math.sin(Math.PI / a)}`;
 }
 
 function sinPiBy(a) {
@@ -50540,6 +50566,9 @@ class Shape6Layer extends ShapestLayer {
         }
         return new Shape6Layer(this.layerHash() + value, this.layer);
     }
+    virt_analyze() {
+        return [new Shape6Layer(this.layerHash() + (this.shape(0) + 'u').repeat(this.length), 0), this.color(0)];
+    }
 }
 
 
@@ -50547,6 +50576,8 @@ const cache = {
     do_stack: new Map(),
     do_rotate: new Map(),
     do_paint: new Map(),
+    virt_unstack_bottom: new Map(),
+    virt_analyze: new Map(),
 };
 
 
@@ -50625,6 +50656,30 @@ class ShapestItemDefinition {
 
         return this.addCached('do_paint', item + ':::' + clr, resultItem);
     }
+
+    static virt_unstack_bottom(item) {
+        if (this.getCached('virt_unstack_bottom', item)) return this.lastCached;
+
+        let layers = new ShapestItem(item).layers;
+
+        let lowerItem = new ShapestItem(layers[0] + '');
+        let upperItem = layers.length > 1 ? new ShapestItem(layers.slice(1).join(':')) : null;
+
+        return this.addCached('virt_unstack_bottom', item, [lowerItem, upperItem]);
+    }
+
+    static virt_analyze(item) {
+        if (this.getCached('virt_analyze', item)) return this.lastCached;
+
+        let layers = new ShapestItem(item).layers;
+
+        let result = layers[0].virt_analyze();
+
+        let shapeItem = result[0] && new ShapestItem(result[0] + '');
+        let colorItem = result[1] && result[1] != '-' ? _items_color_item__WEBPACK_IMPORTED_MODULE_9__["COLOR_ITEM_SINGLETONS"][_colors__WEBPACK_IMPORTED_MODULE_7__["enumShortcodeToColor"][result[1]]] : null;
+
+        return this.addCached('virt_analyze', item, [shapeItem, colorItem]);
+    }
 }
 
 /// DEBUG:
@@ -50632,7 +50687,7 @@ class ShapestItemDefinition {
 
 globalThis.shape6 = shape6svg;
 
-globalThis.clearCaches = function(){
+globalThis.clearCaches = function() {
     for (let k in cache) {
         cache[k].clear();
     }
@@ -55009,8 +55064,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _savegame_serialization__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../savegame/serialization */ "./src/js/savegame/serialization.js");
 /* harmony import */ var _colors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./colors */ "./src/js/game/colors.js");
 /* harmony import */ var _items_shape_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./items/shape_item */ "./src/js/game/items/shape_item.js");
-/* harmony import */ var _root__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./root */ "./src/js/game/root.js");
-/* harmony import */ var _shape_definition__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./shape_definition */ "./src/js/game/shape_definition.js");
+/* harmony import */ var _items_shapest_item__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./items/shapest_item */ "./src/js/game/items/shapest_item.js");
+/* harmony import */ var _root__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./root */ "./src/js/game/root.js");
+/* harmony import */ var _shape_definition__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./shape_definition */ "./src/js/game/shape_definition.js");
+
 
 
 
@@ -55059,7 +55116,7 @@ class ShapeDefinitionManager extends _savegame_serialization__WEBPACK_IMPORTED_M
         if (cached) {
             return cached;
         }
-        return (this.shapeKeyToDefinition[hash] = _shape_definition__WEBPACK_IMPORTED_MODULE_5__["ShapeDefinition"].fromShortKey(hash));
+        return (this.shapeKeyToDefinition[hash] = _shape_definition__WEBPACK_IMPORTED_MODULE_6__["ShapeDefinition"].fromShortKey(hash));
     }
 
     /**
@@ -55072,8 +55129,7 @@ class ShapeDefinitionManager extends _savegame_serialization__WEBPACK_IMPORTED_M
         if (cached) {
             return cached;
         }
-        const definition = this.getShapeFromShortKey(hash);
-        return (this.shapeKeyToItem[hash] = new _items_shape_item__WEBPACK_IMPORTED_MODULE_3__["ShapeItem"](definition));
+        return (this.shapeKeyToItem[hash] = new _items_shapest_item__WEBPACK_IMPORTED_MODULE_4__["ShapestItem"](hash));
     }
 
     /**
@@ -55267,7 +55323,7 @@ class ShapeDefinitionManager extends _savegame_serialization__WEBPACK_IMPORTED_M
             subShape => ({ subShape, color })
         ));
 
-        return this.registerOrReturnHandle(new _shape_definition__WEBPACK_IMPORTED_MODULE_5__["ShapeDefinition"]({ layers: [shapeLayer] }));
+        return this.registerOrReturnHandle(new _shape_definition__WEBPACK_IMPORTED_MODULE_6__["ShapeDefinition"]({ layers: [shapeLayer] }));
     }
 }
 
@@ -57915,7 +57971,7 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
         window.assert(inputItem instanceof _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItem"], "Input for rotation is not a shape");
 
         payload.outItems.push({
-            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_rotate(inputItem.hash, 1),
+            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_rotate(inputItem.getHash(), 1),
         });
     }
 
@@ -57927,7 +57983,7 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
         window.assert(inputItem instanceof _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItem"], "Input for rotation is not a shape");
 
         payload.outItems.push({
-            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_rotate(inputItem.hash, -1),
+            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_rotate(inputItem.getHash(), -1),
         });
     }
 
@@ -57939,7 +57995,7 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
         window.assert(inputItem instanceof _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItem"], "Input for rotation is not a shape");
 
         payload.outItems.push({
-            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_rotate(inputItem.hash, 0),
+            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_rotate(inputItem.getHash(), 0),
         });
     }
 
@@ -57954,7 +58010,7 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
         window.assert(upperItem instanceof _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItem"], "Input for upper stack is not a shape");
 
         payload.outItems.push({
-            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_stack(lowerItem.hash, upperItem.hash),
+            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_stack(lowerItem.getHash(), upperItem.getHash()),
         });
     }
 
@@ -57997,7 +58053,7 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
         const colorItem = /** @type {ColorItem} */ (payload.itemsBySlot[1]);
 
         payload.outItems.push({
-            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_paint(shapeItem.hash, _colors__WEBPACK_IMPORTED_MODULE_1__["enumColorToShortcode"][colorItem.color]),
+            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_paint(shapeItem.getHash(), colorItem.getHash()),
         });
     }
 
@@ -58005,29 +58061,19 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
      * @param {ProcessorImplementationPayload} payload
      */
     process_PAINTER_DOUBLE(payload) {
-        const shapeItem1 = /** @type {ShapeItem} */ (payload.itemsBySlot[0]);
-        const shapeItem2 = /** @type {ShapeItem} */ (payload.itemsBySlot[1]);
+        const shapeItem1 = /** @type {ShapestItem} */ (payload.itemsBySlot[0]);
+        const shapeItem2 = /** @type {ShapestItem} */ (payload.itemsBySlot[1]);
         const colorItem = /** @type {ColorItem} */ (payload.itemsBySlot[2]);
 
-        window.assert(shapeItem1 instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for painter is not a shape");
-        window.assert(shapeItem2 instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for painter is not a shape");
+        window.assert(shapeItem1 instanceof _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItem"], "Input for painter is not a shape");
+        window.assert(shapeItem2 instanceof _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItem"], "Input for painter is not a shape");
         window.assert(colorItem instanceof _items_color_item__WEBPACK_IMPORTED_MODULE_6__["ColorItem"], "Input for painter is not a color");
 
-        const colorizedDefinition1 = this.root.shapeDefinitionMgr.shapeActionPaintWith(
-            shapeItem1.definition,
-            colorItem.color
-        );
-
-        const colorizedDefinition2 = this.root.shapeDefinitionMgr.shapeActionPaintWith(
-            shapeItem2.definition,
-            colorItem.color
-        );
         payload.outItems.push({
-            item: this.root.shapeDefinitionMgr.getShapeItemFromDefinition(colorizedDefinition1),
+            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_paint(shapeItem1.getHash(), colorItem.getHash()),
         });
-
         payload.outItems.push({
-            item: this.root.shapeDefinitionMgr.getShapeItemFromDefinition(colorizedDefinition2),
+            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_paint(shapeItem2.getHash(), colorItem.getHash()),
         });
     }
 
@@ -58376,7 +58422,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _items_boolean_item__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../items/boolean_item */ "./src/js/game/items/boolean_item.js");
 /* harmony import */ var _items_color_item__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../items/color_item */ "./src/js/game/items/color_item.js");
 /* harmony import */ var _items_shape_item__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../items/shape_item */ "./src/js/game/items/shape_item.js");
-/* harmony import */ var _shape_definition__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../shape_definition */ "./src/js/game/shape_definition.js");
+/* harmony import */ var _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../items/shapest_item */ "./src/js/game/items/shapest_item.js");
+/* harmony import */ var _shape_definition__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../shape_definition */ "./src/js/game/shape_definition.js");
+
 
 
 
@@ -58542,9 +58590,7 @@ class LogicGateSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MODULE_
             return null;
         }
 
-        const definition = /** @type {ShapeItem} */ (item).definition;
-        const rotatedDefinitionCW = this.root.shapeDefinitionMgr.shapeActionRotateCW(definition);
-        return this.root.shapeDefinitionMgr.getShapeItemFromDefinition(rotatedDefinitionCW);
+        return _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_rotate(item.getHash(), 1);
     }
 
     /**
@@ -58558,6 +58604,9 @@ class LogicGateSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MODULE_
             return [null, null];
         }
 
+        return _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].virt_analyze(item.getHash());
+
+
         const definition = /** @type {ShapeItem} */ (item).definition;
         const lowerLayer = /** @type {import("../shape_definition").ShapeLayer} */ (definition.layers[0]);
         if (!lowerLayer) {
@@ -58570,7 +58619,7 @@ class LogicGateSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MODULE_
             return [null, null];
         }
 
-        const newDefinition = new _shape_definition__WEBPACK_IMPORTED_MODULE_8__["ShapeDefinition"]({
+        const newDefinition = new _shape_definition__WEBPACK_IMPORTED_MODULE_9__["ShapeDefinition"]({
             layers: [
                 [
                     { subShape: topRightContent.subShape, color: _colors__WEBPACK_IMPORTED_MODULE_1__["enumColors"].uncolored },
@@ -58621,23 +58670,7 @@ class LogicGateSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MODULE_
             return [null, null];
         }
 
-        const definition = /** @type {ShapeItem} */ (item).definition;
-        const layers = /** @type {Array<import("../shape_definition").ShapeLayer>}  */ (definition.layers);
-
-        const upperLayerDefinition = new _shape_definition__WEBPACK_IMPORTED_MODULE_8__["ShapeDefinition"]({
-            layers: [layers[layers.length - 1]],
-        });
-
-        const lowerLayers = layers.slice(0, layers.length - 1);
-        const lowerLayerDefinition =
-            lowerLayers.length > 0 ? new _shape_definition__WEBPACK_IMPORTED_MODULE_8__["ShapeDefinition"]({ layers: lowerLayers }) : null;
-
-        return [
-            lowerLayerDefinition
-                ? this.root.shapeDefinitionMgr.getShapeItemFromDefinition(lowerLayerDefinition)
-                : null,
-            this.root.shapeDefinitionMgr.getShapeItemFromDefinition(upperLayerDefinition),
-        ];
+        return _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].virt_unstack_bottom(item.getHash());
     }
 
     /**
@@ -58658,12 +58691,7 @@ class LogicGateSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MODULE_
             return null;
         }
 
-        const stackedShape = this.root.shapeDefinitionMgr.shapeActionStack(
-            /** @type {ShapeItem} */ (lowerItem).definition,
-            /** @type {ShapeItem} */ (upperItem).definition
-        );
-
-        return this.root.shapeDefinitionMgr.getShapeItemFromDefinition(stackedShape);
+        return _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_stack(lowerItem.getHash(), upperItem.getHash());
     }
 
     /**
@@ -58684,12 +58712,7 @@ class LogicGateSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MODULE_
             return null;
         }
 
-        const coloredShape = this.root.shapeDefinitionMgr.shapeActionPaintWith(
-            /** @type {ShapeItem} */ (shape).definition,
-            /** @type {ColorItem} */ (color).color
-        );
-
-        return this.root.shapeDefinitionMgr.getShapeItemFromDefinition(coloredShape);
+        return _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_paint(shape.getHash(), color.getHash());
     }
 
     /**
