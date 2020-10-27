@@ -43816,7 +43816,7 @@ class HUDDebugInfo extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDP
      */
     onModeChanged(mode) {
         this.element.setAttribute("data-mode", mode);
-        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"c863b0ab"}`;
+        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"4a367bec"}`;
     }
 
     /**
@@ -50171,7 +50171,7 @@ class ShapestItem extends _shape_item__WEBPACK_IMPORTED_MODULE_8__["ShapeItem"] 
 
 
     get layers() {
-        return this.hash.split(':').map(ShapestLayer.create);
+        return this.hash.split(':').filter(Boolean).map(ShapestLayer.create);
     }
 }
 
@@ -50262,10 +50262,16 @@ class ShapestLayer {
     draw(context) { window.assert(false, 'abstract method called of: ' + (this.name || (this.constructor && this.constructor.name)));; }
     can_fall_through(layer) { return this.can_stack_with(layer); }
     can_stack_with(layer) { return this.sameLayerAs(layer); }
-    /** @returns {any} */ do_stack_with(layer) { return ERROR; }
-    /** @returns {any} */ do_paint(clr) { return ERROR; }
-    /** @returns {any} */ do_rotate(rot) { return ERROR; }
-    /** @returns {any} */ do_cut2() { return [ERROR, ERROR]; }
+    /** @returns {any} */
+    do_stack_with(layer) { return ERROR; }
+    /** @returns {any} */
+    do_paint(clr) { return ERROR; }
+    /** @returns {any} */
+    do_rotate(rot) { return ERROR; }
+    /** @returns {any[]} */
+    do_cut2() { return [ERROR, ERROR]; }
+    /** @returns {any[]} */
+    do_cut4() { return [ERROR, ERROR, ERROR, ERROR]; }
     virt_analyze() { return [null, null, null]; }
 
 }
@@ -50566,6 +50572,13 @@ class Shape4Layer extends ShapestLayer {
         if (half2 == '-'.repeat(this.length)) half2 = null;
         return [half1 && new Shape4Layer(this.layerHash() + half1 + '-'.repeat(this.length), 0), half2 && new Shape4Layer(this.layerHash() + '-'.repeat(this.length) + half2, 0)];
     }
+    do_cut4() {
+        let parts = Array(this.length).fill(0).map((e,i)=>this.shape(i)+this.color(i));
+
+        return parts
+            .map((e, i) => Array(this.length).fill('--').map((elm,ind)=>i==ind?e:elm).join(''))
+            .map(e => e == '--'.repeat(this.length) ? null : new Shape4Layer(this.layerHash() + e, this.layer));
+    }
 
     virt_analyze() {
         return [new Shape4Layer(this.layerHash() + (this.shape(0) + 'u').repeat(this.length), 0), this.color(0)];
@@ -50688,6 +50701,14 @@ class Shape6Layer extends ShapestLayer {
         if (half2 == '-'.repeat(this.length)) half2 = null;
         return [half1 && new Shape6Layer(this.layerHash() + half1 + '-'.repeat(this.length), 0), half2 && new Shape6Layer(this.layerHash() + '-'.repeat(this.length) + half2, 0)];
     }
+    do_cut4() {
+        let parts = Array(this.length / 2).fill(0).map((e,i)=>this.hash.slice(1 + 4 * i, 5 + 4 * i));
+
+        return parts
+            .map((e, i) => Array(this.length).fill('----').map((elm,ind)=>i==ind?e:elm).join(''))
+            .map(e => e == '--'.repeat(this.length) ? null : new Shape6Layer(this.layerHash() + e, this.layer))
+            .concat([null]);
+    }
     virt_analyze() {
         return [new Shape6Layer(this.layerHash() + (this.shape(0) + 'u').repeat(this.length), 0), this.color(0)];
     }
@@ -50699,6 +50720,7 @@ const cache = {
     do_rotate: new Map(),
     do_paint: new Map(),
     do_cut2: new Map(),
+    do_cut4: new Map(),
     virt_unstack_bottom: new Map(),
     virt_analyze: new Map(),
 };
@@ -50792,6 +50814,17 @@ class ShapestItemDefinition {
         let resultItem2 = resultLayers2.length ? new ShapestItem(resultLayers2.join(':')) : null;
 
         return this.addCached('do_cut2', item, [resultItem1, resultItem2]);
+    }
+    static do_cut4(item) {
+        if (this.getCached('do_cut4', item)) return this.lastCached;
+
+        let layers = new ShapestItem(item).layers;
+
+        let result = Array(4).fill(0)
+            .map((e, i) => layers.map(e => e.do_cut4()[i]).filter(Boolean))
+            .map(e => e.length ? new ShapestItem(e.join(':')) : null);
+
+        return this.addCached('do_cut4', item, result);
     }
 
     static virt_unstack_bottom(item) {
@@ -55258,7 +55291,7 @@ class ShapeDefinitionManager extends _savegame_serialization__WEBPACK_IMPORTED_M
         if (cached) {
             return cached;
         }
-        return (this.shapeKeyToDefinition[hash] = _shape_definition__WEBPACK_IMPORTED_MODULE_7__["ShapeDefinition"].fromShortKey(hash));
+        return (this.shapeKeyToDefinition[hash] = new _items_shapest_item__WEBPACK_IMPORTED_MODULE_4__["ShapestItem"](hash));
     }
 
     /**
@@ -58095,18 +58128,13 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
     process_CUTTER_QUAD(payload) {
         const inputItem = /** @type {ShapeItem} */ (payload.items[0].item);
         window.assert(inputItem instanceof _items_shape_item__WEBPACK_IMPORTED_MODULE_7__["ShapeItem"], "Input for cut is not a shape");
-        const inputDefinition = inputItem.definition;
 
-        const cutDefinitions = this.root.shapeDefinitionMgr.shapeActionCutQuad(inputDefinition);
-
-        for (let i = 0; i < cutDefinitions.length; ++i) {
-            const definition = cutDefinitions[i];
-            if (!definition.isEntirelyEmpty()) {
-                payload.outItems.push({
-                    item: this.root.shapeDefinitionMgr.getShapeItemFromDefinition(definition),
-                    requiredSlot: i,
-                });
-            }
+        let result = _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_cut4(inputItem.getHash())
+        for (let i = 0; i < result.length; i++) {
+            result[i] && payload.outItems.push({
+                item: result[i],
+                requiredSlot: i,
+            });
         }
     }
 
@@ -61639,8 +61667,8 @@ if (window.coreThreadLoadedCb) {
 // }
 
 console.log(
-    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"c863b0ab"}%c on %c${new Date(
-        1603800967109
+    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"4a367bec"}%c on %c${new Date(
+        1603816384783
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -70392,7 +70420,7 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_3__["GameSt
 
                     <div class="lower">
                         <button class="resetApp styledButton">Reset App</button>
-                        <i>Build ${"1.2.0"} @ ${"c863b0ab"}</i>
+                        <i>Build ${"1.2.0"} @ ${"4a367bec"}</i>
                     </div>
                 </div>
         `;
@@ -70524,14 +70552,14 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1603800967109;
+        const lastBuildMs = new Date().getTime() - 1603816384783;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
 
         labelVersion.innerHTML = `
             <span class='version'>
-                ${"1.2.0"} @ ${version} @ ${"c863b0ab"}
+                ${"1.2.0"} @ ${version} @ ${"4a367bec"}
             </span>
             <span class='buildTime'>
                 ${_translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.buildDate.replace("<at-date>", lastBuildText)}<br />
