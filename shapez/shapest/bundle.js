@@ -50284,6 +50284,8 @@ class ShapestLayer {
     /** @returns {any} */
     do_paint(clr) { return ERROR; }
     /** @returns {any} */
+    do_paint4(clrs) { return ERROR; }
+    /** @returns {any} */
     do_rotate(rot) { return ERROR; }
     /** @returns {any[]} */
     do_cut2() { return [ERROR, ERROR]; }
@@ -50414,6 +50416,13 @@ class TextLayer extends ShapestLayer {
         let s = this.layerHash();
         for (let i = 0; i < this.length; i++) {
             s += this.shape(i) + clr;
+        }
+        return new TextLayer(s, this.layer);
+    }
+    do_paint4(clrs) {
+        let s = this.layerHash();
+        for (let i = 0; i < this.length; i++) {
+            s += this.shape(i) + (clrs[i] || this.color(i));
         }
         return new TextLayer(s, this.layer);
     }
@@ -50571,6 +50580,13 @@ class Shape4Layer extends ShapestLayer {
         }
         return new Shape4Layer(s, this.layer);
     }
+    do_paint4(clrs) {
+        let s = this.layerHash();
+        for (let i = 0; i < this.length; i++) {
+            s += this.shape(i) == '-' ? '--' :  this.shape(i) + (clrs[i] || this.color(i));
+        }
+        return new Shape4Layer(s, this.layer);
+    }
     do_rotate(rot) {
         let value = this.hash.slice(1);
         if (rot == 1) {
@@ -50700,6 +50716,13 @@ class Shape6Layer extends ShapestLayer {
         }
         return new Shape6Layer(s, this.layer);
     }
+    do_paint4(clrs) {
+        let s = this.layerHash();
+        for (let i = 0; i < this.length; i++) {
+            s += this.shape(i) == '-' ? '--' :  this.shape(i) + (clrs[i] || this.color(i));
+        }
+        return new Shape4Layer(s, this.layer);
+    }
     do_rotate(rot) {
         let value = this.hash.slice(1);
         if (rot == 1) {
@@ -50736,6 +50759,7 @@ const cache = {
     do_stack: new Map(),
     do_rotate: new Map(),
     do_paint: new Map(),
+    do_paint4: new Map(),
     do_cut2: new Map(),
     do_cut4: new Map(),
     virt_unstack_bottom: new Map(),
@@ -50817,6 +50841,18 @@ class ShapestItemDefinition {
         let resultItem = new ShapestItem(resultLayers.join(':'));
 
         return this.addCached('do_paint', item + ':::' + clr, resultItem);
+    }
+
+    static do_paint4(item, clr) {
+        if (this.getCached('do_paint4', item + ':::' + clr)) return this.lastCached;
+
+        let layers = new ShapestItem(item).layers;
+
+        let resultLayers = layers.map(e => e.do_paint4(clr));
+
+        let resultItem = new ShapestItem(resultLayers.join(':'));
+
+        return this.addCached('do_paint4', item + ':::' + clr, resultItem);
     }
 
     static do_cut2(item) {
@@ -58026,14 +58062,15 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
                 // Check if all colors of the enabled slots are there
                 for (let i = 0; i < slotStatus.length; ++i) {
                     if (slotStatus[i] && !itemsBySlot[1 + i]) {
+                        return false;
                         // A slot which is enabled wasn't enabled. Make sure if there is anything on the quadrant,
                         // it is not possible to paint, but if there is nothing we can ignore it
-                        for (let j = 0; j < 4; ++j) {
-                            const layer = shapeItem.definition.layers[j];
-                            if (layer && layer[i]) {
-                                return false;
-                            }
-                        }
+                        // for (let j = 0; j < 4; ++j) {
+                        //     const layer = shapeItem.definition.layers[j];
+                        //     if (layer && layer[i]) {
+                        //         return false;
+                        //     }
+                        // }
                     }
                 }
 
@@ -58280,17 +58317,12 @@ class ItemProcessorSystem extends _game_system_with_filter__WEBPACK_IMPORTED_MOD
         const colors = [null, null, null, null];
         for (let i = 0; i < 4; ++i) {
             if (payload.itemsBySlot[i + 1]) {
-                colors[i] = /** @type {ColorItem} */ (payload.itemsBySlot[i + 1]).color;
+                colors[i] = /** @type {ColorItem} */ (payload.itemsBySlot[i + 1]).getHash();
             }
         }
 
-        const colorizedDefinition = this.root.shapeDefinitionMgr.shapeActionPaintWith4Colors(
-            shapeItem.definition,
-            /** @type {[string, string, string, string]} */ (colors)
-        );
-
         payload.outItems.push({
-            item: this.root.shapeDefinitionMgr.getShapeItemFromDefinition(colorizedDefinition),
+            item: _items_shapest_item__WEBPACK_IMPORTED_MODULE_8__["ShapestItemDefinition"].do_paint4(shapeItem.getHash(), colors),
         });
     }
 
