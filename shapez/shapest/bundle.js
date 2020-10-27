@@ -49996,6 +49996,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _colors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../colors */ "./src/js/game/colors.js");
 /* harmony import */ var _shape_item__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./shape_item */ "./src/js/game/items/shape_item.js");
 /* harmony import */ var _items_color_item__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../items/color_item */ "./src/js/game/items/color_item.js");
+/* harmony import */ var _core_buffer_utils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../core/buffer_utils */ "./src/js/core/buffer_utils.js");
+
 
 
 
@@ -50153,6 +50155,21 @@ class ShapestItem extends _shape_item__WEBPACK_IMPORTED_MODULE_8__["ShapeItem"] 
 
             context.restore();
         }
+    }
+
+    /**
+     * Generates this shape as a canvas
+     * @param {number} size
+     */
+    generateAsCanvas(size = 120) {
+        const [canvas, context] = Object(_core_buffer_utils__WEBPACK_IMPORTED_MODULE_10__["makeOffscreenBuffer"])(size, size, {
+            smooth: true,
+            label: "definition-canvas-cache-" + this.getHash(),
+            reusable: false,
+        });
+
+        this.internalGenerateShapeBuffer(canvas, context, size, size, 1);
+        return canvas;
     }
 
     /**
