@@ -42021,6 +42021,7 @@ class HUDBlueprintPlacer extends _base_hud_part__WEBPACK_IMPORTED_MODULE_10__["B
             return false;
         }
         let bpJson = this.currentBlueprint.get().serializeToString();
+        console.log({bpJson});
         let buffer = new TextEncoder().encode(bpJson);
         let compressedBuffer = await compressArrayBuffer(buffer);
         let base64String = bufferToBase64(compressedBuffer);
@@ -42040,6 +42041,7 @@ class HUDBlueprintPlacer extends _base_hud_part__WEBPACK_IMPORTED_MODULE_10__["B
         let compressedBuffer = base64ToBuffer(base64String);
         let buffer = await decompressArrayBuffer(compressedBuffer);
         let bpJson = new TextDecoder().decode(buffer);
+        console.log({bpJson});
         let blueprint = _blueprint__WEBPACK_IMPORTED_MODULE_7__["Blueprint"].deserializeFromString(this.root, bpJson);
         if (!blueprint) {
             return false;
@@ -45245,7 +45247,7 @@ __webpack_require__.r(__webpack_exports__);
 const logger = Object(_core_logging__WEBPACK_IMPORTED_MODULE_9__["createLogger"])("hud/mass_selector");
 
 class HUDMassSelector extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDPart"] {
-    createElements(parent) {}
+    createElements(parent) { }
 
     initialize() {
         this.currentSelectionStartWorld = null;
@@ -45474,6 +45476,13 @@ class HUDMassSelector extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseH
                     if (contents && this.root.logic.canDeleteBuilding(contents)) {
                         this.selectedUids.add(contents.uid);
                     }
+                    if (this.root.keyMapper.getBinding(_key_action_mapper__WEBPACK_IMPORTED_MODULE_12__["KEYMAPPINGS"].placementModifiers.placeInverse)) {
+                        let otherLayer = this.root.currentLayer == "regular" ? "wires" : "regular";
+                        const contents = this.root.map.getLayerContentXY(x, y, otherLayer);
+                        if (contents && this.root.logic.canDeleteBuilding(contents)) {
+                            this.selectedUids.add(contents.uid);
+                        }
+                    }
                 }
             }
 
@@ -45540,6 +45549,28 @@ class HUDMassSelector extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseH
                             2
                         );
                         parameters.context.fill();
+                    }
+                    if (this.root.keyMapper.getBinding(_key_action_mapper__WEBPACK_IMPORTED_MODULE_12__["KEYMAPPINGS"].placementModifiers.placeInverse)) {
+                        let otherLayer = this.root.currentLayer == "regular" ? "wires" : "regular";
+                        const contents = this.root.map.getLayerContentXY(x, y, otherLayer);
+                        if (contents && this.root.logic.canDeleteBuilding(contents)) {
+                            const uid = contents.uid;
+                            if (renderedUids.has(uid)) {
+                                continue;
+                            }
+                            renderedUids.add(uid);
+
+                            const staticComp = contents.components.StaticMapEntity;
+                            const bounds = staticComp.getTileSpaceBounds();
+                            parameters.context.beginRoundedRect(
+                                bounds.x * _core_config__WEBPACK_IMPORTED_MODULE_6__["globalConfig"].tileSize + boundsBorder,
+                                bounds.y * _core_config__WEBPACK_IMPORTED_MODULE_6__["globalConfig"].tileSize + boundsBorder,
+                                bounds.w * _core_config__WEBPACK_IMPORTED_MODULE_6__["globalConfig"].tileSize - 2 * boundsBorder,
+                                bounds.h * _core_config__WEBPACK_IMPORTED_MODULE_6__["globalConfig"].tileSize - 2 * boundsBorder,
+                                2
+                            );
+                            parameters.context.fill();
+                        }
                     }
                 }
             }
