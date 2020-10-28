@@ -39765,6 +39765,10 @@ class GameMode {
         this.root = root;
     }
 
+    getName() {
+        return "";
+    }
+
     /**
      * Should return all available upgrades
      * @returns {Object<string, UpgradeTiers>}
@@ -52239,6 +52243,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _root__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./root */ "./src/js/game/root.js");
 /* harmony import */ var _shape_definition__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./shape_definition */ "./src/js/game/shape_definition.js");
 /* harmony import */ var _core_rectangle__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../core/rectangle */ "./src/js/core/rectangle.js");
+/* harmony import */ var _items_shapest_item__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./items/shapest_item */ "./src/js/game/items/shapest_item.js");
+
 
 
 
@@ -52420,6 +52426,9 @@ class MapChunk {
      * @param {number} distanceToOriginInChunks
      */
     internalGenerateShapePatch(rng, shapePatchSize, distanceToOriginInChunks) {
+        if (this.root.gameMode.getName() == "Hexagonal") {
+            return this.internalGenerateHexagonalPatch(rng, shapePatchSize, distanceToOriginInChunks);
+        }
         /** @type {[enumSubShape, enumSubShape, enumSubShape, enumSubShape]} */
         let subShapes = null;
 
@@ -52475,6 +52484,59 @@ class MapChunk {
             rng,
             shapePatchSize,
             this.root.shapeDefinitionMgr.getShapeItemFromDefinition(definition)
+        );
+    }
+
+    /**
+     * Generates a shape patch
+     * @param {RandomNumberGenerator} rng
+     * @param {number} shapePatchSize
+     * @param {number} distanceToOriginInChunks
+     */
+    internalGenerateHexagonalPatch(rng, shapePatchSize, distanceToOriginInChunks) {
+        let weights = {};
+
+        // Later there is a mix of everything
+        weights = {
+            Ru: 100,
+            Cu: Math.round(50 + Object(_core_utils__WEBPACK_IMPORTED_MODULE_3__["clamp"])(distanceToOriginInChunks * 2, 0, 50)),
+            Su: Math.round(20 + Object(_core_utils__WEBPACK_IMPORTED_MODULE_3__["clamp"])(distanceToOriginInChunks, 0, 30)),
+            Wu: Math.round(6 + Object(_core_utils__WEBPACK_IMPORTED_MODULE_3__["clamp"])(distanceToOriginInChunks / 2, 0, 20)),
+        };
+
+        if (distanceToOriginInChunks < 7) {
+            // Initial chunks can not spawn the good stuff
+            weights.Su = 0;
+            weights.Wu = 0;
+        }
+
+        let key = ''
+
+        if (distanceToOriginInChunks < 10) {
+            // Initial chunk patches always have the same shape
+            const subShape = this.internalGenerateRandomSubShape(rng, weights);
+            key = subShape.repeat(6);
+        } else if (distanceToOriginInChunks < 15) {
+            // Later patches can also have mixed ones
+            const subShapeA = this.internalGenerateRandomSubShape(rng, weights);
+            const subShapeB = this.internalGenerateRandomSubShape(rng, weights);
+            key = subShapeA.repeat(3) + subShapeB.repeat(3);
+        } else {
+            // Finally there is a mix of everything
+            let subShapes = [
+                this.internalGenerateRandomSubShape(rng, weights),
+                this.internalGenerateRandomSubShape(rng, weights),
+                this.internalGenerateRandomSubShape(rng, weights),
+            ];
+            if (subShapes.filter(e=>e=='Wu').length > 1)
+                subShapes[1] = 'Ru';
+            key = subShapes.map(e=>e.repeat(2)).join('');
+        }
+
+        this.internalGeneratePatch(
+            rng,
+            shapePatchSize,
+            new _items_shapest_item__WEBPACK_IMPORTED_MODULE_12__["ShapestItem"]('6'+key),
         );
     }
 
@@ -52538,17 +52600,20 @@ class MapChunk {
      * @returns {boolean}
      */
     generatePredefined(rng) {
+        let hex = this.root.gameMode.getName() == "Hexagonal"
         if (this.x === 0 && this.y === 0) {
             this.internalGeneratePatch(rng, 2, _items_color_item__WEBPACK_IMPORTED_MODULE_8__["COLOR_ITEM_SINGLETONS"][_colors__WEBPACK_IMPORTED_MODULE_6__["enumColors"].red], 7, 7);
             return true;
         }
         if (this.x === -1 && this.y === 0) {
-            const item = this.root.shapeDefinitionMgr.getShapeItemFromShortKey("CuCuCuCu");
+            const item = hex ? new _items_shapest_item__WEBPACK_IMPORTED_MODULE_12__["ShapestItem"]('6CuCuCuCuCuCu') :
+                 this.root.shapeDefinitionMgr.getShapeItemFromShortKey("CuCuCuCu");
             this.internalGeneratePatch(rng, 2, item, _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].mapChunkSize - 9, 7);
             return true;
         }
         if (this.x === 0 && this.y === -1) {
-            const item = this.root.shapeDefinitionMgr.getShapeItemFromShortKey("RuRuRuRu");
+            const item = hex ? new _items_shapest_item__WEBPACK_IMPORTED_MODULE_12__["ShapestItem"]('6RuRuRuRuRuRu') :
+                this.root.shapeDefinitionMgr.getShapeItemFromShortKey("RuRuRuRu");
             this.internalGeneratePatch(rng, 2, item, 5, _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].mapChunkSize - 7);
             return true;
         }
@@ -52559,7 +52624,8 @@ class MapChunk {
         }
 
         if (this.x === 5 && this.y === -2) {
-            const item = this.root.shapeDefinitionMgr.getShapeItemFromShortKey("SuSuSuSu");
+            const item = hex ? new _items_shapest_item__WEBPACK_IMPORTED_MODULE_12__["ShapestItem"]('6SuSuSuSuSuSu') :
+                this.root.shapeDefinitionMgr.getShapeItemFromShortKey("SuSuSuSu");
             this.internalGeneratePatch(rng, 2, item, 5, _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].mapChunkSize - 7);
             return true;
         }
@@ -53898,6 +53964,13 @@ const namedShapes = {
     plant: "6Rg--Rg--Rg--:6CwRwCwRwCwRw:6--Rg--Rg--Rg",
     rocket: "6CbCuCbCuCbCu:6Sr----------:6--CrCrSrCrCr:6CwCwCwCwCwCw",
 
+    mill: "6CwCwCwCwCwCw:6WbWbWbWbWbWb",
+    star: "6SuSuSuSuSuSu",
+    circleStar: "6CwCrCwCrCwCr:6SgSgSgSgSgSg",
+    clown: "6WrRgWrRgWrRg:6CwCrCwCrCwCr:6SgSgSgSgSgSg",
+    windmillRed: "6WrWrWrWrWrWr",
+    fanTriple: "6WpWpWpWpWpWp:6CwCwCwCwCwCw:6WpWpWpWpWpWp",
+    fanQuadruple: "6WpWpWpWpWpWp:6CwCwCwCwCwCw:6WpWpWpWpWpWp:6CwCwCwCwCwCw",
 }
 
 // Tiers need % of the previous tier as requirement too
@@ -53913,9 +53986,9 @@ function generateUpgrades(limitedVersion = false) {
     function generateInfiniteUnlocks() {
         return new Array(numEndgameUpgrades).fill(null).map((_, i) => ({
             required: [
-                { shape: preparementShape, amount: 30000 + i * 10000 },
-                { shape: finalGameShape, amount: 20000 + i * 5000 },
-                { shape: rocketShape, amount: 20000 + i * 5000 },
+                { shape: namedShapes.bouquet, amount: 30000 + i * 10000 },
+                { shape: namedShapes.logo, amount: 20000 + i * 5000 },
+                { shape: namedShapes.rocket, amount: 20000 + i * 5000 },
             ],
             excludePrevious: true,
         }));
@@ -53937,28 +54010,28 @@ function generateUpgrades(limitedVersion = false) {
     const upgrades = {
         belt: [
             {
-                required: [{ shape: "CuCuCuCu", amount: 30 }],
+                required: [{ shape: namedShapes.circle, amount: 30 }],
             },
             {
-                required: [{ shape: "--CuCu--", amount: 500 }],
+                required: [{ shape: namedShapes.circleHalfRotated, amount: 500 }],
             },
             {
-                required: [{ shape: "CpCpCpCp", amount: 1000 }],
+                required: [{ shape: namedShapes.circlePurple, amount: 1000 }],
             },
             {
-                required: [{ shape: "SrSrSrSr:CyCyCyCy", amount: 6000 }],
+                required: [{ shape: namedShapes.starCircle, amount: 6000 }],
             },
             {
-                required: [{ shape: "SrSrSrSr:CyCyCyCy:SwSwSwSw", amount: 25000 }],
+                required: [{ shape: namedShapes.starCircleStar, amount: 25000 }],
             },
             {
-                required: [{ shape: preparementShape, amount: 25000 }],
+                required: [{ shape: namedShapes.bouquet, amount: 25000 }],
                 excludePrevious: true,
             },
             {
                 required: [
-                    { shape: preparementShape, amount: 25000 },
-                    { shape: finalGameShape, amount: 50000 },
+                    { shape: namedShapes.bouquet, amount: 25000 },
+                    { shape: namedShapes.logo, amount: 50000 },
                 ],
                 excludePrevious: true,
             },
@@ -53967,28 +54040,28 @@ function generateUpgrades(limitedVersion = false) {
 
         miner: [
             {
-                required: [{ shape: "RuRuRuRu", amount: 300 }],
+                required: [{ shape: namedShapes.rect, amount: 300 }],
             },
             {
-                required: [{ shape: "Cu------", amount: 800 }],
+                required: [{ shape: namedShapes.circleQuad, amount: 800 }],
             },
             {
-                required: [{ shape: "ScScScSc", amount: 3500 }],
+                required: [{ shape: namedShapes.starCyan, amount: 3500 }],
             },
             {
-                required: [{ shape: "CwCwCwCw:WbWbWbWb", amount: 23000 }],
+                required: [{ shape: namedShapes.mill, amount: 23000 }],
             },
             {
-                required: [{ shape: "CbRbRbCb:CwCwCwCw:WbWbWbWb", amount: 50000 }],
+                required: [{ shape: namedShapes.fan, amount: 50000 }],
             },
             {
-                required: [{ shape: preparementShape, amount: 25000 }],
+                required: [{ shape: namedShapes.bouquet, amount: 25000 }],
                 excludePrevious: true,
             },
             {
                 required: [
-                    { shape: preparementShape, amount: 25000 },
-                    { shape: finalGameShape, amount: 50000 },
+                    { shape: namedShapes.bouquet, amount: 25000 },
+                    { shape: namedShapes.logo, amount: 50000 },
                 ],
                 excludePrevious: true,
             },
@@ -53997,28 +54070,28 @@ function generateUpgrades(limitedVersion = false) {
 
         processors: [
             {
-                required: [{ shape: "SuSuSuSu", amount: 500 }],
+                required: [{ shape: namedShapes.star, amount: 500 }],
             },
             {
-                required: [{ shape: "RuRu----", amount: 600 }],
+                required: [{ shape: namedShapes.rectHalf, amount: 600 }],
             },
             {
-                required: [{ shape: "CgScScCg", amount: 3500 }],
+                required: [{ shape: namedShapes.fish, amount: 3500 }],
             },
             {
-                required: [{ shape: "CwCrCwCr:SgSgSgSg", amount: 25000 }],
+                required: [{ shape: namedShapes.circleStar, amount: 25000 }],
             },
             {
-                required: [{ shape: "WrRgWrRg:CwCrCwCr:SgSgSgSg", amount: 50000 }],
+                required: [{ shape: namedShapes.clown, amount: 50000 }],
             },
             {
-                required: [{ shape: preparementShape, amount: 25000 }],
+                required: [{ shape: namedShapes.bouquet, amount: 25000 }],
                 excludePrevious: true,
             },
             {
                 required: [
-                    { shape: preparementShape, amount: 25000 },
-                    { shape: finalGameShape, amount: 50000 },
+                    { shape: namedShapes.bouquet, amount: 25000 },
+                    { shape: namedShapes.logo, amount: 50000 },
                 ],
                 excludePrevious: true,
             },
@@ -54027,28 +54100,28 @@ function generateUpgrades(limitedVersion = false) {
 
         painting: [
             {
-                required: [{ shape: "RbRb----", amount: 600 }],
+                required: [{ shape: namedShapes.rectHalfBlue, amount: 600 }],
             },
             {
-                required: [{ shape: "WrWrWrWr", amount: 3800 }],
+                required: [{ shape: namedShapes.windmillRed, amount: 3800 }],
             },
             {
-                required: [{ shape: "RpRpRpRp:CwCwCwCw", amount: 6500 }],
+                required: [{ shape: namedShapes.rectCircle, amount: 6500 }],
             },
             {
-                required: [{ shape: "WpWpWpWp:CwCwCwCw:WpWpWpWp", amount: 25000 }],
+                required: [{ shape: namedShapes.fanTriple, amount: 25000 }],
             },
             {
-                required: [{ shape: "WpWpWpWp:CwCwCwCw:WpWpWpWp:CwCwCwCw", amount: 50000 }],
+                required: [{ shape: namedShapes.fanQuadruple, amount: 50000 }],
             },
             {
-                required: [{ shape: preparementShape, amount: 25000 }],
+                required: [{ shape: namedShapes.bouquet, amount: 25000 }],
                 excludePrevious: true,
             },
             {
                 required: [
-                    { shape: preparementShape, amount: 25000 },
-                    { shape: finalGameShape, amount: 50000 },
+                    { shape: namedShapes.bouquet, amount: 25000 },
+                    { shape: namedShapes.logo, amount: 50000 },
                 ],
                 excludePrevious: true,
             },
@@ -54093,7 +54166,9 @@ function generateUpgrades(limitedVersion = false) {
             upgrades[upgradeId].forEach(tier => {
                 tier.required.forEach(({ shape }) => {
                     try {
-                        _shape_definition__WEBPACK_IMPORTED_MODULE_2__["ShapeDefinition"].fromShortKey(shape);
+                        if (!_items_shapest_item__WEBPACK_IMPORTED_MODULE_3__["ShapestItem"].isValidShortKey(shape)) {
+                            throw new Error();
+                        }
                     } catch (ex) {
                         throw new Error("Invalid upgrade goal: '" + ex + "' for shape" + shape);
                     }
@@ -54294,6 +54369,10 @@ class HexagonalGameMode extends _game_mode__WEBPACK_IMPORTED_MODULE_1__["GameMod
         super(root);
     }
 
+    getName() {
+        return "Hexagonal";
+    }
+
     getUpgrades() {
         return fullVersionUpgrades;
     }
@@ -54368,27 +54447,13 @@ const namedShapes = {
     plant: "Rg--Rg--:CwRwCwRw:--Rg--Rg",
     rocket: "CbCuCbCu:Sr------:--CrSrCr:CwCwCwCw",
 
-
-
-
-    // 6------CuCuCu:
-    // 6RuRuRuRuRuRu:
-    // 6RuRuRu------:
-    // 6CuCu------Cu:
-    // 6Cu----------:
-    // 6CrCrCrCrCrCr:
-    // 6RbRbRb------:
-    // 6CpCpCpCpCpCp:
-    // 6ScScScScScSc:
-    // 6CgCgScScScCg:
-    // 6CbCbCbCbCbRb:6CwCwCwCwCwCw
-    // 6RpRpRpRpRpRp:6CwCwCwCwCwCw
-    // 6----Cg------:6----Cr------
-    // 6SrSrSrSrSrSr:6CyCyCyCyCyCy
-    // 6SrSrSrSrSrSr:6CyCyCyCyCyCy:6SwSwSwSwSwSw
-    // 6CbCbRbRbRbCb:6CwCwCwCwCwCw:6WbWbWbWbWbWb
-    // 6SgSg------Sg:6CgCgCgCgCgCg:6----CyCyCy--
-    // 6CpCpRpCpCp--:6SwSwSwSwSwSw
+    mill: "CwCwCwCw:WbWbWbWb",
+    star: "SuSuSuSu",
+    circleStar: "CwCrCwCr:SgSgSgSg",
+    clown: "WrRgWrRg:CwCrCwCr:SgSgSgSg",
+    windmillRed: "WrWrWrWr",
+    fanTriple: "WpWpWpWp:CwCwCwCw:WpWpWpWp",
+    fanQuadruple: "WpWpWpWp:CwCwCwCw:WpWpWpWp:CwCwCwCw",
 }
 
 // Tiers need % of the previous tier as requirement too
@@ -54404,9 +54469,9 @@ function generateUpgrades(limitedVersion = false) {
     function generateInfiniteUnlocks() {
         return new Array(numEndgameUpgrades).fill(null).map((_, i) => ({
             required: [
-                { shape: preparementShape, amount: 30000 + i * 10000 },
-                { shape: finalGameShape, amount: 20000 + i * 5000 },
-                { shape: rocketShape, amount: 20000 + i * 5000 },
+                { shape: namedShapes.bouquet, amount: 30000 + i * 10000 },
+                { shape: namedShapes.logo, amount: 20000 + i * 5000 },
+                { shape: namedShapes.rocket, amount: 20000 + i * 5000 },
             ],
             excludePrevious: true,
         }));
@@ -54428,28 +54493,28 @@ function generateUpgrades(limitedVersion = false) {
     const upgrades = {
         belt: [
             {
-                required: [{ shape: "CuCuCuCu", amount: 30 }],
+                required: [{ shape: namedShapes.circle, amount: 30 }],
             },
             {
-                required: [{ shape: "--CuCu--", amount: 500 }],
+                required: [{ shape: namedShapes.circleHalfRotated, amount: 500 }],
             },
             {
-                required: [{ shape: "CpCpCpCp", amount: 1000 }],
+                required: [{ shape: namedShapes.circlePurple, amount: 1000 }],
             },
             {
-                required: [{ shape: "SrSrSrSr:CyCyCyCy", amount: 6000 }],
+                required: [{ shape: namedShapes.starCircle, amount: 6000 }],
             },
             {
-                required: [{ shape: "SrSrSrSr:CyCyCyCy:SwSwSwSw", amount: 25000 }],
+                required: [{ shape: namedShapes.starCircleStar, amount: 25000 }],
             },
             {
-                required: [{ shape: preparementShape, amount: 25000 }],
+                required: [{ shape: namedShapes.bouquet, amount: 25000 }],
                 excludePrevious: true,
             },
             {
                 required: [
-                    { shape: preparementShape, amount: 25000 },
-                    { shape: finalGameShape, amount: 50000 },
+                    { shape: namedShapes.bouquet, amount: 25000 },
+                    { shape: namedShapes.logo, amount: 50000 },
                 ],
                 excludePrevious: true,
             },
@@ -54458,28 +54523,28 @@ function generateUpgrades(limitedVersion = false) {
 
         miner: [
             {
-                required: [{ shape: "RuRuRuRu", amount: 300 }],
+                required: [{ shape: namedShapes.rect, amount: 300 }],
             },
             {
-                required: [{ shape: "Cu------", amount: 800 }],
+                required: [{ shape: namedShapes.circleQuad, amount: 800 }],
             },
             {
-                required: [{ shape: "ScScScSc", amount: 3500 }],
+                required: [{ shape: namedShapes.starCyan, amount: 3500 }],
             },
             {
-                required: [{ shape: "CwCwCwCw:WbWbWbWb", amount: 23000 }],
+                required: [{ shape: namedShapes.mill, amount: 23000 }],
             },
             {
-                required: [{ shape: "CbRbRbCb:CwCwCwCw:WbWbWbWb", amount: 50000 }],
+                required: [{ shape: namedShapes.fan, amount: 50000 }],
             },
             {
-                required: [{ shape: preparementShape, amount: 25000 }],
+                required: [{ shape: namedShapes.bouquet, amount: 25000 }],
                 excludePrevious: true,
             },
             {
                 required: [
-                    { shape: preparementShape, amount: 25000 },
-                    { shape: finalGameShape, amount: 50000 },
+                    { shape: namedShapes.bouquet, amount: 25000 },
+                    { shape: namedShapes.logo, amount: 50000 },
                 ],
                 excludePrevious: true,
             },
@@ -54488,28 +54553,28 @@ function generateUpgrades(limitedVersion = false) {
 
         processors: [
             {
-                required: [{ shape: "SuSuSuSu", amount: 500 }],
+                required: [{ shape: namedShapes.star, amount: 500 }],
             },
             {
-                required: [{ shape: "RuRu----", amount: 600 }],
+                required: [{ shape: namedShapes.rectHalf, amount: 600 }],
             },
             {
-                required: [{ shape: "CgScScCg", amount: 3500 }],
+                required: [{ shape: namedShapes.fish, amount: 3500 }],
             },
             {
-                required: [{ shape: "CwCrCwCr:SgSgSgSg", amount: 25000 }],
+                required: [{ shape: namedShapes.circleStar, amount: 25000 }],
             },
             {
-                required: [{ shape: "WrRgWrRg:CwCrCwCr:SgSgSgSg", amount: 50000 }],
+                required: [{ shape: namedShapes.clown, amount: 50000 }],
             },
             {
-                required: [{ shape: preparementShape, amount: 25000 }],
+                required: [{ shape: namedShapes.bouquet, amount: 25000 }],
                 excludePrevious: true,
             },
             {
                 required: [
-                    { shape: preparementShape, amount: 25000 },
-                    { shape: finalGameShape, amount: 50000 },
+                    { shape: namedShapes.bouquet, amount: 25000 },
+                    { shape: namedShapes.logo, amount: 50000 },
                 ],
                 excludePrevious: true,
             },
@@ -54518,28 +54583,28 @@ function generateUpgrades(limitedVersion = false) {
 
         painting: [
             {
-                required: [{ shape: "RbRb----", amount: 600 }],
+                required: [{ shape: namedShapes.rectHalfBlue, amount: 600 }],
             },
             {
-                required: [{ shape: "WrWrWrWr", amount: 3800 }],
+                required: [{ shape: namedShapes.windmillRed, amount: 3800 }],
             },
             {
-                required: [{ shape: "RpRpRpRp:CwCwCwCw", amount: 6500 }],
+                required: [{ shape: namedShapes.rectCircle, amount: 6500 }],
             },
             {
-                required: [{ shape: "WpWpWpWp:CwCwCwCw:WpWpWpWp", amount: 25000 }],
+                required: [{ shape: namedShapes.fanTriple, amount: 25000 }],
             },
             {
-                required: [{ shape: "WpWpWpWp:CwCwCwCw:WpWpWpWp:CwCwCwCw", amount: 50000 }],
+                required: [{ shape: namedShapes.fanQuadruple, amount: 50000 }],
             },
             {
-                required: [{ shape: preparementShape, amount: 25000 }],
+                required: [{ shape: namedShapes.bouquet, amount: 25000 }],
                 excludePrevious: true,
             },
             {
                 required: [
-                    { shape: preparementShape, amount: 25000 },
-                    { shape: finalGameShape, amount: 50000 },
+                    { shape: namedShapes.bouquet, amount: 25000 },
+                    { shape: namedShapes.logo, amount: 50000 },
                 ],
                 excludePrevious: true,
             },
