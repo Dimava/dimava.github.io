@@ -53857,7 +53857,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/utils */ "./src/js/core/utils.js");
 /* harmony import */ var _game_mode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../game_mode */ "./src/js/game/game_mode.js");
 /* harmony import */ var _shape_definition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shape_definition */ "./src/js/game/shape_definition.js");
-/* harmony import */ var _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../tutorial_goals */ "./src/js/game/tutorial_goals.js");
+/* harmony import */ var _items_shapest_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../items/shapest_item */ "./src/js/game/items/shapest_item.js");
+/* harmony import */ var _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../tutorial_goals */ "./src/js/game/tutorial_goals.js");
+
 
 
 
@@ -54113,165 +54115,167 @@ function generateLevelDefinitions(limitedVersion = false) {
         {
             shape: namedShapes.circle, // belts t1
             required: 30,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_cutter_and_trash,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_cutter_and_trash,
         },
         // 2: Cutter
         {
             shape: namedShapes.circleHalf, //
             required: 40,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].no_reward,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].no_reward,
         },
         // 3: Rectangle
         {
             shape: namedShapes.rect, // miners t1
             required: 70,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_balancer,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_balancer,
         },
         // 4
         {
             shape: namedShapes.rectHalf, // processors t2
             required: 70,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_rotater,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_rotater,
         },
         // 5: Rotater
         {
             shape: namedShapes.circleHalfRotated, // belts t2
             required: 170,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_tunnel,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_tunnel,
         },
         // 6
         {
             shape: namedShapes.circleQuad, // miners t2
             required: 270,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_painter,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_painter,
         },
         // 7: Painter
         {
             shape: namedShapes.circleRed, // unused
             required: 300,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_rotater_ccw,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_rotater_ccw,
         },
         // 8:
         {
             shape: namedShapes.rectHalfBlue, // painter t2
             required: 480,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_mixer,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_mixer,
         },
         // 9: Mixing (purple)
         {
             shape: namedShapes.circlePurple, // belts t3
             required: 600,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_merger,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_merger,
         },
         // 10: STACKER: Star shape + cyan
         {
             shape: namedShapes.starCyan, // miners t3
             required: 800,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_stacker,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_stacker,
         },
         // 11: Chainable miner
         {
             shape: namedShapes.fish, // processors t3
             required: 1000,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_miner_chainable,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_miner_chainable,
         },
         // 12: Blueprints
         {
             shape: namedShapes.blueprint,
             required: 1000,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_blueprints,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_blueprints,
         },
         // 13: Tunnel Tier 2
         {
             shape: namedShapes.rectCircle, // painting t3
             required: 3800,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_underground_belt_tier_2,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_underground_belt_tier_2,
         },
         // 14: Belt reader
         {
             shape: namedShapes.watermelon, // unused
             required: 8, // Per second!
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_belt_reader,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_belt_reader,
             throughputOnly: true,
         },
         // 15: Storage
         {
             shape: namedShapes.starCircle, // unused
             required: 10000,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_storage,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_storage,
         },
         // 16: Quad Cutter
         {
             shape: namedShapes.starCircleStar, // belts t4 (two variants)
             required: 6000,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_cutter_quad,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_cutter_quad,
         },
         // 17: Double painter
         {
             shape: namedShapes.fan, // miner t4 (two variants)
             required: 20000,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_painter_double,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_painter_double,
         },
         // 18: Rotater (180deg)
         {
             shape: namedShapes.monster, // unused
             required: 20000,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_rotater_180,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_rotater_180,
         },
         // 19: Compact splitter
         {
             shape: namedShapes.bouquet,
             required: 25000,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_splitter,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_splitter,
         },
         // 20: WIRES
         {
             shape: namedShapes.logo,
             required: 25000,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_wires_painter_and_levers,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_wires_painter_and_levers,
         },
         // 21: Filter
         {
             shape: namedShapes.target,
             required: 25000,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_filter,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_filter,
         },
         // 22: Constant signal
         {
             shape: namedShapes.speedometer,
             required: 25000,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_constant_signal,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_constant_signal,
         },
         // 23: Display
         {
             shape: namedShapes.spikedBall,
             required: 25000,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_display,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_display,
         },
         // 24: Logic gates
         {
             shape: namedShapes.compass,
             required: 25000,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_logic_gates,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_logic_gates,
         },
         // 25: Virtual Processing
         {
             shape: namedShapes.plant,
             required: 25000,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_virtual_processing,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_virtual_processing,
         },
         // 26: Freeplay
         {
             shape: namedShapes.rocket,
             required: 50000,
-            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_3__["enumHubGoalRewards"].reward_freeplay,
+            reward: _tutorial_goals__WEBPACK_IMPORTED_MODULE_4__["enumHubGoalRewards"].reward_freeplay,
         },
     ];
 
     if (true) {
         levelDefinitions.forEach(({ shape }) => {
             try {
-                _shape_definition__WEBPACK_IMPORTED_MODULE_2__["ShapeDefinition"].fromShortKey(shape);
+                if (!_items_shapest_item__WEBPACK_IMPORTED_MODULE_3__["ShapestItem"].isValidShortKey(shape)) {
+                    throw new Error();
+                }
             } catch (ex) {
                 throw new Error("Invalid tutorial goal: '" + ex + "' for shape" + shape);
             }
