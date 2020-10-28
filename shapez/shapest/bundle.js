@@ -31024,6 +31024,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_vector__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../core/vector */ "./src/js/core/vector.js");
 /* harmony import */ var _entity__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./entity */ "./src/js/game/entity.js");
 /* harmony import */ var _root__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./root */ "./src/js/game/root.js");
+/* harmony import */ var _savegame_serializer_internal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../savegame/serializer_internal */ "./src/js/savegame/serializer_internal.js");
+
 
 
 
@@ -31190,6 +31192,25 @@ class Blueprint {
             }
             return anyPlaced;
         });
+    }
+
+    serializeToString() {
+        let array = new _savegame_serializer_internal__WEBPACK_IMPORTED_MODULE_6__["SerializerInternal"]().serializeEntityArray(this.entities);
+        return JSON.stringify(array);
+    }
+
+    /**
+     * @param {GameRoot} root
+     * @param {string} bpJson
+     */
+    static deserializeFromString(root, bpJson) {
+        try {
+            let array = JSON.parse(bpJson);
+            let entities = new _savegame_serializer_internal__WEBPACK_IMPORTED_MODULE_6__["SerializerInternal"]().deserializeEntityArray(root, array, false);
+            return new Blueprint(entities);
+        } catch(err) {
+            return null;
+        }
     }
 }
 
@@ -41834,6 +41855,13 @@ class HUDBlueprintPlacer extends _base_hud_part__WEBPACK_IMPORTED_MODULE_10__["B
 
         this.domAttach = new _dynamic_dom_attach__WEBPACK_IMPORTED_MODULE_11__["DynamicDomAttach"](this.root, this.costDisplayParent);
         this.trackedCanAfford = new _core_tracked_state__WEBPACK_IMPORTED_MODULE_2__["TrackedState"](this.onCanAffordChanged, this);
+
+        // SHAPEST-TODO
+        globalThis.BPP = this;
+
+        document.oncopy = () => this.copyToClipboard();
+        document.onpaste = () => this.pasteFromClipboard();
+
     }
 
     abortPlacement() {
@@ -41986,8 +42014,99 @@ class HUDBlueprintPlacer extends _base_hud_part__WEBPACK_IMPORTED_MODULE_10__["B
         const tile = worldPos.toTileSpace();
         blueprint.draw(parameters, tile);
     }
+
+    async copyToClipboard() {
+        if (!this.currentBlueprint.get()) {
+            alert("Can't copy, no blueprint selected!");
+            return false;
+        }
+        let bpJson = this.currentBlueprint.get().serializeToString();
+        let buffer = new TextEncoder().encode(bpJson);
+        let compressedBuffer = await compressArrayBuffer(buffer);
+        let base64String = bufferToBase64(compressedBuffer);
+        let bpString = `ShapezBP<<<${base64String}>>>`;
+        await navigator.clipboard.writeText(bpString);
+        alert("bp copied");
+        return true;
+    }
+
+    async pasteFromClipboard() {
+        let bpString = await navigator.clipboard.readText();
+        if (!bpString.startsWith("ShapezBP<<<") || !bpString.endsWith(">>>")) {
+            alert("Can't paste, not a blueprint!");
+            return false;
+        }
+        let base64String = bpString.slice(11, -3);
+        let compressedBuffer = base64ToBuffer(base64String);
+        let buffer = await decompressArrayBuffer(compressedBuffer);
+        let bpJson = new TextDecoder().decode(buffer);
+        let blueprint = _blueprint__WEBPACK_IMPORTED_MODULE_7__["Blueprint"].deserializeFromString(this.root, bpJson);
+        if (!blueprint) {
+            return false;
+        }
+        this.currentBlueprint.set(blueprint);
+        alert("bp pasted")
+        return true;
+    }
 }
 
+
+
+async function compressArrayBuffer(input) {
+    const cs = new CompressionStream('deflate');
+    const writer = cs.writable.getWriter();
+    writer.write(input);
+    writer.close();
+    const output = [];
+    const reader = cs.readable.getReader();
+    let totalSize = 0;
+    while (true) {
+        const { value, done } = await reader.read();
+        if (done)
+            break;
+        output.push(value);
+        totalSize += value.byteLength;
+    }
+    const concatenated = new Uint8Array(totalSize);
+    let offset = 0;
+    for (const array of output) {
+        concatenated.set(array, offset);
+        offset += array.byteLength;
+    }
+    return concatenated;
+}
+
+async function decompressArrayBuffer(input) {
+    const cs = new DecompressionStream('deflate');
+    const writer = cs.writable.getWriter();
+    writer.write(input);
+    writer.close();
+    const output = [];
+    const reader = cs.readable.getReader();
+    let totalSize = 0;
+    while (true) {
+        const { value, done } = await reader.read();
+        if (done)
+            break;
+        output.push(value);
+        totalSize += value.byteLength;
+    }
+    const concatenated = new Uint8Array(totalSize);
+    let offset = 0;
+    for (const array of output) {
+        concatenated.set(array, offset);
+        offset += array.byteLength;
+    }
+    return concatenated;
+}
+
+function bufferToBase64(b) {
+    return btoa(String.fromCharCode(...b));
+}
+
+function base64ToBuffer(base64String) {
+    return Uint8Array.from(atob(base64String), c => c.charCodeAt(0))
+}
 
 /***/ }),
 
@@ -69720,11 +69839,15 @@ class SerializerInternal {
      *
      * @param {GameRoot} root
      * @param {Array<Entity>} array
-     * @returns {string|void}
+     * @returns {string|void|Array<Entity>}
      */
-    deserializeEntityArray(root, array) {
-        for (let i = 0; i < array.length; ++i) {
-            this.deserializeEntity(root, array[i]);
+    deserializeEntityArray(root, array, register = true) {
+        if (register) {
+            for (let i = 0; i < array.length; ++i) {
+                this.deserializeEntity(root, array[i], register);
+            }
+        } else {
+            return array.map(e => this.deserializeEntity(root, e, register));
         }
     }
 
@@ -69733,7 +69856,7 @@ class SerializerInternal {
      * @param {GameRoot} root
      * @param {Entity} payload
      */
-    deserializeEntity(root, payload) {
+    deserializeEntity(root, payload, register = true) {
         const staticData = payload.components.StaticMapEntity;
         window.assert(staticData, "entity has no static data");
 
@@ -69755,8 +69878,12 @@ class SerializerInternal {
 
         this.deserializeComponents(root, entity, payload.components);
 
-        root.entityMgr.registerEntity(entity, payload.uid);
-        root.map.placeStaticEntity(entity);
+        if (register) {
+            root.entityMgr.registerEntity(entity, payload.uid);
+            root.map.placeStaticEntity(entity);
+        }
+
+        return entity;
     }
 
     /////// COMPONENTS ////
