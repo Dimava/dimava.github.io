@@ -50280,13 +50280,15 @@ class ShapeItem extends _base_item__WEBPACK_IMPORTED_MODULE_2__["BaseItem"] {
 /*!*******************************************!*\
   !*** ./src/js/game/items/shapest_item.js ***!
   \*******************************************/
-/*! exports provided: ERROR, ShapestItem, shape4svg, shape6svg, ShapestItemDefinition */
+/*! exports provided: ERROR, ShapestItem, NumberLayer, TextLayer, shape4svg, shape6svg, ShapestItemDefinition */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ERROR", function() { return ERROR; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ShapestItem", function() { return ShapestItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NumberLayer", function() { return NumberLayer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TextLayer", function() { return TextLayer; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "shape4svg", function() { return shape4svg; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "shape6svg", function() { return shape6svg; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ShapestItemDefinition", function() { return ShapestItemDefinition; });
@@ -50609,6 +50611,21 @@ class NumberLayer extends ShapestLayer {
         return hash[0] == this.layerHash() && Number.isInteger(+hash.slice(2));
     }
 
+    static get mapPatchItemList() {
+        if (this._mapPatchItemList) {
+            return this._mapPatchItemList;
+        }
+        let numList = Array(11).fill(0).map((e, i) => i-1);
+        return this._mapPatchItemList = numList.map(n => new ShapestItem(`nu${n}`));
+    }
+
+    static get mapPatchItemDisplay() {
+        if (this._mapPatchItem) {
+            return this._mapPatchItem;
+        }
+        return this._mapPatchItem = new ShapestItem(`nu1`);
+    }
+
     color() {
         return this.hash[1];
     }
@@ -50663,6 +50680,24 @@ class TextLayer extends ShapestLayer {
 
     static isValidKey(hash) {
         return hash[0] == this.layerHash() && hash.length % 2 && hash.length >= 3;
+    }
+
+    static get mapPatchItemList() {
+        if (this._mapPatchItemList) {
+            return this._mapPatchItemList;
+        }
+        let list_low = 'abcdefghijklmnopqrstuvwxyz';
+        let list_high = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let list_sym = '_!"#$%&\'()*+,-./<=>?[]^{|}';
+        let fullList = list_low + list_high + list_sym;
+        return this._mapPatchItemList = fullList.split('').map(c => new ShapestItem(`t${c}u`));
+    }
+
+    static get mapPatchItemDisplay() {
+        if (this._mapPatchItem) {
+            return this._mapPatchItem;
+        }
+        return this._mapPatchItem = new ShapestItem(`tAu`);
     }
 
     get length() {
@@ -52570,8 +52605,9 @@ class MapChunk {
      * @param {BaseItem} item
      * @param {number=} overrideX Override the X position of the patch
      * @param {number=} overrideY Override the Y position of the patch
+     * @param {BaseItem[]} itemList
      */
-    internalGeneratePatch(rng, patchSize, item, overrideX = null, overrideY = null) {
+    internalGeneratePatch(rng, patchSize, item, overrideX = null, overrideY = null, itemList = null) {
         const border = Math.ceil(patchSize / 2 + 3);
 
         // Find a position within the chunk which is not blocked
@@ -52614,7 +52650,7 @@ class MapChunk {
                         const originalDy = dy / circleScaleY;
                         if (originalDx * originalDx + originalDy * originalDy <= circleRadiusSquare) {
                             if (!this.lowerLayer[x][y]) {
-                                this.lowerLayer[x][y] = item;
+                                this.lowerLayer[x][y] = itemList ? rng.choice(itemList) : item;
                                 ++patchesDrawn;
                                 avgPos.x += x;
                                 avgPos.y += y;
@@ -52656,7 +52692,7 @@ class MapChunk {
      * @param {number} distanceToOriginInChunks
      */
     internalGenerateShapePatch(rng, shapePatchSize, distanceToOriginInChunks) {
-        if (this.root.gameMode.getName() == "Hexagonal") {
+        if (this.hex) {
             return this.internalGenerateHexagonalPatch(rng, shapePatchSize, distanceToOriginInChunks);
         }
         /** @type {[enumSubShape, enumSubShape, enumSubShape, enumSubShape]} */
@@ -52716,6 +52752,19 @@ class MapChunk {
             this.root.shapeDefinitionMgr.getShapeItemFromDefinition(definition)
         );
     }
+
+    internalGenerateNumberPatch(rng, colorPatchSize, distanceToOriginInChunks) {
+        let itemDisplay = _items_shapest_item__WEBPACK_IMPORTED_MODULE_12__["NumberLayer"].mapPatchItemDisplay;
+        let itemList = _items_shapest_item__WEBPACK_IMPORTED_MODULE_12__["NumberLayer"].mapPatchItemList;
+        this.internalGeneratePatch(rng, colorPatchSize, itemDisplay, null, null, itemList);
+           }
+
+    internalGenerateLetterPatch(rng, colorPatchSize, distanceToOriginInChunks) {
+        let itemDisplay = _items_shapest_item__WEBPACK_IMPORTED_MODULE_12__["TextLayer"].mapPatchItemDisplay;
+        let itemList = _items_shapest_item__WEBPACK_IMPORTED_MODULE_12__["TextLayer"].mapPatchItemList;
+        this.internalGeneratePatch(rng, colorPatchSize, itemDisplay, null, null, itemList);
+    }
+
 
     /**
      * Generates a shape patch
@@ -52796,6 +52845,9 @@ class MapChunk {
         logger.error("Failed to find matching shape in chunk generation");
         return _shape_definition__WEBPACK_IMPORTED_MODULE_10__["enumSubShape"].circle;
     }
+    get hex() {
+        return this.root.gameMode.getName() == "Hexagonal";
+    }
 
     /**
      * Generates the lower layer "terrain"
@@ -52824,6 +52876,20 @@ class MapChunk {
             const shapePatchSize = Math.max(2, Math.round(1 + Object(_core_utils__WEBPACK_IMPORTED_MODULE_3__["clamp"])(distanceToOriginInChunks / 8, 0, 4)));
             this.internalGenerateShapePatch(rng, shapePatchSize, distanceToOriginInChunks);
         }
+        if (!this.hex) {
+            return;
+        }
+
+        const digitPatchChance = Object(_core_utils__WEBPACK_IMPORTED_MODULE_3__["clamp"])((distanceToOriginInChunks - 15) / 25, 0, 1) * 0.5;
+        if (rng.next() < digitPatchChance / 8) {
+            const shapePatchSize = Math.max(2, Math.round(1 + Object(_core_utils__WEBPACK_IMPORTED_MODULE_3__["clamp"])(distanceToOriginInChunks / 8, 0, 4)));
+            this.internalGenerateNumberPatch(rng, shapePatchSize, distanceToOriginInChunks);
+        }
+        const letterPatchChance = Object(_core_utils__WEBPACK_IMPORTED_MODULE_3__["clamp"])((distanceToOriginInChunks - 15) / 25, 0, 1) * 0.5;
+        if (rng.next() < letterPatchChance / 8) {
+            const shapePatchSize = Math.max(2, Math.round(1 + Object(_core_utils__WEBPACK_IMPORTED_MODULE_3__["clamp"])(distanceToOriginInChunks / 8, 0, 4)));
+            this.internalGenerateLetterPatch(rng, shapePatchSize, distanceToOriginInChunks);
+        }
     }
 
     /**
@@ -52833,19 +52899,18 @@ class MapChunk {
      * @returns {boolean}
      */
     generatePredefined(rng) {
-        let hex = this.root.gameMode.getName() == "Hexagonal"
         if (this.x === 0 && this.y === 0) {
             this.internalGeneratePatch(rng, 2, _items_color_item__WEBPACK_IMPORTED_MODULE_8__["COLOR_ITEM_SINGLETONS"][_colors__WEBPACK_IMPORTED_MODULE_6__["enumColors"].red], 7, 7);
             return true;
         }
         if (this.x === -1 && this.y === 0) {
-            const item = hex ? new _items_shapest_item__WEBPACK_IMPORTED_MODULE_12__["ShapestItem"]('6CuCuCuCuCuCu') :
+            const item = this.hex ? new _items_shapest_item__WEBPACK_IMPORTED_MODULE_12__["ShapestItem"]('6CuCuCuCuCuCu') :
                  this.root.shapeDefinitionMgr.getShapeItemFromShortKey("CuCuCuCu");
             this.internalGeneratePatch(rng, 2, item, _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].mapChunkSize - 9, 7);
             return true;
         }
         if (this.x === 0 && this.y === -1) {
-            const item = hex ? new _items_shapest_item__WEBPACK_IMPORTED_MODULE_12__["ShapestItem"]('6RuRuRuRuRuRu') :
+            const item = this.hex ? new _items_shapest_item__WEBPACK_IMPORTED_MODULE_12__["ShapestItem"]('6RuRuRuRuRuRu') :
                 this.root.shapeDefinitionMgr.getShapeItemFromShortKey("RuRuRuRu");
             this.internalGeneratePatch(rng, 2, item, 5, _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].mapChunkSize - 7);
             return true;
@@ -52857,7 +52922,7 @@ class MapChunk {
         }
 
         if (this.x === 5 && this.y === -2) {
-            const item = hex ? new _items_shapest_item__WEBPACK_IMPORTED_MODULE_12__["ShapestItem"]('6SuSuSuSuSuSu') :
+            const item = this.hex ? new _items_shapest_item__WEBPACK_IMPORTED_MODULE_12__["ShapestItem"]('6SuSuSuSuSuSu') :
                 this.root.shapeDefinitionMgr.getShapeItemFromShortKey("SuSuSuSu");
             this.internalGeneratePatch(rng, 2, item, 5, _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].mapChunkSize - 7);
             return true;
