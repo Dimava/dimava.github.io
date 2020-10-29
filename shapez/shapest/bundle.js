@@ -40407,7 +40407,7 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
         const upgrades = this.root.gameMode.getUpgrades();
         for (const upgradeId in upgrades) {
             const tiers = upgrades[upgradeId];
-            const level = this.upgradeLevels[upgradeId] || 0;
+            const level = Math.min(this.upgradeLevels[upgradeId] || 0, tiers.length);
             let totalImprovement = 1;
             for (let i = 0; i < level; ++i) {
                 totalImprovement += tiers[i].improvement;
@@ -40826,7 +40826,7 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
      * @returns {number} items / sec
      */
     getBeltBaseSpeed() {
-        return _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].beltSpeedItemsPerSecond * this.upgradeImprovements.belt;
+        return _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].beltSpeedItemsPerSecond * (this.upgradeImprovements.belt + this.upgradeImprovements.global);
     }
 
     /**
@@ -40834,7 +40834,7 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
      * @returns {number} items / sec
      */
     getUndergroundBeltBaseSpeed() {
-        return _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].beltSpeedItemsPerSecond * this.upgradeImprovements.belt;
+        return _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].beltSpeedItemsPerSecond * (this.upgradeImprovements.belt + this.upgradeImprovements.global);
     }
 
     /**
@@ -40842,7 +40842,7 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
      * @returns {number} items / sec
      */
     getMinerBaseSpeed() {
-        return _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].minerSpeedItemsPerSecond * this.upgradeImprovements.miner;
+        return _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].minerSpeedItemsPerSecond * (this.upgradeImprovements.miner + this.upgradeImprovements.global);
     }
 
     /**
@@ -46588,6 +46588,12 @@ class HUDSandboxController extends _base_hud_part__WEBPACK_IMPORTED_MODULE_1__["
                     <button class="styledButton plus">+</button>
                 </div>
 
+                <div class="upgradesGlobal plusMinus">
+                    <label>Upgrades &rarr; Global</label>
+                    <button class="styledButton minus">-</button>
+                    <button class="styledButton plus">+</button>
+                </div>
+
                 <div class="additionalOptions">
                     <button class="styledButton giveBlueprints">Fill blueprint shapes</button>
                     <button class="styledButton maxOutAll">Max out all</button>
@@ -46614,6 +46620,9 @@ class HUDSandboxController extends _base_hud_part__WEBPACK_IMPORTED_MODULE_1__["
 
         bind(".upgradesPainting .minus", () => this.modifyUpgrade("painting", -1));
         bind(".upgradesPainting .plus", () => this.modifyUpgrade("painting", 1));
+
+        bind(".upgradesGlobal .minus", () => this.modifyUpgrade("global", -1));
+        bind(".upgradesGlobal .plus", () => this.modifyUpgrade("global", 1));
     }
 
     giveBlueprints() {
@@ -47183,7 +47192,7 @@ class HUDShop extends _base_hud_part__WEBPACK_IMPORTED_MODULE_5__["BaseHUDPart"]
             handle.elem.setAttribute("data-upgrade-id", upgradeId);
 
             // Title
-            const title = Object(_core_utils__WEBPACK_IMPORTED_MODULE_2__["makeDiv"])(handle.elem, null, ["title"], _translations__WEBPACK_IMPORTED_MODULE_3__["T"].shopUpgrades[upgradeId].name);
+            const title = Object(_core_utils__WEBPACK_IMPORTED_MODULE_2__["makeDiv"])(handle.elem, null, ["title"], (_translations__WEBPACK_IMPORTED_MODULE_3__["T"].shopUpgrades[upgradeId] || {}).name || upgradeId);
 
             // Title > Tier
             handle.elemTierLabel = Object(_core_utils__WEBPACK_IMPORTED_MODULE_2__["makeDiv"])(title, null, ["tier"]);
@@ -47249,7 +47258,7 @@ class HUDShop extends _base_hud_part__WEBPACK_IMPORTED_MODULE_5__["BaseHUDPart"]
             }
 
             // Set description
-            handle.elemDescription.innerText = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].shopUpgrades[upgradeId].description
+            handle.elemDescription.innerText = ((_translations__WEBPACK_IMPORTED_MODULE_3__["T"].shopUpgrades[upgradeId] || {}).description || `Speed x<currentMult> → x<newMult>`)
                 .replace("<currentMult>", Object(_core_utils__WEBPACK_IMPORTED_MODULE_2__["formatBigNumber"])(currentTierMultiplier))
                 .replace("<newMult>", Object(_core_utils__WEBPACK_IMPORTED_MODULE_2__["formatBigNumber"])(currentTierMultiplier + tierHandle.improvement));
 
@@ -54232,11 +54241,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const rocketShape = "CbCuCbCu:Sr------:--CrSrCr:CwCwCwCw";
-const finalGameShape = "RuCw--Cw:----Ru--";
-const preparementShape = "CpRpCp--:SwSwSwSw";
-const blueprintShape = "CbCbCbRb:CwCwCwCw";
-
 const namedShapes = {
     circle: "6CuCuCuCuCuCu",
     circleHalf: "6------CuCuCu",
@@ -54272,6 +54276,9 @@ const namedShapes = {
     windmillRed: "6WrWrWrWrWrWr",
     fanTriple: "6WpWpWpWpWpWp:6CwCwCwCwCwCw:6WpWpWpWpWpWp",
     fanQuadruple: "6WpWpWpWpWpWp:6CwCwCwCwCwCw:6WpWpWpWpWpWp:6CwCwCwCwCwCw",
+
+    bird: "6Sr----------:6--CgCg--CgCg:6Sb----Sb----:6--CwCw--CwCw",
+    scissors: "6Sr----------:6--CgCgCgCgCg:6----Sb------:6CwCw--CwCwCw",
 }
 
 // Tiers need % of the previous tier as requirement too
@@ -54281,7 +54288,18 @@ const tierGrowth = 2.5;
  * Generates all upgrades
  * @returns {Object<string, import("../game_mode").UpgradeTiers>} */
 function generateUpgrades(limitedVersion = false) {
-    const fixedImprovements = [0.5, 0.5, 1, 1, 2, 1, 1];
+    //                         1 1.5   2   3  4  6
+    const fixedImprovementsT1 = [0.5, 0.5, 1, 1, 2];
+    //                         6 7  8  9  10 12
+    const fixedImprovementsT2 = [1, 1, 1, 1, 2];
+    const maxSpeed = 30;
+
+    const fixedImprovements = fixedImprovementsT1.concat(fixedImprovementsT2);
+
+    while (fixedImprovements.reduce((v,e)=>v+1,1) < maxSpeed) {
+        fixedImprovements.push(0.5)
+    }
+
     const numEndgameUpgrades = limitedVersion ? 0 : 1000 - fixedImprovements.length - 1;
 
     function generateInfiniteUnlocks() {
@@ -54294,6 +54312,18 @@ function generateUpgrades(limitedVersion = false) {
             excludePrevious: true,
         }));
     }
+
+    // {
+    //     required: [{ shape: namedShapes.bouquet, amount: 25000 }],
+    //     excludePrevious: true,
+    // },
+    // {
+    //     required: [
+    //         { shape: namedShapes.bouquet, amount: 25000 },
+    //         { shape: namedShapes.logo, amount: 50000 },
+    //     ],
+    //     excludePrevious: true,
+    // },
 
     // Fill in endgame upgrades
     for (let i = 0; i < numEndgameUpgrades; ++i) {
@@ -54325,18 +54355,6 @@ function generateUpgrades(limitedVersion = false) {
             {
                 required: [{ shape: namedShapes.starCircleStar, amount: 25000 }],
             },
-            {
-                required: [{ shape: namedShapes.bouquet, amount: 25000 }],
-                excludePrevious: true,
-            },
-            {
-                required: [
-                    { shape: namedShapes.bouquet, amount: 25000 },
-                    { shape: namedShapes.logo, amount: 50000 },
-                ],
-                excludePrevious: true,
-            },
-            ...generateInfiniteUnlocks(),
         ],
 
         miner: [
@@ -54355,18 +54373,6 @@ function generateUpgrades(limitedVersion = false) {
             {
                 required: [{ shape: namedShapes.fan, amount: 50000 }],
             },
-            {
-                required: [{ shape: namedShapes.bouquet, amount: 25000 }],
-                excludePrevious: true,
-            },
-            {
-                required: [
-                    { shape: namedShapes.bouquet, amount: 25000 },
-                    { shape: namedShapes.logo, amount: 50000 },
-                ],
-                excludePrevious: true,
-            },
-            ...generateInfiniteUnlocks(),
         ],
 
         processors: [
@@ -54385,18 +54391,6 @@ function generateUpgrades(limitedVersion = false) {
             {
                 required: [{ shape: namedShapes.clown, amount: 50000 }],
             },
-            {
-                required: [{ shape: namedShapes.bouquet, amount: 25000 }],
-                excludePrevious: true,
-            },
-            {
-                required: [
-                    { shape: namedShapes.bouquet, amount: 25000 },
-                    { shape: namedShapes.logo, amount: 50000 },
-                ],
-                excludePrevious: true,
-            },
-            ...generateInfiniteUnlocks(),
         ],
 
         painting: [
@@ -54415,18 +54409,6 @@ function generateUpgrades(limitedVersion = false) {
             {
                 required: [{ shape: namedShapes.fanQuadruple, amount: 50000 }],
             },
-            {
-                required: [{ shape: namedShapes.bouquet, amount: 25000 }],
-                excludePrevious: true,
-            },
-            {
-                required: [
-                    { shape: namedShapes.bouquet, amount: 25000 },
-                    { shape: namedShapes.logo, amount: 50000 },
-                ],
-                excludePrevious: true,
-            },
-            ...generateInfiniteUnlocks(),
         ],
     };
 
@@ -54459,6 +54441,28 @@ function generateUpgrades(limitedVersion = false) {
                 tier.amount = Object(_core_utils__WEBPACK_IMPORTED_MODULE_0__["findNiceIntegerValue"])(tier.amount * tierGrowth);
             });
         }
+    }
+
+    upgrades.global = [];
+    const globalShapes = [
+        namedShapes.bouquet,
+        namedShapes.logo,
+        namedShapes.rocket,
+        namedShapes.bird,
+        namedShapes.scissors,
+    ];
+    for (let i = 0; i < 5; i++) {
+        let upgrade = {
+            required: [],
+            improvement: 1,
+        };
+        for (let j = 0; j <= i; j++) {
+            upgrade.required.push({
+                shape: globalShapes[j],
+                amount: 1000 * (5 + i) * (5 + j),
+            });
+        }
+        upgrades.global.push(upgrade);
     }
 
     // VALIDATE
@@ -54683,7 +54687,7 @@ class HexagonalGameMode extends _game_mode__WEBPACK_IMPORTED_MODULE_1__["GameMod
     }
 
     getBlueprintShapeKey() {
-        return blueprintShape;
+        return namedShapes.blueprint;
     }
 
     getLevelDefinitions() {
