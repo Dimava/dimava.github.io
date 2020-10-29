@@ -44090,7 +44090,7 @@ class HUDDebugInfo extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDP
      */
     onModeChanged(mode) {
         this.element.setAttribute("data-mode", mode);
-        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"7d6a70a7"}`;
+        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"8c9d870f"}`;
     }
 
     /**
@@ -52748,8 +52748,11 @@ class MapChunk {
             key = subShape.repeat(6);
         } else if (distanceToOriginInChunks < 15) {
             // Later patches can also have mixed ones
-            const subShapeA = this.internalGenerateRandomSubShape(rng, weights);
-            const subShapeB = this.internalGenerateRandomSubShape(rng, weights);
+            let subShapeA = this.internalGenerateRandomSubShape(rng, weights);
+            let subShapeB = this.internalGenerateRandomSubShape(rng, weights);
+            if (subShapeA == 'Wu') {
+                subShapeB = 'Ru';
+            }
             key = subShapeA.repeat(3) + subShapeB.repeat(3);
         } else {
             // Finally there is a mix of everything
@@ -63054,8 +63057,8 @@ if (window.coreThreadLoadedCb) {
 // }
 
 console.log(
-    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"7d6a70a7"}%c on %c${new Date(
-        1603920192569
+    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"8c9d870f"}%c on %c${new Date(
+        1603970652726
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -71815,7 +71818,7 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_3__["GameSt
 
                     <div class="lower">
                         <button class="resetApp styledButton">Reset App</button>
-                        <i>Build ${"1.2.0"} @ ${"7d6a70a7"}</i>
+                        <i>Build ${"1.2.0"} @ ${"8c9d870f"}</i>
                     </div>
                 </div>
         `;
@@ -71947,14 +71950,14 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1603920192569;
+        const lastBuildMs = new Date().getTime() - 1603970652726;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
 
         labelVersion.innerHTML = `
             <span class='version'>
-                ${"1.2.0"} @ ${version} @ ${"7d6a70a7"}
+                ${"1.2.0"} @ ${version} @ ${"8c9d870f"}
             </span>
             <span class='buildTime'>
                 ${_translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.buildDate.replace("<at-date>", lastBuildText)}<br />
