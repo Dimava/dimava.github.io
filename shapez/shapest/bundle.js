@@ -40826,7 +40826,7 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
      * @returns {number} items / sec
      */
     getBeltBaseSpeed() {
-        return _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].beltSpeedItemsPerSecond * (this.upgradeImprovements.belt + this.upgradeImprovements.global);
+        return _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].beltSpeedItemsPerSecond * this.upgradeImprovements.belt * this.upgradeImprovements.global;
     }
 
     /**
@@ -40834,7 +40834,7 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
      * @returns {number} items / sec
      */
     getUndergroundBeltBaseSpeed() {
-        return _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].beltSpeedItemsPerSecond * (this.upgradeImprovements.belt + this.upgradeImprovements.global);
+        return _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].beltSpeedItemsPerSecond * this.upgradeImprovements.belt * this.upgradeImprovements.global;
     }
 
     /**
@@ -40842,7 +40842,7 @@ class HubGoals extends _savegame_serialization__WEBPACK_IMPORTED_MODULE_3__["Bas
      * @returns {number} items / sec
      */
     getMinerBaseSpeed() {
-        return _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].minerSpeedItemsPerSecond * (this.upgradeImprovements.miner + this.upgradeImprovements.global);
+        return _core_config__WEBPACK_IMPORTED_MODULE_0__["globalConfig"].minerSpeedItemsPerSecond * this.upgradeImprovements.miner * this.upgradeImprovements.global;
     }
 
     /**
@@ -44090,7 +44090,7 @@ class HUDDebugInfo extends _base_hud_part__WEBPACK_IMPORTED_MODULE_0__["BaseHUDP
      */
     onModeChanged(mode) {
         this.element.setAttribute("data-mode", mode);
-        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"8c9d870f"}`;
+        this.versionElement.innerText = `${"1.2.0"} @ ${"dev"} @ ${"8dcc0b13"}`;
     }
 
     /**
@@ -47012,6 +47012,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shape_definition__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../shape_definition */ "./src/js/game/shape_definition.js");
 /* harmony import */ var _base_hud_part__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../base_hud_part */ "./src/js/game/hud/base_hud_part.js");
 /* harmony import */ var _dynamic_dom_attach__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../dynamic_dom_attach */ "./src/js/game/hud/dynamic_dom_attach.js");
+/* harmony import */ var _items_shapest_item__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../items/shapest_item */ "./src/js/game/items/shapest_item.js");
+
 
 
 
@@ -47097,41 +47099,35 @@ class HUDShapeViewer extends _base_hud_part__WEBPACK_IMPORTED_MODULE_5__["BaseHU
 
         this.currentShapeKey = definition.getHash();
 
-        const layers = definition.layers;
+        const layers = new _items_shapest_item__WEBPACK_IMPORTED_MODULE_7__["ShapestItem"](this.currentShapeKey).layers;
         this.contentDiv.setAttribute("data-layers", layers.length);
 
         for (let i = layers.length - 1; i >= 0; --i) {
             const layerElem = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["makeDiv"])(this.renderArea, null, ["layer", "layer-" + i]);
 
-            let fakeLayers = [];
-            for (let k = 0; k < i; ++k) {
-                fakeLayers.push([null, null, null, null]);
-            }
-            fakeLayers.push(layers[i]);
-
-            const thisLayerOnly = new _shape_definition__WEBPACK_IMPORTED_MODULE_4__["ShapeDefinition"]({ layers: fakeLayers });
+            const thisLayerOnly = new _items_shapest_item__WEBPACK_IMPORTED_MODULE_7__["ShapestItem"]('e :'.repeat(i) + layers[i]);
             const thisLayerCanvas = thisLayerOnly.generateAsCanvas(160);
             layerElem.appendChild(thisLayerCanvas);
 
             for (let quad = 0; quad < 4; ++quad) {
-                const quadElem = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["makeDiv"])(layerElem, null, ["quad", "quad-" + quad]);
+                // const quadElem = makeDiv(layerElem, null, ["quad", "quad-" + quad]);
 
-                const contents = layers[i][quad];
-                if (contents) {
-                    const colorLabelElem = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["makeDiv"])(
-                        quadElem,
-                        null,
-                        ["colorLabel"],
-                        _translations__WEBPACK_IMPORTED_MODULE_2__["T"].ingame.colors[contents.color]
-                    );
-                } else {
-                    const emptyLabelElem = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["makeDiv"])(
-                        quadElem,
-                        null,
-                        ["emptyLabel"],
-                        _translations__WEBPACK_IMPORTED_MODULE_2__["T"].ingame.shapeViewer.empty
-                    );
-                }
+                // const contents = layers[i][quad];
+                // if (contents) {
+                //     const colorLabelElem = makeDiv(
+                //         quadElem,
+                //         null,
+                //         ["colorLabel"],
+                //         T.ingame.colors[contents.color]
+                //     );
+                // } else {
+                //     const emptyLabelElem = makeDiv(
+                //         quadElem,
+                //         null,
+                //         ["emptyLabel"],
+                //         T.ingame.shapeViewer.empty
+                //     );
+                // }
             }
         }
     }
@@ -54288,8 +54284,8 @@ const tierGrowth = 2.5;
  * Generates all upgrades
  * @returns {Object<string, import("../game_mode").UpgradeTiers>} */
 function generateUpgrades(limitedVersion = false) {
-    //                         1 1.5   2   3  4  6
-    const fixedImprovementsT1 = [0.5, 0.5, 1, 1, 2];
+    //                         1 2  3  4  6  8
+    const fixedImprovementsT1 = [1, 1, 1, 2, 2];
     //                         6 7  8  9  10 12
     const fixedImprovementsT2 = [1, 1, 1, 1, 2];
     const maxSpeed = 30;
@@ -54415,12 +54411,12 @@ function generateUpgrades(limitedVersion = false) {
         namedShapes.bird,
         namedShapes.scissors,
     ];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 8; i++) {
         let upgrade = {
             required: [],
-            improvement: 1,
+            improvement: 1 / 16,
         };
-        for (let j = 0; j <= i; j++) {
+        for (let j = 0; j <= i && j < globalShapes.length; j++) {
             upgrade.required.push({
                 shape: globalShapes[j],
                 amount: 1000 * (5 + i) * (5 + j),
@@ -63090,8 +63086,8 @@ if (window.coreThreadLoadedCb) {
 // }
 
 console.log(
-    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"8c9d870f"}%c on %c${new Date(
-        1603970652726
+    `%cshapez.io ️%c\n© 2020 Tobias Springer IT Solutions\nCommit %c${"8dcc0b13"}%c on %c${new Date(
+        1603996663748
     ).toLocaleString()}\n`,
     "font-size: 35px; font-family: Arial;font-weight: bold; padding: 10px 0;",
     "color: #aaa",
@@ -71851,7 +71847,7 @@ class PreloadState extends _core_game_state__WEBPACK_IMPORTED_MODULE_3__["GameSt
 
                     <div class="lower">
                         <button class="resetApp styledButton">Reset App</button>
-                        <i>Build ${"1.2.0"} @ ${"8c9d870f"}</i>
+                        <i>Build ${"1.2.0"} @ ${"8dcc0b13"}</i>
                     </div>
                 </div>
         `;
@@ -71983,14 +71979,14 @@ class SettingsState extends _core_textual_game_state__WEBPACK_IMPORTED_MODULE_0_
 
     renderBuildText() {
         const labelVersion = this.htmlElement.querySelector(".buildVersion");
-        const lastBuildMs = new Date().getTime() - 1603970652726;
+        const lastBuildMs = new Date().getTime() - 1603996663748;
         const lastBuildText = Object(_core_utils__WEBPACK_IMPORTED_MODULE_1__["formatSecondsToTimeAgo"])(lastBuildMs / 1000.0);
 
         const version = _translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.versionBadges["dev"];
 
         labelVersion.innerHTML = `
             <span class='version'>
-                ${"1.2.0"} @ ${version} @ ${"8c9d870f"}
+                ${"1.2.0"} @ ${version} @ ${"8dcc0b13"}
             </span>
             <span class='buildTime'>
                 ${_translations__WEBPACK_IMPORTED_MODULE_3__["T"].settings.buildDate.replace("<at-date>", lastBuildText)}<br />
