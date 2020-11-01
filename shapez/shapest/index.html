@@ -26,18 +26,8 @@
     <meta http-equiv="Expires" content="0">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="canonical" href="https://shapez.io">
-    <link rel="preconnect" href="https://analytics.shapez.io" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="none" onload="this.media=&#34;all&#34;" href="main.css" integrity="sha256-4NcShSKp9gvclDZsI3kQ5EjQPOYyuu/MrKdsOz8g400=">
-    <script src="https://www.googletagmanager.com/gtag/js?id=UA-165342524-1" async></script>
-    <script>
-        function gtag() {
-            dataLayer.push(arguments)
-        }
-        window.dataLayer = window.dataLayer || [], gtag("js", new Date), gtag("config", "UA-165342524-1", {
-            anonymize_ip: !0
-        })
-    </script>
-    <script src="https://www.googleoptimize.com/optimize.js?id=OPT-M5NHCV7" async></script>
+    <link rel="preconnect" href="http://localhost:5005" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="none" onload="this.media=&#34;all&#34;" href="main.css">
     <link rel="preload" href="res/fonts/GameFont.woff2" crossorigin="anonymous" as="font">
     <style type="text/css">
         @font-face {
@@ -92,8 +82,8 @@
     <script type="text/javascript">
         var bundleSrc = "bundle.js",
             bundleSrcTranspiled = "bundle-transpiled.js",
-            bundleIntegrity = "sha256-5yAEaI3gafwGM6xMA1TGpsaKt3ab8AaTSWlOHg8YeHI=",
-            bundleIntegrityTranspiled = "sha256-+6J2JYCow6fBRP1bS9/qybw1mnhnBFlQyQIZRJTBRTE=";
+            bundleIntegrity = null,
+            bundleIntegrityTranspiled = null;
         ! function() {
             var e = null,
                 n = !1;
