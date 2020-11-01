@@ -18,3 +18,5 @@ git add -A
 git commit -m "_push-shapest"
 
 git push
+
+pause

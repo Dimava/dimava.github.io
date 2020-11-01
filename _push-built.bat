@@ -8,3 +8,5 @@ git add -A
 git commit -m "_push-built"
 
 git push
+
+pause

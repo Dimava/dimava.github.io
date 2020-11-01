@@ -20,3 +20,5 @@ git add -A
 git commit -m "_push-dev"
 
 git push
+
+pause

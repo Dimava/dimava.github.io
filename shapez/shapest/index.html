@@ -92,26 +92,26 @@
     <script type="text/javascript">
         var bundleSrc = "bundle.js",
             bundleSrcTranspiled = "bundle-transpiled.js",
-            bundleIntegrity = "sha256-kxzJ0FMmXtDCf2cPcdYecvtoqpwg2eeNa0kpXSRLbXE=",
-            bundleIntegrityTranspiled = "sha256-jhYTc9P0hWJk1HiBeLkqI7NJLDFqCMqfsI9xlTZzZSc=";
+            bundleIntegrity = "sha256-yyjFFXglRinKeI5AzckoGxsVegmBe8CC1B2lDu+04h8=",
+            bundleIntegrityTranspiled = "sha256-tVpusLUhCkSPb3EMWSeK9kscaRCW+j4pfOyEa8E1CCE=";
         ! function() {
             var e = null,
                 n = !1;
 
             function r(e, n, r, t, o) {
                 console.error("👀 Init Error:", e, n, r, t, o);
-                var d = document.createElement("div");
-                d.style.position = "fixed", d.style.top = "0", d.style.right = "0", d.style.bottom = "0", d.style.left = "0", d.style.zIndex = "29999", d.style.backgroundColor = "#222429", d.style.display = "flex", d.style.justifyContent = "center", d.style.alignItems = "center";
                 var l = document.createElement("div");
-                l.style.color = "#fff", l.style.fontFamily = "GameFont, sans-serif", l.style.fontSize = "15px", l.style.padding = "30px", l.style.textAlign = "center", d.appendChild(l);
+                l.style.position = "fixed", l.style.top = "0", l.style.right = "0", l.style.bottom = "0", l.style.left = "0", l.style.zIndex = "29999", l.style.backgroundColor = "#222429", l.style.display = "flex", l.style.justifyContent = "center", l.style.alignItems = "center";
+                var d = document.createElement("div");
+                d.style.color = "#fff", d.style.fontFamily = "GameFont, sans-serif", d.style.fontSize = "15px", d.style.padding = "30px", d.style.textAlign = "center", l.appendChild(d);
                 var a = document.createElement("h3");
-                a.style.color = "#ef5072", a.innerText = "Error", a.style.marginBottom = "40px", a.style.fontSize = "45px", l.appendChild(a);
+                a.style.color = "#ef5072", a.innerText = "Error", a.style.marginBottom = "40px", a.style.fontSize = "45px", d.appendChild(a);
                 var i = document.createElement("p");
-                if (i.style.color = "#eee", i.innerText = o || e && e.message || e || "Unknown Error", l.appendChild(i), n) {
+                if (i.style.color = "#eee", i.innerText = o || e && e.message || e || "Unknown Error", d.appendChild(i), n) {
                     var s = document.createElement("p");
-                    s.style.color = "#777", s.innerText = s + ":" + r + ":" + t, l.appendChild(s)
+                    s.style.color = "#777", s.innerText = s + ":" + r + ":" + t, d.appendChild(s)
                 }
-                document.documentElement.appendChild(d)
+                document.documentElement.appendChild(l)
             }
 
             function t(e, n) {
@@ -123,12 +123,12 @@
                 throw console.error("👀 Failed to load bundle!"), console.error("👀 Error was:", e), new Error("Core load failed.")
             }
 
-            function d() {
+            function l() {
                 if (!n) throw console.error("👀 Got no core callback"), new Error("Core thread failed to respond within time.")
             }
 
-            function l() {
-                console.log("👀 Core loaded at", Math.floor(performance.now()), "ms"), e = setTimeout(d, 15e3), window.removeEventListener("error", r), window.removeEventListener("unhandledrejection", r)
+            function d() {
+                console.log("👀 Core loaded at", Math.floor(performance.now()), "ms"), e = setTimeout(l, 15e3), window.removeEventListener("error", r), window.removeEventListener("unhandledrejection", r)
             }
             window.addEventListener("error", r), window.addEventListener("unhandledrejection", r), window.coreThreadLoadedCb = function() {
                 console.log("👀 Core responded at", Math.floor(performance.now()), "ms"), clearTimeout(e), n = !(e = null)
@@ -137,8 +137,8 @@
             a.addEventListener("error", function(e) {
                 console.warn("👀 ES6 Script not supported, loading transpiled code."), console.warn("👀 Error was:", e);
                 var n = t(bundleSrcTranspiled);
-                n.addEventListener("error", o), n.addEventListener("load", l), document.head.appendChild(n)
-            }), a.addEventListener("load", l), document.head.appendChild(a)
+                n.addEventListener("error", o), n.addEventListener("load", d), document.head.appendChild(n)
+            }), a.addEventListener("load", d), document.head.appendChild(a)
         }()
     </script>
 </head>

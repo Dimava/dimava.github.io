@@ -8,3 +8,5 @@ git add -A
 git commit -m "_push-modz"
 
 git push
+
+pause

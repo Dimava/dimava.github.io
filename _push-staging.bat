@@ -18,3 +18,5 @@ git add -A
 git commit -m "_push-staging"
 
 git push
+
+pause
