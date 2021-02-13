@@ -1,0 +1,94 @@
+<div class="part" data-bind="
+	draggable: {
+		dragObject: part,
+		restrict: {
+			restriction: '.part_sandbox'
+		},
+		onstart: function(ev) {
+			/* Actually I already know where it needs to go.. */
+			ev.target.setAttribute('data-x', 0);
+			ev.target.setAttribute('data-y', 0);
+			ev.target.style.transition = '';
+			game.dragging_part(part);
+
+		},
+		onend: function(ev) {
+				ev.target.style.transition = 'transform 0.25s';
+				ev.target.style.transform = '';
+				game.dragging_part(null);
+		},
+		onmove: function(event) {
+			var target = event.target,
+		        // keep the dragged position in the data-x/data-y attributes
+		        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+		        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+		    // translate the element
+		    target.style.webkitTransform =
+		    target.style.transform =
+		      'translate(' + x + 'px, ' + y + 'px)';
+
+		    // update the posiion attributes
+		    target.setAttribute('data-x', x);
+		    target.setAttribute('data-y', y);
+		},
+		snap: {
+
+		}
+	},
+	right_click: _.bind(part.double_tap, part),
+        double_tap: _.bind(part.double_tap, part),
+        tap: _.bind(part.tap, part),
+        event: {
+            mouseover: function(part, event) {
+                    game.hovered_part(part);
+            },
+            mouseout: function(part, event) {
+                    if(game.hovered_part() !== part) return;
+                    game.hovered_part(null);
+            },
+        },
+        qtip_template: {
+                name: 'kot/part_tooltip.html',
+                data: part,
+                as: 'part',
+                qtip: {
+                        'show': {
+                                'effect': false,
+                        },
+                        'title': 'title1',
+                        'content': {
+                                'title': part.name(),
+                                'text': 'foo',
+                        },
+                        'style': {
+                                'classes': 'qtip-dark'
+                        },
+                        'hide': {
+                                'fixed': false,
+                                'effect': false,
+                        },
+                        'position': {
+                                'my': 'top right',
+                                'at': 'top left',
+                                viewport: $(window),
+                                target: 'mouse',
+                                adjust: {
+                                    screen: true,
+                                    method: 'flip',
+                                },
+                        }
+                }
+        }
+">
+	<div class="part_raph" data-bind="
+		raphael: _.bind(part.raph, part)
+	">
+		<div class="glyph_holder" data-bind="css: part.glyph_holder_css()">
+			<span class="glyph glyph1 magi" data-bind="css: part.glyph_classes()[0]"></span>
+			<span class="glyph glyph2 magi" data-bind="css: part.glyph_classes()[1]"></span>
+			<span class="glyph glyph3 magi" data-bind="css: part.glyph_classes()[2]"></span>
+
+		</div>
+	</div>
+</div>

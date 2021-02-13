@@ -1,0 +1,21 @@
+<div class="trash_slot" data-bind="
+            dropzone: {
+                ondropenter: function(ev) {
+                    //console.log('ondropenter', ev);
+                    ev.draggable.dropped_on = game.trash_slot();
+                },
+                ondropleave: function(ev) {
+                    //console.log('ondropleave', ev);
+                    ev.draggable.dropped_on = null;
+                },
+
+                ondrop: function(ev) {
+                    //console.log('ondrop', ev);
+                    if(game.animating_shell()) return;
+
+                    game.trash_slot().set_part(ev.draggable.dragObject);
+                },
+                overlap: 'center'
+            }
+        ">
+    </div>

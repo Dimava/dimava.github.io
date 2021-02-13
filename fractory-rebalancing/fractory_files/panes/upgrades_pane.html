@@ -1,0 +1,55 @@
+<div class="pane upgrades" data-bind="visible: game.current_pane() === 'upgrades'">
+    <p>
+        Spend Arcana to increase the effective value of a stat on all crystals.<br>
+        Shift click to buy as many as you can.<br>
+        Right click to remove a level.
+    </p>
+    <table class="shop_table noselect">
+        <thead>
+            <th>Name</th>
+            <th>Level</th>
+            <th>Bonus</th>
+            <th>Next Cost</th>
+            <th>Next Bonus</th>
+            <th>Description</th>
+        </thead>
+        <tbody>
+    <!-- ko foreach: {
+        data: _.chain(game.upgrades_list()).filter(function(ug) { return ug.available(game); }).value(),
+        as: 'ug'
+    } -->
+
+        <tr class="upgrade available_upgrade" data-bind="
+            click: function(data, ev) {
+                if(ev.mouseButton != 2)
+                {
+                    game.buy_upgrade(ug,ev);
+                }
+            },
+            right_click: function(ev) {
+
+                game.unbuy_upgrade(ug);
+
+            },
+            css: ug.css(game),
+        ">
+            <td class="name" data-bind="text: ug.name()"></td>
+            <td class="points">
+                <span data-bind="text: ug.points()"></span>
+                <!-- ko if: ug.max_points(game) !== Infinity -->
+                / <span data-bind="text: ug.max_points(game)"></span>
+                <!-- /ko -->
+            </td>
+            <td class="current_factor" data-bind="text: ug.boost_factor().formatByPercent()"></td>
+            <td class="arcana_cost" data-bind="text: ug.arcana_cost().formatBig()"></td>
+            <td class="next_increase" data-bind="
+                text: (ug.boost_factor(ug.points() + 1) - ug.boost_factor() + 1).formatByPercent()
+            "></td>
+            <td class="description">
+                Boosts the effective value of <span data-bind="text: ug.mech().props().noun"></span>.
+            </td>
+        </tr>
+    <!-- /ko -->
+        </tbody>
+    </table>
+</div>

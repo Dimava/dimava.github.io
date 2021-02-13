@@ -1,0 +1,39 @@
+<div class="pane controls_pane" data-bind="visible: game.current_pane() === 'controls'">
+    <p>
+        <b>All hotkeys work inside your inventory as well.</b><br>
+        <br>
+        All crystals use the corresponding tier from their shop page.<br>
+        <br>
+        Hover over the '< >' symbol in simple crystal shop page and scroll your mousewheel to cycle through available types.<br>
+        Left and rightclicking the button also works.<br>
+        Hover and scroll over the tier number to cycle it in the same manner.<br>
+        <br>
+        Rightclick or doubleclick a crystal to transfer it to your inventory from a node.<br>
+        Rightclick or doubleclick a node to put the first crystal from your inventory into it.<br>
+        <br>
+        Rightclick or doubleclick a crystal in the shop to buy it into the first available slot in your inventory.
+        <br>
+        Hold shift and move your mouse over links to enable them.<br>
+        Hold control and move your mouse over links to disable them.<br>
+        <br>
+        Right click on the key to rebind.<br>
+        Bind to escape to revert to default.<br>
+        You can use regular keys, keys+ctrl-shift-alt, basically any combination, even key sequences, go nuts!
+    </p>
+    <table class="controls_table">
+        <tbody>
+            <!-- ko foreach: {data: game.keybindings.binds(), as: 'keybind'} -->
+            <tr class="binding_row" data-bind="if : game.keybindings.unlocked(keybind)">
+                <td class="key_td" data-bind="
+                    text: keybind.key(),
+                    right_click: function(){
+                        game.keybindings.record_rebind(keybind);
+                    }
+                    "></td>
+                <td class="description_td" data-bind="text: keybind.description"></td>
+            </tr>
+            <!-- /ko -->
+        </tbody>
+    </table>
+    <button data-bind="click: function() {game.keybindings.reset_to_defaults()}" class ="reset_keybindings">Reset to defaults</button>
+</div>

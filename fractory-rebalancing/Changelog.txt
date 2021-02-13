@@ -1,0 +1,47 @@
+CHANGELOG
+
+Beta 0.9.3 05.12.2016
+
+Finalised the hotkeys, they are now saved and loaded, have safeguards against conflicts, properly show up in controls pane
+
+Beta 0.9.3 04.12.2016
+
+Rewrote the Controls pane properly, now uses the same code as the rest of the panes
+Made all hotkeys rebindable!
+They are not saved yet, however, and will revert to defaults on every page refresh
+
+Beta 0.9.2 01.12.2016
+
+Added the blank generator gem, keybinds to place it and talents for it!
+Changed the method for buying maximum arcana upgrades at once to non-looped
+
+Beta 0.9.1 01.12.2016
+
+Made the maximum inventory size 3 columns by 7 rows, each point in 'bigger inventory' grants 3 slots, you start with 6
+Reworked the code in keybindings to accomodate shift\ctr\alt modifiers for later
+Hotkeys for buying crystals are now usable inside the inventory
+Crystals can now be bought from the shop into your inventory by right clicking
+Tooltips now shouldn't go offscreen and follow your mouse smoothly
+
+Beta 0.9.1 28.11.2016
+
+Added a button to show controls, most of this changelog is now there
+Added the ability to scroll through simple crystal types and crystal tiers using mousewheel (both forward and backwards) - hover over the ">" button and scroll for types, hover over the tier plate for tiers
+Fixed simple crystal types getting stuck
+Fixed self-modifying crystals (power, lens, etc.)
+Changed the styles in fractory.html to keep shop slots from bouncing around at high tiers (smaller font + wider slots)
+Added the ability to quickly activate\deactivate links (hold shift\ctrl and move the mouse over them)
+Holding shift when buying Enchanting upgrades now buys as many as you can in one click
+Added hotkeys to place all gem types, 1-0 for the first 10, shift + 1-0 for the rest
+
+Added hotkeys:
+q: quickbuy - buys a crystal from current simple shop slot and places it, if possible
+d: delete - deletes a crystal from a node
+r: quick relay - places a relay, if possible
+c: quick conduit - places a conduit, if possible
+f: quick fractal - places a correct (lowest suitable) tier of fractal, if possible (so it will place a T1 if you're on the main layer, a T2 if you're in a T1 fractal and so on)
+[: copy fractal - copies current fractal's link layout (Credit to https://www.reddit.com/user/JadeE1024)
+]: paste fractal - pastes saved fractal's link layout onto the current one (Credit to https://www.reddit.com/user/JadeE1024)
+shift+]: clear all links - deactivates all links in the current fractal (Credit to https://www.reddit.com/user/JadeE1024)
+shift+[: activate all links - activates all links in the current fractal (Credit to https://www.reddit.com/user/JadeE1024)
+shift+space: pause\unpause

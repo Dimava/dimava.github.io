@@ -1,0 +1,109 @@
+    <div class="shop_bar">
+        <div class="shop_label">Conjure</div>
+
+        <div class="shop_slot_holder">
+            <!-- ko foreach: {
+                data: game.shop_slots(),
+                as: 'ss'
+            } -->
+                <div class="shop_entry">
+                    <div class="shop_slot_label" data-bind="
+                        text: {
+                            'blank': 'Blank',
+                            'single': 'Simple',
+                            'multi': 'Complex',
+                            'fractal': 'Fractal',
+                            'conduit': 'Conduit',
+                            'capacitor': 'Capacitor',
+                            'relay': 'Relay',
+                            'hopper': 'Hopper',
+                            'blank_generator': 'Blank Generator',
+                        }[ss.mode()]
+                    "></div>
+                    <div class="shop_slot">
+                        <!-- ko if: ss.part() -->
+                            <!-- ko with: {ss: ss, part: ss.part(), shell: ss.shell } -->
+                                <!-- ko template: {
+                                        name: 'kot/part.html',
+                                        data: part,
+                                        as: 'part',
+                                        shell: ss.shell,
+                                } --><!-- /ko -->
+                            <!-- /ko -->
+                        <!-- /ko -->
+                    </div>
+                    <!-- ko if: ss.part() -->
+                    <div class="shop_price">
+                        <i class="icon-mana"></i>
+                        <span data-bind="text: ss.part().mana_cost().formatBig()"></span>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if: ss.mode() === 'single' || ss.mode() === 'multi' -->
+                    <div>
+                        <button data-bind="click: function() { ss.restock(); }">Reroll</button>
+                        <!-- ko if: ss.mode() === 'single' -->
+                        <button data-bind="click: function() {ss.next_stat();}, right_click: function() {ss.prev_stat();}, event:{mousewheel: function(handler,event)
+                                {
+                                    if(event.originalEvent.wheelDelta<0)
+                                    {
+                                        ss.next_stat();
+                                    }
+                                    else
+                                    {
+                                    if(ss.mode() === 'fractal' && ss.tier()>1)
+                                        {
+                                            ss.tier.inc(-1);
+                                            ss.restock();
+                                            return;
+                                        }
+                                        ss.prev_stat();
+                                    }
+                                }}">&lt; &gt;</button>
+                        <!-- /ko -->
+                    </div>
+                    <!-- /ko -->
+                    <div class="tier_selector" data-bind="visible: ss.max_tier() > 1,
+                         event:{mousewheel: function(handler,event)
+                                {
+                                    if(event.originalEvent.wheelDelta<0)
+                                    {
+                                    if(ss.tier()< ss.max_tier())
+                                        {
+                                            ss.tier.inc(1);
+                                            ss.restock();
+                                            return;
+                                        }
+                                    }
+                                    else
+                                    {
+                                    if(ss.tier()>1)
+                                        {
+                                            ss.tier.inc(-1);
+                                            ss.restock();
+                                            return;
+                                        }
+                                    }
+                                }}
+                         ">
+                        <button class="tier_down" data-bind="
+                            disable: ss.tier() <= 1,
+                            click: function() {
+                                ss.tier.inc(-1);
+                                ss.restock();
+                            }
+                        ">-</button>
+                        <span class="tier" data-bind="text: ss.tier()"></span>
+                        <button class="tier_up" data-bind="
+                            disable: ss.tier() >= ss.max_tier(),
+                            click: function() {
+                                ss.tier.inc(1);
+                                ss.restock();
+                            }
+                        ">+</button>
+
+                    </div>
+                </div>
+            <!-- /ko -->
+        </div>
+
+    </div>

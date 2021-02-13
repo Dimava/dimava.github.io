@@ -1,0 +1,470 @@
+body {
+	color: white;
+	background-color: #222;
+	//background-color: grey;
+
+}
+scene_holder {
+	width:910px;
+	height: 620px;
+}
+.scene, {
+	border: 1px dotted white;
+	position: relative;
+	width: 910px;
+	height: 620px;
+}
+
+.shell {
+	border: 1px dotted red;
+	position: absolute;
+	.links {
+		position: absolute;
+		overflow: hidden;
+		width: 720px;
+		height: 640px;
+	}
+}
+.shell_holder {
+	position: relative;
+	width: 720px;
+	height: 640px;
+	float: left;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.inventory_holder {
+	width: 230px;
+	float: left;
+	.inventory_label {
+		font-size: 18pt;
+		font-weight: bold;
+		text-align: center;
+		padding-bottom: 3px;
+	}
+}
+.shop_bar {
+	width: 290px;
+	float: left;
+
+	.shop_label {
+		font-size: 18pt;
+		font-weight: bold;
+		text-align: center;
+		padding-bottom: 3px;
+	}
+
+	.shop_slot_label {
+		text-decoration: underline;
+		text-align: center;
+	}
+
+	.shop_slot_holder {
+		.shop_entry {
+			text-align: center;
+			background-color: #444;
+			float: left;
+			margin-right: 4px;
+			margin-bottom: 4px;
+			width: 90px;
+			height: 145px;
+			padding: 1px;
+			.shop_slot {
+				position: relative;
+				width: 60px;
+				height: 60px;
+				display: inline-block;
+			}
+                        .shop_price {
+                                font-size: 10pt;
+                        }
+
+		}
+		button {
+			padding: 1px 1px;
+			font-size: 8pt;
+			font-weight: bold;
+		}
+	}
+}
+
+.ui-dialog-title {
+	font-size: 8pt !important;
+	margin: 2px !important;
+}
+.ui-dialog-titlebar {
+	padding: 4px 5px !important;
+}
+
+.node {
+	z-index: 1;
+	border: 1px dotted green;
+	position: absolute;
+}
+
+.part_holder {
+	position: absolute;
+	width: 60px;
+	height: 60px;
+	//border: 1px dotted white;
+	top: 0px;
+	left: 0px;
+	//background-color: rgba(255,255,255,0.2);
+}
+
+.part {
+	position: absolute !important;
+	left: 0;
+	top: 0;
+	width: 60px;
+	height: 60px;
+
+}
+.inventory_slot {
+	//position: absolute;
+	position: relative;
+	width: 60px;
+	height: 60px;
+	border: 2px dotted orange;
+	margin-right: 10px;
+	margin-top: 10px;
+	//float: left;
+	display: inline-block;
+}
+
+
+.trash_slot {
+	//position: absolute;
+	position: relative;
+	width: 60px;
+	height: 60px;
+	border: 2px dotted red;
+	margin-right: 10px;
+	margin-top: 10px;
+	//float: left;
+	display: inline-block;
+	background-color: rgba(255, 225, 225, 0.8);
+}
+
+
+.link {
+	background-color: rgba(0, 255, 255, 0.1);
+	position: absolute;
+	overflow: hidden;
+	//z-index: -1;
+	&.active {
+		background-color: rgba(0, 255, 128, 0.5);
+		&.side {
+			background-color: rgba(128, 128, 40, 0.5);
+		}
+		&.disconnected {
+			background-color: rgba(128, 40, 40, 0.5);
+		}
+	}
+	.flow_arrow {
+		text-align: center;
+	}
+}
+
+.paused .link.active {
+	background-color: rgba(0, 0, 128, 0.5);
+}
+
+.stat_table {
+	.stat_row {
+		font-size: 8pt;
+		.stat_noun {
+			font-weight: bold;
+			color: white;
+		}
+		.total {
+			.value {
+				color: #3f3;
+				font-weight: bold;
+			}
+			.buff {
+				color: cyan;
+				font-style: italic;
+			}
+		}
+		.description {
+			width: 300px;
+			.factor {
+				color: yellow;
+				font-weight: bold;
+			}
+		}
+	}
+}
+.controls_table{
+    tr,td{
+        border: 1px solid white;
+    }
+    .key_td{
+        text-align: center;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .description_td{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+img.flip {
+			transform: scale(-1, 1);
+		    -moz-transform: scale(-1, 1);
+		    -webkit-transform: scale(-1, 1);
+		    -o-transform: scale(-1, 1);
+		    -khtml-transform: scale(-1, 1);
+		    -ms-transform: scale(-1, 1);
+
+}
+
+img.fill_img {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+
+}
+
+.clickthrough {
+	pointer-events: none;
+}
+.clear {
+        clear: inherit;
+}
+
+.refinement_bar {
+	width: 100%;
+	height: 20px;
+}
+
+.infusion_bar {
+	.ui-progressbar-value {
+		background: hsla(0.5, 100, 50, 1) url(images/ui-bg_hexagon_16_af511a_12x10.png) 50% 50% repeat;
+	}
+	width: 100%;
+	height: 20px;
+}
+
+.progressbar_with_overlay {
+	position: relative;
+	.progressbar {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+	}
+	.overlay {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+
+	}
+}
+
+.trash_label {
+	margin-top: 10px;
+}
+.status_bar {
+	width: 800px;
+	margin-top: 20px;
+	margin-left: 75px;
+
+	.mana {
+		color: aquamarine;
+	}
+	.spent {
+		color: pink;
+	}
+	.generated {
+		color: green;
+	}
+}
+.panes {
+	width: 800px;
+
+	margin-left: 75px;
+	margin-bottom: 300px;
+	.pane_chooser {
+		text-align: center;
+
+	}
+	.pane {
+		margin-top: 5px;
+		text-align: center;
+		width: 100%;
+                &.controls_pane {
+                    text-align: left;
+                }
+		&.game_stats {
+			width: 110%;
+			table.game_stats {
+				float: left;
+			}
+			.info_part {
+				padding: 10px;
+				border: 1px solid yellow;
+				float: left;
+				margin-left: 100px;
+			}
+		}
+		&.research {
+			table {
+				width: 90%;
+				margin-left: auto;
+				margin-right: auto;
+				border-collapse: collapse;
+				td {
+					padding: 3px 15px;
+				}
+
+			}
+			.available_research {
+				.name {
+					font-weight: bold;
+				}
+				.mana_cost {
+					text-align: right;
+				}
+				&.cannot_buy {
+					background-color: fade(red, 20%);
+				}
+				&.learned {
+					background-color: green;
+				}
+				&.can_buy {
+					background-color: fade(yellow, 20%);
+				}
+			}
+		}
+		&.shop {
+			text-align: left;
+
+			.shop_settings {
+				float: left;
+				width: 720px;
+				margin-left: 5px;
+				tr td {
+					padding-bottom: 9px;
+				}
+				th {
+					padding-right: 10px;
+				}
+				.shop_choose_button {
+					.button;
+					&.active {
+						background-color: white;
+						color: black;
+					}
+				}
+				.action_button {
+					.button;
+					&.reroll {
+						color: red;
+					}
+				}
+			}
+		}
+	}
+}
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+.button {
+	display: inline-block;
+	margin-right: 10px;
+	padding: 5px;
+	border: 1px solid silver;
+	cursor: pointer;
+	.noselect;
+}
+.pane_chooser {
+	margin-top: 10px;
+}
+.pane_button {
+	.button;
+	&.active {
+		background-color: white;
+		color: black;
+	}
+	cursor: pointer;
+}
+
+table.horiz_stats {
+	border: 2px solid white;
+	margin: 0 auto 0 auto;
+	th {
+		text-align: center;
+		text-decoration: underline;
+	}
+	td {
+		text-align: center;
+	}
+	th,td {
+		padding: 0 15px 0 15px;
+	}
+}
+table.shop_table {
+	border-collapse: collapse;
+	margin: 10px auto 0 auto;
+
+	tbody tr {
+		padding-top: 3px;
+		padding-bottom: 3px;
+		border-top: 1px solid silver;
+		border-bottom: 1px solid silver;
+		span.line {
+			display: block;
+		}
+		&:hover {
+			background-color: rgba(1,1,1,1);
+		}
+	}
+	th,td {
+		padding: 5px 15px 5px 15px;
+	}
+
+
+}
+tr.available_talent {
+
+}
+
+tr.available_upgrade {
+	cursor: pointer;
+}
+
+div#game_render {
+	width: 1250px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.icon-mana {
+	background-image: url('https://jamuspsi.github.io/fractory/less/../images/icons/mana.png');
+	background-size: 100% 100%;
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+}
+
+.full_reset {
+	margin-top: 900px;
+	button {
+		font-size: 6pt;
+		color: red;
+		font-weight: bold;
+	}
+}

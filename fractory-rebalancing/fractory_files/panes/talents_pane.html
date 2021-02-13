@@ -1,0 +1,140 @@
+<div class="pane talents" data-bind="visible: game.current_pane() === 'talents'">
+
+    <div class="ascend_block">
+        <p>
+            <button data-bind="
+                click: function() {
+                    var conf = window.confirm('Ascending will destroy all crystals and upgrades, granting experience equal to your spent arcana.  Are you sure?  (Protip: your first ascent should be to level 3.)');
+                    if(conf) game.ascend();
+                }
+            ">Ascend</button> now for
+            <span data-bind="text: game.arcana_spent().formatBig()"></span> experience, increasing level by
+            <span data-bind="text: game.level_after_ascend() - game.level()"></span>.
+        </p>
+        <p>
+            You gain experience by enchanting, one point per arcana spent.
+        </p>
+        <p>
+            <strong style="color: red;">You will LOSE ALL CRYSTALS AND UPGRADES when you ascend.</strong>
+        </p>
+    </div>
+
+    <table class="stats_table horiz_stats">
+        <thead>
+            <tr>
+                <th>Level</th>
+                <th>Available Talent Points</th>
+                <th>Next Level At</th>
+                <th>Next Discovery</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-bind="text: game.level()"></td>
+                <td>
+                    <span data-bind="text: game.unspent_tp()"></span>
+                    / <span data-bind="text: game.total_tp()"></span>
+                <td>
+                    <span data-bind="text: (game.exp_for_level(game.level_after_ascend() + 1) - game.experience()).formatBig()"></span> Arcana
+                    (<span data-bind="text: (game.exp_for_level(game.level_after_ascend() + 1) - game.experience() - game.arcana_spent()).formatBig()"></span> more)
+                </td>
+
+                <td>
+                    <!-- ko if: !game.next_talent_discovered() -->
+                        None
+                    <!-- /ko -->
+                    <!-- ko if: game.next_talent_discovered() -->
+                        <span data-bind="text: game.next_talent_discovered().name()"></span>
+                        at Level <span data-bind="text: game.next_talent_discovered().min_level()"></span>
+                    <!-- /ko -->
+
+                </td>
+
+            </tr>
+        </tbody>
+
+    </table>
+    <div class="reset_block">
+        <p>
+            <button data-bind="
+                click: function() {
+                    var conf = window.confirm('You can reset your spent talent points, but it will force an ascension at the same time.  Are you sure?');
+                    if(!conf) return;
+                    _.each(game.talents_list(), function(tal) { tal.points(0); });
+                    game.ascend();
+                }
+            ">Reset Points</button> (requires immediate ascent)
+        </p>
+    </div>
+
+    <table class="shop_table">
+        <thead>
+            <th>Name</th>
+            <th>Level</th>
+            <th>Bonus</th>
+            <th>Description</th>
+        </thead>
+        <tbody>
+    <!-- ko foreach: {
+        data: _.chain(game.talents_list()).filter(function(tal) { return tal.available(game); }).value(),
+        as: 'tal'
+    } -->
+
+        <tr class="available_talent" data-bind="
+            click: function() {
+                game.buy_talent(tal);
+            },
+            css: tal.css(game),
+        ">
+            <td class="name" data-bind="text: tal.name()"></td>
+            <td class="points">
+                <span data-bind="text: tal.points()"></span>
+                <!-- ko if: tal.max_points(game) !== Infinity -->
+                / <span data-bind="text: tal.max_points(game)"></span>
+                <!-- /ko -->
+            </td>
+            <td class="current_factor">
+                <!-- ko if: tal.boost_mech_code() && tal.points() -->
+                    <span data-bind="text: tal.boost_factor().formatByPercent()"></span>
+                <!-- /ko -->
+            </td>
+            <td class="description">
+                <!-- ko if: tal.unlocks_stat() && (tal.boost_mech_code() !== tal.unlocks_stat() || tal.points() == 0) -->
+                <span class="line">Unlocks the <span data-bind="text: Mechs[tal.unlocks_stat()].props().noun"></span> stat.</span>
+
+                <!-- /ko -->
+
+                <!-- ko if: tal.boost_mech_code() && (tal.unlocks_stat() != tal.boost_mech_code() || tal.points() > 0) -->
+                <span class="line">
+                    <span data-bind="if: tal.boost_mech_code() === tal.unlocks_stat() && false">Unlocks/</span>Boosts
+                    the <span data-bind="text: Mechs[tal.boost_mech_code()].props().noun"></span> stat.</span>
+                <!-- /ko -->
+                <!-- ko if: tal.adds_inventory_slots() -->
+                <span class="line">Adds 3 inventory slots.</span>
+                <!-- /ko -->
+                <!-- ko if: tal.shop_mode() -->
+                    <span class="line">
+                        <span data-bind="
+                            text: {
+                                'single': 'Increases the maximum tier of Simple crystal you can conjure.',
+                                'multi': 'Increases the maximum tier of Complex crystal you can conjure.',
+                                'fractal': 'Increases the maximum tier of Fractal crystal you can conjure.  Higher tiers can be nested deeper.',
+                                'conduit': 'Unlocks conduits, which automatically move parts downstream.',
+                                'capacitor': 'Unlocks capacitors, which automatically move parts downstream when they\'re done improving.',
+                                'relay': 'Unlocks relays, which redirect effects further downstream.',
+                                'hopper': 'Unlocks hoppers, which move crystals in and out of your inventory.',
+                                'blank': 'Increases the maximum tier of Blank crystal you can conjure.',
+                                'blank_generator': 'Increases the maximum tier of blank generators you can conjure. Higher tiers generate higher tier blanks. Requires points in Better Blanks.',
+                            }[tal.shop_mode()]"></span>
+
+                    </span>
+                <!-- /ko -->
+            </td>
+        </tr>
+    <!-- /ko -->
+        </tbody>
+    </table>
+    <div class="full_reset">
+        <button data-bind="click: _.bind(game.full_reset, game)">Full Reset</button> to lose all crystals, upgrades, AND EXPERIENCE, LEVELS, AND TALENTS.  This is a complete reset!  There is no going back!
+    </div>
+</div>

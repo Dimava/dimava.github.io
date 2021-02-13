@@ -1,0 +1,233 @@
+<div>
+<table class="stat_table">
+	<tbody>
+	<!-- ko if: Ice.isa(part, CorePart) -->
+	<tr class="stat_row">
+		<td class="stat_noun">Core</td>
+		<td class="total">
+
+		</td>
+		<td class="description">The core of your Fractory.  Cannot be moved.  All crystals must be linked to it to function.</td>
+	</tr>
+	<!-- /ko -->
+	<!-- ko if: Ice.isa(part, FractalPart) -->
+	<tr class="stat_row">
+		<td class="stat_noun">Fractal</td>
+		<td class="total">
+
+		</td>
+		<td class="description">A fractally nested spatial anomaly.  Can hold more crystals inside.  Links from the outside correspond to links inside; cannot be directly linked to.  The maximum depth on which it can be placed depends on tier.</td>
+	</tr>
+	<!-- /ko -->
+	<!-- ko if: Ice.isa(part, ConduitPart) -->
+	<tr class="stat_row">
+		<td class="stat_noun">Conduit</td>
+		<td class="total">
+
+		</td>
+		<td class="description">Each tick, after all other actions, moves an immediately upstream crystal to the next empty downstream node.  Blocks other crystals from moving crystals past it.</td>
+	</tr>
+	<!-- /ko -->
+	<!-- ko if: Ice.isa(part, CapacitorPart) -->
+	<tr class="stat_row">
+		<td class="stat_noun">Capacitor</td>
+		<td class="total">
+
+		</td>
+		<td class="description">Each tick, after all other actions, moves an immediately upstream crystal to the next empty downstream node, IF it was not improved this tick.  Blocks other crystals from moving crystals past it.</td>
+	</tr>
+	<!-- /ko -->
+	<!-- ko if: Ice.isa(part, HopperPart) -->
+	<tr class="stat_row">
+		<td class="stat_noun">Hopper</td>
+		<td class="total">
+
+		</td>
+		<td class="description">Each tick, after all other actions, moves an immediately upstream crystal to the next empty inventory slot, IF it was not improved this tick.  Then, moves the first crystal in your inventory to the next empty downstream node.  Blocks other crystals from moving crystals past it, and never moves other blocks.</td>
+	</tr>
+	<!-- /ko -->
+	<!-- ko if: Ice.isa(part, RelayPart) -->
+	<tr class="stat_row">
+		<td class="stat_noun">Relay</td>
+		<td class="total">
+
+		</td>
+		<td class="description">Passes effects from upstream directly downstream.  Passes through empty crystals and other relays, but cannot fork.</td>
+	</tr>
+	<!-- /ko -->
+        <!-- ko if: Ice.isa(part, BlankGeneratorPart) -->
+	<tr class="stat_row">
+		<td class="stat_noun">Blank Generator</td>
+		<td class="total">
+
+		</td>
+		<td class="description">Generates blank crystals in immediately downstream nodes.</td>
+	</tr>
+	<!-- /ko -->
+	<tr class="stat_row">
+		<td class="stat_noun">Tier</td>
+		<td class="total">
+			<span class="value" data-bind="text: part.tier()"></span>
+		</td>
+		<td class="description">
+			Determines maximum refinement.
+		</td>
+	</tr>
+
+
+
+	<!-- ko foreach: {
+	    data: _.sortBy(part.stats_list(), function(part) {
+			return part.total() * -1;
+		}),
+		as: 'sv'
+	} -->
+	<tr class="stat_row">
+		<td class="stat_noun" data-bind="text: sv.mech().props().noun"></td>
+		<td class="total">
+			<span class="value" data-bind="text: sv.value().formatBig()"></span>
+			<span class="buff" data-bind="visible: sv.buff(), text: '+' + sv.buff().formatBig()"></span>
+		</td>
+		<td class="description">
+			<!-- ko if: sv.code() === 'Flaw' -->
+				Does nothing.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Glow' -->
+				Generates <span class="factor" data-bind="text: sv.factor().formatBig()"></span> mana  per tick. (<span class="factor" data-bind="text: (sv.factor() * part.stat_factor('Brilliance') * part.stat_factor('Vividity')).formatBig()"></span>)
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Brilliance' -->
+				Increases mana generation by <span class="factor" data-bind="text: sv.factor().formatByPercent()"></span>.  Requires Glow on the same crystal to be effective.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Vividity' -->
+				Increases mana and arcana generation by <span class="factor" data-bind="text: sv.factor().formatByPercent()"></span>.  Requires Glow and/or Arcana on the same crystal to be effective.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'GenerationFlatModifier' -->
+				Increases mana generation by <span class="factor" data-bind="text: sv.factor()"></span> per tick.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Radiance' -->
+				Buffs <span class="factor" data-bind="text: sv.factor().formatByPercent() "></span> of all other stats on this crystal to immediately downstream crystals.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Conductivity' -->
+				Permanently transfers <span class="factor" data-bind="text: sv.factor()"></span>/tick of the lowest stat on immediately upstream crystals to immediately downstream crystals.  Effect splits if there's multiple valid targets.  Costs mana while connected.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Waxing' -->
+				Permanently increases the highest stat on immediately downstream crystals by <span class="factor" data-bind="text: sv.factor()"></span>/tick.  Costs mana while connected.  Mana cost scales with target crystal tier.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Reflection' -->
+				Permanently increases a stat on a single immediately downstream crystal by <span class="factor" data-bind="text: sv.factor()"></span>/tick.  The stat chosen is the highest stat on a single immediately upstream crystal, and the downstream part won't exceed the upstream part's value in that stat.  Costs mana while connected.  Mana cost scales with downstream crystal tier.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Arcana' -->
+				Converts mana to arcana, which is spent on Enchanting.  Enchanting increases the effective value of all stats on all crystals.  (<span class="factor" data-bind="text: (sv.factor() * part.stat_factor('Mystery') * part.stat_factor('Vividity')).formatBig()"></span>/tick after buffs).
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Mystery' -->
+				Increases arcana by <span class="factor" data-bind="text: sv.factor().toFixed(2)"></span>x.  Requires Arcana on the same crystal to be effective.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Imbuing' -->
+				Permanently increases maximum refinement on immediately downstream crystals by <span class="factor" data-bind="text: sv.factor()"></span>/tick, up to 2x the normal value.  Costs mana while connected.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Infusing' -->
+				Infuses immediately downstream crystals with mana at <span class="factor" data-bind="text: sv.factor()"></span>/tick.  Infusion does not count towards refinement.  At great levels of infusion, a crystal's tier increases, dramatically increasing maximum refinement.  <strong>Can only infuse crystals of equal or lesser tier.</strong>
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Infused' -->
+				Does not count toward refinement.  At <span class="factor" data-bind="text: (10 * Math.pow(1000, part.tier())).formatBig()"></span>, tier increases by one permanenty, dramatically increasing maximum refinement.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Luster' -->
+				Maximum refinement increased by <span class="factor" data-bind="text: sv.factor()"></span>.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Power' -->
+				All other stats on this crystal buffed by <span class="factor" data-bind="text: sv.factor().formatByPercent()"></span>.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Shine' -->
+				Buffs all stats on immediately downstream crystals by <span class="factor" data-bind="text: sv.factor().formatByPercent()"></span>, except Shine.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Lens' -->
+				Buffs this crystal's stats by <span class="factor" data-bind="text: sv.factor().formatPercentOf()"></span> of each stat of each immediately upstream part, excluding Lens.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Prism' -->
+				Grants <span class="factor" data-bind="text: sv.factor().formatPercentOf()"></span> of each stat of a single immediately upstream crystal as a buff to each immediately downstream part, excluding Prism.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Shimmer' -->
+				Increases all other stats of this crystal by <span class="factor" data-bind="text: sv.factor().formatByPercent()"></span> for each stat (additively) other than Shimmer on this crystal.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Seal' -->
+				Increases all other stats of this crystal by <span class="factor" data-bind="text: sv.factor().formatByPercent()"></span> if there are no immediately downstream crystals.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Resonance' -->
+				Permanently increases Flux on immediately downstream crystals by <span class="factor" data-bind="text: sv.factor()"></span>/tick.  When a downstream crystal's Flux exceeds the single immediately upstream crystal's total base stats, the Flux is converted into the upstream crystal's base stats.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Flux' -->
+				A placeholder stat that can be turned into real stats by Resonance.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Purity' -->
+				Increases the highest stat on this crystal by <span class="factor" data-bind="text: sv.factor().formatByPercent()"></span>, if it is at least 50% of the total base stats on this crystal.
+			<!-- /ko -->
+			<!-- ko if: sv.code() === 'Gleam' -->
+				Increases all other stats of this crystal by <span class="factor" data-bind="text: sv.factor().formatByPercent()"></span> for each step away this crystal is from the core.
+			<!-- /ko -->
+
+
+
+		</td>
+
+	</tr>
+	<!-- /ko -->
+
+	<tr class="stat_row">
+		<td class="stat_noun" data-bind="text: Ice.isa(part.container(), ShopSlot) ? 'Price' : 'Value'"></td>
+		<td class="total">
+			<span class="value" data-bind="text: part.mana_cost().formatBig()"></span>
+		</td>
+	</tr>
+	<!-- ko if: !Ice.isa(part, CorePart) && !Ice.isa(part, FractalPart) && !Ice.isa(part, ConduitPart) && part.max_refinement() -->
+	<tr class="stat_row">
+		<td class="stat_noun">Refinement</td>
+		<td colspan="2">
+			<div class="progressbar_with_overlay refinement_bar">
+				<div class="progressbar" data-bind="
+					progressbar: {
+						part:part,
+						value: part.refinement,
+						max: part.max_refinement
+					}
+				">
+				</div>
+				<div class="overlay">
+					<span data-bind="text: part.refinement().formatBig()"></span> /
+					<span data-bind="text: part.max_refinement().formatBig()"></span>
+				</div>
+			</div>
+		</td>
+	</tr>
+
+	<!-- /ko -->
+
+
+	<!-- ko if: part.stats().Infused -->
+		<tr class="stat_row">
+			<td class="stat_noun">Infusion</td>
+			<td colspan="2">
+				<div class="progressbar_with_overlay infusion_bar">
+					<div class="progressbar" data-bind="
+						progressbar: {
+							part:part,
+							value: ko.computed(function() {
+								return !(part.stats().Infused) ? 0 : part.stats().Infused.value2();
+							}),
+							max: ko.computed(function() { return part.next_tier_at(); })
+						}
+					">
+					</div>
+						<div class="overlay">
+							<span data-bind="text: part.stats().Infused.value().formatBig()"></span> /
+							<span data-bind="text: part.next_tier_at().formatBig()"></span>
+						</div>
+				</div>
+			</td>
+		</tr>
+
+
+
+	<!-- /ko -->
+	</tbody>
+</table>
+</div>

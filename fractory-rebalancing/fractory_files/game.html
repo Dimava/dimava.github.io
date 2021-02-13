@@ -1,0 +1,233 @@
+&nbsp;
+<button data-bind="
+	visible: game.shell() && !!game.view_shell().in_part() && !game.view_shell().zoom_out(),
+	click: _.bind(game.zoom_out, game)
+">Zoom Out</button>
+
+
+<div class="part_sandbox">
+
+	<div class="inventory_holder">
+		<div class="inventory_label">Held</div>
+	<!-- ko foreach: {
+		data: game.inventory_slots(),
+		as: 'islot'
+	} -->
+		<!-- ko template: {
+			name: 'kot/inventory_slot.html',
+			data: islot,
+			as: 'islot',
+		} --><!-- /ko -->
+
+	<!-- /ko -->
+		<div class="clear trash_label">Trash</div>
+	<!-- ko template: {
+		name: 'kot/trash_slot.html',
+		data: game,
+		as: 'game'
+	} --><!-- /ko -->
+	</div>
+
+	<div class="shell_holder" data-bind="css: game.paused() ? 'paused' : ''">
+	<!-- ko if: game.shell() -->
+
+		<!-- ko foreach: {data: game.shell_renders(), as: 'shell' } -->
+		<div class="shell" data-bind="
+			style: {
+				width: shell.elsize.x,
+				height: shell.elsize.y,
+			},
+			shell_render: shell,
+			right_click: _.bind(shell.right_click, shell),
+
+		">
+
+			<div class="nodes">
+				<!-- ko foreach: {data: _.values(shell.nodes), as: 'node'} -->
+					<div class="node" data-bind="
+						css: 'node_' + node.loc,
+						style: {
+							width: node.elsize.x,
+							height: node.elsize.y,
+							left: node.pos.x,
+							top: node.pos.y,
+						},
+						dropzone: {
+							ondropenter: function(ev) {
+								//console.log('ondropenter', ev);
+								ev.draggable.dropped_on = node;
+							},
+							ondropleave: function(ev) {
+								//console.log('ondropleave', ev);
+								ev.draggable.dropped_on = null;
+							},
+
+							ondrop: function(ev) {
+								//console.log('ondrop', ev);
+								if(game.animating_shell()) return;
+
+								node.set_part(ev.draggable.dragObject);
+							},
+							overlap: 'center'
+						},
+						double_tap: _.bind(node.double_tap, node),
+						right_click: _.bind(node.right_click, node),
+						event: {
+							mouseover: function(node, event) {
+								game.hovered_node(node);
+							},
+							mouseout: function(node, event) {
+								if(game.hovered_node() !== node) return;
+								game.hovered_node(null);
+							}
+						}
+					">
+						<div class="node_raph" data-bind="
+							raphael: _.bind(node.raph, node)
+						">
+						</div>
+						<!-- ko if: node.part() -->
+							<!-- ko with: {part: node.part(), shell: node.shell } -->
+								<!-- ko template: {
+									name: 'kot/part.html',
+									data: part,
+									as: 'part',
+									shell: node.shell,
+								} --> <!-- /ko -->
+							<!-- /ko -->
+						<!-- /ko -->
+					</div>
+				<!-- /ko -->
+			</div>
+			<div class="links">
+			<!-- ko foreach: {
+				data: _.values(shell.nodes), as: 'node'
+			} -->
+			<!-- ko foreach: {
+				data: _.filter(node.links, function(link) {
+					return link.primary();
+					return link.flow() === 'down' || (link.flow() !== 'up' && link.primary()) || !link.pair_link();
+				}),
+				as: 'link'
+			} -->
+				<div class="link" data-bind="
+					style: {
+						width: link.elsize.x,
+						height: link.elsize.y,
+						left: link.pos.x,
+						top: link.pos.y,
+						transform: link.rotate_transform
+					},
+					css: (function() {
+						var classes = link.flow();
+						classes += ' dir_' + link.direction();
+						if(link.active()) classes += ' active';
+						return classes;
+					})(),
+                                        click: _.bind(link.click, link),
+                                        event:{
+                                            mouseover: function(link,event) {
+                                                if(event.shiftKey) {
+                                                    link.set_active(true);
+                                                }
+                                                else if(event.ctrlKey){
+                                                    link.set_active(false);
+                                                }
+                                            },
+                                            mouseenter: function(link,event) {
+                                                if(event.shiftKey) {
+                                                    link.set_active(true);
+                                                }
+                                                else if(event.ctrlKey){
+                                                    link.set_active(false);
+                                                }
+                                            },
+                                        }
+					
+				">
+
+					<div class="stripe_holder" data-bind="
+
+						css: link.stripe_holder_css()
+					">
+						<div class="inner_stripe_holder">
+							<div class="link_stripe"></div>
+							<div class="link_stripe"></div>
+							<div class="link_stripe"></div>
+						</div>
+					</div>
+					<!-- ko if: false -->
+					<div class="flow_arrow" data-bind="
+						text: !link.active() ? '' :
+							  link.flow_direction() === link.direction() ? '--->' :
+						      link.flow_direction() === null ? '|' :
+						      '<---'
+					"></div>
+					<!-- /ko -->
+					<span data-bind="visible: false, text: link.node().loc + '->' + (link.pair_link() ? link.pair_link().node().loc : '') + (link.active() ? link.flow() : '')"></span>
+				</div>
+
+			<!-- /ko -->
+			<!-- /ko -->
+			</div>
+
+		</div>
+		<!-- /ko -->
+		<!-- /ko -->
+	</div>
+	<!-- ko template: {
+		name: 'kot/shop_bar.html',
+		data: game,
+		as: 'game'
+	} --><!-- /ko -->
+	<div class="clear"></div>
+	<div class="status_bar">
+		<!-- ko template: { name: 'kot/status_bar.html', data: game, as: 'game' } --><!-- /ko -->
+	</div>
+	<div class="panes">
+		<div class="pane_chooser">
+			<!-- ko foreach: {
+				data: [
+					{'pane' : 'stats', label: 'Reflect'},
+					{pane: 'upgrades', label: 'Enchant'},
+					{pane: 'talents', label: 'Ascend'},
+                                        {pane: 'controls', label: 'Controls'}
+
+				],
+				as: 'pb'
+			} -->
+				<a class="pane_button" data-bind="
+					css: game.current_pane() === pb.pane ? 'active' : '',
+					click: function() { game.current_pane(pb.pane); }
+				">
+					<span data-bind="text: pb.label"></span>
+					<!-- ko if: pb.pane === 'talents' && game.level_after_ascend() - game.level() > 0 -->
+					(<span data-bind="text: game.level_after_ascend() - game.level()"></span>)
+					<!-- /ko -->
+
+				</a>
+			<!-- /ko -->
+			<a class="pane_button" data-bind="
+				click: function() { game.save_game(); }
+			">
+				<span data-bind="text: 'Saved ' + game.save_ticks() + ' secs ago'"></span>
+			</a>
+
+			<a class="pane_button" data-bind="
+				click: function() { game.paused() ? game.unpause() : game.pause(); }
+			">
+				<span data-bind="text: game.paused() ? 'Paused' : 'Pause'"></span>
+			</a>
+
+
+		</div>
+		<!-- ko template: { name: 'kot/panes/stats_pane.html', data: game, as: 'game' } --><!-- /ko -->
+		<!-- ko template: { name: 'kot/panes/shop_pane.html', data: game, as: 'game' } --><!-- /ko -->
+		<!-- ko template: { name: 'kot/panes/research_pane.html', data: game, as: 'game' } --><!-- /ko -->
+		<!-- ko template: { name: 'kot/panes/upgrades_pane.html', data: game, as: 'game' } --><!-- /ko -->
+		<!-- ko template: { name: 'kot/panes/talents_pane.html', data: game, as: 'game' } --><!-- /ko -->
+                <!-- ko template: { name: 'kot/panes/controls_pane.html', data: game, as: 'game' } --><!-- /ko -->
+
+
+	</div>
+</div>

@@ -1,0 +1,105 @@
+
+<div class="pane shop" data-bind="visible: game.current_pane() === 'shop'">
+    &nbsp;
+    <div class="shop_slot_holder">
+    &nbsp;
+    <!-- ko if: game.chosen_shop_slot() -->
+        <!-- ko with: {ss: game.chosen_shop_slot()} -->
+            <div class="shop_slot">
+            <!-- ko if: ss.part() -->
+                <!-- ko with: {ss: ss, part: ss.part(), shell: ss.shell } -->
+                    <!-- ko template: {
+                            name: 'kot/part.html',
+                            data: part,
+                            as: 'part',
+                            shell: ss.shell,
+                    } --><!-- /ko -->
+                <!-- /ko -->
+            <!-- /ko -->
+            </div>
+        <!-- /ko -->
+    <!-- /ko -->
+    </div>
+    <div class="shop_settings">
+        <table>
+            <tbody>
+
+                <tr>
+                    <th>Type</th>
+                    <td>
+                    <!-- ko foreach: {
+                        data: game.shop_slots(),
+                        as: 'ss'
+                    } -->
+                        <a class="shop_choose_button" data-bind="
+                            text: {
+                                'blank': 'Blank',
+                                'single': 'Simple',
+                                'multi': 'Complex',
+                                'fractal': 'Fractal',
+                                'conduit': 'Conduit',
+                                'blank_generator': 'Blank Generator',
+                            }[ss.mode()],
+                            css: game.chosen_shop_slot() === ss ? 'active' : '',
+                            click: function() {game.chosen_shop_slot(ss); }
+                        ">
+                        </a>
+                    <!-- /ko -->
+                    </td>
+                </tr>
+                <!-- ko if: game.chosen_shop_slot() --><!-- ko with: {ss: game.chosen_shop_slot()} -->
+                <tr>
+                    <th>Tier</th>
+                    <td>
+                        <div class="tier_selector">
+                            <button class="tier_down" data-bind="
+                                disable: ss.tier() <= 1,
+                                click: function() {
+                                    ss.tier.inc(-1);
+                                    ss.restock();
+                                }
+                            ">-</button>
+                            <span class="tier" data-bind="text: ss.tier()"></span>
+                            <button class="tier_up" data-bind="
+                                disable: ss.tier() >= ss.max_tier(),
+                                click: function() {
+                                    ss.tier.inc(1);
+                                    ss.restock();
+                                }
+                            ">+</button>
+
+                        </div>
+
+                    </td>
+                </tr>
+                <!-- ko if: ss.part() -->
+                <tr>
+                    <th>Reroll</th>
+                    <td>
+                        <a class="action_button reroll" data-bind="
+                            click: function() {ss.restock();},
+                        ">
+                            Reroll
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Preview</th>
+                    <td>
+                        <div class="part_tooltip">
+                        <!-- ko template: {
+                            name: 'kot/part_tooltip.html',
+                            data: ss.part(),
+                            as: 'part'
+                        } --> <!-- /ko -->
+
+                        </div>
+                    </td>
+                </tr>
+                <!-- /ko -->
+                <!-- /ko --><!-- /ko -->
+            </tbody>
+        </table>
+    </div>
+    <div class="clear"></div>
+</div>

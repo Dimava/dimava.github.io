@@ -1,0 +1,33 @@
+<table class="game_stats">
+    <tbody>
+        <tr>
+            <th>Mana</th>
+            <td>
+                <i class="icon-mana"></i>
+                <span class="mana" data-bind="text: game.mana().formatBig()"></span>
+                (+<span class="generated" data-bind="text: game.mana_generated().formatBig()"></span>
+                -<span class="spent" data-bind="text: (function() {
+                    var tot = 0;
+                    _.each(game.spent_mana(), function(sm) {
+                        tot += sm.val();
+                    });
+                    return tot;
+                })().formatBig()
+
+                "></span> =
+                <span class="mana" data-bind="text: (game.net_mana() >= 0 ?
+                '+' : '') + game.net_mana().formatBig()"></span>/tick)
+            </td>
+        </tr>
+        <tr>
+            <th>Arcana</th>
+            <td>
+                <span class="arcana" data-bind="text: game.arcana().formatBig()"></span>
+                (+<span class="generated" data-bind="text: game.arcana_generated().formatBig()"></span>/tick)
+            </td>
+
+
+
+        </tr>
+    </tbody>
+</table>

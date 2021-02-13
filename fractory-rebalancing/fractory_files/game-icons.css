@@ -1,0 +1,8617 @@
+@font-face {
+	font-family: "game-icons";
+	/*src: url('./game-icons.eot');
+	src: url('./game-icons.eot?#iefix') format('eot'),
+		url('./game-icons.woff') format('woff'),
+		url('./game-icons.ttf') format('truetype');
+}*/
+	src: url('./game-icons.eot');
+}
+.game-icon:after {
+	font-family: "game-icons";
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	/* speak: none; only necessary if not using the private unicode range (firstGlyph option) */
+	text-decoration: none;
+	text-transform: none;
+}
+
+
+.game-icon-brutal-helm:after {
+	content: "\E001";
+}
+
+.game-icon-american-football-helmet:after {
+	content: "\E002";
+}
+
+.game-icon-astronaut-helmet:after {
+	content: "\E003";
+}
+
+.game-icon-black-knight-helm:after {
+	content: "\E004";
+}
+
+.game-icon-diving-helmet:after {
+	content: "\E005";
+}
+
+.game-icon-full-motorcycle-helmet:after {
+	content: "\E006";
+}
+
+.game-icon-gauls-helm:after {
+	content: "\E007";
+}
+
+.game-icon-overlord-helm:after {
+	content: "\E008";
+}
+
+.game-icon-helmet:after {
+	content: "\E009";
+}
+
+.game-icon-stahlhelm:after {
+	content: "\E00A";
+}
+
+.game-icon-barbute:after {
+	content: "\E00B";
+}
+
+.game-icon-battle-gear:after {
+	content: "\E00C";
+}
+
+.game-icon-cracked-helm:after {
+	content: "\E00D";
+}
+
+.game-icon-crested-helmet:after {
+	content: "\E00E";
+}
+
+.game-icon-heavy-helm:after {
+	content: "\E00F";
+}
+
+.game-icon-helmet-head-shot:after {
+	content: "\E010";
+}
+
+.game-icon-horned-helm:after {
+	content: "\E011";
+}
+
+.game-icon-visored-helm:after {
+	content: "\E012";
+}
+
+.game-icon-crossbow:after {
+	content: "\E013";
+}
+
+.game-icon-forward-sun:after {
+	content: "\E014";
+}
+
+.game-icon-anticlockwise-rotation:after {
+	content: "\E015";
+}
+
+.game-icon-arrow-cursor:after {
+	content: "\E016";
+}
+
+.game-icon-chart:after {
+	content: "\E017";
+}
+
+.game-icon-clockwise-rotation:after {
+	content: "\E018";
+}
+
+.game-icon-contract:after {
+	content: "\E019";
+}
+
+.game-icon-expand:after {
+	content: "\E01A";
+}
+
+.game-icon-horizontal-flip:after {
+	content: "\E01B";
+}
+
+.game-icon-move:after {
+	content: "\E01C";
+}
+
+.game-icon-plain-arrow:after {
+	content: "\E01D";
+}
+
+.game-icon-vertical-flip:after {
+	content: "\E01E";
+}
+
+.game-icon-dodge:after {
+	content: "\E01F";
+}
+
+.game-icon-overhead:after {
+	content: "\E020";
+}
+
+.game-icon-sideswipe:after {
+	content: "\E021";
+}
+
+.game-icon-thrust:after {
+	content: "\E022";
+}
+
+.game-icon-underhand:after {
+	content: "\E023";
+}
+
+.game-icon-detour:after {
+	content: "\E024";
+}
+
+.game-icon-direction-sign:after {
+	content: "\E025";
+}
+
+.game-icon-quiver:after {
+	content: "\E026";
+}
+
+.game-icon-spear-feather:after {
+	content: "\E027";
+}
+
+.game-icon-sun-spear:after {
+	content: "\E028";
+}
+
+.game-icon-expander:after {
+	content: "\E029";
+}
+
+.game-icon-fall-down:after {
+	content: "\E02A";
+}
+
+.game-icon-pounce:after {
+	content: "\E02B";
+}
+
+.game-icon-aerodynamic-harpoon:after {
+	content: "\E02C";
+}
+
+.game-icon-arrow-cluster:after {
+	content: "\E02D";
+}
+
+.game-icon-arrow-dunk:after {
+	content: "\E02E";
+}
+
+.game-icon-arrow-flights:after {
+	content: "\E02F";
+}
+
+.game-icon-arrowed:after {
+	content: "\E030";
+}
+
+.game-icon-arrowhead:after {
+	content: "\E031";
+}
+
+.game-icon-arrows-shield:after {
+	content: "\E032";
+}
+
+.game-icon-back-forth:after {
+	content: "\E033";
+}
+
+.game-icon-barbed-arrow:after {
+	content: "\E034";
+}
+
+.game-icon-barbed-spear:after {
+	content: "\E035";
+}
+
+.game-icon-bottom-right-3d-arrow:after {
+	content: "\E036";
+}
+
+.game-icon-bowman:after {
+	content: "\E037";
+}
+
+.game-icon-branch-arrow:after {
+	content: "\E038";
+}
+
+.game-icon-broadhead-arrow:after {
+	content: "\E039";
+}
+
+.game-icon-chained-arrow-heads:after {
+	content: "\E03A";
+}
+
+.game-icon-chemical-arrow:after {
+	content: "\E03B";
+}
+
+.game-icon-crosshair-arrow:after {
+	content: "\E03C";
+}
+
+.game-icon-cupidon-arrow:after {
+	content: "\E03D";
+}
+
+.game-icon-cycle:after {
+	content: "\E03E";
+}
+
+.game-icon-divergence:after {
+	content: "\E03F";
+}
+
+.game-icon-divert:after {
+	content: "\E040";
+}
+
+.game-icon-double-shot:after {
+	content: "\E041";
+}
+
+.game-icon-energy-arrow:after {
+	content: "\E042";
+}
+
+.game-icon-falling-boulder:after {
+	content: "\E043";
+}
+
+.game-icon-fast-arrow:after {
+	content: "\E044";
+}
+
+.game-icon-flaming-arrow:after {
+	content: "\E045";
+}
+
+.game-icon-frayed-arrow:after {
+	content: "\E046";
+}
+
+.game-icon-frozen-arrow:after {
+	content: "\E047";
+}
+
+.game-icon-headshot:after {
+	content: "\E048";
+}
+
+.game-icon-heavy-arrow:after {
+	content: "\E049";
+}
+
+.game-icon-high-shot:after {
+	content: "\E04A";
+}
+
+.game-icon-ice-spear:after {
+	content: "\E04B";
+}
+
+.game-icon-imbricated-arrows:after {
+	content: "\E04C";
+}
+
+.game-icon-impact-point:after {
+	content: "\E04D";
+}
+
+.game-icon-lob-arrow:after {
+	content: "\E04E";
+}
+
+.game-icon-on-target:after {
+	content: "\E04F";
+}
+
+.game-icon-orb-direction:after {
+	content: "\E050";
+}
+
+.game-icon-paper-arrow:after {
+	content: "\E051";
+}
+
+.game-icon-pierced-body:after {
+	content: "\E052";
+}
+
+.game-icon-pierced-heart:after {
+	content: "\E053";
+}
+
+.game-icon-pocket-bow:after {
+	content: "\E054";
+}
+
+.game-icon-rally-the-troops:after {
+	content: "\E055";
+}
+
+.game-icon-rapidshare-arrow:after {
+	content: "\E056";
+}
+
+.game-icon-recycle:after {
+	content: "\E057";
+}
+
+.game-icon-return-arrow:after {
+	content: "\E058";
+}
+
+.game-icon-self-love:after {
+	content: "\E059";
+}
+
+.game-icon-slicing-arrow:after {
+	content: "\E05A";
+}
+
+.game-icon-smash-arrows:after {
+	content: "\E05B";
+}
+
+.game-icon-spear-hook:after {
+	content: "\E05C";
+}
+
+.game-icon-spears:after {
+	content: "\E05D";
+}
+
+.game-icon-spine-arrow:after {
+	content: "\E05E";
+}
+
+.game-icon-spiral-arrow:after {
+	content: "\E05F";
+}
+
+.game-icon-spotted-arrowhead:after {
+	content: "\E060";
+}
+
+.game-icon-stone-spear:after {
+	content: "\E061";
+}
+
+.game-icon-striking-arrows:after {
+	content: "\E062";
+}
+
+.game-icon-striking-clamps:after {
+	content: "\E063";
+}
+
+.game-icon-supersonic-arrow:after {
+	content: "\E064";
+}
+
+.game-icon-target-arrows:after {
+	content: "\E065";
+}
+
+.game-icon-target-shot:after {
+	content: "\E066";
+}
+
+.game-icon-thorn-helix:after {
+	content: "\E067";
+}
+
+.game-icon-thorned-arrow:after {
+	content: "\E068";
+}
+
+.game-icon-thrown-spear:after {
+	content: "\E069";
+}
+
+.game-icon-trade:after {
+	content: "\E06A";
+}
+
+.game-icon-tron-arrow:after {
+	content: "\E06B";
+}
+
+.game-icon-uncertainty:after {
+	content: "\E06C";
+}
+
+.game-icon-wavy-itinerary:after {
+	content: "\E06D";
+}
+
+.game-icon-wide-arrow-dunk:after {
+	content: "\E06E";
+}
+
+.game-icon-william-tell:after {
+	content: "\E06F";
+}
+
+.game-icon-winged-arrow:after {
+	content: "\E070";
+}
+
+.game-icon-zig-arrow:after {
+	content: "\E071";
+}
+
+.game-icon-ninja-star:after {
+	content: "\E072";
+}
+
+.game-icon-baseball-bat:after {
+	content: "\E073";
+}
+
+.game-icon-pistol-gun:after {
+	content: "\E074";
+}
+
+.game-icon-bo:after {
+	content: "\E075";
+}
+
+.game-icon-boomerang:after {
+	content: "\E076";
+}
+
+.game-icon-brass-knuckles:after {
+	content: "\E077";
+}
+
+.game-icon-dagger-rose:after {
+	content: "\E078";
+}
+
+.game-icon-flanged-mace:after {
+	content: "\E079";
+}
+
+.game-icon-lasso:after {
+	content: "\E07A";
+}
+
+.game-icon-lunar-wand:after {
+	content: "\E07B";
+}
+
+.game-icon-magic-trident:after {
+	content: "\E07C";
+}
+
+.game-icon-mortar:after {
+	content: "\E07D";
+}
+
+.game-icon-mp5:after {
+	content: "\E07E";
+}
+
+.game-icon-nunchaku:after {
+	content: "\E07F";
+}
+
+.game-icon-panzerfaust:after {
+	content: "\E080";
+}
+
+.game-icon-revolver:after {
+	content: "\E081";
+}
+
+.game-icon-sai:after {
+	content: "\E082";
+}
+
+.game-icon-sawed-off-shotgun:after {
+	content: "\E083";
+}
+
+.game-icon-slingshot:after {
+	content: "\E084";
+}
+
+.game-icon-stake-hammer:after {
+	content: "\E085";
+}
+
+.game-icon-switch-weapon:after {
+	content: "\E086";
+}
+
+.game-icon-tomahawk:after {
+	content: "\E087";
+}
+
+.game-icon-torpedo:after {
+	content: "\E088";
+}
+
+.game-icon-umbrella-bayonet:after {
+	content: "\E089";
+}
+
+.game-icon-uzi:after {
+	content: "\E08A";
+}
+
+.game-icon-wood-club:after {
+	content: "\E08B";
+}
+
+.game-icon-ammo-box:after {
+	content: "\E08C";
+}
+
+.game-icon-chaingun:after {
+	content: "\E08D";
+}
+
+.game-icon-duel:after {
+	content: "\E08E";
+}
+
+.game-icon-grenade:after {
+	content: "\E08F";
+}
+
+.game-icon-laser-gun:after {
+	content: "\E090";
+}
+
+.game-icon-rifle:after {
+	content: "\E091";
+}
+
+.game-icon-shotgun:after {
+	content: "\E092";
+}
+
+.game-icon-turret:after {
+	content: "\E093";
+}
+
+.game-icon-gladius:after {
+	content: "\E094";
+}
+
+.game-icon-luger:after {
+	content: "\E095";
+}
+
+.game-icon-orb-wand:after {
+	content: "\E096";
+}
+
+.game-icon-all-for-one:after {
+	content: "\E097";
+}
+
+.game-icon-andromeda-chain:after {
+	content: "\E098";
+}
+
+.game-icon-archery-target:after {
+	content: "\E099";
+}
+
+.game-icon-autogun:after {
+	content: "\E09A";
+}
+
+.game-icon-axe-in-stump:after {
+	content: "\E09B";
+}
+
+.game-icon-backstab:after {
+	content: "\E09C";
+}
+
+.game-icon-battered-axe:after {
+	content: "\E09D";
+}
+
+.game-icon-battle-axe:after {
+	content: "\E09E";
+}
+
+.game-icon-beam-wake:after {
+	content: "\E09F";
+}
+
+.game-icon-blunderbuss:after {
+	content: "\E0A0";
+}
+
+.game-icon-bolas:after {
+	content: "\E0A1";
+}
+
+.game-icon-bolter-gun:after {
+	content: "\E0A2";
+}
+
+.game-icon-broken-bottle:after {
+	content: "\E0A3";
+}
+
+.game-icon-bullets:after {
+	content: "\E0A4";
+}
+
+.game-icon-cannon-ball:after {
+	content: "\E0A5";
+}
+
+.game-icon-cannon-shot:after {
+	content: "\E0A6";
+}
+
+.game-icon-cannon:after {
+	content: "\E0A7";
+}
+
+.game-icon-crossed-pistols:after {
+	content: "\E0A8";
+}
+
+.game-icon-crossed-sabres:after {
+	content: "\E0A9";
+}
+
+.game-icon-crossed-swords:after {
+	content: "\E0AA";
+}
+
+.game-icon-crystal-wand:after {
+	content: "\E0AB";
+}
+
+.game-icon-dripping-knife:after {
+	content: "\E0AC";
+}
+
+.game-icon-fairy-wand:after {
+	content: "\E0AD";
+}
+
+.game-icon-flaming-trident:after {
+	content: "\E0AE";
+}
+
+.game-icon-flash-grenade:after {
+	content: "\E0AF";
+}
+
+.game-icon-grapple:after {
+	content: "\E0B0";
+}
+
+.game-icon-gunshot:after {
+	content: "\E0B1";
+}
+
+.game-icon-halberd-shuriken:after {
+	content: "\E0B2";
+}
+
+.game-icon-harpoon-chain:after {
+	content: "\E0B3";
+}
+
+.game-icon-harpoon-trident:after {
+	content: "\E0B4";
+}
+
+.game-icon-laser-blast:after {
+	content: "\E0B5";
+}
+
+.game-icon-lightning-bow:after {
+	content: "\E0B6";
+}
+
+.game-icon-mace-head:after {
+	content: "\E0B7";
+}
+
+.game-icon-machete:after {
+	content: "\E0B8";
+}
+
+.game-icon-minigun:after {
+	content: "\E0B9";
+}
+
+.game-icon-missile-pod:after {
+	content: "\E0BA";
+}
+
+.game-icon-missile-swarm:after {
+	content: "\E0BB";
+}
+
+.game-icon-ray-gun:after {
+	content: "\E0BC";
+}
+
+.game-icon-reticule:after {
+	content: "\E0BD";
+}
+
+.game-icon-saber-slash:after {
+	content: "\E0BE";
+}
+
+.game-icon-sabers-choc:after {
+	content: "\E0BF";
+}
+
+.game-icon-scalpel-strike:after {
+	content: "\E0C0";
+}
+
+.game-icon-scythe:after {
+	content: "\E0C1";
+}
+
+.game-icon-sentry-gun:after {
+	content: "\E0C2";
+}
+
+.game-icon-shuriken:after {
+	content: "\E0C3";
+}
+
+.game-icon-slavery-whip:after {
+	content: "\E0C4";
+}
+
+.game-icon-sparkling-sabre:after {
+	content: "\E0C5";
+}
+
+.game-icon-spiked-mace:after {
+	content: "\E0C6";
+}
+
+.game-icon-stiletto:after {
+	content: "\E0C7";
+}
+
+.game-icon-supersonic-bullet:after {
+	content: "\E0C8";
+}
+
+.game-icon-sword-clash:after {
+	content: "\E0C9";
+}
+
+.game-icon-sword-in-stone:after {
+	content: "\E0CA";
+}
+
+.game-icon-sword-spade:after {
+	content: "\E0CB";
+}
+
+.game-icon-tesla-turret:after {
+	content: "\E0CC";
+}
+
+.game-icon-trefoil-shuriken:after {
+	content: "\E0CD";
+}
+
+.game-icon-trident:after {
+	content: "\E0CE";
+}
+
+.game-icon-wave-strike:after {
+	content: "\E0CF";
+}
+
+.game-icon-whip:after {
+	content: "\E0D0";
+}
+
+.game-icon-winged-sword:after {
+	content: "\E0D1";
+}
+
+.game-icon-flame:after {
+	content: "\E0D2";
+}
+
+.game-icon-torch:after {
+	content: "\E0D3";
+}
+
+.game-icon-blast:after {
+	content: "\E0D4";
+}
+
+.game-icon-blaster:after {
+	content: "\E0D5";
+}
+
+.game-icon-burn:after {
+	content: "\E0D6";
+}
+
+.game-icon-fire:after {
+	content: "\E0D7";
+}
+
+.game-icon-fireflake:after {
+	content: "\E0D8";
+}
+
+.game-icon-flamer:after {
+	content: "\E0D9";
+}
+
+.game-icon-hot-surface:after {
+	content: "\E0DA";
+}
+
+.game-icon-lava:after {
+	content: "\E0DB";
+}
+
+.game-icon-lucifer-cannon:after {
+	content: "\E0DC";
+}
+
+.game-icon-alien-fire:after {
+	content: "\E0DD";
+}
+
+.game-icon-arson:after {
+	content: "\E0DE";
+}
+
+.game-icon-burning-book:after {
+	content: "\E0DF";
+}
+
+.game-icon-burning-dot:after {
+	content: "\E0E0";
+}
+
+.game-icon-burning-embers:after {
+	content: "\E0E1";
+}
+
+.game-icon-burning-eye:after {
+	content: "\E0E2";
+}
+
+.game-icon-burning-meteor:after {
+	content: "\E0E3";
+}
+
+.game-icon-burning-passion:after {
+	content: "\E0E4";
+}
+
+.game-icon-burning-tree:after {
+	content: "\E0E5";
+}
+
+.game-icon-caldera:after {
+	content: "\E0E6";
+}
+
+.game-icon-campfire:after {
+	content: "\E0E7";
+}
+
+.game-icon-candle-flame:after {
+	content: "\E0E8";
+}
+
+.game-icon-candle-holder:after {
+	content: "\E0E9";
+}
+
+.game-icon-candle-light:after {
+	content: "\E0EA";
+}
+
+.game-icon-candlebright:after {
+	content: "\E0EB";
+}
+
+.game-icon-celebration-fire:after {
+	content: "\E0EC";
+}
+
+.game-icon-dragon-breath:after {
+	content: "\E0ED";
+}
+
+.game-icon-ember-shot:after {
+	content: "\E0EE";
+}
+
+.game-icon-eruption:after {
+	content: "\E0EF";
+}
+
+.game-icon-fire-ace:after {
+	content: "\E0F0";
+}
+
+.game-icon-fire-axe:after {
+	content: "\E0F1";
+}
+
+.game-icon-fire-bomb:after {
+	content: "\E0F2";
+}
+
+.game-icon-fire-bottle:after {
+	content: "\E0F3";
+}
+
+.game-icon-fire-bowl:after {
+	content: "\E0F4";
+}
+
+.game-icon-fire-breath:after {
+	content: "\E0F5";
+}
+
+.game-icon-fire-dash:after {
+	content: "\E0F6";
+}
+
+.game-icon-fire-punch:after {
+	content: "\E0F7";
+}
+
+.game-icon-fire-ring:after {
+	content: "\E0F8";
+}
+
+.game-icon-fire-shield:after {
+	content: "\E0F9";
+}
+
+.game-icon-fire-silhouette:after {
+	content: "\E0FA";
+}
+
+.game-icon-fire-tail:after {
+	content: "\E0FB";
+}
+
+.game-icon-fire-wave:after {
+	content: "\E0FC";
+}
+
+.game-icon-fire-zone:after {
+	content: "\E0FD";
+}
+
+.game-icon-fireball:after {
+	content: "\E0FE";
+}
+
+.game-icon-firework-rocket:after {
+	content: "\E0FF";
+}
+
+.game-icon-flame-claws:after {
+	content: "\E100";
+}
+
+.game-icon-flame-spin:after {
+	content: "\E101";
+}
+
+.game-icon-flame-tunnel:after {
+	content: "\E102";
+}
+
+.game-icon-flamed-leaf:after {
+	content: "\E103";
+}
+
+.game-icon-flaming-claw:after {
+	content: "\E104";
+}
+
+.game-icon-flaming-sheet:after {
+	content: "\E105";
+}
+
+.game-icon-fluffy-flame:after {
+	content: "\E106";
+}
+
+.game-icon-frostfire:after {
+	content: "\E107";
+}
+
+.game-icon-heartburn:after {
+	content: "\E108";
+}
+
+.game-icon-heat-haze:after {
+	content: "\E109";
+}
+
+.game-icon-ifrit:after {
+	content: "\E10A";
+}
+
+.game-icon-kindle:after {
+	content: "\E10B";
+}
+
+.game-icon-lantern-flame:after {
+	content: "\E10C";
+}
+
+.game-icon-lit-candelabra:after {
+	content: "\E10D";
+}
+
+.game-icon-match-head:after {
+	content: "\E10E";
+}
+
+.game-icon-plasma-bolt:after {
+	content: "\E10F";
+}
+
+.game-icon-pyromaniac:after {
+	content: "\E110";
+}
+
+.game-icon-salamander:after {
+	content: "\E111";
+}
+
+.game-icon-small-fire:after {
+	content: "\E112";
+}
+
+.game-icon-thrown-charcoal:after {
+	content: "\E113";
+}
+
+.game-icon-unfriendly-fire:after {
+	content: "\E114";
+}
+
+.game-icon-volcano:after {
+	content: "\E115";
+}
+
+.game-icon-wildfires:after {
+	content: "\E116";
+}
+
+.game-icon-mite-alt:after {
+	content: "\E117";
+}
+
+.game-icon-spider-alt:after {
+	content: "\E118";
+}
+
+.game-icon-spider-face:after {
+	content: "\E119";
+}
+
+.game-icon-animal-hide:after {
+	content: "\E11A";
+}
+
+.game-icon-bat:after {
+	content: "\E11B";
+}
+
+.game-icon-camel-head:after {
+	content: "\E11C";
+}
+
+.game-icon-dolphin:after {
+	content: "\E11D";
+}
+
+.game-icon-duck:after {
+	content: "\E11E";
+}
+
+.game-icon-elephant-head:after {
+	content: "\E11F";
+}
+
+.game-icon-falcon-moon:after {
+	content: "\E120";
+}
+
+.game-icon-fox-tail:after {
+	content: "\E121";
+}
+
+.game-icon-horse-head:after {
+	content: "\E122";
+}
+
+.game-icon-horseshoe:after {
+	content: "\E123";
+}
+
+.game-icon-lynx-head:after {
+	content: "\E124";
+}
+
+.game-icon-panda:after {
+	content: "\E125";
+}
+
+.game-icon-praying-mantis:after {
+	content: "\E126";
+}
+
+.game-icon-rabbit:after {
+	content: "\E127";
+}
+
+.game-icon-rhinoceros-horn:after {
+	content: "\E128";
+}
+
+.game-icon-saddle:after {
+	content: "\E129";
+}
+
+.game-icon-sea-star:after {
+	content: "\E12A";
+}
+
+.game-icon-seahorse:after {
+	content: "\E12B";
+}
+
+.game-icon-shark-fin:after {
+	content: "\E12C";
+}
+
+.game-icon-sheep:after {
+	content: "\E12D";
+}
+
+.game-icon-sperm-whale:after {
+	content: "\E12E";
+}
+
+.game-icon-tiger:after {
+	content: "\E12F";
+}
+
+.game-icon-tortoise:after {
+	content: "\E130";
+}
+
+.game-icon-toucan:after {
+	content: "\E131";
+}
+
+.game-icon-trojan-horse:after {
+	content: "\E132";
+}
+
+.game-icon-udder:after {
+	content: "\E133";
+}
+
+.game-icon-big-egg:after {
+	content: "\E134";
+}
+
+.game-icon-claw:after {
+	content: "\E135";
+}
+
+.game-icon-poison:after {
+	content: "\E136";
+}
+
+.game-icon-chess-knight:after {
+	content: "\E137";
+}
+
+.game-icon-donkey:after {
+	content: "\E138";
+}
+
+.game-icon-mounted-knight:after {
+	content: "\E139";
+}
+
+.game-icon-pegasus:after {
+	content: "\E13A";
+}
+
+.game-icon-ammonite-fossil:after {
+	content: "\E13B";
+}
+
+.game-icon-ammonite:after {
+	content: "\E13C";
+}
+
+.game-icon-angler-fish:after {
+	content: "\E13D";
+}
+
+.game-icon-angular-spider:after {
+	content: "\E13E";
+}
+
+.game-icon-animal-skull:after {
+	content: "\E13F";
+}
+
+.game-icon-armadillo-tail:after {
+	content: "\E140";
+}
+
+.game-icon-bat-wing:after {
+	content: "\E141";
+}
+
+.game-icon-bee:after {
+	content: "\E142";
+}
+
+.game-icon-bird-twitter:after {
+	content: "\E143";
+}
+
+.game-icon-black-cat:after {
+	content: "\E144";
+}
+
+.game-icon-boar-tusks:after {
+	content: "\E145";
+}
+
+.game-icon-bull-horns:after {
+	content: "\E146";
+}
+
+.game-icon-bull:after {
+	content: "\E147";
+}
+
+.game-icon-butterfly-warning:after {
+	content: "\E148";
+}
+
+.game-icon-butterfly:after {
+	content: "\E149";
+}
+
+.game-icon-centipede:after {
+	content: "\E14A";
+}
+
+.game-icon-chicken-leg:after {
+	content: "\E14B";
+}
+
+.game-icon-cobweb:after {
+	content: "\E14C";
+}
+
+.game-icon-crab-claw:after {
+	content: "\E14D";
+}
+
+.game-icon-crab:after {
+	content: "\E14E";
+}
+
+.game-icon-croc-jaws:after {
+	content: "\E14F";
+}
+
+.game-icon-crossed-claws:after {
+	content: "\E150";
+}
+
+.game-icon-crow-dive:after {
+	content: "\E151";
+}
+
+.game-icon-dinosaur-rex:after {
+	content: "\E152";
+}
+
+.game-icon-dragonfly:after {
+	content: "\E153";
+}
+
+.game-icon-eagle-emblem:after {
+	content: "\E154";
+}
+
+.game-icon-earwig:after {
+	content: "\E155";
+}
+
+.game-icon-evil-bat:after {
+	content: "\E156";
+}
+
+.game-icon-fish-corpse:after {
+	content: "\E157";
+}
+
+.game-icon-fishbone:after {
+	content: "\E158";
+}
+
+.game-icon-food-chain:after {
+	content: "\E159";
+}
+
+.game-icon-fox-head:after {
+	content: "\E15A";
+}
+
+.game-icon-frog:after {
+	content: "\E15B";
+}
+
+.game-icon-gecko:after {
+	content: "\E15C";
+}
+
+.game-icon-gold-scarab:after {
+	content: "\E15D";
+}
+
+.game-icon-grasping-claws:after {
+	content: "\E15E";
+}
+
+.game-icon-hanging-spider:after {
+	content: "\E15F";
+}
+
+.game-icon-hoof:after {
+	content: "\E160";
+}
+
+.game-icon-horse-head-2:after {
+	content: "\E161";
+}
+
+.game-icon-hound:after {
+	content: "\E162";
+}
+
+.game-icon-insect-jaws:after {
+	content: "\E163";
+}
+
+.game-icon-jellyfish:after {
+	content: "\E164";
+}
+
+.game-icon-lamprey-mouth:after {
+	content: "\E165";
+}
+
+.game-icon-leeching-worm:after {
+	content: "\E166";
+}
+
+.game-icon-lion:after {
+	content: "\E167";
+}
+
+.game-icon-maggot:after {
+	content: "\E168";
+}
+
+.game-icon-masked-spider:after {
+	content: "\E169";
+}
+
+.game-icon-mite:after {
+	content: "\E16A";
+}
+
+.game-icon-monkey:after {
+	content: "\E16B";
+}
+
+.game-icon-mouse:after {
+	content: "\E16C";
+}
+
+.game-icon-octopus:after {
+	content: "\E16D";
+}
+
+.game-icon-ouroboros:after {
+	content: "\E16E";
+}
+
+.game-icon-owl:after {
+	content: "\E16F";
+}
+
+.game-icon-parmecia:after {
+	content: "\E170";
+}
+
+.game-icon-parrot-head:after {
+	content: "\E171";
+}
+
+.game-icon-paw-front:after {
+	content: "\E172";
+}
+
+.game-icon-paw-heart:after {
+	content: "\E173";
+}
+
+.game-icon-paw-print:after {
+	content: "\E174";
+}
+
+.game-icon-paw:after {
+	content: "\E175";
+}
+
+.game-icon-raven:after {
+	content: "\E176";
+}
+
+.game-icon-roast-chicken:after {
+	content: "\E177";
+}
+
+.game-icon-sad-crab:after {
+	content: "\E178";
+}
+
+.game-icon-scarab-beetle:after {
+	content: "\E179";
+}
+
+.game-icon-scorpion-tail:after {
+	content: "\E17A";
+}
+
+.game-icon-scorpion:after {
+	content: "\E17B";
+}
+
+.game-icon-sea-serpent:after {
+	content: "\E17C";
+}
+
+.game-icon-seated-mouse:after {
+	content: "\E17D";
+}
+
+.game-icon-shark-jaws:after {
+	content: "\E17E";
+}
+
+.game-icon-snail:after {
+	content: "\E17F";
+}
+
+.game-icon-snake-bite:after {
+	content: "\E180";
+}
+
+.game-icon-snake-totem:after {
+	content: "\E181";
+}
+
+.game-icon-snake:after {
+	content: "\E182";
+}
+
+.game-icon-sonic-screech:after {
+	content: "\E183";
+}
+
+.game-icon-spiked-snail:after {
+	content: "\E184";
+}
+
+.game-icon-squid-head:after {
+	content: "\E185";
+}
+
+.game-icon-squid:after {
+	content: "\E186";
+}
+
+.game-icon-stag-head:after {
+	content: "\E187";
+}
+
+.game-icon-stomp:after {
+	content: "\E188";
+}
+
+.game-icon-swan:after {
+	content: "\E189";
+}
+
+.game-icon-tick:after {
+	content: "\E18A";
+}
+
+.game-icon-toad-teeth:after {
+	content: "\E18B";
+}
+
+.game-icon-top-paw:after {
+	content: "\E18C";
+}
+
+.game-icon-trilobite:after {
+	content: "\E18D";
+}
+
+.game-icon-turd:after {
+	content: "\E18E";
+}
+
+.game-icon-turtle-shell:after {
+	content: "\E18F";
+}
+
+.game-icon-turtle:after {
+	content: "\E190";
+}
+
+.game-icon-virus:after {
+	content: "\E191";
+}
+
+.game-icon-vulture:after {
+	content: "\E192";
+}
+
+.game-icon-wasp-sting:after {
+	content: "\E193";
+}
+
+.game-icon-white-cat:after {
+	content: "\E194";
+}
+
+.game-icon-wolf-head:after {
+	content: "\E195";
+}
+
+.game-icon-wolf-howl:after {
+	content: "\E196";
+}
+
+.game-icon-wolverine-claws:after {
+	content: "\E197";
+}
+
+.game-icon-worm-mouth:after {
+	content: "\E198";
+}
+
+.game-icon-beehive:after {
+	content: "\E199";
+}
+
+.game-icon-beetle-shell:after {
+	content: "\E19A";
+}
+
+.game-icon-long-antennae-bug:after {
+	content: "\E19B";
+}
+
+.game-icon-card-discard:after {
+	content: "\E19C";
+}
+
+.game-icon-card-draw:after {
+	content: "\E19D";
+}
+
+.game-icon-card-pick:after {
+	content: "\E19E";
+}
+
+.game-icon-card-random:after {
+	content: "\E19F";
+}
+
+.game-icon-dice-six-faces-three:after {
+	content: "\E1A0";
+}
+
+.game-icon-perspective-dice-six-faces-four:after {
+	content: "\E1A1";
+}
+
+.game-icon-ages:after {
+	content: "\E1A2";
+}
+
+.game-icon-backgammon:after {
+	content: "\E1A3";
+}
+
+.game-icon-coins:after {
+	content: "\E1A4";
+}
+
+.game-icon-empty-chessboard:after {
+	content: "\E1A5";
+}
+
+.game-icon-meeple:after {
+	content: "\E1A6";
+}
+
+.game-icon-rolling-dices:after {
+	content: "\E1A7";
+}
+
+.game-icon-stack:after {
+	content: "\E1A8";
+}
+
+.game-icon-tabletop-players:after {
+	content: "\E1A9";
+}
+
+.game-icon-tic-tac-toe:after {
+	content: "\E1AA";
+}
+
+.game-icon-ace:after {
+	content: "\E1AB";
+}
+
+.game-icon-honeycomb:after {
+	content: "\E1AC";
+}
+
+.game-icon-pawn:after {
+	content: "\E1AD";
+}
+
+.game-icon-poker-hand:after {
+	content: "\E1AE";
+}
+
+.game-icon-suits:after {
+	content: "\E1AF";
+}
+
+.game-icon-dragon-head:after {
+	content: "\E1B0";
+}
+
+.game-icon-anubis:after {
+	content: "\E1B1";
+}
+
+.game-icon-carnivorous-plant:after {
+	content: "\E1B2";
+}
+
+.game-icon-half-body-crawling:after {
+	content: "\E1B3";
+}
+
+.game-icon-metroid:after {
+	content: "\E1B4";
+}
+
+.game-icon-orc-head:after {
+	content: "\E1B5";
+}
+
+.game-icon-shambling-zombie:after {
+	content: "\E1B6";
+}
+
+.game-icon-unicorn:after {
+	content: "\E1B7";
+}
+
+.game-icon-sea-creature:after {
+	content: "\E1B8";
+}
+
+.game-icon-behold:after {
+	content: "\E1B9";
+}
+
+.game-icon-bestial-fangs:after {
+	content: "\E1BA";
+}
+
+.game-icon-cyclops:after {
+	content: "\E1BB";
+}
+
+.game-icon-diablo-skull:after {
+	content: "\E1BC";
+}
+
+.game-icon-dinosaur-bones:after {
+	content: "\E1BD";
+}
+
+.game-icon-dinosaur-egg:after {
+	content: "\E1BE";
+}
+
+.game-icon-double-dragon:after {
+	content: "\E1BF";
+}
+
+.game-icon-dragon-head-2:after {
+	content: "\E1C0";
+}
+
+.game-icon-dragon-spiral:after {
+	content: "\E1C1";
+}
+
+.game-icon-evil-fork:after {
+	content: "\E1C2";
+}
+
+.game-icon-evil-moon:after {
+	content: "\E1C3";
+}
+
+.game-icon-evil-tree:after {
+	content: "\E1C4";
+}
+
+.game-icon-eyestalk:after {
+	content: "\E1C5";
+}
+
+.game-icon-fairy:after {
+	content: "\E1C6";
+}
+
+.game-icon-fleshy-mass:after {
+	content: "\E1C7";
+}
+
+.game-icon-frankenstein-creature:after {
+	content: "\E1C8";
+}
+
+.game-icon-ghost:after {
+	content: "\E1C9";
+}
+
+.game-icon-gluttonous-smile:after {
+	content: "\E1CA";
+}
+
+.game-icon-gooey-daemon:after {
+	content: "\E1CB";
+}
+
+.game-icon-grim-reaper:after {
+	content: "\E1CC";
+}
+
+.game-icon-harpy:after {
+	content: "\E1CD";
+}
+
+.game-icon-haunting:after {
+	content: "\E1CE";
+}
+
+.game-icon-hydra-shot:after {
+	content: "\E1CF";
+}
+
+.game-icon-hydra:after {
+	content: "\E1D0";
+}
+
+.game-icon-imp-laugh:after {
+	content: "\E1D1";
+}
+
+.game-icon-imp:after {
+	content: "\E1D2";
+}
+
+.game-icon-infested-mass:after {
+	content: "\E1D3";
+}
+
+.game-icon-lizardman:after {
+	content: "\E1D4";
+}
+
+.game-icon-minotaur:after {
+	content: "\E1D5";
+}
+
+.game-icon-pretty-fangs:after {
+	content: "\E1D6";
+}
+
+.game-icon-sea-dragon:after {
+	content: "\E1D7";
+}
+
+.game-icon-sharp-smile:after {
+	content: "\E1D8";
+}
+
+.game-icon-spectre:after {
+	content: "\E1D9";
+}
+
+.game-icon-vile-fluid:after {
+	content: "\E1DA";
+}
+
+.game-icon-witch-flight:after {
+	content: "\E1DB";
+}
+
+.game-icon-wyvern:after {
+	content: "\E1DC";
+}
+
+.game-icon-lizard-tongue:after {
+	content: "\E1DD";
+}
+
+.game-icon-death-skull:after {
+	content: "\E1DE";
+}
+
+.game-icon-telefrag:after {
+	content: "\E1DF";
+}
+
+.game-icon-alien-skull:after {
+	content: "\E1E0";
+}
+
+.game-icon-blade-bite:after {
+	content: "\E1E1";
+}
+
+.game-icon-bone-gnawer:after {
+	content: "\E1E2";
+}
+
+.game-icon-broken-skull:after {
+	content: "\E1E3";
+}
+
+.game-icon-candle-skull:after {
+	content: "\E1E4";
+}
+
+.game-icon-carrion:after {
+	content: "\E1E5";
+}
+
+.game-icon-condylura-skull:after {
+	content: "\E1E6";
+}
+
+.game-icon-crowned-skull:after {
+	content: "\E1E7";
+}
+
+.game-icon-daemon-skull:after {
+	content: "\E1E8";
+}
+
+.game-icon-death-zone:after {
+	content: "\E1E9";
+}
+
+.game-icon-desert-skull:after {
+	content: "\E1EA";
+}
+
+.game-icon-disintegrate:after {
+	content: "\E1EB";
+}
+
+.game-icon-dread-skull:after {
+	content: "\E1EC";
+}
+
+.game-icon-fanged-skull:after {
+	content: "\E1ED";
+}
+
+.game-icon-goo-skull:after {
+	content: "\E1EE";
+}
+
+.game-icon-harry-potter-skull:after {
+	content: "\E1EF";
+}
+
+.game-icon-horned-skull:after {
+	content: "\E1F0";
+}
+
+.game-icon-leaky-skull:after {
+	content: "\E1F1";
+}
+
+.game-icon-medal-skull:after {
+	content: "\E1F2";
+}
+
+.game-icon-morbid-humour:after {
+	content: "\E1F3";
+}
+
+.game-icon-piece-skull:after {
+	content: "\E1F4";
+}
+
+.game-icon-pirate-skull:after {
+	content: "\E1F5";
+}
+
+.game-icon-poison-bottle:after {
+	content: "\E1F6";
+}
+
+.game-icon-poison-gas:after {
+	content: "\E1F7";
+}
+
+.game-icon-reaper-scythe:after {
+	content: "\E1F8";
+}
+
+.game-icon-sharped-teeth-skull:after {
+	content: "\E1F9";
+}
+
+.game-icon-skull-bolt:after {
+	content: "\E1FA";
+}
+
+.game-icon-skull-crack:after {
+	content: "\E1FB";
+}
+
+.game-icon-skull-crossed-bones:after {
+	content: "\E1FC";
+}
+
+.game-icon-skull-in-jar:after {
+	content: "\E1FD";
+}
+
+.game-icon-skull-mask:after {
+	content: "\E1FE";
+}
+
+.game-icon-skull-ring:after {
+	content: "\E1FF";
+}
+
+.game-icon-skull-shield:after {
+	content: "\E200";
+}
+
+.game-icon-skull-signet:after {
+	content: "\E201";
+}
+
+.game-icon-spade-skull:after {
+	content: "\E202";
+}
+
+.game-icon-stoned-skull:after {
+	content: "\E203";
+}
+
+.game-icon-surprised-skull:after {
+	content: "\E204";
+}
+
+.game-icon-tentacles-skull:after {
+	content: "\E205";
+}
+
+.game-icon-thunder-skull:after {
+	content: "\E206";
+}
+
+.game-icon-triple-skulls:after {
+	content: "\E207";
+}
+
+.game-icon-minerals:after {
+	content: "\E208";
+}
+
+.game-icon-ore:after {
+	content: "\E209";
+}
+
+.game-icon-mine-wagon:after {
+	content: "\E20A";
+}
+
+.game-icon-rupee:after {
+	content: "\E20B";
+}
+
+.game-icon-crystal-bars:after {
+	content: "\E20C";
+}
+
+.game-icon-crystal-cluster:after {
+	content: "\E20D";
+}
+
+.game-icon-crystal-eye:after {
+	content: "\E20E";
+}
+
+.game-icon-crystal-growth:after {
+	content: "\E20F";
+}
+
+.game-icon-crystal-shine:after {
+	content: "\E210";
+}
+
+.game-icon-crystalize:after {
+	content: "\E211";
+}
+
+.game-icon-cut-diamond:after {
+	content: "\E212";
+}
+
+.game-icon-diamond-hard:after {
+	content: "\E213";
+}
+
+.game-icon-emerald:after {
+	content: "\E214";
+}
+
+.game-icon-floating-crystal:after {
+	content: "\E215";
+}
+
+.game-icon-gem-chain:after {
+	content: "\E216";
+}
+
+.game-icon-gem-necklace:after {
+	content: "\E217";
+}
+
+.game-icon-gem-pendant:after {
+	content: "\E218";
+}
+
+.game-icon-gems:after {
+	content: "\E219";
+}
+
+.game-icon-saphir:after {
+	content: "\E21A";
+}
+
+.game-icon-nautilus-shell:after {
+	content: "\E21B";
+}
+
+.game-icon-buoy:after {
+	content: "\E21C";
+}
+
+.game-icon-crow-nest:after {
+	content: "\E21D";
+}
+
+.game-icon-drakkar:after {
+	content: "\E21E";
+}
+
+.game-icon-fishing:after {
+	content: "\E21F";
+}
+
+.game-icon-iceberg:after {
+	content: "\E220";
+}
+
+.game-icon-island:after {
+	content: "\E221";
+}
+
+.game-icon-life-buoy:after {
+	content: "\E222";
+}
+
+.game-icon-lighthouse:after {
+	content: "\E223";
+}
+
+.game-icon-paddles:after {
+	content: "\E224";
+}
+
+.game-icon-pulley-hook:after {
+	content: "\E225";
+}
+
+.game-icon-rope-coil:after {
+	content: "\E226";
+}
+
+.game-icon-sailboat:after {
+	content: "\E227";
+}
+
+.game-icon-sextant:after {
+	content: "\E228";
+}
+
+.game-icon-ship-wheel:after {
+	content: "\E229";
+}
+
+.game-icon-speed-boat:after {
+	content: "\E22A";
+}
+
+.game-icon-submarine:after {
+	content: "\E22B";
+}
+
+.game-icon-snorkel:after {
+	content: "\E22C";
+}
+
+.game-icon-anchor:after {
+	content: "\E22D";
+}
+
+.game-icon-at-sea:after {
+	content: "\E22E";
+}
+
+.game-icon-big-wave:after {
+	content: "\E22F";
+}
+
+.game-icon-cargo-crane:after {
+	content: "\E230";
+}
+
+.game-icon-drowning:after {
+	content: "\E231";
+}
+
+.game-icon-fishing-hook:after {
+	content: "\E232";
+}
+
+.game-icon-fishing-net:after {
+	content: "\E233";
+}
+
+.game-icon-galleon:after {
+	content: "\E234";
+}
+
+.game-icon-water-splash:after {
+	content: "\E235";
+}
+
+.game-icon-wave-crest:after {
+	content: "\E236";
+}
+
+.game-icon-oyster-pearl:after {
+	content: "\E237";
+}
+
+.game-icon-armoured-shell:after {
+	content: "\E238";
+}
+
+.game-icon-backbone-shell:after {
+	content: "\E239";
+}
+
+.game-icon-scallop:after {
+	content: "\E23A";
+}
+
+.game-icon-spiked-shell:after {
+	content: "\E23B";
+}
+
+.game-icon-spiral-shell:after {
+	content: "\E23C";
+}
+
+.game-icon-american-shield:after {
+	content: "\E23D";
+}
+
+.game-icon-european-flag:after {
+	content: "\E23E";
+}
+
+.game-icon-round-star:after {
+	content: "\E23F";
+}
+
+.game-icon-seven-pointed-star:after {
+	content: "\E240";
+}
+
+.game-icon-solar-system:after {
+	content: "\E241";
+}
+
+.game-icon-stars-stack:after {
+	content: "\E242";
+}
+
+.game-icon-sun-cloud:after {
+	content: "\E243";
+}
+
+.game-icon-thermometer-hot:after {
+	content: "\E244";
+}
+
+.game-icon-usa-flag:after {
+	content: "\E245";
+}
+
+.game-icon-flake:after {
+	content: "\E246";
+}
+
+.game-icon-spikes-full:after {
+	content: "\E247";
+}
+
+.game-icon-spikes-half:after {
+	content: "\E248";
+}
+
+.game-icon-spikes-init:after {
+	content: "\E249";
+}
+
+.game-icon-spikes:after {
+	content: "\E24A";
+}
+
+.game-icon-splash:after {
+	content: "\E24B";
+}
+
+.game-icon-barbed-star:after {
+	content: "\E24C";
+}
+
+.game-icon-beveled-star:after {
+	content: "\E24D";
+}
+
+.game-icon-boomerang-sun:after {
+	content: "\E24E";
+}
+
+.game-icon-cursed-star:after {
+	content: "\E24F";
+}
+
+.game-icon-dripping-star:after {
+	content: "\E250";
+}
+
+.game-icon-eclipse-flare:after {
+	content: "\E251";
+}
+
+.game-icon-eclipse:after {
+	content: "\E252";
+}
+
+.game-icon-flat-star:after {
+	content: "\E253";
+}
+
+.game-icon-flexible-star:after {
+	content: "\E254";
+}
+
+.game-icon-gooey-eyed-sun:after {
+	content: "\E255";
+}
+
+.game-icon-justice-star:after {
+	content: "\E256";
+}
+
+.game-icon-law-star:after {
+	content: "\E257";
+}
+
+.game-icon-lotus-flower:after {
+	content: "\E258";
+}
+
+.game-icon-magic-shield:after {
+	content: "\E259";
+}
+
+.game-icon-moebius-star:after {
+	content: "\E25A";
+}
+
+.game-icon-pentagram-rose:after {
+	content: "\E25B";
+}
+
+.game-icon-radial-balance:after {
+	content: "\E25C";
+}
+
+.game-icon-rainbow-star:after {
+	content: "\E25D";
+}
+
+.game-icon-rosa-shield:after {
+	content: "\E25E";
+}
+
+.game-icon-shiny-iris:after {
+	content: "\E25F";
+}
+
+.game-icon-star-cycle:after {
+	content: "\E260";
+}
+
+.game-icon-star-prominences:after {
+	content: "\E261";
+}
+
+.game-icon-star-pupil:after {
+	content: "\E262";
+}
+
+.game-icon-star-sattelites:after {
+	content: "\E263";
+}
+
+.game-icon-star-swirl:after {
+	content: "\E264";
+}
+
+.game-icon-staryu:after {
+	content: "\E265";
+}
+
+.game-icon-sun-radiations:after {
+	content: "\E266";
+}
+
+.game-icon-sun:after {
+	content: "\E267";
+}
+
+.game-icon-sunbeams:after {
+	content: "\E268";
+}
+
+.game-icon-sundial:after {
+	content: "\E269";
+}
+
+.game-icon-sunrise:after {
+	content: "\E26A";
+}
+
+.game-icon-ubisoft-sun:after {
+	content: "\E26B";
+}
+
+.game-icon-wrapping-star:after {
+	content: "\E26C";
+}
+
+.game-icon-asteroid:after {
+	content: "\E26D";
+}
+
+.game-icon-brick-pile:after {
+	content: "\E26E";
+}
+
+.game-icon-dig-hole:after {
+	content: "\E26F";
+}
+
+.game-icon-falling-rocks:after {
+	content: "\E270";
+}
+
+.game-icon-menhir:after {
+	content: "\E271";
+}
+
+.game-icon-stone-pile:after {
+	content: "\E272";
+}
+
+.game-icon-bridge:after {
+	content: "\E273";
+}
+
+.game-icon-broken-tablet:after {
+	content: "\E274";
+}
+
+.game-icon-crags:after {
+	content: "\E275";
+}
+
+.game-icon-dripping-stone:after {
+	content: "\E276";
+}
+
+.game-icon-fossil:after {
+	content: "\E277";
+}
+
+.game-icon-meteor-impact:after {
+	content: "\E278";
+}
+
+.game-icon-mineral-heart:after {
+	content: "\E279";
+}
+
+.game-icon-mining:after {
+	content: "\E27A";
+}
+
+.game-icon-mountains:after {
+	content: "\E27B";
+}
+
+.game-icon-mountaintop:after {
+	content: "\E27C";
+}
+
+.game-icon-peaks:after {
+	content: "\E27D";
+}
+
+.game-icon-pirate-grave:after {
+	content: "\E27E";
+}
+
+.game-icon-rock:after {
+	content: "\E27F";
+}
+
+.game-icon-rune-stone:after {
+	content: "\E280";
+}
+
+.game-icon-stalagtite:after {
+	content: "\E281";
+}
+
+.game-icon-stone-axe:after {
+	content: "\E282";
+}
+
+.game-icon-stone-block:after {
+	content: "\E283";
+}
+
+.game-icon-stone-crafting:after {
+	content: "\E284";
+}
+
+.game-icon-stone-sphere:after {
+	content: "\E285";
+}
+
+.game-icon-stone-tablet:after {
+	content: "\E286";
+}
+
+.game-icon-stone-throne:after {
+	content: "\E287";
+}
+
+.game-icon-stone-tower:after {
+	content: "\E288";
+}
+
+.game-icon-dice-eight-faces-eight:after {
+	content: "\E289";
+}
+
+.game-icon-dice-six-faces-five:after {
+	content: "\E28A";
+}
+
+.game-icon-dice-six-faces-four:after {
+	content: "\E28B";
+}
+
+.game-icon-dice-six-faces-one:after {
+	content: "\E28C";
+}
+
+.game-icon-dice-six-faces-six:after {
+	content: "\E28D";
+}
+
+.game-icon-dice-six-faces-two:after {
+	content: "\E28E";
+}
+
+.game-icon-dice-twenty-faces-twenty:after {
+	content: "\E28F";
+}
+
+.game-icon-perspective-dice-six-faces-five:after {
+	content: "\E290";
+}
+
+.game-icon-perspective-dice-six-faces-one:after {
+	content: "\E291";
+}
+
+.game-icon-perspective-dice-six-faces-random:after {
+	content: "\E292";
+}
+
+.game-icon-perspective-dice-six-faces-six:after {
+	content: "\E293";
+}
+
+.game-icon-perspective-dice-six-faces-three:after {
+	content: "\E294";
+}
+
+.game-icon-perspective-dice-six-faces-two:after {
+	content: "\E295";
+}
+
+.game-icon-cubes:after {
+	content: "\E296";
+}
+
+.game-icon-deshret-red-crown:after {
+	content: "\E297";
+}
+
+.game-icon-hedjet-white-crown:after {
+	content: "\E298";
+}
+
+.game-icon-pschent-double-crown:after {
+	content: "\E299";
+}
+
+.game-icon-pope-crown:after {
+	content: "\E29A";
+}
+
+.game-icon-crown-coin:after {
+	content: "\E29B";
+}
+
+.game-icon-crown-of-thorns:after {
+	content: "\E29C";
+}
+
+.game-icon-crown:after {
+	content: "\E29D";
+}
+
+.game-icon-crowned-heart:after {
+	content: "\E29E";
+}
+
+.game-icon-king:after {
+	content: "\E29F";
+}
+
+.game-icon-laurel-crown:after {
+	content: "\E2A0";
+}
+
+.game-icon-laurels:after {
+	content: "\E2A1";
+}
+
+.game-icon-queen-crown:after {
+	content: "\E2A2";
+}
+
+.game-icon-sharp-crown:after {
+	content: "\E2A3";
+}
+
+.game-icon-egyptian-pyramids:after {
+	content: "\E2A4";
+}
+
+.game-icon-defensive-wall:after {
+	content: "\E2A5";
+}
+
+.game-icon-ancient-ruins:after {
+	content: "\E2A6";
+}
+
+.game-icon-aqueduct:after {
+	content: "\E2A7";
+}
+
+.game-icon-bank:after {
+	content: "\E2A8";
+}
+
+.game-icon-barn:after {
+	content: "\E2A9";
+}
+
+.game-icon-block-house:after {
+	content: "\E2AA";
+}
+
+.game-icon-brick-wall:after {
+	content: "\E2AB";
+}
+
+.game-icon-castle:after {
+	content: "\E2AC";
+}
+
+.game-icon-church:after {
+	content: "\E2AD";
+}
+
+.game-icon-closed-doors:after {
+	content: "\E2AE";
+}
+
+.game-icon-entry-door:after {
+	content: "\E2AF";
+}
+
+.game-icon-exit-door:after {
+	content: "\E2B0";
+}
+
+.game-icon-factory:after {
+	content: "\E2B1";
+}
+
+.game-icon-gate:after {
+	content: "\E2B2";
+}
+
+.game-icon-gold-mine:after {
+	content: "\E2B3";
+}
+
+.game-icon-graveyard:after {
+	content: "\E2B4";
+}
+
+.game-icon-greek-temple:after {
+	content: "\E2B5";
+}
+
+.game-icon-house:after {
+	content: "\E2B6";
+}
+
+.game-icon-i-beam:after {
+	content: "\E2B7";
+}
+
+.game-icon-igloo:after {
+	content: "\E2B8";
+}
+
+.game-icon-indian-palace:after {
+	content: "\E2B9";
+}
+
+.game-icon-ionic-column:after {
+	content: "\E2BA";
+}
+
+.game-icon-ladder:after {
+	content: "\E2BB";
+}
+
+.game-icon-mayan-pyramid:after {
+	content: "\E2BC";
+}
+
+.game-icon-medieval-gate:after {
+	content: "\E2BD";
+}
+
+.game-icon-medieval-pavilion:after {
+	content: "\E2BE";
+}
+
+.game-icon-obelisk:after {
+	content: "\E2BF";
+}
+
+.game-icon-observatory:after {
+	content: "\E2C0";
+}
+
+.game-icon-oil-rig:after {
+	content: "\E2C1";
+}
+
+.game-icon-palisade:after {
+	content: "\E2C2";
+}
+
+.game-icon-saloon-doors:after {
+	content: "\E2C3";
+}
+
+.game-icon-shinto-shrine:after {
+	content: "\E2C4";
+}
+
+.game-icon-shop:after {
+	content: "\E2C5";
+}
+
+.game-icon-siege-tower:after {
+	content: "\E2C6";
+}
+
+.game-icon-stairs:after {
+	content: "\E2C7";
+}
+
+.game-icon-stone-bridge:after {
+	content: "\E2C8";
+}
+
+.game-icon-theater-curtains:after {
+	content: "\E2C9";
+}
+
+.game-icon-tipi:after {
+	content: "\E2CA";
+}
+
+.game-icon-tower-bridge:after {
+	content: "\E2CB";
+}
+
+.game-icon-traffic-cone:after {
+	content: "\E2CC";
+}
+
+.game-icon-viking-longhouse:after {
+	content: "\E2CD";
+}
+
+.game-icon-village:after {
+	content: "\E2CE";
+}
+
+.game-icon-warp-pipe:after {
+	content: "\E2CF";
+}
+
+.game-icon-watchtower:after {
+	content: "\E2D0";
+}
+
+.game-icon-water-fountain:after {
+	content: "\E2D1";
+}
+
+.game-icon-well:after {
+	content: "\E2D2";
+}
+
+.game-icon-wheelbarrow:after {
+	content: "\E2D3";
+}
+
+.game-icon-wind-turbine:after {
+	content: "\E2D4";
+}
+
+.game-icon-windmill:after {
+	content: "\E2D5";
+}
+
+.game-icon-windpump:after {
+	content: "\E2D6";
+}
+
+.game-icon-arena:after {
+	content: "\E2D7";
+}
+
+.game-icon-capitol:after {
+	content: "\E2D8";
+}
+
+.game-icon-castle-2:after {
+	content: "\E2D9";
+}
+
+.game-icon-demolish:after {
+	content: "\E2DA";
+}
+
+.game-icon-fountain:after {
+	content: "\E2DB";
+}
+
+.game-icon-guarded-tower:after {
+	content: "\E2DC";
+}
+
+.game-icon-heart-tower:after {
+	content: "\E2DD";
+}
+
+.game-icon-locked-fortress:after {
+	content: "\E2DE";
+}
+
+.game-icon-magic-gate:after {
+	content: "\E2DF";
+}
+
+.game-icon-magic-portal:after {
+	content: "\E2E0";
+}
+
+.game-icon-maze:after {
+	content: "\E2E1";
+}
+
+.game-icon-mucous-pillar:after {
+	content: "\E2E2";
+}
+
+.game-icon-portculis:after {
+	content: "\E2E3";
+}
+
+.game-icon-radar-dish:after {
+	content: "\E2E4";
+}
+
+.game-icon-tower-fall:after {
+	content: "\E2E5";
+}
+
+.game-icon-white-tower:after {
+	content: "\E2E6";
+}
+
+.game-icon-wooden-door:after {
+	content: "\E2E7";
+}
+
+.game-icon-wrecking-ball:after {
+	content: "\E2E8";
+}
+
+.game-icon-eye-of-horus:after {
+	content: "\E2E9";
+}
+
+.game-icon-all-seeing-eye:after {
+	content: "\E2EA";
+}
+
+.game-icon-angry-eyes:after {
+	content: "\E2EB";
+}
+
+.game-icon-binoculars:after {
+	content: "\E2EC";
+}
+
+.game-icon-blindfold:after {
+	content: "\E2ED";
+}
+
+.game-icon-lock-spy:after {
+	content: "\E2EE";
+}
+
+.game-icon-look-at:after {
+	content: "\E2EF";
+}
+
+.game-icon-night-vision:after {
+	content: "\E2F0";
+}
+
+.game-icon-protection-glasses:after {
+	content: "\E2F1";
+}
+
+.game-icon-steampunk-goggles:after {
+	content: "\E2F2";
+}
+
+.game-icon-sunglasses:after {
+	content: "\E2F3";
+}
+
+.game-icon-warlock-eye:after {
+	content: "\E2F4";
+}
+
+.game-icon-beast-eye:after {
+	content: "\E2F5";
+}
+
+.game-icon-bleeding-eye:after {
+	content: "\E2F6";
+}
+
+.game-icon-brass-eye:after {
+	content: "\E2F7";
+}
+
+.game-icon-croissants-pupil:after {
+	content: "\E2F8";
+}
+
+.game-icon-dead-eye:after {
+	content: "\E2F9";
+}
+
+.game-icon-eye-shield:after {
+	content: "\E2FA";
+}
+
+.game-icon-eyeball:after {
+	content: "\E2FB";
+}
+
+.game-icon-falling-eye:after {
+	content: "\E2FC";
+}
+
+.game-icon-gaze:after {
+	content: "\E2FD";
+}
+
+.game-icon-hidden:after {
+	content: "\E2FE";
+}
+
+.game-icon-lightning-tear:after {
+	content: "\E2FF";
+}
+
+.game-icon-magnifying-glass:after {
+	content: "\E300";
+}
+
+.game-icon-octogonal-eye:after {
+	content: "\E301";
+}
+
+.game-icon-one-eyed:after {
+	content: "\E302";
+}
+
+.game-icon-paranoia:after {
+	content: "\E303";
+}
+
+.game-icon-semi-closed-eye:after {
+	content: "\E304";
+}
+
+.game-icon-sheikah-eye:after {
+	content: "\E305";
+}
+
+.game-icon-six-eyes:after {
+	content: "\E306";
+}
+
+.game-icon-smitten:after {
+	content: "\E307";
+}
+
+.game-icon-spectacle-lenses:after {
+	content: "\E308";
+}
+
+.game-icon-spectacles:after {
+	content: "\E309";
+}
+
+.game-icon-spyglass:after {
+	content: "\E30A";
+}
+
+.game-icon-sunken-eye:after {
+	content: "\E30B";
+}
+
+.game-icon-tear-tracks:after {
+	content: "\E30C";
+}
+
+.game-icon-third-eye:after {
+	content: "\E30D";
+}
+
+.game-icon-worried-eyes:after {
+	content: "\E30E";
+}
+
+.game-icon-transform:after {
+	content: "\E30F";
+}
+
+.game-icon-rss:after {
+	content: "\E310";
+}
+
+.game-icon-aquarius:after {
+	content: "\E311";
+}
+
+.game-icon-aries:after {
+	content: "\E312";
+}
+
+.game-icon-cancer:after {
+	content: "\E313";
+}
+
+.game-icon-capricorn:after {
+	content: "\E314";
+}
+
+.game-icon-gemini:after {
+	content: "\E315";
+}
+
+.game-icon-leo:after {
+	content: "\E316";
+}
+
+.game-icon-libra:after {
+	content: "\E317";
+}
+
+.game-icon-ophiuchus:after {
+	content: "\E318";
+}
+
+.game-icon-pisces:after {
+	content: "\E319";
+}
+
+.game-icon-sagittarius:after {
+	content: "\E31A";
+}
+
+.game-icon-scorpio:after {
+	content: "\E31B";
+}
+
+.game-icon-taurus:after {
+	content: "\E31C";
+}
+
+.game-icon-virgo:after {
+	content: "\E31D";
+}
+
+.game-icon-anarchy:after {
+	content: "\E31E";
+}
+
+.game-icon-banknote:after {
+	content: "\E31F";
+}
+
+.game-icon-bowen-knot:after {
+	content: "\E320";
+}
+
+.game-icon-female:after {
+	content: "\E321";
+}
+
+.game-icon-freemasonry:after {
+	content: "\E322";
+}
+
+.game-icon-hell-crosses:after {
+	content: "\E323";
+}
+
+.game-icon-info:after {
+	content: "\E324";
+}
+
+.game-icon-male:after {
+	content: "\E325";
+}
+
+.game-icon-nested-hexagons:after {
+	content: "\E326";
+}
+
+.game-icon-triforce:after {
+	content: "\E327";
+}
+
+.game-icon-yin-yang:after {
+	content: "\E328";
+}
+
+.game-icon-holosphere:after {
+	content: "\E329";
+}
+
+.game-icon-power-button:after {
+	content: "\E32A";
+}
+
+.game-icon-cancel:after {
+	content: "\E32B";
+}
+
+.game-icon-clover-spiked:after {
+	content: "\E32C";
+}
+
+.game-icon-clover:after {
+	content: "\E32D";
+}
+
+.game-icon-doubled:after {
+	content: "\E32E";
+}
+
+.game-icon-help:after {
+	content: "\E32F";
+}
+
+.game-icon-hive:after {
+	content: "\E330";
+}
+
+.game-icon-mass-driver:after {
+	content: "\E331";
+}
+
+.game-icon-nodular:after {
+	content: "\E332";
+}
+
+.game-icon-nuclear:after {
+	content: "\E333";
+}
+
+.game-icon-overmind:after {
+	content: "\E334";
+}
+
+.game-icon-pulse:after {
+	content: "\E335";
+}
+
+.game-icon-reactor:after {
+	content: "\E336";
+}
+
+.game-icon-regeneration:after {
+	content: "\E337";
+}
+
+.game-icon-slow-blob:after {
+	content: "\E338";
+}
+
+.game-icon-spawn-node:after {
+	content: "\E339";
+}
+
+.game-icon-infinity:after {
+	content: "\E33A";
+}
+
+.game-icon-aerial-signal:after {
+	content: "\E33B";
+}
+
+.game-icon-ankh:after {
+	content: "\E33C";
+}
+
+.game-icon-artificial-hive:after {
+	content: "\E33D";
+}
+
+.game-icon-automatic-sas:after {
+	content: "\E33E";
+}
+
+.game-icon-barbed-sun:after {
+	content: "\E33F";
+}
+
+.game-icon-biohazard:after {
+	content: "\E340";
+}
+
+.game-icon-checkbox-tree:after {
+	content: "\E341";
+}
+
+.game-icon-coiling-curl:after {
+	content: "\E342";
+}
+
+.game-icon-concentric-crescents:after {
+	content: "\E343";
+}
+
+.game-icon-conversation:after {
+	content: "\E344";
+}
+
+.game-icon-cubeforce:after {
+	content: "\E345";
+}
+
+.game-icon-divided-spiral:after {
+	content: "\E346";
+}
+
+.game-icon-freedom-dove:after {
+	content: "\E347";
+}
+
+.game-icon-gamepad-cross:after {
+	content: "\E348";
+}
+
+.game-icon-hazard-sign:after {
+	content: "\E349";
+}
+
+.game-icon-holy-symbol:after {
+	content: "\E34A";
+}
+
+.game-icon-hospital-cross:after {
+	content: "\E34B";
+}
+
+.game-icon-interdiction:after {
+	content: "\E34C";
+}
+
+.game-icon-james-bond-aperture:after {
+	content: "\E34D";
+}
+
+.game-icon-laser-warning:after {
+	content: "\E34E";
+}
+
+.game-icon-maze-cornea:after {
+	content: "\E34F";
+}
+
+.game-icon-moebius-triangle:after {
+	content: "\E350";
+}
+
+.game-icon-omega:after {
+	content: "\E351";
+}
+
+.game-icon-orbital:after {
+	content: "\E352";
+}
+
+.game-icon-over-infinity:after {
+	content: "\E353";
+}
+
+.game-icon-perpendicular-rings:after {
+	content: "\E354";
+}
+
+.game-icon-radioactive:after {
+	content: "\E355";
+}
+
+.game-icon-rss-2:after {
+	content: "\E356";
+}
+
+.game-icon-rune-sword:after {
+	content: "\E357";
+}
+
+.game-icon-scales:after {
+	content: "\E358";
+}
+
+.game-icon-totem-head:after {
+	content: "\E359";
+}
+
+.game-icon-triorb:after {
+	content: "\E35A";
+}
+
+.game-icon-triple-beak:after {
+	content: "\E35B";
+}
+
+.game-icon-triple-corn:after {
+	content: "\E35C";
+}
+
+.game-icon-triple-plier:after {
+	content: "\E35D";
+}
+
+.game-icon-triple-yin:after {
+	content: "\E35E";
+}
+
+.game-icon-zigzag-cage:after {
+	content: "\E35F";
+}
+
+.game-icon-fez:after {
+	content: "\E360";
+}
+
+.game-icon-chef-toque:after {
+	content: "\E361";
+}
+
+.game-icon-graduate-cap:after {
+	content: "\E362";
+}
+
+.game-icon-jester-hat:after {
+	content: "\E363";
+}
+
+.game-icon-magick-trick:after {
+	content: "\E364";
+}
+
+.game-icon-phrygian-cap:after {
+	content: "\E365";
+}
+
+.game-icon-pirate-hat:after {
+	content: "\E366";
+}
+
+.game-icon-robin-hood-hat:after {
+	content: "\E367";
+}
+
+.game-icon-sombrero:after {
+	content: "\E368";
+}
+
+.game-icon-western-hat:after {
+	content: "\E369";
+}
+
+.game-icon-fedora:after {
+	content: "\E36A";
+}
+
+.game-icon-pointy-hat:after {
+	content: "\E36B";
+}
+
+.game-icon-top-hat:after {
+	content: "\E36C";
+}
+
+.game-icon-palm-tree:after {
+	content: "\E36D";
+}
+
+.game-icon-forest:after {
+	content: "\E36E";
+}
+
+.game-icon-log:after {
+	content: "\E36F";
+}
+
+.game-icon-acorn:after {
+	content: "\E370";
+}
+
+.game-icon-beech:after {
+	content: "\E371";
+}
+
+.game-icon-curled-leaf:after {
+	content: "\E372";
+}
+
+.game-icon-dead-wood:after {
+	content: "\E373";
+}
+
+.game-icon-elderberry:after {
+	content: "\E374";
+}
+
+.game-icon-ent-mouth:after {
+	content: "\E375";
+}
+
+.game-icon-falling-leaf:after {
+	content: "\E376";
+}
+
+.game-icon-fruiting:after {
+	content: "\E377";
+}
+
+.game-icon-leaf-swirl:after {
+	content: "\E378";
+}
+
+.game-icon-linden-leaf:after {
+	content: "\E379";
+}
+
+.game-icon-maple-leaf:after {
+	content: "\E37A";
+}
+
+.game-icon-oak:after {
+	content: "\E37B";
+}
+
+.game-icon-pine-tree:after {
+	content: "\E37C";
+}
+
+.game-icon-root-tip:after {
+	content: "\E37D";
+}
+
+.game-icon-three-leaves:after {
+	content: "\E37E";
+}
+
+.game-icon-tree-branch:after {
+	content: "\E37F";
+}
+
+.game-icon-zigzag-leaf:after {
+	content: "\E380";
+}
+
+.game-icon-pharoah:after {
+	content: "\E381";
+}
+
+.game-icon-invisible-face:after {
+	content: "\E382";
+}
+
+.game-icon-luchador:after {
+	content: "\E383";
+}
+
+.game-icon-mighty-boosh:after {
+	content: "\E384";
+}
+
+.game-icon-android-mask:after {
+	content: "\E385";
+}
+
+.game-icon-architect-mask:after {
+	content: "\E386";
+}
+
+.game-icon-bird-mask:after {
+	content: "\E387";
+}
+
+.game-icon-cracked-mask:after {
+	content: "\E388";
+}
+
+.game-icon-doctor-face:after {
+	content: "\E389";
+}
+
+.game-icon-domino-mask:after {
+	content: "\E38A";
+}
+
+.game-icon-double-face-mask:after {
+	content: "\E38B";
+}
+
+.game-icon-drama-masks:after {
+	content: "\E38C";
+}
+
+.game-icon-duality-mask:after {
+	content: "\E38D";
+}
+
+.game-icon-gas-mask:after {
+	content: "\E38E";
+}
+
+.game-icon-iron-mask:after {
+	content: "\E38F";
+}
+
+.game-icon-lightning-mask:after {
+	content: "\E390";
+}
+
+.game-icon-ninja-mask:after {
+	content: "\E391";
+}
+
+.game-icon-tribal-mask:after {
+	content: "\E392";
+}
+
+.game-icon-checklist:after {
+	content: "\E393";
+}
+
+.game-icon-database:after {
+	content: "\E394";
+}
+
+.game-icon-histogram:after {
+	content: "\E395";
+}
+
+.game-icon-load:after {
+	content: "\E396";
+}
+
+.game-icon-phone:after {
+	content: "\E397";
+}
+
+.game-icon-position-marker:after {
+	content: "\E398";
+}
+
+.game-icon-save:after {
+	content: "\E399";
+}
+
+.game-icon-shopping-cart:after {
+	content: "\E39A";
+}
+
+.game-icon-speaker:after {
+	content: "\E39B";
+}
+
+.game-icon-thumb-down:after {
+	content: "\E39C";
+}
+
+.game-icon-thumb-up:after {
+	content: "\E39D";
+}
+
+.game-icon-button-finger:after {
+	content: "\E39E";
+}
+
+.game-icon-calendar:after {
+	content: "\E39F";
+}
+
+.game-icon-compact-disc:after {
+	content: "\E3A0";
+}
+
+.game-icon-earth-africa-europe:after {
+	content: "\E3A1";
+}
+
+.game-icon-earth-america:after {
+	content: "\E3A2";
+}
+
+.game-icon-earth-asia-oceania:after {
+	content: "\E3A3";
+}
+
+.game-icon-gamepad:after {
+	content: "\E3A4";
+}
+
+.game-icon-joystick:after {
+	content: "\E3A5";
+}
+
+.game-icon-keyboard:after {
+	content: "\E3A6";
+}
+
+.game-icon-mailbox:after {
+	content: "\E3A7";
+}
+
+.game-icon-mouse-2:after {
+	content: "\E3A8";
+}
+
+.game-icon-photo-camera:after {
+	content: "\E3A9";
+}
+
+.game-icon-pie-chart:after {
+	content: "\E3AA";
+}
+
+.game-icon-podium:after {
+	content: "\E3AB";
+}
+
+.game-icon-checkered-flag:after {
+	content: "\E3AC";
+}
+
+.game-icon-corporal:after {
+	content: "\E3AD";
+}
+
+.game-icon-private-first-class:after {
+	content: "\E3AE";
+}
+
+.game-icon-private:after {
+	content: "\E3AF";
+}
+
+.game-icon-ribbon-medal:after {
+	content: "\E3B0";
+}
+
+.game-icon-sergeant:after {
+	content: "\E3B1";
+}
+
+.game-icon-level-four-advanced:after {
+	content: "\E3B2";
+}
+
+.game-icon-level-four:after {
+	content: "\E3B3";
+}
+
+.game-icon-level-three-advanced:after {
+	content: "\E3B4";
+}
+
+.game-icon-level-three:after {
+	content: "\E3B5";
+}
+
+.game-icon-level-two-advanced:after {
+	content: "\E3B6";
+}
+
+.game-icon-level-two:after {
+	content: "\E3B7";
+}
+
+.game-icon-holy-grail:after {
+	content: "\E3B8";
+}
+
+.game-icon-medal:after {
+	content: "\E3B9";
+}
+
+.game-icon-ribbon:after {
+	content: "\E3BA";
+}
+
+.game-icon-trophy:after {
+	content: "\E3BB";
+}
+
+.game-icon-backpack:after {
+	content: "\E3BC";
+}
+
+.game-icon-barrel:after {
+	content: "\E3BD";
+}
+
+.game-icon-bindle:after {
+	content: "\E3BE";
+}
+
+.game-icon-briefcase:after {
+	content: "\E3BF";
+}
+
+.game-icon-cardboard-box:after {
+	content: "\E3C0";
+}
+
+.game-icon-chest:after {
+	content: "\E3C1";
+}
+
+.game-icon-cryo-chamber:after {
+	content: "\E3C2";
+}
+
+.game-icon-jerrycan:after {
+	content: "\E3C3";
+}
+
+.game-icon-magic-potion:after {
+	content: "\E3C4";
+}
+
+.game-icon-present:after {
+	content: "\E3C5";
+}
+
+.game-icon-suitcase:after {
+	content: "\E3C6";
+}
+
+.game-icon-watering-can:after {
+	content: "\E3C7";
+}
+
+.game-icon-wooden-crate:after {
+	content: "\E3C8";
+}
+
+.game-icon-cannister:after {
+	content: "\E3C9";
+}
+
+.game-icon-chemical-tank:after {
+	content: "\E3CA";
+}
+
+.game-icon-coffin:after {
+	content: "\E3CB";
+}
+
+.game-icon-jigsaw-box:after {
+	content: "\E3CC";
+}
+
+.game-icon-knapsack:after {
+	content: "\E3CD";
+}
+
+.game-icon-locked-chest:after {
+	content: "\E3CE";
+}
+
+.game-icon-crosshair:after {
+	content: "\E3CF";
+}
+
+.game-icon-crucifix:after {
+	content: "\E3D0";
+}
+
+.game-icon-hammer-sickle:after {
+	content: "\E3D1";
+}
+
+.game-icon-holy-hand-grenade:after {
+	content: "\E3D2";
+}
+
+.game-icon-holy-water:after {
+	content: "\E3D3";
+}
+
+.game-icon-light-sabers:after {
+	content: "\E3D4";
+}
+
+.game-icon-templar-shield:after {
+	content: "\E3D5";
+}
+
+.game-icon-union-jack:after {
+	content: "\E3D6";
+}
+
+.game-icon-health-decrease:after {
+	content: "\E3D7";
+}
+
+.game-icon-health-increase:after {
+	content: "\E3D8";
+}
+
+.game-icon-health-normal:after {
+	content: "\E3D9";
+}
+
+.game-icon-cross-mark:after {
+	content: "\E3DA";
+}
+
+.game-icon-crossed-axes:after {
+	content: "\E3DB";
+}
+
+.game-icon-crossed-bones:after {
+	content: "\E3DC";
+}
+
+.game-icon-crossed-chains:after {
+	content: "\E3DD";
+}
+
+.game-icon-crossed-slashes:after {
+	content: "\E3DE";
+}
+
+.game-icon-dervish-swords:after {
+	content: "\E3DF";
+}
+
+.game-icon-dig-dug:after {
+	content: "\E3E0";
+}
+
+.game-icon-knife-fork:after {
+	content: "\E3E1";
+}
+
+.game-icon-nails:after {
+	content: "\E3E2";
+}
+
+.game-icon-split-cross:after {
+	content: "\E3E3";
+}
+
+.game-icon-tinker:after {
+	content: "\E3E4";
+}
+
+.game-icon-zeus-sword:after {
+	content: "\E3E5";
+}
+
+.game-icon-acoustic-megaphone:after {
+	content: "\E3E6";
+}
+
+.game-icon-alarm-clock:after {
+	content: "\E3E7";
+}
+
+.game-icon-audio-cassette:after {
+	content: "\E3E8";
+}
+
+.game-icon-elf-ear:after {
+	content: "\E3E9";
+}
+
+.game-icon-headphones:after {
+	content: "\E3EA";
+}
+
+.game-icon-heart-beats:after {
+	content: "\E3EB";
+}
+
+.game-icon-human-ear:after {
+	content: "\E3EC";
+}
+
+.game-icon-megaphone:after {
+	content: "\E3ED";
+}
+
+.game-icon-microphone:after {
+	content: "\E3EE";
+}
+
+.game-icon-mute:after {
+	content: "\E3EF";
+}
+
+.game-icon-ocarina:after {
+	content: "\E3F0";
+}
+
+.game-icon-pan-flute:after {
+	content: "\E3F1";
+}
+
+.game-icon-piano-keys:after {
+	content: "\E3F2";
+}
+
+.game-icon-silenced:after {
+	content: "\E3F3";
+}
+
+.game-icon-whistle:after {
+	content: "\E3F4";
+}
+
+.game-icon-anthem:after {
+	content: "\E3F5";
+}
+
+.game-icon-bugle-call:after {
+	content: "\E3F6";
+}
+
+.game-icon-carillon:after {
+	content: "\E3F7";
+}
+
+.game-icon-double-quaver:after {
+	content: "\E3F8";
+}
+
+.game-icon-echo-ripples:after {
+	content: "\E3F9";
+}
+
+.game-icon-guitar:after {
+	content: "\E3FA";
+}
+
+.game-icon-hunting-horn:after {
+	content: "\E3FB";
+}
+
+.game-icon-love-howl:after {
+	content: "\E3FC";
+}
+
+.game-icon-love-song:after {
+	content: "\E3FD";
+}
+
+.game-icon-lyre:after {
+	content: "\E3FE";
+}
+
+.game-icon-movement-sensor:after {
+	content: "\E3FF";
+}
+
+.game-icon-music-spell:after {
+	content: "\E400";
+}
+
+.game-icon-resonance:after {
+	content: "\E401";
+}
+
+.game-icon-ringing-bell:after {
+	content: "\E402";
+}
+
+.game-icon-screaming:after {
+	content: "\E403";
+}
+
+.game-icon-shouting:after {
+	content: "\E404";
+}
+
+.game-icon-silence:after {
+	content: "\E405";
+}
+
+.game-icon-sing:after {
+	content: "\E406";
+}
+
+.game-icon-sonic-boom:after {
+	content: "\E407";
+}
+
+.game-icon-sonic-shout:after {
+	content: "\E408";
+}
+
+.game-icon-tune-pitch:after {
+	content: "\E409";
+}
+
+.game-icon-ultrasound:after {
+	content: "\E40A";
+}
+
+.game-icon-vibrating-ball:after {
+	content: "\E40B";
+}
+
+.game-icon-zigzag-tune:after {
+	content: "\E40C";
+}
+
+.game-icon-paper:after {
+	content: "\E40D";
+}
+
+.game-icon-rock-2:after {
+	content: "\E40E";
+}
+
+.game-icon-scissors:after {
+	content: "\E40F";
+}
+
+.game-icon-attached-shield:after {
+	content: "\E410";
+}
+
+.game-icon-finger-print:after {
+	content: "\E411";
+}
+
+.game-icon-forearm:after {
+	content: "\E412";
+}
+
+.game-icon-hand-of-god:after {
+	content: "\E413";
+}
+
+.game-icon-pirate-hook:after {
+	content: "\E414";
+}
+
+.game-icon-ring:after {
+	content: "\E415";
+}
+
+.game-icon-shaking-hands:after {
+	content: "\E416";
+}
+
+.game-icon-skeletal-hand:after {
+	content: "\E417";
+}
+
+.game-icon-hand:after {
+	content: "\E418";
+}
+
+.game-icon-revolt:after {
+	content: "\E419";
+}
+
+.game-icon-usable:after {
+	content: "\E41A";
+}
+
+.game-icon-raise-zombie:after {
+	content: "\E41B";
+}
+
+.game-icon-black-hand-shield:after {
+	content: "\E41C";
+}
+
+.game-icon-boxing-glove:after {
+	content: "\E41D";
+}
+
+.game-icon-cut-palm:after {
+	content: "\E41E";
+}
+
+.game-icon-engagement-ring:after {
+	content: "\E41F";
+}
+
+.game-icon-evil-hand:after {
+	content: "\E420";
+}
+
+.game-icon-fist:after {
+	content: "\E421";
+}
+
+.game-icon-fulguro-punch:after {
+	content: "\E422";
+}
+
+.game-icon-glowing-hands:after {
+	content: "\E423";
+}
+
+.game-icon-grab:after {
+	content: "\E424";
+}
+
+.game-icon-hand-2:after {
+	content: "\E425";
+}
+
+.game-icon-handcuffs:after {
+	content: "\E426";
+}
+
+.game-icon-high-five:after {
+	content: "\E427";
+}
+
+.game-icon-magic-palm:after {
+	content: "\E428";
+}
+
+.game-icon-magic-swirl:after {
+	content: "\E429";
+}
+
+.game-icon-mailed-fist:after {
+	content: "\E42A";
+}
+
+.game-icon-mechanical-arm:after {
+	content: "\E42B";
+}
+
+.game-icon-metal-hand:after {
+	content: "\E42C";
+}
+
+.game-icon-monster-grasp:after {
+	content: "\E42D";
+}
+
+.game-icon-moon-claws:after {
+	content: "\E42E";
+}
+
+.game-icon-palm:after {
+	content: "\E42F";
+}
+
+.game-icon-pointing:after {
+	content: "\E430";
+}
+
+.game-icon-punch-blast:after {
+	content: "\E431";
+}
+
+.game-icon-punch:after {
+	content: "\E432";
+}
+
+.game-icon-shadow-grasp:after {
+	content: "\E433";
+}
+
+.game-icon-slap:after {
+	content: "\E434";
+}
+
+.game-icon-smoking-finger:after {
+	content: "\E435";
+}
+
+.game-icon-snatch:after {
+	content: "\E436";
+}
+
+.game-icon-stigmata:after {
+	content: "\E437";
+}
+
+.game-icon-thor-fist:after {
+	content: "\E438";
+}
+
+.game-icon-american-football-ball:after {
+	content: "\E439";
+}
+
+.game-icon-basketball-ball:after {
+	content: "\E43A";
+}
+
+.game-icon-corner-flag:after {
+	content: "\E43B";
+}
+
+.game-icon-eight-ball:after {
+	content: "\E43C";
+}
+
+.game-icon-soccer-ball:after {
+	content: "\E43D";
+}
+
+.game-icon-tennis-ball:after {
+	content: "\E43E";
+}
+
+.game-icon-volleyball-ball:after {
+	content: "\E43F";
+}
+
+.game-icon-beach-ball:after {
+	content: "\E440";
+}
+
+.game-icon-marbles:after {
+	content: "\E441";
+}
+
+.game-icon-pinball-flipper:after {
+	content: "\E442";
+}
+
+.game-icon-snitch-quidditch-ball:after {
+	content: "\E443";
+}
+
+.game-icon-balloons:after {
+	content: "\E444";
+}
+
+.game-icon-black-hole-bolas:after {
+	content: "\E445";
+}
+
+.game-icon-blackball:after {
+	content: "\E446";
+}
+
+.game-icon-bowling-propulsion:after {
+	content: "\E447";
+}
+
+.game-icon-caged-ball:after {
+	content: "\E448";
+}
+
+.game-icon-concentration-orb:after {
+	content: "\E449";
+}
+
+.game-icon-crumbling-ball:after {
+	content: "\E44A";
+}
+
+.game-icon-crystal-ball:after {
+	content: "\E44B";
+}
+
+.game-icon-dragon-balls:after {
+	content: "\E44C";
+}
+
+.game-icon-falling-blob:after {
+	content: "\E44D";
+}
+
+.game-icon-frozen-orb:after {
+	content: "\E44E";
+}
+
+.game-icon-juggler:after {
+	content: "\E44F";
+}
+
+.game-icon-kaleidoscope-pearls:after {
+	content: "\E450";
+}
+
+.game-icon-mesh-ball:after {
+	content: "\E451";
+}
+
+.game-icon-striking-balls:after {
+	content: "\E452";
+}
+
+.game-icon-basketball-basket:after {
+	content: "\E453";
+}
+
+.game-icon-bowling-pin:after {
+	content: "\E454";
+}
+
+.game-icon-golf-flag:after {
+	content: "\E455";
+}
+
+.game-icon-hockey:after {
+	content: "\E456";
+}
+
+.game-icon-ping-pong-bat:after {
+	content: "\E457";
+}
+
+.game-icon-rugby-conversion:after {
+	content: "\E458";
+}
+
+.game-icon-shuttlecock:after {
+	content: "\E459";
+}
+
+.game-icon-soccer-field:after {
+	content: "\E45A";
+}
+
+.game-icon-babyfoot-players:after {
+	content: "\E45B";
+}
+
+.game-icon-flying-fox:after {
+	content: "\E45C";
+}
+
+.game-icon-kimono:after {
+	content: "\E45D";
+}
+
+.game-icon-weight-lifting-down:after {
+	content: "\E45E";
+}
+
+.game-icon-weight-lifting-up:after {
+	content: "\E45F";
+}
+
+.game-icon-hill-conquest:after {
+	content: "\E460";
+}
+
+.game-icon-black-flag:after {
+	content: "\E461";
+}
+
+.game-icon-flying-flag:after {
+	content: "\E462";
+}
+
+.game-icon-tattered-banner:after {
+	content: "\E463";
+}
+
+.game-icon-i-brick:after {
+	content: "\E464";
+}
+
+.game-icon-j-brick:after {
+	content: "\E465";
+}
+
+.game-icon-l-brick:after {
+	content: "\E466";
+}
+
+.game-icon-o-brick:after {
+	content: "\E467";
+}
+
+.game-icon-s-brick:after {
+	content: "\E468";
+}
+
+.game-icon-t-brick:after {
+	content: "\E469";
+}
+
+.game-icon-z-brick:after {
+	content: "\E46A";
+}
+
+.game-icon-ice-cube:after {
+	content: "\E46B";
+}
+
+.game-icon-catapult:after {
+	content: "\E46C";
+}
+
+.game-icon-candlestick-phone:after {
+	content: "\E46D";
+}
+
+.game-icon-cctv-camera:after {
+	content: "\E46E";
+}
+
+.game-icon-computer-fan:after {
+	content: "\E46F";
+}
+
+.game-icon-flashlight:after {
+	content: "\E470";
+}
+
+.game-icon-gas-pump:after {
+	content: "\E471";
+}
+
+.game-icon-gps:after {
+	content: "\E472";
+}
+
+.game-icon-hexagonal-nut:after {
+	content: "\E473";
+}
+
+.game-icon-led:after {
+	content: "\E474";
+}
+
+.game-icon-pipes:after {
+	content: "\E475";
+}
+
+.game-icon-plug:after {
+	content: "\E476";
+}
+
+.game-icon-robot-leg:after {
+	content: "\E477";
+}
+
+.game-icon-spider-bot:after {
+	content: "\E478";
+}
+
+.game-icon-trebuchet:after {
+	content: "\E479";
+}
+
+.game-icon-tv:after {
+	content: "\E47A";
+}
+
+.game-icon-walkie-talkie:after {
+	content: "\E47B";
+}
+
+.game-icon-amplitude:after {
+	content: "\E47C";
+}
+
+.game-icon-artificial-intelligence:after {
+	content: "\E47D";
+}
+
+.game-icon-computing:after {
+	content: "\E47E";
+}
+
+.game-icon-diagram:after {
+	content: "\E47F";
+}
+
+.game-icon-microscope:after {
+	content: "\E480";
+}
+
+.game-icon-tesla:after {
+	content: "\E481";
+}
+
+.game-icon-unplugged:after {
+	content: "\E482";
+}
+
+.game-icon-afterburn:after {
+	content: "\E483";
+}
+
+.game-icon-auto-repair:after {
+	content: "\E484";
+}
+
+.game-icon-circuitry:after {
+	content: "\E485";
+}
+
+.game-icon-clockwork:after {
+	content: "\E486";
+}
+
+.game-icon-cog:after {
+	content: "\E487";
+}
+
+.game-icon-cogsplosion:after {
+	content: "\E488";
+}
+
+.game-icon-drill:after {
+	content: "\E489";
+}
+
+.game-icon-gears:after {
+	content: "\E48A";
+}
+
+.game-icon-jetpack:after {
+	content: "\E48B";
+}
+
+.game-icon-light-bulb:after {
+	content: "\E48C";
+}
+
+.game-icon-microchip:after {
+	content: "\E48D";
+}
+
+.game-icon-microscope-lens:after {
+	content: "\E48E";
+}
+
+.game-icon-missile-mech:after {
+	content: "\E48F";
+}
+
+.game-icon-overdrive:after {
+	content: "\E490";
+}
+
+.game-icon-pokecog:after {
+	content: "\E491";
+}
+
+.game-icon-processor:after {
+	content: "\E492";
+}
+
+.game-icon-radar-sweep:after {
+	content: "\E493";
+}
+
+.game-icon-ram:after {
+	content: "\E494";
+}
+
+.game-icon-sattelite:after {
+	content: "\E495";
+}
+
+.game-icon-skid-mark:after {
+	content: "\E496";
+}
+
+.game-icon-spoutnik:after {
+	content: "\E497";
+}
+
+.game-icon-techno-heart:after {
+	content: "\E498";
+}
+
+.game-icon-tyre:after {
+	content: "\E499";
+}
+
+.game-icon-vintage-robot:after {
+	content: "\E49A";
+}
+
+.game-icon-armored-pants:after {
+	content: "\E49B";
+}
+
+.game-icon-bracer:after {
+	content: "\E49C";
+}
+
+.game-icon-greaves:after {
+	content: "\E49D";
+}
+
+.game-icon-guards:after {
+	content: "\E49E";
+}
+
+.game-icon-pteruges:after {
+	content: "\E49F";
+}
+
+.game-icon-chain-mail:after {
+	content: "\E4A0";
+}
+
+.game-icon-armor-vest:after {
+	content: "\E4A1";
+}
+
+.game-icon-breastplate:after {
+	content: "\E4A2";
+}
+
+.game-icon-lamellar:after {
+	content: "\E4A3";
+}
+
+.game-icon-layered-armor:after {
+	content: "\E4A4";
+}
+
+.game-icon-leather-vest:after {
+	content: "\E4A5";
+}
+
+.game-icon-mail-shirt:after {
+	content: "\E4A6";
+}
+
+.game-icon-metal-scales:after {
+	content: "\E4A7";
+}
+
+.game-icon-plastron:after {
+	content: "\E4A8";
+}
+
+.game-icon-scale-mail:after {
+	content: "\E4A9";
+}
+
+.game-icon-shoulder-scales:after {
+	content: "\E4AA";
+}
+
+.game-icon-space-suit:after {
+	content: "\E4AB";
+}
+
+.game-icon-spiked-armor:after {
+	content: "\E4AC";
+}
+
+.game-icon-cape:after {
+	content: "\E4AD";
+}
+
+.game-icon-corset:after {
+	content: "\E4AE";
+}
+
+.game-icon-polo-shirt:after {
+	content: "\E4AF";
+}
+
+.game-icon-safety-pin:after {
+	content: "\E4B0";
+}
+
+.game-icon-shorts:after {
+	content: "\E4B1";
+}
+
+.game-icon-sleeveless-jacket:after {
+	content: "\E4B2";
+}
+
+.game-icon-socks:after {
+	content: "\E4B3";
+}
+
+.game-icon-tie:after {
+	content: "\E4B4";
+}
+
+.game-icon-belt:after {
+	content: "\E4B5";
+}
+
+.game-icon-cloak:after {
+	content: "\E4B6";
+}
+
+.game-icon-shirt:after {
+	content: "\E4B7";
+}
+
+.game-icon-trousers:after {
+	content: "\E4B8";
+}
+
+.game-icon-kevlar:after {
+	content: "\E4B9";
+}
+
+.game-icon-belt-buckles:after {
+	content: "\E4BA";
+}
+
+.game-icon-hood:after {
+	content: "\E4BB";
+}
+
+.game-icon-robe:after {
+	content: "\E4BC";
+}
+
+.game-icon-sewing-needle:after {
+	content: "\E4BD";
+}
+
+.game-icon-trousers-2:after {
+	content: "\E4BE";
+}
+
+.game-icon-shotgun-rounds:after {
+	content: "\E4BF";
+}
+
+.game-icon-arm:after {
+	content: "\E4C0";
+}
+
+.game-icon-biceps:after {
+	content: "\E4C1";
+}
+
+.game-icon-cavalry:after {
+	content: "\E4C2";
+}
+
+.game-icon-invisible:after {
+	content: "\E4C3";
+}
+
+.game-icon-jump-across:after {
+	content: "\E4C4";
+}
+
+.game-icon-kneeling:after {
+	content: "\E4C5";
+}
+
+.game-icon-lungs:after {
+	content: "\E4C6";
+}
+
+.game-icon-pikeman:after {
+	content: "\E4C7";
+}
+
+.game-icon-police-target:after {
+	content: "\E4C8";
+}
+
+.game-icon-prisoner:after {
+	content: "\E4C9";
+}
+
+.game-icon-public-speaker:after {
+	content: "\E4CA";
+}
+
+.game-icon-pull:after {
+	content: "\E4CB";
+}
+
+.game-icon-push:after {
+	content: "\E4CC";
+}
+
+.game-icon-shrug:after {
+	content: "\E4CD";
+}
+
+.game-icon-stomach:after {
+	content: "\E4CE";
+}
+
+.game-icon-falling:after {
+	content: "\E4CF";
+}
+
+.game-icon-anatomy:after {
+	content: "\E4D0";
+}
+
+.game-icon-aura:after {
+	content: "\E4D1";
+}
+
+.game-icon-back-pain:after {
+	content: "\E4D2";
+}
+
+.game-icon-backup:after {
+	content: "\E4D3";
+}
+
+.game-icon-beams-aura:after {
+	content: "\E4D4";
+}
+
+.game-icon-bell-shield:after {
+	content: "\E4D5";
+}
+
+.game-icon-body-swapping:after {
+	content: "\E4D6";
+}
+
+.game-icon-brain-stem:after {
+	content: "\E4D7";
+}
+
+.game-icon-brain:after {
+	content: "\E4D8";
+}
+
+.game-icon-dark-squad:after {
+	content: "\E4D9";
+}
+
+.game-icon-deadly-strike:after {
+	content: "\E4DA";
+}
+
+.game-icon-dna1:after {
+	content: "\E4DB";
+}
+
+.game-icon-dna2:after {
+	content: "\E4DC";
+}
+
+.game-icon-dozen:after {
+	content: "\E4DD";
+}
+
+.game-icon-duality:after {
+	content: "\E4DE";
+}
+
+.game-icon-embrassed-energy:after {
+	content: "\E4DF";
+}
+
+.game-icon-eskimo:after {
+	content: "\E4E0";
+}
+
+.game-icon-heart-inside:after {
+	content: "\E4E1";
+}
+
+.game-icon-heart-organ:after {
+	content: "\E4E2";
+}
+
+.game-icon-inner-self:after {
+	content: "\E4E3";
+}
+
+.game-icon-internal-injury:after {
+	content: "\E4E4";
+}
+
+.game-icon-internal-organ:after {
+	content: "\E4E5";
+}
+
+.game-icon-lift:after {
+	content: "\E4E6";
+}
+
+.game-icon-meditation:after {
+	content: "\E4E7";
+}
+
+.game-icon-minions:after {
+	content: "\E4E8";
+}
+
+.game-icon-muscle-fat:after {
+	content: "\E4E9";
+}
+
+.game-icon-muscle-up:after {
+	content: "\E4EA";
+}
+
+.game-icon-psychic-waves:after {
+	content: "\E4EB";
+}
+
+.game-icon-puppet:after {
+	content: "\E4EC";
+}
+
+.game-icon-rogue:after {
+	content: "\E4ED";
+}
+
+.game-icon-run:after {
+	content: "\E4EE";
+}
+
+.game-icon-sensuousness:after {
+	content: "\E4EF";
+}
+
+.game-icon-shadow-follower:after {
+	content: "\E4F0";
+}
+
+.game-icon-sinking-trap:after {
+	content: "\E4F1";
+}
+
+.game-icon-skeleton-inside:after {
+	content: "\E4F2";
+}
+
+.game-icon-spartan:after {
+	content: "\E4F3";
+}
+
+.game-icon-split-body:after {
+	content: "\E4F4";
+}
+
+.game-icon-sprint:after {
+	content: "\E4F5";
+}
+
+.game-icon-strong:after {
+	content: "\E4F6";
+}
+
+.game-icon-target-dummy:after {
+	content: "\E4F7";
+}
+
+.game-icon-telepathy:after {
+	content: "\E4F8";
+}
+
+.game-icon-tumor:after {
+	content: "\E4F9";
+}
+
+.game-icon-air-balloon:after {
+	content: "\E4FA";
+}
+
+.game-icon-helicopter:after {
+	content: "\E4FB";
+}
+
+.game-icon-jet-fighter:after {
+	content: "\E4FC";
+}
+
+.game-icon-kite:after {
+	content: "\E4FD";
+}
+
+.game-icon-bomber:after {
+	content: "\E4FE";
+}
+
+.game-icon-heavy-fighter:after {
+	content: "\E4FF";
+}
+
+.game-icon-light-fighter:after {
+	content: "\E500";
+}
+
+.game-icon-moon:after {
+	content: "\E501";
+}
+
+.game-icon-night-sky:after {
+	content: "\E502";
+}
+
+.game-icon-parachute:after {
+	content: "\E503";
+}
+
+.game-icon-raining:after {
+	content: "\E504";
+}
+
+.game-icon-snowing:after {
+	content: "\E505";
+}
+
+.game-icon-umbrella:after {
+	content: "\E506";
+}
+
+.game-icon-ambulance:after {
+	content: "\E507";
+}
+
+.game-icon-car-key:after {
+	content: "\E508";
+}
+
+.game-icon-city-car:after {
+	content: "\E509";
+}
+
+.game-icon-helicopter-tail:after {
+	content: "\E50A";
+}
+
+.game-icon-jeep:after {
+	content: "\E50B";
+}
+
+.game-icon-lunar-module:after {
+	content: "\E50C";
+}
+
+.game-icon-old-wagon:after {
+	content: "\E50D";
+}
+
+.game-icon-plane-wing:after {
+	content: "\E50E";
+}
+
+.game-icon-railway:after {
+	content: "\E50F";
+}
+
+.game-icon-rocket-thruster:after {
+	content: "\E510";
+}
+
+.game-icon-scooter:after {
+	content: "\E511";
+}
+
+.game-icon-space-shuttle:after {
+	content: "\E512";
+}
+
+.game-icon-speedometer:after {
+	content: "\E513";
+}
+
+.game-icon-steam-locomotive:after {
+	content: "\E514";
+}
+
+.game-icon-steering-wheel:after {
+	content: "\E515";
+}
+
+.game-icon-traffic-lights-green:after {
+	content: "\E516";
+}
+
+.game-icon-traffic-lights-orange:after {
+	content: "\E517";
+}
+
+.game-icon-traffic-lights-ready-to-go:after {
+	content: "\E518";
+}
+
+.game-icon-traffic-lights-red:after {
+	content: "\E519";
+}
+
+.game-icon-truck:after {
+	content: "\E51A";
+}
+
+.game-icon-ufo:after {
+	content: "\E51B";
+}
+
+.game-icon-velocipede:after {
+	content: "\E51C";
+}
+
+.game-icon-jet-pack:after {
+	content: "\E51D";
+}
+
+.game-icon-apc:after {
+	content: "\E51E";
+}
+
+.game-icon-bubble-field:after {
+	content: "\E51F";
+}
+
+.game-icon-cartwheel:after {
+	content: "\E520";
+}
+
+.game-icon-forward-field:after {
+	content: "\E521";
+}
+
+.game-icon-rocket-flight:after {
+	content: "\E522";
+}
+
+.game-icon-rocket:after {
+	content: "\E523";
+}
+
+.game-icon-strafe:after {
+	content: "\E524";
+}
+
+.game-icon-tank:after {
+	content: "\E525";
+}
+
+.game-icon-bookshelf:after {
+	content: "\E526";
+}
+
+.game-icon-clapperboard:after {
+	content: "\E527";
+}
+
+.game-icon-palette:after {
+	content: "\E528";
+}
+
+.game-icon-paper-clip:after {
+	content: "\E529";
+}
+
+.game-icon-paper-plane:after {
+	content: "\E52A";
+}
+
+.game-icon-pencil:after {
+	content: "\E52B";
+}
+
+.game-icon-piggy-bank:after {
+	content: "\E52C";
+}
+
+.game-icon-pin:after {
+	content: "\E52D";
+}
+
+.game-icon-table:after {
+	content: "\E52E";
+}
+
+.game-icon-trash-can:after {
+	content: "\E52F";
+}
+
+.game-icon-desk-lamp:after {
+	content: "\E530";
+}
+
+.game-icon-envelope:after {
+	content: "\E531";
+}
+
+.game-icon-eyedropper:after {
+	content: "\E532";
+}
+
+.game-icon-fountain-pen:after {
+	content: "\E533";
+}
+
+.game-icon-globe:after {
+	content: "\E534";
+}
+
+.game-icon-ink-swirl:after {
+	content: "\E535";
+}
+
+.game-icon-jigsaw-piece:after {
+	content: "\E536";
+}
+
+.game-icon-letter-bomb:after {
+	content: "\E537";
+}
+
+.game-icon-papers:after {
+	content: "\E538";
+}
+
+.game-icon-quill-ink:after {
+	content: "\E539";
+}
+
+.game-icon-scissors-2:after {
+	content: "\E53A";
+}
+
+.game-icon-shiny-purse:after {
+	content: "\E53B";
+}
+
+.game-icon-swap-bag:after {
+	content: "\E53C";
+}
+
+.game-icon-tied-scroll:after {
+	content: "\E53D";
+}
+
+.game-icon-treasure-map:after {
+	content: "\E53E";
+}
+
+.game-icon-wax-seal:after {
+	content: "\E53F";
+}
+
+.game-icon-watch:after {
+	content: "\E540";
+}
+
+.game-icon-empty-hourglass:after {
+	content: "\E541";
+}
+
+.game-icon-heavy-timer:after {
+	content: "\E542";
+}
+
+.game-icon-hourglass:after {
+	content: "\E543";
+}
+
+.game-icon-sands-of-time:after {
+	content: "\E544";
+}
+
+.game-icon-stopwatch:after {
+	content: "\E545";
+}
+
+.game-icon-time-bomb:after {
+	content: "\E546";
+}
+
+.game-icon-time-trap:after {
+	content: "\E547";
+}
+
+.game-icon-stethoscope:after {
+	content: "\E548";
+}
+
+.game-icon-medical-pack-alt:after {
+	content: "\E549";
+}
+
+.game-icon-medical-pack:after {
+	content: "\E54A";
+}
+
+.game-icon-broken-heart:after {
+	content: "\E54B";
+}
+
+.game-icon-defibrilate:after {
+	content: "\E54C";
+}
+
+.game-icon-embryo:after {
+	content: "\E54D";
+}
+
+.game-icon-life-tap:after {
+	content: "\E54E";
+}
+
+.game-icon-pill:after {
+	content: "\E54F";
+}
+
+.game-icon-transfuse:after {
+	content: "\E550";
+}
+
+.game-icon-roman-shield:after {
+	content: "\E551";
+}
+
+.game-icon-viking-shield:after {
+	content: "\E552";
+}
+
+.game-icon-shield:after {
+	content: "\E553";
+}
+
+.game-icon-round-shield:after {
+	content: "\E554";
+}
+
+.game-icon-bolt-shield:after {
+	content: "\E555";
+}
+
+.game-icon-bordered-shield:after {
+	content: "\E556";
+}
+
+.game-icon-broken-shield:after {
+	content: "\E557";
+}
+
+.game-icon-checked-shield:after {
+	content: "\E558";
+}
+
+.game-icon-cracked-shield:after {
+	content: "\E559";
+}
+
+.game-icon-crenulated-shield:after {
+	content: "\E55A";
+}
+
+.game-icon-edged-shield:after {
+	content: "\E55B";
+}
+
+.game-icon-energy-shield:after {
+	content: "\E55C";
+}
+
+.game-icon-ice-shield:after {
+	content: "\E55D";
+}
+
+.game-icon-lightning-shield:after {
+	content: "\E55E";
+}
+
+.game-icon-riot-shield:after {
+	content: "\E55F";
+}
+
+.game-icon-shield-bounces:after {
+	content: "\E560";
+}
+
+.game-icon-shield-echoes:after {
+	content: "\E561";
+}
+
+.game-icon-shield-reflect:after {
+	content: "\E562";
+}
+
+.game-icon-shieldcomb:after {
+	content: "\E563";
+}
+
+.game-icon-slashed-shield:after {
+	content: "\E564";
+}
+
+.game-icon-winged-shield:after {
+	content: "\E565";
+}
+
+.game-icon-zebra-shield:after {
+	content: "\E566";
+}
+
+.game-icon-amphora:after {
+	content: "\E567";
+}
+
+.game-icon-aquarium:after {
+	content: "\E568";
+}
+
+.game-icon-beer-bottle:after {
+	content: "\E569";
+}
+
+.game-icon-jug:after {
+	content: "\E56A";
+}
+
+.game-icon-bottle-vapors:after {
+	content: "\E56B";
+}
+
+.game-icon-bottled-bolt:after {
+	content: "\E56C";
+}
+
+.game-icon-brandy-bottle:after {
+	content: "\E56D";
+}
+
+.game-icon-bubbling-flask:after {
+	content: "\E56E";
+}
+
+.game-icon-drink-me:after {
+	content: "\E56F";
+}
+
+.game-icon-fizzing-flask:after {
+	content: "\E570";
+}
+
+.game-icon-heart-bottle:after {
+	content: "\E571";
+}
+
+.game-icon-magic-lamp:after {
+	content: "\E572";
+}
+
+.game-icon-perfume-bottle:after {
+	content: "\E573";
+}
+
+.game-icon-potion-ball:after {
+	content: "\E574";
+}
+
+.game-icon-round-bottom-flask:after {
+	content: "\E575";
+}
+
+.game-icon-snow-bottle:after {
+	content: "\E576";
+}
+
+.game-icon-spiral-bottle:after {
+	content: "\E577";
+}
+
+.game-icon-square-bottle:after {
+	content: "\E578";
+}
+
+.game-icon-standing-potion:after {
+	content: "\E579";
+}
+
+.game-icon-coffee-cup:after {
+	content: "\E57A";
+}
+
+.game-icon-cooking-pot:after {
+	content: "\E57B";
+}
+
+.game-icon-dough-roller:after {
+	content: "\E57C";
+}
+
+.game-icon-egg-pod:after {
+	content: "\E57D";
+}
+
+.game-icon-bandage-roll:after {
+	content: "\E57E";
+}
+
+.game-icon-bowl-spiral:after {
+	content: "\E57F";
+}
+
+.game-icon-coffee-mug:after {
+	content: "\E580";
+}
+
+.game-icon-glass-shot:after {
+	content: "\E581";
+}
+
+.game-icon-kitchen-knives:after {
+	content: "\E582";
+}
+
+.game-icon-martini:after {
+	content: "\E583";
+}
+
+.game-icon-meat-cleaver:after {
+	content: "\E584";
+}
+
+.game-icon-pizza-cutter:after {
+	content: "\E585";
+}
+
+.game-icon-shattered-glass:after {
+	content: "\E586";
+}
+
+.game-icon-spoon:after {
+	content: "\E587";
+}
+
+.game-icon-teapot:after {
+	content: "\E588";
+}
+
+.game-icon-wine-glass:after {
+	content: "\E589";
+}
+
+.game-icon-lily-pads:after {
+	content: "\E58A";
+}
+
+.game-icon-river:after {
+	content: "\E58B";
+}
+
+.game-icon-swamp:after {
+	content: "\E58C";
+}
+
+.game-icon-tap:after {
+	content: "\E58D";
+}
+
+.game-icon-acid:after {
+	content: "\E58E";
+}
+
+.game-icon-water-drop:after {
+	content: "\E58F";
+}
+
+.game-icon-blood:after {
+	content: "\E590";
+}
+
+.game-icon-acid-blob:after {
+	content: "\E591";
+}
+
+.game-icon-beer-stein:after {
+	content: "\E592";
+}
+
+.game-icon-boiling-bubbles:after {
+	content: "\E593";
+}
+
+.game-icon-bubbles:after {
+	content: "\E594";
+}
+
+.game-icon-bubbling-bowl:after {
+	content: "\E595";
+}
+
+.game-icon-burst-blob:after {
+	content: "\E596";
+}
+
+.game-icon-cauldron:after {
+	content: "\E597";
+}
+
+.game-icon-chalice-drops:after {
+	content: "\E598";
+}
+
+.game-icon-chemical-drop:after {
+	content: "\E599";
+}
+
+.game-icon-dripping-blade:after {
+	content: "\E59A";
+}
+
+.game-icon-dripping-goo:after {
+	content: "\E59B";
+}
+
+.game-icon-dripping-honey:after {
+	content: "\E59C";
+}
+
+.game-icon-dripping-sword:after {
+	content: "\E59D";
+}
+
+.game-icon-drop:after {
+	content: "\E59E";
+}
+
+.game-icon-droplet-splash:after {
+	content: "\E59F";
+}
+
+.game-icon-droplets:after {
+	content: "\E5A0";
+}
+
+.game-icon-foam:after {
+	content: "\E5A1";
+}
+
+.game-icon-gloop:after {
+	content: "\E5A2";
+}
+
+.game-icon-goo-explosion:after {
+	content: "\E5A3";
+}
+
+.game-icon-goo-spurt:after {
+	content: "\E5A4";
+}
+
+.game-icon-gooey-impact:after {
+	content: "\E5A5";
+}
+
+.game-icon-gooey-molecule:after {
+	content: "\E5A6";
+}
+
+.game-icon-gooey-sword:after {
+	content: "\E5A7";
+}
+
+.game-icon-grease-trap:after {
+	content: "\E5A8";
+}
+
+.game-icon-grouped-drops:after {
+	content: "\E5A9";
+}
+
+.game-icon-heart-drop:after {
+	content: "\E5AA";
+}
+
+.game-icon-heavy-rain:after {
+	content: "\E5AB";
+}
+
+.game-icon-hypodermic-test:after {
+	content: "\E5AC";
+}
+
+.game-icon-jeweled-chalice:after {
+	content: "\E5AD";
+}
+
+.game-icon-marrow-drain:after {
+	content: "\E5AE";
+}
+
+.game-icon-mouth-watering:after {
+	content: "\E5AF";
+}
+
+.game-icon-pouring-chalice:after {
+	content: "\E5B0";
+}
+
+.game-icon-ragged-wound:after {
+	content: "\E5B1";
+}
+
+.game-icon-spatter:after {
+	content: "\E5B2";
+}
+
+.game-icon-spill:after {
+	content: "\E5B3";
+}
+
+.game-icon-splash-2:after {
+	content: "\E5B4";
+}
+
+.game-icon-splashy-stream:after {
+	content: "\E5B5";
+}
+
+.game-icon-splurt:after {
+	content: "\E5B6";
+}
+
+.game-icon-water-bolt:after {
+	content: "\E5B7";
+}
+
+.game-icon-confrontation:after {
+	content: "\E5B8";
+}
+
+.game-icon-dead-head:after {
+	content: "\E5B9";
+}
+
+.game-icon-idea:after {
+	content: "\E5BA";
+}
+
+.game-icon-think:after {
+	content: "\E5BB";
+}
+
+.game-icon-awareness:after {
+	content: "\E5BC";
+}
+
+.game-icon-brain-freeze:after {
+	content: "\E5BD";
+}
+
+.game-icon-coma:after {
+	content: "\E5BE";
+}
+
+.game-icon-delighted:after {
+	content: "\E5BF";
+}
+
+.game-icon-despair:after {
+	content: "\E5C0";
+}
+
+.game-icon-distraction:after {
+	content: "\E5C1";
+}
+
+.game-icon-extra-lucid:after {
+	content: "\E5C2";
+}
+
+.game-icon-gluttony:after {
+	content: "\E5C3";
+}
+
+.game-icon-imprisoned:after {
+	content: "\E5C4";
+}
+
+.game-icon-mirror-mirror:after {
+	content: "\E5C5";
+}
+
+.game-icon-nothing-to-say:after {
+	content: "\E5C6";
+}
+
+.game-icon-oppression:after {
+	content: "\E5C7";
+}
+
+.game-icon-sleepy:after {
+	content: "\E5C8";
+}
+
+.game-icon-sly:after {
+	content: "\E5C9";
+}
+
+.game-icon-surprised:after {
+	content: "\E5CA";
+}
+
+.game-icon-suspicious:after {
+	content: "\E5CB";
+}
+
+.game-icon-temptation:after {
+	content: "\E5CC";
+}
+
+.game-icon-terror:after {
+	content: "\E5CD";
+}
+
+.game-icon-suicide:after {
+	content: "\E5CE";
+}
+
+.game-icon-tombstone:after {
+	content: "\E5CF";
+}
+
+.game-icon-decapitation:after {
+	content: "\E5D0";
+}
+
+.game-icon-guillotine:after {
+	content: "\E5D1";
+}
+
+.game-icon-life-in-the-balance:after {
+	content: "\E5D2";
+}
+
+.game-icon-prayer:after {
+	content: "\E5D3";
+}
+
+.game-icon-tombstone-2:after {
+	content: "\E5D4";
+}
+
+.game-icon-fishing-pole:after {
+	content: "\E5D5";
+}
+
+.game-icon-piranha:after {
+	content: "\E5D6";
+}
+
+.game-icon-tropical-fish:after {
+	content: "\E5D7";
+}
+
+.game-icon-salmon:after {
+	content: "\E5D8";
+}
+
+.game-icon-jupiter:after {
+	content: "\E5D9";
+}
+
+.game-icon-alien-stare:after {
+	content: "\E5DA";
+}
+
+.game-icon-hypersonic-bolt:after {
+	content: "\E5DB";
+}
+
+.game-icon-nested-eclipses:after {
+	content: "\E5DC";
+}
+
+.game-icon-ringed-planet:after {
+	content: "\E5DD";
+}
+
+.game-icon-spiky-field:after {
+	content: "\E5DE";
+}
+
+.game-icon-transportation-rings:after {
+	content: "\E5DF";
+}
+
+.game-icon-vortex:after {
+	content: "\E5E0";
+}
+
+.game-icon-world:after {
+	content: "\E5E1";
+}
+
+.game-icon-banana-peel:after {
+	content: "\E5E2";
+}
+
+.game-icon-foot-plaster:after {
+	content: "\E5E3";
+}
+
+.game-icon-high-heel:after {
+	content: "\E5E4";
+}
+
+.game-icon-wooden-pegleg:after {
+	content: "\E5E5";
+}
+
+.game-icon-barefoot:after {
+	content: "\E5E6";
+}
+
+.game-icon-boot-prints:after {
+	content: "\E5E7";
+}
+
+.game-icon-boot-stomp:after {
+	content: "\E5E8";
+}
+
+.game-icon-boots:after {
+	content: "\E5E9";
+}
+
+.game-icon-foot-trip:after {
+	content: "\E5EA";
+}
+
+.game-icon-footprint:after {
+	content: "\E5EB";
+}
+
+.game-icon-leather-boot:after {
+	content: "\E5EC";
+}
+
+.game-icon-nailed-foot:after {
+	content: "\E5ED";
+}
+
+.game-icon-quake-stomp:after {
+	content: "\E5EE";
+}
+
+.game-icon-steeltoe-boots:after {
+	content: "\E5EF";
+}
+
+.game-icon-tread:after {
+	content: "\E5F0";
+}
+
+.game-icon-tripwire:after {
+	content: "\E5F1";
+}
+
+.game-icon-walking-boot:after {
+	content: "\E5F2";
+}
+
+.game-icon-wingfoot:after {
+	content: "\E5F3";
+}
+
+.game-icon-banana:after {
+	content: "\E5F4";
+}
+
+.game-icon-carrot:after {
+	content: "\E5F5";
+}
+
+.game-icon-cherry:after {
+	content: "\E5F6";
+}
+
+.game-icon-garlic:after {
+	content: "\E5F7";
+}
+
+.game-icon-orange:after {
+	content: "\E5F8";
+}
+
+.game-icon-pear:after {
+	content: "\E5F9";
+}
+
+.game-icon-strawberry:after {
+	content: "\E5FA";
+}
+
+.game-icon-watermelon:after {
+	content: "\E5FB";
+}
+
+.game-icon-apple-maggot:after {
+	content: "\E5FC";
+}
+
+.game-icon-apple-seeds:after {
+	content: "\E5FD";
+}
+
+.game-icon-aubergine:after {
+	content: "\E5FE";
+}
+
+.game-icon-blackcurrant:after {
+	content: "\E5FF";
+}
+
+.game-icon-gift-trap:after {
+	content: "\E600";
+}
+
+.game-icon-grapes:after {
+	content: "\E601";
+}
+
+.game-icon-shiny-apple:after {
+	content: "\E602";
+}
+
+.game-icon-spiky-pit:after {
+	content: "\E603";
+}
+
+.game-icon-crush:after {
+	content: "\E604";
+}
+
+.game-icon-spikeball:after {
+	content: "\E605";
+}
+
+.game-icon-trigger-hurt:after {
+	content: "\E606";
+}
+
+.game-icon-weight-crush:after {
+	content: "\E607";
+}
+
+.game-icon-barbed-wire:after {
+	content: "\E608";
+}
+
+.game-icon-boxing-glove-surprise:after {
+	content: "\E609";
+}
+
+.game-icon-honeypot:after {
+	content: "\E60A";
+}
+
+.game-icon-land-mine:after {
+	content: "\E60B";
+}
+
+.game-icon-lever:after {
+	content: "\E60C";
+}
+
+.game-icon-mantrap:after {
+	content: "\E60D";
+}
+
+.game-icon-mine-explosion:after {
+	content: "\E60E";
+}
+
+.game-icon-quicksand:after {
+	content: "\E60F";
+}
+
+.game-icon-spider-web:after {
+	content: "\E610";
+}
+
+.game-icon-wavy-chains:after {
+	content: "\E611";
+}
+
+.game-icon-web-spit:after {
+	content: "\E612";
+}
+
+.game-icon-wolf-trap:after {
+	content: "\E613";
+}
+
+.game-icon-bread:after {
+	content: "\E614";
+}
+
+.game-icon-candy-canes:after {
+	content: "\E615";
+}
+
+.game-icon-coffee-beans:after {
+	content: "\E616";
+}
+
+.game-icon-corn:after {
+	content: "\E617";
+}
+
+.game-icon-croissant:after {
+	content: "\E618";
+}
+
+.game-icon-cupcake:after {
+	content: "\E619";
+}
+
+.game-icon-ice-cream-cone:after {
+	content: "\E61A";
+}
+
+.game-icon-ice-pop:after {
+	content: "\E61B";
+}
+
+.game-icon-pizza-slice:after {
+	content: "\E61C";
+}
+
+.game-icon-pretzel:after {
+	content: "\E61D";
+}
+
+.game-icon-steak:after {
+	content: "\E61E";
+}
+
+.game-icon-cake-slice:after {
+	content: "\E61F";
+}
+
+.game-icon-cheese-wedge:after {
+	content: "\E620";
+}
+
+.game-icon-cool-spices:after {
+	content: "\E621";
+}
+
+.game-icon-egg-clutch:after {
+	content: "\E622";
+}
+
+.game-icon-hot-spices:after {
+	content: "\E623";
+}
+
+.game-icon-meat-hook:after {
+	content: "\E624";
+}
+
+.game-icon-meat:after {
+	content: "\E625";
+}
+
+.game-icon-mushroom:after {
+	content: "\E626";
+}
+
+.game-icon-oat:after {
+	content: "\E627";
+}
+
+.game-icon-overdose:after {
+	content: "\E628";
+}
+
+.game-icon-pie-slice:after {
+	content: "\E629";
+}
+
+.game-icon-powder:after {
+	content: "\E62A";
+}
+
+.game-icon-pumpkin-lantern:after {
+	content: "\E62B";
+}
+
+.game-icon-salt-shaker:after {
+	content: "\E62C";
+}
+
+.game-icon-sliced-bread:after {
+	content: "\E62D";
+}
+
+.game-icon-wheat:after {
+	content: "\E62E";
+}
+
+.game-icon-wrapped-sweet:after {
+	content: "\E62F";
+}
+
+.game-icon-gold-stack:after {
+	content: "\E630";
+}
+
+.game-icon-money-stack:after {
+	content: "\E631";
+}
+
+.game-icon-gold-bar:after {
+	content: "\E632";
+}
+
+.game-icon-cash:after {
+	content: "\E633";
+}
+
+.game-icon-metal-disc:after {
+	content: "\E634";
+}
+
+.game-icon-profit:after {
+	content: "\E635";
+}
+
+.game-icon-barbarian:after {
+	content: "\E636";
+}
+
+.game-icon-dwarf-face:after {
+	content: "\E637";
+}
+
+.game-icon-monk-face:after {
+	content: "\E638";
+}
+
+.game-icon-nose-front:after {
+	content: "\E639";
+}
+
+.game-icon-nose-side:after {
+	content: "\E63A";
+}
+
+.game-icon-police-officer-head:after {
+	content: "\E63B";
+}
+
+.game-icon-woman-elf-face:after {
+	content: "\E63C";
+}
+
+.game-icon-overkill:after {
+	content: "\E63D";
+}
+
+.game-icon-beard:after {
+	content: "\E63E";
+}
+
+.game-icon-brainstorm:after {
+	content: "\E63F";
+}
+
+.game-icon-comb:after {
+	content: "\E640";
+}
+
+.game-icon-cowled:after {
+	content: "\E641";
+}
+
+.game-icon-cultist:after {
+	content: "\E642";
+}
+
+.game-icon-diamonds-smile:after {
+	content: "\E643";
+}
+
+.game-icon-frontal-lobe:after {
+	content: "\E644";
+}
+
+.game-icon-gibbet:after {
+	content: "\E645";
+}
+
+.game-icon-mad-scientist:after {
+	content: "\E646";
+}
+
+.game-icon-nailed-head:after {
+	content: "\E647";
+}
+
+.game-icon-pig-face:after {
+	content: "\E648";
+}
+
+.game-icon-pummeled:after {
+	content: "\E649";
+}
+
+.game-icon-pumpkin-mask:after {
+	content: "\E64A";
+}
+
+.game-icon-razor-blade:after {
+	content: "\E64B";
+}
+
+.game-icon-spiked-halo:after {
+	content: "\E64C";
+}
+
+.game-icon-swallow:after {
+	content: "\E64D";
+}
+
+.game-icon-tooth:after {
+	content: "\E64E";
+}
+
+.game-icon-vomiting:after {
+	content: "\E64F";
+}
+
+.game-icon-chainsaw:after {
+	content: "\E650";
+}
+
+.game-icon-hand-saw:after {
+	content: "\E651";
+}
+
+.game-icon-planks:after {
+	content: "\E652";
+}
+
+.game-icon-totem:after {
+	content: "\E653";
+}
+
+.game-icon-wood-pile:after {
+	content: "\E654";
+}
+
+.game-icon-circular-saw:after {
+	content: "\E655";
+}
+
+.game-icon-circular-sawblade:after {
+	content: "\E656";
+}
+
+.game-icon-stick-splitting:after {
+	content: "\E657";
+}
+
+.game-icon-wizard-staff:after {
+	content: "\E658";
+}
+
+.game-icon-wood-axe:after {
+	content: "\E659";
+}
+
+.game-icon-wooden-sign:after {
+	content: "\E65A";
+}
+
+.game-icon-bed:after {
+	content: "\E65B";
+}
+
+.game-icon-pillow:after {
+	content: "\E65C";
+}
+
+.game-icon-book-cover:after {
+	content: "\E65D";
+}
+
+.game-icon-black-book:after {
+	content: "\E65E";
+}
+
+.game-icon-white-book:after {
+	content: "\E65F";
+}
+
+.game-icon-book-aura:after {
+	content: "\E660";
+}
+
+.game-icon-book-cover-2:after {
+	content: "\E661";
+}
+
+.game-icon-book-storm:after {
+	content: "\E662";
+}
+
+.game-icon-bookmark:after {
+	content: "\E663";
+}
+
+.game-icon-bookmarklet:after {
+	content: "\E664";
+}
+
+.game-icon-death-note:after {
+	content: "\E665";
+}
+
+.game-icon-enlightenment:after {
+	content: "\E666";
+}
+
+.game-icon-evil-book:after {
+	content: "\E667";
+}
+
+.game-icon-folded-paper:after {
+	content: "\E668";
+}
+
+.game-icon-gift-of-knowledge:after {
+	content: "\E669";
+}
+
+.game-icon-open-book:after {
+	content: "\E66A";
+}
+
+.game-icon-scroll-unfurled:after {
+	content: "\E66B";
+}
+
+.game-icon-boss-key:after {
+	content: "\E66C";
+}
+
+.game-icon-lock-picking:after {
+	content: "\E66D";
+}
+
+.game-icon-key:after {
+	content: "\E66E";
+}
+
+.game-icon-cog-lock:after {
+	content: "\E66F";
+}
+
+.game-icon-key-2:after {
+	content: "\E670";
+}
+
+.game-icon-padlock:after {
+	content: "\E671";
+}
+
+.game-icon-skeleton-key:after {
+	content: "\E672";
+}
+
+.game-icon-spiked-fence:after {
+	content: "\E673";
+}
+
+.game-icon-three-keys:after {
+	content: "\E674";
+}
+
+.game-icon-triple-lock:after {
+	content: "\E675";
+}
+
+.game-icon-unlocking:after {
+	content: "\E676";
+}
+
+.game-icon-broom:after {
+	content: "\E677";
+}
+
+.game-icon-crowbar:after {
+	content: "\E678";
+}
+
+.game-icon-hole-ladder:after {
+	content: "\E679";
+}
+
+.game-icon-knot:after {
+	content: "\E67A";
+}
+
+.game-icon-lead-pipe:after {
+	content: "\E67B";
+}
+
+.game-icon-monkey-wrench:after {
+	content: "\E67C";
+}
+
+.game-icon-paint-roller:after {
+	content: "\E67D";
+}
+
+.game-icon-rake:after {
+	content: "\E67E";
+}
+
+.game-icon-sickle:after {
+	content: "\E67F";
+}
+
+.game-icon-trowel:after {
+	content: "\E680";
+}
+
+.game-icon-weight:after {
+	content: "\E681";
+}
+
+.game-icon-trample:after {
+	content: "\E682";
+}
+
+.game-icon-wrench:after {
+	content: "\E683";
+}
+
+.game-icon-anvil-impact:after {
+	content: "\E684";
+}
+
+.game-icon-anvil:after {
+	content: "\E685";
+}
+
+.game-icon-claw-hammer:after {
+	content: "\E686";
+}
+
+.game-icon-compass:after {
+	content: "\E687";
+}
+
+.game-icon-fishhook-fork:after {
+	content: "\E688";
+}
+
+.game-icon-flat-hammer:after {
+	content: "\E689";
+}
+
+.game-icon-gavel:after {
+	content: "\E68A";
+}
+
+.game-icon-gear-hammer:after {
+	content: "\E68B";
+}
+
+.game-icon-hammer-drop:after {
+	content: "\E68C";
+}
+
+.game-icon-hammer-nails:after {
+	content: "\E68D";
+}
+
+.game-icon-needle-drill:after {
+	content: "\E68E";
+}
+
+.game-icon-pincers:after {
+	content: "\E68F";
+}
+
+.game-icon-scalpel:after {
+	content: "\E690";
+}
+
+.game-icon-screwdriver:after {
+	content: "\E691";
+}
+
+.game-icon-spade:after {
+	content: "\E692";
+}
+
+.game-icon-spanner:after {
+	content: "\E693";
+}
+
+.game-icon-sword-smithing:after {
+	content: "\E694";
+}
+
+.game-icon-thermometer-scale:after {
+	content: "\E695";
+}
+
+.game-icon-convince:after {
+	content: "\E696";
+}
+
+.game-icon-dodging:after {
+	content: "\E697";
+}
+
+.game-icon-journey:after {
+	content: "\E698";
+}
+
+.game-icon-targeting:after {
+	content: "\E699";
+}
+
+.game-icon-teleport:after {
+	content: "\E69A";
+}
+
+.game-icon-cactus:after {
+	content: "\E69B";
+}
+
+.game-icon-grass:after {
+	content: "\E69C";
+}
+
+.game-icon-high-grass:after {
+	content: "\E69D";
+}
+
+.game-icon-round-straw-bale:after {
+	content: "\E69E";
+}
+
+.game-icon-beanstalk:after {
+	content: "\E69F";
+}
+
+.game-icon-bud:after {
+	content: "\E6A0";
+}
+
+.game-icon-bulb:after {
+	content: "\E6A1";
+}
+
+.game-icon-clover-2:after {
+	content: "\E6A2";
+}
+
+.game-icon-curling-vines:after {
+	content: "\E6A3";
+}
+
+.game-icon-daisy:after {
+	content: "\E6A4";
+}
+
+.game-icon-deathcab:after {
+	content: "\E6A5";
+}
+
+.game-icon-flower-pot:after {
+	content: "\E6A6";
+}
+
+.game-icon-flowers:after {
+	content: "\E6A7";
+}
+
+.game-icon-fragrance:after {
+	content: "\E6A8";
+}
+
+.game-icon-ground-sprout:after {
+	content: "\E6A9";
+}
+
+.game-icon-heavy-thorny-triskelion:after {
+	content: "\E6AA";
+}
+
+.game-icon-leaf-skeleton:after {
+	content: "\E6AB";
+}
+
+.game-icon-light-thorny-triskelion:after {
+	content: "\E6AC";
+}
+
+.game-icon-lotus:after {
+	content: "\E6AD";
+}
+
+.game-icon-mushroom-gills:after {
+	content: "\E6AE";
+}
+
+.game-icon-pollen-dust:after {
+	content: "\E6AF";
+}
+
+.game-icon-rose:after {
+	content: "\E6B0";
+}
+
+.game-icon-shut-rose:after {
+	content: "\E6B1";
+}
+
+.game-icon-spiral-bloom:after {
+	content: "\E6B2";
+}
+
+.game-icon-spoted-flower:after {
+	content: "\E6B3";
+}
+
+.game-icon-spotted-mushroom:after {
+	content: "\E6B4";
+}
+
+.game-icon-sprout-disc:after {
+	content: "\E6B5";
+}
+
+.game-icon-sprout:after {
+	content: "\E6B6";
+}
+
+.game-icon-super-mushroom:after {
+	content: "\E6B7";
+}
+
+.game-icon-trefoil-lily:after {
+	content: "\E6B8";
+}
+
+.game-icon-twirly-flower:after {
+	content: "\E6B9";
+}
+
+.game-icon-vanilla-flower:after {
+	content: "\E6BA";
+}
+
+.game-icon-vine-flower:after {
+	content: "\E6BB";
+}
+
+.game-icon-vine-leaf:after {
+	content: "\E6BC";
+}
+
+.game-icon-vine-whip:after {
+	content: "\E6BD";
+}
+
+.game-icon-viola:after {
+	content: "\E6BE";
+}
+
+.game-icon-cigarette:after {
+	content: "\E6BF";
+}
+
+.game-icon-poison-cloud:after {
+	content: "\E6C0";
+}
+
+.game-icon-molecule:after {
+	content: "\E6C1";
+}
+
+.game-icon-spray:after {
+	content: "\E6C2";
+}
+
+.game-icon-smoking-pipe:after {
+	content: "\E6C3";
+}
+
+.game-icon-aerosol:after {
+	content: "\E6C4";
+}
+
+.game-icon-fluffy-swirl:after {
+	content: "\E6C5";
+}
+
+.game-icon-incense:after {
+	content: "\E6C6";
+}
+
+.game-icon-black-bar:after {
+	content: "\E6C7";
+}
+
+.game-icon-magnet:after {
+	content: "\E6C8";
+}
+
+.game-icon-manacles:after {
+	content: "\E6C9";
+}
+
+.game-icon-metal-bar:after {
+	content: "\E6CA";
+}
+
+.game-icon-robot-golem:after {
+	content: "\E6CB";
+}
+
+.game-icon-steel-claws:after {
+	content: "\E6CC";
+}
+
+.game-icon-steelwing-emblem:after {
+	content: "\E6CD";
+}
+
+.game-icon-head-shot:after {
+	content: "\E6CE";
+}
+
+.game-icon-select:after {
+	content: "\E6CF";
+}
+
+.game-icon-target-laser:after {
+	content: "\E6D0";
+}
+
+.game-icon-targeted:after {
+	content: "\E6D1";
+}
+
+.game-icon-acid-tube:after {
+	content: "\E6D2";
+}
+
+.game-icon-syringe:after {
+	content: "\E6D3";
+}
+
+.game-icon-vial:after {
+	content: "\E6D4";
+}
+
+.game-icon-chemical-bolt:after {
+	content: "\E6D5";
+}
+
+.game-icon-corked-tube:after {
+	content: "\E6D6";
+}
+
+.game-icon-dripping-tube:after {
+	content: "\E6D7";
+}
+
+.game-icon-energise:after {
+	content: "\E6D8";
+}
+
+.game-icon-erlenmeyer:after {
+	content: "\E6D9";
+}
+
+.game-icon-love-injection:after {
+	content: "\E6DA";
+}
+
+.game-icon-materials-science:after {
+	content: "\E6DB";
+}
+
+.game-icon-miracle-medecine:after {
+	content: "\E6DC";
+}
+
+.game-icon-pill-drop:after {
+	content: "\E6DD";
+}
+
+.game-icon-soap-experiment:after {
+	content: "\E6DE";
+}
+
+.game-icon-syringe-2:after {
+	content: "\E6DF";
+}
+
+.game-icon-test-tubes:after {
+	content: "\E6E0";
+}
+
+.game-icon-triple-needle:after {
+	content: "\E6E1";
+}
+
+.game-icon-diamond-ring:after {
+	content: "\E6E2";
+}
+
+.game-icon-necklace:after {
+	content: "\E6E3";
+}
+
+.game-icon-linked-rings:after {
+	content: "\E6E4";
+}
+
+.game-icon-bird-claw:after {
+	content: "\E6E5";
+}
+
+.game-icon-bird-limb:after {
+	content: "\E6E6";
+}
+
+.game-icon-condor-emblem:after {
+	content: "\E6E7";
+}
+
+.game-icon-dove:after {
+	content: "\E6E8";
+}
+
+.game-icon-falling-ovoid:after {
+	content: "\E6E9";
+}
+
+.game-icon-scarecrow:after {
+	content: "\E6EA";
+}
+
+.game-icon-sparrow:after {
+	content: "\E6EB";
+}
+
+.game-icon-dynamite:after {
+	content: "\E6EC";
+}
+
+.game-icon-stun-grenade:after {
+	content: "\E6ED";
+}
+
+.game-icon-bombing-run:after {
+	content: "\E6EE";
+}
+
+.game-icon-cluster-bomb:after {
+	content: "\E6EF";
+}
+
+.game-icon-grenade-2:after {
+	content: "\E6F0";
+}
+
+.game-icon-ice-bomb:after {
+	content: "\E6F1";
+}
+
+.game-icon-molotov:after {
+	content: "\E6F2";
+}
+
+.game-icon-paper-bomb:after {
+	content: "\E6F3";
+}
+
+.game-icon-rolling-bomb:after {
+	content: "\E6F4";
+}
+
+.game-icon-sparky-bomb:after {
+	content: "\E6F5";
+}
+
+.game-icon-unlit-bomb:after {
+	content: "\E6F6";
+}
+
+.game-icon-ermine:after {
+	content: "\E6F7";
+}
+
+.game-icon-fleur-de-lys:after {
+	content: "\E6F8";
+}
+
+.game-icon-klingon:after {
+	content: "\E6F9";
+}
+
+.game-icon-batwing-emblem:after {
+	content: "\E6FA";
+}
+
+.game-icon-winged-emblem:after {
+	content: "\E6FB";
+}
+
+.game-icon-interstellar-path:after {
+	content: "\E6FC";
+}
+
+.game-icon-lantern:after {
+	content: "\E6FD";
+}
+
+.game-icon-laserburn:after {
+	content: "\E6FE";
+}
+
+.game-icon-paper-lantern:after {
+	content: "\E6FF";
+}
+
+.game-icon-shiny-entrance:after {
+	content: "\E700";
+}
+
+.game-icon-two-shadows:after {
+	content: "\E701";
+}
+
+.game-icon-unlit-candelabra:after {
+	content: "\E702";
+}
+
+.game-icon-neck-bite:after {
+	content: "\E703";
+}
+
+.game-icon-air-zigzag:after {
+	content: "\E704";
+}
+
+.game-icon-bandaged:after {
+	content: "\E705";
+}
+
+.game-icon-bleeding-heart:after {
+	content: "\E706";
+}
+
+.game-icon-bleeding-wound:after {
+	content: "\E707";
+}
+
+.game-icon-bloody-stash:after {
+	content: "\E708";
+}
+
+.game-icon-bloody-sword:after {
+	content: "\E709";
+}
+
+.game-icon-feather-wound:after {
+	content: "\E70A";
+}
+
+.game-icon-large-wound:after {
+	content: "\E70B";
+}
+
+.game-icon-open-wound:after {
+	content: "\E70C";
+}
+
+.game-icon-rough-wound:after {
+	content: "\E70D";
+}
+
+.game-icon-scar-wound:after {
+	content: "\E70E";
+}
+
+.game-icon-spotted-wound:after {
+	content: "\E70F";
+}
+
+.game-icon-sticking-plaster:after {
+	content: "\E710";
+}
+
+.game-icon-stitched-wound:after {
+	content: "\E711";
+}
+
+.game-icon-hills:after {
+	content: "\E712";
+}
+
+.game-icon-mountain-cave:after {
+	content: "\E713";
+}
+
+.game-icon-earth-crack:after {
+	content: "\E714";
+}
+
+.game-icon-field:after {
+	content: "\E715";
+}
+
+.game-icon-valley:after {
+	content: "\E716";
+}
+
+.game-icon-wind-hole:after {
+	content: "\E717";
+}
+
+.game-icon-paper-windmill:after {
+	content: "\E718";
+}
+
+.game-icon-puzzle:after {
+	content: "\E719";
+}
+
+.game-icon-voodoo-doll:after {
+	content: "\E71A";
+}
+
+.game-icon-cloud-ring:after {
+	content: "\E71B";
+}
+
+.game-icon-cloudy-fork:after {
+	content: "\E71C";
+}
+
+.game-icon-dust-cloud:after {
+	content: "\E71D";
+}
+
+.game-icon-flower-twirl:after {
+	content: "\E71E";
+}
+
+.game-icon-fluffy-cloud:after {
+	content: "\E71F";
+}
+
+.game-icon-lightning-storm:after {
+	content: "\E720";
+}
+
+.game-icon-mushroom-cloud:after {
+	content: "\E721";
+}
+
+.game-icon-nested-hearts:after {
+	content: "\E722";
+}
+
+.game-icon-ball-heart:after {
+	content: "\E723";
+}
+
+.game-icon-broken-heart-zone:after {
+	content: "\E724";
+}
+
+.game-icon-chained-heart:after {
+	content: "\E725";
+}
+
+.game-icon-charm:after {
+	content: "\E726";
+}
+
+.game-icon-cheerful:after {
+	content: "\E727";
+}
+
+.game-icon-chewed-heart:after {
+	content: "\E728";
+}
+
+.game-icon-cold-heart:after {
+	content: "\E729";
+}
+
+.game-icon-glass-heart:after {
+	content: "\E72A";
+}
+
+.game-icon-half-heart:after {
+	content: "\E72B";
+}
+
+.game-icon-life-support:after {
+	content: "\E72C";
+}
+
+.game-icon-royal-love:after {
+	content: "\E72D";
+}
+
+.game-icon-shining-heart:after {
+	content: "\E72E";
+}
+
+.game-icon-templar-heart:after {
+	content: "\E72F";
+}
+
+.game-icon-tentacle-heart:after {
+	content: "\E730";
+}
+
+.game-icon-wrapped-heart:after {
+	content: "\E731";
+}
+
+.game-icon-thermometer-cold:after {
+	content: "\E732";
+}
+
+.game-icon-frozen-block:after {
+	content: "\E733";
+}
+
+.game-icon-ice-bolt:after {
+	content: "\E734";
+}
+
+.game-icon-icebergs:after {
+	content: "\E735";
+}
+
+.game-icon-icicles-fence:after {
+	content: "\E736";
+}
+
+.game-icon-snowflake-1:after {
+	content: "\E737";
+}
+
+.game-icon-snowflake-2:after {
+	content: "\E738";
+}
+
+.game-icon-snowman:after {
+	content: "\E739";
+}
+
+.game-icon-katana:after {
+	content: "\E73A";
+}
+
+.game-icon-assassin-pocket:after {
+	content: "\E73B";
+}
+
+.game-icon-bat-blade:after {
+	content: "\E73C";
+}
+
+.game-icon-blade-fall:after {
+	content: "\E73D";
+}
+
+.game-icon-bone-knife:after {
+	content: "\E73E";
+}
+
+.game-icon-bowie-knife:after {
+	content: "\E73F";
+}
+
+.game-icon-broad-dagger:after {
+	content: "\E740";
+}
+
+.game-icon-broadsword:after {
+	content: "\E741";
+}
+
+.game-icon-cloak-dagger:after {
+	content: "\E742";
+}
+
+.game-icon-cracked-saber:after {
+	content: "\E743";
+}
+
+.game-icon-crescent-blade:after {
+	content: "\E744";
+}
+
+.game-icon-croc-sword:after {
+	content: "\E745";
+}
+
+.game-icon-curvy-knife:after {
+	content: "\E746";
+}
+
+.game-icon-daggers:after {
+	content: "\E747";
+}
+
+.game-icon-diving-dagger:after {
+	content: "\E748";
+}
+
+.game-icon-energy-sword:after {
+	content: "\E749";
+}
+
+.game-icon-flying-dagger:after {
+	content: "\E74A";
+}
+
+.game-icon-fragmented-sword:after {
+	content: "\E74B";
+}
+
+.game-icon-knife-thrust:after {
+	content: "\E74C";
+}
+
+.game-icon-lightning-saber:after {
+	content: "\E74D";
+}
+
+.game-icon-plain-dagger:after {
+	content: "\E74E";
+}
+
+.game-icon-relic-blade:after {
+	content: "\E74F";
+}
+
+.game-icon-sacrificial-dagger:after {
+	content: "\E750";
+}
+
+.game-icon-shard-sword:after {
+	content: "\E751";
+}
+
+.game-icon-shattered-sword:after {
+	content: "\E752";
+}
+
+.game-icon-shining-sword:after {
+	content: "\E753";
+}
+
+.game-icon-spinning-blades:after {
+	content: "\E754";
+}
+
+.game-icon-spinning-sword:after {
+	content: "\E755";
+}
+
+.game-icon-spiral-thrust:after {
+	content: "\E756";
+}
+
+.game-icon-sword-array:after {
+	content: "\E757";
+}
+
+.game-icon-sword-break:after {
+	content: "\E758";
+}
+
+.game-icon-sword-hilt:after {
+	content: "\E759";
+}
+
+.game-icon-sword-slice:after {
+	content: "\E75A";
+}
+
+.game-icon-sword-spin:after {
+	content: "\E75B";
+}
+
+.game-icon-thrown-daggers:after {
+	content: "\E75C";
+}
+
+.game-icon-thrown-knife:after {
+	content: "\E75D";
+}
+
+.game-icon-thunder-blade:after {
+	content: "\E75E";
+}
+
+.game-icon-atomic-slashes:after {
+	content: "\E75F";
+}
+
+.game-icon-barbed-coil:after {
+	content: "\E760";
+}
+
+.game-icon-broken-bone:after {
+	content: "\E761";
+}
+
+.game-icon-burning-round-shot:after {
+	content: "\E762";
+}
+
+.game-icon-circle-claws:after {
+	content: "\E763";
+}
+
+.game-icon-claw-slashes:after {
+	content: "\E764";
+}
+
+.game-icon-cracked-ball-dunk:after {
+	content: "\E765";
+}
+
+.game-icon-cracked-disc:after {
+	content: "\E766";
+}
+
+.game-icon-cracked-glass:after {
+	content: "\E767";
+}
+
+.game-icon-crossed-air-flows:after {
+	content: "\E768";
+}
+
+.game-icon-earth-spit:after {
+	content: "\E769";
+}
+
+.game-icon-edge-crack:after {
+	content: "\E76A";
+}
+
+.game-icon-groundbreaker:after {
+	content: "\E76B";
+}
+
+.game-icon-quick-slash:after {
+	content: "\E76C";
+}
+
+.game-icon-serrated-slash:after {
+	content: "\E76D";
+}
+
+.game-icon-shatter:after {
+	content: "\E76E";
+}
+
+.game-icon-spiked-collar:after {
+	content: "\E76F";
+}
+
+.game-icon-spiked-tentacle:after {
+	content: "\E770";
+}
+
+.game-icon-spiky-eclipse:after {
+	content: "\E771";
+}
+
+.game-icon-spiky-explosion:after {
+	content: "\E772";
+}
+
+.game-icon-striking-diamonds:after {
+	content: "\E773";
+}
+
+.game-icon-swan-breeze:after {
+	content: "\E774";
+}
+
+.game-icon-swirl-ring:after {
+	content: "\E775";
+}
+
+.game-icon-swirl-string:after {
+	content: "\E776";
+}
+
+.game-icon-tornado-discs:after {
+	content: "\E777";
+}
+
+.game-icon-triple-claws:after {
+	content: "\E778";
+}
+
+.game-icon-unstable-projectile:after {
+	content: "\E779";
+}
+
+.game-icon-whiplash:after {
+	content: "\E77A";
+}
+
+.game-icon-wind-slap:after {
+	content: "\E77B";
+}
+
+.game-icon-fangs:after {
+	content: "\E77C";
+}
+
+.game-icon-alligator-clip:after {
+	content: "\E77D";
+}
+
+.game-icon-carnivore-mouth:after {
+	content: "\E77E";
+}
+
+.game-icon-energy-breath:after {
+	content: "\E77F";
+}
+
+.game-icon-front-teeth:after {
+	content: "\E780";
+}
+
+.game-icon-incisors:after {
+	content: "\E781";
+}
+
+.game-icon-jawbone:after {
+	content: "\E782";
+}
+
+.game-icon-lightning-shout:after {
+	content: "\E783";
+}
+
+.game-icon-lips:after {
+	content: "\E784";
+}
+
+.game-icon-needle-jaws:after {
+	content: "\E785";
+}
+
+.game-icon-saber-tooth:after {
+	content: "\E786";
+}
+
+.game-icon-sharp-lips:after {
+	content: "\E787";
+}
+
+.game-icon-evil-wings:after {
+	content: "\E788";
+}
+
+.game-icon-angel-outfit:after {
+	content: "\E789";
+}
+
+.game-icon-angel-wings:after {
+	content: "\E78A";
+}
+
+.game-icon-curly-wing:after {
+	content: "\E78B";
+}
+
+.game-icon-feather:after {
+	content: "\E78C";
+}
+
+.game-icon-feathered-wing:after {
+	content: "\E78D";
+}
+
+.game-icon-fluffy-wing:after {
+	content: "\E78E";
+}
+
+.game-icon-quill:after {
+	content: "\E78F";
+}
+
+.game-icon-two-feathers:after {
+	content: "\E790";
+}
+
+.game-icon-wing-cloak:after {
+	content: "\E791";
+}
+
+.game-icon-winged-leg:after {
+	content: "\E792";
+}
+
+.game-icon-sharp-halberd:after {
+	content: "\E793";
+}
+
+.game-icon-axe-swing:after {
+	content: "\E794";
+}
+
+.game-icon-halberd:after {
+	content: "\E795";
+}
+
+.game-icon-hatchets:after {
+	content: "\E796";
+}
+
+.game-icon-horn-internal:after {
+	content: "\E797";
+}
+
+.game-icon-ribcage:after {
+	content: "\E798";
+}
+
+.game-icon-spinal-coil:after {
+	content: "\E799";
+}
+
+.game-icon-half-tornado:after {
+	content: "\E79A";
+}
+
+.game-icon-lightning-tree:after {
+	content: "\E79B";
+}
+
+.game-icon-tornado:after {
+	content: "\E79C";
+}
+
+.game-icon-twister:after {
+	content: "\E79D";
+}
+
+.game-icon-whirlwind:after {
+	content: "\E79E";
+}
+
+.game-icon-battery-0:after {
+	content: "\E79F";
+}
+
+.game-icon-battery-100:after {
+	content: "\E7A0";
+}
+
+.game-icon-battery-25:after {
+	content: "\E7A1";
+}
+
+.game-icon-battery-50:after {
+	content: "\E7A2";
+}
+
+.game-icon-battery-75:after {
+	content: "\E7A3";
+}
+
+.game-icon-battery-minus:after {
+	content: "\E7A4";
+}
+
+.game-icon-battery-plus:after {
+	content: "\E7A5";
+}
+
+.game-icon-battery-pack-alt:after {
+	content: "\E7A6";
+}
+
+.game-icon-battery-pack:after {
+	content: "\E7A7";
+}
+
+.game-icon-batteries:after {
+	content: "\E7A8";
+}
+
+.game-icon-portal:after {
+	content: "\E7A9";
+}
+
+.game-icon-sinusoidal-beam:after {
+	content: "\E7AA";
+}
+
+.game-icon-electric:after {
+	content: "\E7AB";
+}
+
+.game-icon-chain-lightning:after {
+	content: "\E7AC";
+}
+
+.game-icon-bolt-saw:after {
+	content: "\E7AD";
+}
+
+.game-icon-electric-whip:after {
+	content: "\E7AE";
+}
+
+.game-icon-focused-lightning:after {
+	content: "\E7AF";
+}
+
+.game-icon-heavy-lightning:after {
+	content: "\E7B0";
+}
+
+.game-icon-lightning-arc:after {
+	content: "\E7B1";
+}
+
+.game-icon-lightning-branches:after {
+	content: "\E7B2";
+}
+
+.game-icon-lightning-dissipation:after {
+	content: "\E7B3";
+}
+
+.game-icon-lightning-electron:after {
+	content: "\E7B4";
+}
+
+.game-icon-lightning-frequency:after {
+	content: "\E7B5";
+}
+
+.game-icon-lightning-helix:after {
+	content: "\E7B6";
+}
+
+.game-icon-lightning-shadow:after {
+	content: "\E7B7";
+}
+
+.game-icon-lightning-slashes:after {
+	content: "\E7B8";
+}
+
+.game-icon-lightning-trio:after {
+	content: "\E7B9";
+}
+
+.game-icon-magnet-blast:after {
+	content: "\E7BA";
+}
+
+.game-icon-power-lightning:after {
+	content: "\E7BB";
+}
+
+.game-icon-round-struck:after {
+	content: "\E7BC";
+}
+
+.game-icon-sonic-lightning:after {
+	content: "\E7BD";
+}
+
+.game-icon-static-waves:after {
+	content: "\E7BE";
+}
+
+.game-icon-static:after {
+	content: "\E7BF";
+}
+
+.game-icon-tesla-coil:after {
+	content: "\E7C0";
+}
+
+.game-icon-thunder-struck:after {
+	content: "\E7C1";
+}
+
+.game-icon-thunderball:after {
+	content: "\E7C2";
+}
+
+.game-icon-windy-stripes:after {
+	content: "\E7C3";
+}
+
+.game-icon-arcing-bolt:after {
+	content: "\E7C4";
+}
+
+.game-icon-bright-explosion:after {
+	content: "\E7C5";
+}
+
+.game-icon-bubbling-beam:after {
+	content: "\E7C6";
+}
+
+.game-icon-burning-blobs:after {
+	content: "\E7C7";
+}
+
+.game-icon-circle-sparks:after {
+	content: "\E7C8";
+}
+
+.game-icon-clout:after {
+	content: "\E7C9";
+}
+
+.game-icon-comet-spark:after {
+	content: "\E7CA";
+}
+
+.game-icon-corner-explosion:after {
+	content: "\E7CB";
+}
+
+.game-icon-crowned-explosion:after {
+	content: "\E7CC";
+}
+
+.game-icon-egg-defense:after {
+	content: "\E7CD";
+}
+
+.game-icon-electrical-crescent:after {
+	content: "\E7CE";
+}
+
+.game-icon-explosion-rays:after {
+	content: "\E7CF";
+}
+
+.game-icon-explosive-materials:after {
+	content: "\E7D0";
+}
+
+.game-icon-explosive-meeting:after {
+	content: "\E7D1";
+}
+
+.game-icon-fission:after {
+	content: "\E7D2";
+}
+
+.game-icon-fragmented-meteor:after {
+	content: "\E7D3";
+}
+
+.game-icon-heavy-fall:after {
+	content: "\E7D4";
+}
+
+.game-icon-hypersonic-melon:after {
+	content: "\E7D5";
+}
+
+.game-icon-implosion:after {
+	content: "\E7D6";
+}
+
+.game-icon-incoming-rocket:after {
+	content: "\E7D7";
+}
+
+.game-icon-ion-cannon-blast:after {
+	content: "\E7D8";
+}
+
+.game-icon-laser-sparks:after {
+	content: "\E7D9";
+}
+
+.game-icon-ringed-beam:after {
+	content: "\E7DA";
+}
+
+.game-icon-screen-impact:after {
+	content: "\E7DB";
+}
+
+.game-icon-squib:after {
+	content: "\E7DC";
+}
+
+.game-icon-striking-splinter:after {
+	content: "\E7DD";
+}
+
+.game-icon-barbed-nails:after {
+	content: "\E7DE";
+}
+
+.game-icon-claw-string:after {
+	content: "\E7DF";
+}
+
+.game-icon-midnight-claw:after {
+	content: "\E7E0";
+}
+
+.game-icon-pawprint:after {
+	content: "\E7E1";
+}
+
+.game-icon-plate-claw:after {
+	content: "\E7E2";
+}
+
+.game-icon-saw-claw:after {
+	content: "\E7E3";
+}
+
+.game-icon-shining-claw:after {
+	content: "\E7E4";
+}
+
+.game-icon-triple-scratches:after {
+	content: "\E7E5";
+}
+
+.game-icon-abstract-001:after {
+	content: "\E7E6";
+}
+
+.game-icon-abstract-002:after {
+	content: "\E7E7";
+}
+
+.game-icon-abstract-003:after {
+	content: "\E7E8";
+}
+
+.game-icon-abstract-004:after {
+	content: "\E7E9";
+}
+
+.game-icon-abstract-005:after {
+	content: "\E7EA";
+}
+
+.game-icon-abstract-006:after {
+	content: "\E7EB";
+}
+
+.game-icon-abstract-007:after {
+	content: "\E7EC";
+}
+
+.game-icon-abstract-008:after {
+	content: "\E7ED";
+}
+
+.game-icon-abstract-009:after {
+	content: "\E7EE";
+}
+
+.game-icon-abstract-010:after {
+	content: "\E7EF";
+}
+
+.game-icon-abstract-011:after {
+	content: "\E7F0";
+}
+
+.game-icon-abstract-012:after {
+	content: "\E7F1";
+}
+
+.game-icon-abstract-013:after {
+	content: "\E7F2";
+}
+
+.game-icon-abstract-014:after {
+	content: "\E7F3";
+}
+
+.game-icon-abstract-015:after {
+	content: "\E7F4";
+}
+
+.game-icon-abstract-016:after {
+	content: "\E7F5";
+}
+
+.game-icon-abstract-017:after {
+	content: "\E7F6";
+}
+
+.game-icon-abstract-018:after {
+	content: "\E7F7";
+}
+
+.game-icon-abstract-019:after {
+	content: "\E7F8";
+}
+
+.game-icon-abstract-020:after {
+	content: "\E7F9";
+}
+
+.game-icon-abstract-021:after {
+	content: "\E7FA";
+}
+
+.game-icon-abstract-022:after {
+	content: "\E7FB";
+}
+
+.game-icon-abstract-023:after {
+	content: "\E7FC";
+}
+
+.game-icon-abstract-024:after {
+	content: "\E7FD";
+}
+
+.game-icon-abstract-025:after {
+	content: "\E7FE";
+}
+
+.game-icon-abstract-026:after {
+	content: "\E7FF";
+}
+
+.game-icon-abstract-027:after {
+	content: "\E800";
+}
+
+.game-icon-abstract-028:after {
+	content: "\E801";
+}
+
+.game-icon-abstract-029:after {
+	content: "\E802";
+}
+
+.game-icon-abstract-030:after {
+	content: "\E803";
+}
+
+.game-icon-abstract-031:after {
+	content: "\E804";
+}
+
+.game-icon-abstract-032:after {
+	content: "\E805";
+}
+
+.game-icon-abstract-033:after {
+	content: "\E806";
+}
+
+.game-icon-abstract-034:after {
+	content: "\E807";
+}
+
+.game-icon-abstract-035:after {
+	content: "\E808";
+}
+
+.game-icon-abstract-036:after {
+	content: "\E809";
+}
+
+.game-icon-abstract-037:after {
+	content: "\E80A";
+}
+
+.game-icon-abstract-038:after {
+	content: "\E80B";
+}
+
+.game-icon-abstract-039:after {
+	content: "\E80C";
+}
+
+.game-icon-abstract-040:after {
+	content: "\E80D";
+}
+
+.game-icon-abstract-041:after {
+	content: "\E80E";
+}
+
+.game-icon-abstract-042:after {
+	content: "\E80F";
+}
+
+.game-icon-abstract-043:after {
+	content: "\E810";
+}
+
+.game-icon-abstract-044:after {
+	content: "\E811";
+}
+
+.game-icon-abstract-045:after {
+	content: "\E812";
+}
+
+.game-icon-abstract-046:after {
+	content: "\E813";
+}
+
+.game-icon-abstract-047:after {
+	content: "\E814";
+}
+
+.game-icon-abstract-048:after {
+	content: "\E815";
+}
+
+.game-icon-abstract-049:after {
+	content: "\E816";
+}
+
+.game-icon-abstract-050:after {
+	content: "\E817";
+}
+
+.game-icon-abstract-051:after {
+	content: "\E818";
+}
+
+.game-icon-abstract-052:after {
+	content: "\E819";
+}
+
+.game-icon-abstract-053:after {
+	content: "\E81A";
+}
+
+.game-icon-abstract-054:after {
+	content: "\E81B";
+}
+
+.game-icon-abstract-055:after {
+	content: "\E81C";
+}
+
+.game-icon-abstract-056:after {
+	content: "\E81D";
+}
+
+.game-icon-abstract-057:after {
+	content: "\E81E";
+}
+
+.game-icon-abstract-058:after {
+	content: "\E81F";
+}
+
+.game-icon-abstract-059:after {
+	content: "\E820";
+}
+
+.game-icon-abstract-060:after {
+	content: "\E821";
+}
+
+.game-icon-abstract-061:after {
+	content: "\E822";
+}
+
+.game-icon-abstract-062:after {
+	content: "\E823";
+}
+
+.game-icon-abstract-063:after {
+	content: "\E824";
+}
+
+.game-icon-abstract-064:after {
+	content: "\E825";
+}
+
+.game-icon-abstract-065:after {
+	content: "\E826";
+}
+
+.game-icon-abstract-066:after {
+	content: "\E827";
+}
+
+.game-icon-abstract-067:after {
+	content: "\E828";
+}
+
+.game-icon-abstract-068:after {
+	content: "\E829";
+}
+
+.game-icon-abstract-069:after {
+	content: "\E82A";
+}
+
+.game-icon-abstract-070:after {
+	content: "\E82B";
+}
+
+.game-icon-abstract-071:after {
+	content: "\E82C";
+}
+
+.game-icon-abstract-072:after {
+	content: "\E82D";
+}
+
+.game-icon-abstract-073:after {
+	content: "\E82E";
+}
+
+.game-icon-abstract-074:after {
+	content: "\E82F";
+}
+
+.game-icon-abstract-075:after {
+	content: "\E830";
+}
+
+.game-icon-abstract-076:after {
+	content: "\E831";
+}
+
+.game-icon-abstract-077:after {
+	content: "\E832";
+}
+
+.game-icon-abstract-078:after {
+	content: "\E833";
+}
+
+.game-icon-abstract-079:after {
+	content: "\E834";
+}
+
+.game-icon-abstract-080:after {
+	content: "\E835";
+}
+
+.game-icon-abstract-081:after {
+	content: "\E836";
+}
+
+.game-icon-abstract-082:after {
+	content: "\E837";
+}
+
+.game-icon-abstract-083:after {
+	content: "\E838";
+}
+
+.game-icon-abstract-084:after {
+	content: "\E839";
+}
+
+.game-icon-abstract-085:after {
+	content: "\E83A";
+}
+
+.game-icon-abstract-086:after {
+	content: "\E83B";
+}
+
+.game-icon-abstract-087:after {
+	content: "\E83C";
+}
+
+.game-icon-abstract-088:after {
+	content: "\E83D";
+}
+
+.game-icon-abstract-089:after {
+	content: "\E83E";
+}
+
+.game-icon-abstract-090:after {
+	content: "\E83F";
+}
+
+.game-icon-abstract-091:after {
+	content: "\E840";
+}
+
+.game-icon-abstract-092:after {
+	content: "\E841";
+}
+
+.game-icon-abstract-093:after {
+	content: "\E842";
+}
+
+.game-icon-abstract-094:after {
+	content: "\E843";
+}
+
+.game-icon-abstract-095:after {
+	content: "\E844";
+}
+
+.game-icon-abstract-096:after {
+	content: "\E845";
+}
+
+.game-icon-abstract-097:after {
+	content: "\E846";
+}
+
+.game-icon-abstract-098:after {
+	content: "\E847";
+}
+
+.game-icon-abstract-099:after {
+	content: "\E848";
+}
+
+.game-icon-abstract-100:after {
+	content: "\E849";
+}
+
+.game-icon-abstract-101:after {
+	content: "\E84A";
+}
+
+.game-icon-abstract-102:after {
+	content: "\E84B";
+}
+
+.game-icon-abstract-103:after {
+	content: "\E84C";
+}
+
+.game-icon-abstract-104:after {
+	content: "\E84D";
+}
+
+.game-icon-abstract-105:after {
+	content: "\E84E";
+}
+
+.game-icon-abstract-106:after {
+	content: "\E84F";
+}
+
+.game-icon-abstract-107:after {
+	content: "\E850";
+}
+
+.game-icon-abstract-108:after {
+	content: "\E851";
+}
+
+.game-icon-abstract-109:after {
+	content: "\E852";
+}
+
+.game-icon-abstract-110:after {
+	content: "\E853";
+}
+
+.game-icon-abstract-111:after {
+	content: "\E854";
+}
+
+.game-icon-abstract-112:after {
+	content: "\E855";
+}
+
+.game-icon-abstract-113:after {
+	content: "\E856";
+}
+
+.game-icon-abstract-114:after {
+	content: "\E857";
+}
+
+.game-icon-abstract-115:after {
+	content: "\E858";
+}
+
+.game-icon-abstract-116:after {
+	content: "\E859";
+}
+
+.game-icon-abstract-117:after {
+	content: "\E85A";
+}
+
+.game-icon-abstract-118:after {
+	content: "\E85B";
+}
+
+.game-icon-abstract-119:after {
+	content: "\E85C";
+}
+
+.game-icon-abstract-120:after {
+	content: "\E85D";
+}
+
+.game-icon-abstract-121:after {
+	content: "\E85E";
+}
+
+.game-icon-curled-tentacle:after {
+	content: "\E85F";
+}
+
+.game-icon-interlaced-tentacles:after {
+	content: "\E860";
+}
+
+.game-icon-suckered-tentacle:after {
+	content: "\E861";
+}
+
+.game-icon-tentacle-strike:after {
+	content: "\E862";
+}
+
+.game-icon-tentacurl:after {
+	content: "\E863";
+}
+
+.game-icon-thorny-tentacle:after {
+	content: "\E864";
+}
+
+.game-icon-thorny-vine:after {
+	content: "\E865";
+}

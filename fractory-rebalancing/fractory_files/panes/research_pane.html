@@ -1,0 +1,31 @@
+<div class="pane research" data-bind="visible: game.current_pane() === 'research'">
+    <table>
+        <thead>
+            <th>Name</th>
+            <th>Arcana</th>
+            <th>Mana</th>
+            <th>Description</th>
+        </thead>
+        <tbody>
+    <!-- ko foreach: {
+        data: _.values(game.available_research()).concat(_.values(game.learned_research())),
+        as: 'r'
+    } -->
+
+        <tr class="available_research" data-bind="
+            click: function() {
+                game.buy_research(r);
+            },
+            css: r.css(game),
+        ">
+            <td class="name" data-bind="text: r.name"></td>
+            <td class="arcana" data-bind="text: r.arcana_requirement()"></td>
+            <td class="mana_cost" data-bind="text: r.mana_cost()"></td>
+            <td class="description" data-bind="text: r.description()"></td>
+
+
+        </tr>
+    <!-- /ko -->
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,41 @@
+<div class="inventory_slot" data-bind="
+            dropzone: {
+                ondropenter: function(ev) {
+                    //console.log('ondropenter', ev);
+                    ev.draggable.dropped_on = islot;
+                },
+                ondropleave: function(ev) {
+                    //console.log('ondropleave', ev);
+                    ev.draggable.dropped_on = null;
+                },
+
+                ondrop: function(ev) {
+                    //console.log('ondrop', ev);
+                    if(game.animating_shell()) return;
+
+                    islot.set_part(ev.draggable.dragObject);
+                },
+                overlap: 'center'
+            },
+            event: {
+                mouseover: function(slot, event) {
+                        game.hovered_inventory_slot(slot);
+                },
+                mouseout: function(slot, event) {
+                        if(game.hovered_inventory_slot() !== slot) return;
+                        game.hovered_inventory_slot(null);
+                },
+            },
+        ">
+            <!-- ko if: islot.part() -->
+                        <!-- ko with: {part: islot.part(), shell: islot.shell } -->
+                            <!-- ko template: {
+                                name: 'kot/part.html',
+                                data: part,
+                                as: 'part',
+                                shell: islot.shell,
+                            } -->
+                            <!-- /ko -->
+                        <!-- /ko -->
+                    <!-- /ko -->
+        </div>

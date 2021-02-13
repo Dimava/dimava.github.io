@@ -1,0 +1,76 @@
+<div class="pane game_stats" data-bind="visible: game.current_pane() === 'stats'">
+    <table class="game_stats">
+        <tbody>
+            <tr>
+                <th>Experience</th>
+                <td>
+                    <span data-bind="text: game.experience().formatBig()"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>Arcana</th>
+                <td>
+                    <span data-bind="text: game.arcana().formatBig()"></span> (Arcana spent on Enchanting becomes exp)
+                </td>
+            </tr>
+            <tr>
+                <th>Level after ascent</th>
+                <td>
+
+                    <span data-bind="text: game.level_after_ascend()"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>Next Level At</th>
+                <td>
+                    <span data-bind="text: (game.exp_for_level(game.level_after_ascend() + 1) - game.experience()).formatBig()"></span> Arcana
+                    (<span data-bind="text: (game.exp_for_level(game.level_after_ascend() + 1) - game.experience() - game.arcana_spent()).formatBig()"></span> more)
+                </td>
+            </tr>
+
+            <tr>
+                <td>Mana:</td>
+                <td data-bind="text: game.mana().formatBig()"></td>
+            </tr>
+            <tr>
+                <td>Generated/tick:</td>
+                <td>
+                    +<span data-bind="text: game.mana_generated().formatBig()"></span>
+                </td>
+            </tr>
+            <!-- ko foreach: {
+                data: _.sortBy(game.spent_mana(), function(sm) {
+                    return -1 * sm.val();
+                }),
+                as: 'sm'
+                }
+            -->
+                <tr>
+                    <td>
+                        <span data-bind="text: sm.reason"></span>:
+                    </td>
+                    <td data-bind="text: (-1 * sm.val()).formatBig()"></td>
+                </tr>
+            <!-- /ko -->
+            <tr>
+                <td>Net</td>
+                <td data-bind="
+                    text: (game.net_mana() < 0 ? '' : '+') + game.net_mana().formatBig()
+                "></td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- ko if: game.focused_part() -->
+        <div class="info_part">
+            <div data-bind="text: game.focused_part().name()"></div>
+            <div class="part_tooltip">
+                <!-- ko template: {
+                    name: 'kot/part_tooltip.html',
+                    data: game.focused_part(),
+                    as: 'part'
+                } --> <!-- /ko -->
+
+            </div>
+        </div>
+    <!-- /ko -->
+</div>
