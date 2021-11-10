@@ -13,7 +13,7 @@ Date.prototype.getTime = function() {
     let timeSince = realtimeSince * Date.timeMulti + Date.deltaTime;
     return Math.round(Date.timeAtStart + timeSince);
 }
-Date.valueOf = function() { return this.getTime(); }
+Date.prototype.valueOf = function() { return this.getTime(); }
 Date.now = function() { return new Date().getTime(); }
 // Then lets make functions to modify the time: time jump and speedhack. To make a clear way to see speedhack time multiplier, we'll push it into site url
 Date.timeskip = function (seconds = 10) {
