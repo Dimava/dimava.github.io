@@ -10,7 +10,7 @@ Date.timeMulti = 1;
 // Then we should override all the methods which converts Date into a number. Don't forget rounding, some games will error if the time is not an integer as it should be.
 Date.prototype.getTime = function() {
     let realtimeSince = this._getTime() - Date.realtimeAtStart;
-    let timeSince = timeSince * Date.timeMulti + Date.deltaTime;
+    let timeSince = realtimeSince * Date.timeMulti + Date.deltaTime;
     return Math.round(Date.timeAtStart + timeSince);
 }
 Date.valueOf = function() { return this.getTime(); }
