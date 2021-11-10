@@ -39,20 +39,20 @@ Date._hasKeydownListener= true;
 Date.timeMultis = [1, 2, 5, 10, 20, 60];
 Date.kds = {
     // number keys skip time
-    1: () => skip(10),
-    2: () => skip(30),
-    3: () => skip(1 * 60), // one minute
-    4: () => skip(5 * 60),
-    5: () => skip(15 * 60),
-    6: () => skip(60 * 60), // one hour
+    1: () => Date.timeskip(10),
+    2: () => Date.timeskip(30),
+    3: () => Date.timeskip(1 * 60), // one minute
+    4: () => Date.timeskip(5 * 60),
+    5: () => Date.timeskip(15 * 60),
+    6: () => Date.timeskip(60 * 60), // one hour
     // bracket keys do speedhack
     "[": () => {
         let speed = Date.timeMultis[Date.timeMultis.indexOf(Date.timeMulti)-1];
-        if (speed) speedhack(speed);
+        if (speed) Date.speedhack(speed);
     },
     "]": () => {
         let speed = Date.timeMultis[Date.timeMultis.indexOf(Date.timeMulti)+1];
-        if (speed) speedhack(speed);
+        if (speed) Date.speedhack(speed);
     },
 }
 // - number keys skip time, . You will want to change those for the games with colliding keybinds.
