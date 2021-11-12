@@ -105,7 +105,7 @@ async function saveGameToFile() {
 		// let's just hope it's the same save with same time and same instincts
 		// while (fs.existsSync(makeSavePath(slot))) slot++;
 		fs.writeFileSync(makeSavePath(slot), save);
-		qq('.notification-content-block span[data-notify-html="content"]').innerHTML = `
+		q('.notification-content-block span[data-notify-html="content"]').innerHTML = `
 			Your save has been saved into a file
 			<code>${makeSavePath(slot)}</code>
 		`;
