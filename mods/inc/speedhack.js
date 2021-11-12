@@ -15,7 +15,7 @@ Date.keybinds = {
 }
 // optional: start speedhack when game starts
 // x20 is over the cap so wil work as 'max'
-setTimeout(() => Date.speedhack(20));
+// setTimeout(() => Date.speedhack(5));
 
 
 

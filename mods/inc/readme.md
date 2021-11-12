@@ -43,7 +43,7 @@
  - Change game speed multiplier
    - use <kbd>\[</kbd>/<kbd>\]</kbd> keys to choose speed in the list of `0.01`, `0.05`, `0.25`, `1`, `2`, `5`, `10`, `20`
    - max working is around x10, for even bigger speed use timeskips 
-   - on game open the multiplier is set to x20 so you don't forget to
+   - ~~on game open the multiplier is set to x20 so you don't forget to~~ use timejumps
  - Use number keys for timeskips
    - max timeskip is around 10 minutes, on higher values the game will reload so it'll be ignored
    - time values are following: <kbd>1</kbd>: `10s`, <kbd>2</kbd>: `20s`, <kbd>3</kbd>: `60s`, <kbd>4</kbd>: `300s`, 

@@ -78,7 +78,7 @@ async function saveGameToFile() {
 	info.instincts = qq('#generation-history-table tr[style]+tr+tr td:nth-child(2)').map(e => e.innerText.split('(').map(e => e.toKNumber()))
 
 	await clickOpenModal('#option-automations-button');
-	tr = qq('#automations-modal-container span').find(e => e.innerText == info.exploration).closest('tr')
+	let tr = qq('#automations-modal-container span').find(e => e.innerText == info.exploration).closest('tr')
 	info.prevChapter = tr.closest('table').id.slice(-1).toKNumber();
 	info.chapter = info.prevChapter + (tr.nextElementSibling || info.end ? 1 : 2);
 
@@ -90,8 +90,8 @@ async function saveGameToFile() {
 		}-${info.instincts.map(e => e[1])}`
 
 	await clickOpenModal('#option-export-save-button')
-	save = await navigator.clipboard.readText().catch(r => r + '')
-	fs = require('fs');
+	let save = await navigator.clipboard.readText().catch(r => r + '')
+	let fs = require('fs');
 	fs.existsSync('resources/app/modsaves') || fs.mkdirSync('resources/app/modsaves');
 
 	if (save.includes('Document is not focused')) {
@@ -101,7 +101,7 @@ async function saveGameToFile() {
 		q('.notifyjs-wrapper').style.backgroundColor = '#faa';
 	} else {
 		let slot = 0;
-		makeSavePath = (slot) => `resources/app/modsaves/${info.filename}${!slot ? '' : `(${slot})`}.incsave`
+		let makeSavePath = (slot) => `resources/app/modsaves/${info.filename}${!slot ? '' : `(${slot})`}.incsave`
 		// let's just hope it's the same save with same time and same instincts
 		// while (fs.existsSync(makeSavePath(slot))) slot++;
 		fs.writeFileSync(makeSavePath(slot), save);
