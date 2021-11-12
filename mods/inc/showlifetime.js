@@ -48,7 +48,7 @@ function displayLifetimeLeft() {
 			return { hp, cooldown, used: 0, amount, el, isRaw, rawEl, rawAmount };
 		});
 	foods = foods.filter(e => e.hp);
-	let mainFoods = foods.filter(e => !e.isRaw && (e.amount || e.cooldown));
+	let mainFoods = foods.filter(e => !e.isRaw && (e.amount || e.cooldown && (!e.rawEl || e.rawAmount)));
 	let rawFoods = foods.filter(e => e.isRaw && !mainFoods.find(f => f.rawEl == e.el));
 	let extraHp = 0; rawFoods.map(e => e.amount * e.hp).reduce((v, e) => v + e, 0);
 	// foods.map(e => e.cooldown && (e.cooldown -= 25));
