@@ -47,3 +47,4 @@
  - Use number keys for timeskips
    - max timeskip is around 10 minutes, on higher values the game will reload so it'll be ignored
    - time values are following: <kbd>1</kbd>: `10s`, <kbd>2</kbd>: `20s`, <kbd>3</kbd>: `60s`, <kbd>4</kbd>: `300s`, 
+   - timeskips only work on speedhack below x5
