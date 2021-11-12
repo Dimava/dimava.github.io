@@ -1,3 +1,9 @@
+/* 
+custom.css
+
+You may use this style by adding `<link rel="stylesheet" href="https://dimava.github.io/mods/inc/custom.css">` to index.html
+*/
+
 
 div#automations-modal-container > h5:nth-child(1) {
     display: none;

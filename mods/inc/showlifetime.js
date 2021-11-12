@@ -3,6 +3,7 @@
 // decimals mean there is a high chance for 1 more food to be consumed
 // estimation is based on displayed values and is not precise
 
+// you may use this by adding `<script src="https://dimava.github.io/mods/inc/showlifetime.js"></script>` to index.html
 // please note that using https: copy of this script instead of a file copy is a security vulnerability 
 
 

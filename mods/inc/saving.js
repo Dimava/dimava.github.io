@@ -1,5 +1,6 @@
 // saving.js
 
+// you may use this by adding `<script src="https://dimava.github.io/mods/inc/saving.js"></script>` to index.html
 // please note that using https: copy of this script instead of a file copy is a security vulnerability 
 
 addEventListener('keydown', event => {
