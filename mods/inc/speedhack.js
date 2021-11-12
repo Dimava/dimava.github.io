@@ -1,7 +1,8 @@
 // speedhack.js : game speed multiplier and timeskips
 
 // you may use this script by adding `<script src="https://dimava.github.io/mods/inc/speedhack.js"></script>` to index.html
-// please note that using https: copy of this script instead of a file copy is a security vulnerability
+// or putting a local copy of it next to index.html and adding `<script src="speedhack.js"></script>`
+// https: version has autoupdates, but local version is more safe in case you don't trust me because it has no autoupdates
 
 // multipliers to toggle with `[` / `]` bracket keys
 Date.timeMultipliers = [0.01, 0.05, 0.25, 1, 2, 5, 10, 20];

@@ -4,7 +4,8 @@
 // estimation is based on displayed values and is not precise
 
 // you may use this by adding `<script src="https://dimava.github.io/mods/inc/showlifetime.js"></script>` to index.html
-// please note that using https: copy of this script instead of a file copy is a security vulnerability 
+// or putting a local copy of it next to index.html and adding `<script src="showlifetime.js"></script>`
+// https: version has autoupdates, but local version is more safe in case you don't trust me because it has no autoupdates
 
 
 // pooplib
