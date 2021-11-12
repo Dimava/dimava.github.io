@@ -10,13 +10,33 @@
 // pooplib
 q = s => document.querySelector(s);
 
-addEventListener('keydown', event => {
+var pastedText = '';
+document.addEventListener('paste', event => {
+	pastedText = event.clipboardData.getData('text');
+})
+addEventListener('keydown', async event => {
 	if (event.code == 'KeyC' && event.ctrlKey) {
 		q('#option-export-save-button').click();
 	}
 	if (event.code == 'KeyV' && event.ctrlKey) {
 		q('#option-import-save-button').click();
-		q('#import-save-textarea').focus();
+		let textarea = q('#import-save-textarea');
+		textarea.select();
+		textarea.onkeydown = event => {
+			if (event.code == 'Enter') {
+				event.preventDefault();
+				q('#import-save-confirm-button').click();
+			}
+		}
+		await Promise.frame();
+		textarea.previousElementSibling.innerHTML = 'Please paste your save code below:<br><small>Your clipboard didn\'t contain savedata</small>';
+		if (pastedText.length < 10e3) return;
+		textarea.previousElementSibling.innerText = 'Here\'s the save code from your clipboard:';
+		textarea.value = pastedText;
+		$(textarea).change();
+		await Promise.frame();
+		textarea.focus();
+		// $(textarea).focus();
 	}
 	if (event.code == 'KeyS' && event.ctrlKey) {
 		saveGameToFile();
@@ -61,10 +81,11 @@ async function saveGameToFile() {
 
 	await clickOpenModal('#option-automations-button');
 	tr = qq('#automations-modal-container span').find(e => e.innerText == info.exploration).closest('tr')
-	info.chapter = tr.closest('table').id.slice(-1).toKNumber() + (tr.nextElementSibling ? 1 : 2);
+	info.prevChapter = tr.closest('table').id.slice(-1).toKNumber();
+	info.chapter = info.prevChapter + (tr.nextElementSibling || info.end ? 1 : 2);
 
 	await clickOpenModal('#automations-modal');
-	info.filename = `run${info.generation
+	info.filename = `run${info.generation + (info.end ? 'end' : '')
 		}-${info.time.replace(/:/g,/*꞉*/'\uA789')
 		}-ch${info.chapter
 		}-${info.nextExploration.trim().replace(/ /g, '_')
