@@ -137,7 +137,7 @@ table#exploration-table td span[data-original-title*="you won't be able to"]::af
 
 table#exploration-table td span[              title*="gemstone"]::after,
 table#exploration-table td span[data-original-title*="gemstone"]::after {
-    content: "123" !important;
+    /* content: "123" !important; */
 }
 
 span[              title*="fa-heart"]::before,
@@ -260,3 +260,57 @@ i[style="-webkit-text-stroke-width: 0px;"] {
 	position: relative;
 	top: 15px;
 }
+
+
+
+span[title*="green gem"],
+span[data-original-title*="green gem"],
+span[title*="Walking on spikes"],
+span[data-original-title*="Walking on spikes"],
+span[title*="emerald"],
+span[data-original-title*="emerald"],
+span[title*="chameleon"],
+span[data-original-title*="chameleon"],
+span[title*="keep access to moss"],
+span[data-original-title*="keep access to moss"],
+null {
+	box-shadow: -2px 0 lightgreen;
+	padding-left: 3px;
+}
+span[title*="red gem"],
+span[data-original-title*="red gem"],
+span[title*="These scarabs"],
+span[data-original-title*="These scarabs"],
+span[title*="glittering rock"],
+span[data-original-title*="glittering rock"],
+span[title*="Catching this thing"],
+span[data-original-title*="Catching this thing"],
+span[title*="access to clay"],
+span[data-original-title*="access to clay"],
+null {
+	box-shadow: -2px 0 pink;
+	padding-left: 3px;
+}
+span[title*="blue gem"],
+span[data-original-title*="blue gem"],
+span[title*="flooded temple"],
+span[data-original-title*="flooded temple"],
+span[title*="Angry fish"],
+span[data-original-title*="Angry fish"],
+span[title*="gemstone out of the water"],
+span[data-original-title*="gemstone out of the water"],
+span[title*="floating log"],
+span[data-original-title*="floating log"],
+null {
+	box-shadow: -2px 0 lightblue;
+	padding-left: 3px;
+}
+
+
+
+
+
+
+
+
+
