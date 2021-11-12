@@ -97,15 +97,15 @@ async function saveGameToFile() {
 	if (save.includes('Document is not focused')) {
 		console.log('error: failed to copy save');
 		// alert('error: failed to copy save');
-		qq('.notification-content-block span[data-notify-html="content"]').pop().innerHTML = save;
-		qq('.notifyjs-wrapper').pop().style.backgroundColor = '#faa';
+		q('.notification-content-block span[data-notify-html="content"]').innerHTML = save;
+		q('.notifyjs-wrapper').style.backgroundColor = '#faa';
 	} else {
 		let slot = 0;
 		makeSavePath = (slot) => `resources/app/modsaves/${info.filename}${!slot ? '' : `(${slot})`}.incsave`
 		// let's just hope it's the same save with same time and same instincts
 		// while (fs.existsSync(makeSavePath(slot))) slot++;
 		fs.writeFileSync(makeSavePath(slot), save);
-		qq('.notification-content-block span[data-notify-html="content"]').pop().innerHTML = `
+		qq('.notification-content-block span[data-notify-html="content"]').innerHTML = `
 			Your save has been saved into a file
 			<code>${makeSavePath(slot)}</code>
 		`;
