@@ -102,7 +102,8 @@ async function saveGameToFile() {
 	} else {
 		let slot = 0;
 		makeSavePath = (slot) => `resources/app/modsaves/${info.filename}${!slot ? '' : `(${slot})`}.incsave`
-		while (fs.existsSync(makeSavePath(slot))) slot++;
+		// let's just hope it's the same save with same time and same instincts
+		// while (fs.existsSync(makeSavePath(slot))) slot++;
 		fs.writeFileSync(makeSavePath(slot), save);
 		qq('.notification-content-block span[data-notify-html="content"]').pop().innerHTML = `
 			Your save has been saved into a file
