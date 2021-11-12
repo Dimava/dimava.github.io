@@ -16,6 +16,7 @@ q = s => document.querySelector(s);
 Element.prototype.q = function (s) { return this.querySelector(s) }
 Element.prototype.qq = function (s) { return [...this.querySelectorAll(s)] }
 String.prototype.toKNumber = function () { return parseFloat(this.replace(' K', 'e3').replace(' M', 'e6')); }
+String.prototype.toSuperscript = function () { return this.replace(/\d/g, s => /*'⁰¹²³⁴⁵⁶⁷⁸⁹'*/'\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079'[s]) }
 
 function displayLifetimeLeft() {
 	let dec = this['top-current-health-decay'].innerText.toKNumber();
@@ -50,16 +51,19 @@ function displayLifetimeLeft() {
 			f.used += 1 - f.cooldown * 0.001;
 	}
 	this['top-current-health-decay'].setAttribute('left', `+${~~(time / 60)}:${(time % 60).toFixed(1).padStart(4, '0')
-		} (${foods.map(e => e.used.toFixed(1).replace('.0', '.\u2007'))
-		})`);
+		.replace(/\.(\d)/, (s, a) => a.toSuperscript())
+		} (${foods.map(e => e.used.toFixed(1).replace(/\.(\d)/, (s, a) => a.toSuperscript()))
+		} )`);
 }
 makeraf(displayLifetimeLeft);
 makeStyle(`
 	span#top-current-health-decay::after {
-		content: " "attr(left);
-		font-size: 0.6em;
-		-webkit-text-stroke-width: 0.6px;
+		content: attr(left);
+		font-size: 0.7em;
 		position: absolute;
+		-webkit-text-fill-color: white;
+		-webkit-text-stroke-width: 0;
+		font-weight: normal;
 	}
 	span#top-current-health {
 		width: 70px;
