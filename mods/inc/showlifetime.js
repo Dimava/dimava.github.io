@@ -37,7 +37,7 @@ function displayLifetimeLeft() {
 	let time = 0;
 	let dt = 50;
 	for (time = 0; time < 3600 * 1e3; time += dt) {
-		hp -= decay(time * 0.001) * 0.1;
+		hp -= decay(time * 0.001) * dt * 0.001;
 		if (hp < 0) break;
 		for (let f of foods) {
 			if (f.cooldown > 0) f.cooldown -= dt;
