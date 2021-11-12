@@ -9,29 +9,32 @@
 
 
 // pooplib
-makeStyle = (s, e) => (e = document.createElement('style'), e.innerHTML = s, document.head.append(e), e);
-makeraf = f => ((function tick() { f && (requestAnimationFrame(tick), requestAnimationFrame(f)) })(), () => f = 0);
-qq = s => [...document.querySelectorAll(s)];
-q = s => document.querySelector(s);
+Promise.frame = () => new Promise(r => requestAnimationFrame(r));
+var makeStyle = (s, e) => (e = document.createElement('style'), e.innerHTML = s, document.head.append(e), e);
+var makeraf = (f) => ((async () => { while (f) { await Promise.frame(); requestAnimationFrame(f); } })(), () => f = 0);
+var qq = s => [...document.querySelectorAll(s)];
+var q = s => document.querySelector(s);
 Element.prototype.q = function (s) { return this.querySelector(s) }
 Element.prototype.qq = function (s) { return [...this.querySelectorAll(s)] }
 String.prototype.toKNumber = function () { return parseFloat(this.replace(' K', 'e3').replace(' M', 'e6')); }
 String.prototype.toSuperscript = function () { return this.replace(/\d/g, s => /*'⁰¹²³⁴⁵⁶⁷⁸⁹'*/'\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079'[s]) }
 
 function displayLifetimeLeft() {
-	let dec = this['top-current-health-decay'].innerText.toKNumber();
-	let hp = this['top-current-health'].innerText.toKNumber();
-	let maxhp = this['top-max-health'].innerText.toKNumber();
+	let dec = +this['top-current-health-decay'].innerText.toKNumber();
+	let hp = +this['top-current-health'].innerText.toKNumber();
+	let maxhp = +this['top-max-health'].innerText.toKNumber();
 	let decay = t => dec * 1.25 ** (t / 60);
-	let foods = qq('.inventory-row[style*=row]')
+	let foods = [...qq('.inventory-row[style*=row]')]
 		.map(el => {
 			let span = el.q('span');
-			let hp = (span.title || span.dataset.originalTitle).toKNumber();
-			let cooldown = parseFloat(el.q('.food-cooldown')?.innerText || 0) * 1000 - 50;
-			return { hp, cooldown, used: 0 };
+			let hp = +(span.title || span.dataset.originalTitle).toKNumber();
+			let cooldown = parseFloat(el.q('.food-cooldown')?.innerText || 0) * 1000;
+			let amount = +el.q('.inventory-amount').innerText.toKNumber();
+			return { hp, cooldown, used: 0, amount };
 		})
-		.filter(e => e.hp);
-	let time;
+		.filter(e => e.hp && (e.cooldown || e.amount));
+	foods.map(e => e.cooldown && (e.cooldown -= 50));
+	let time = 0;
 	let dt = 50;
 	for (time = 0; time < 3600 * 1e3; time += dt) {
 		hp -= decay(time * 0.001) * 0.1;

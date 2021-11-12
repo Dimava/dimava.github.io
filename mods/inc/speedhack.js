@@ -22,8 +22,8 @@ setTimeout(() => Date.speedhack(20));
 
 
 // pooplib
-q = s => document.querySelector(s);
-makeStyle = (s, e) => (e = document.createElement('style'), e.innerHTML = s, document.head.append(e), e);
+var q = s => document.querySelector(s);
+var makeStyle = (s, e) => (e = document.createElement('style'), e.innerHTML = s, document.head.append(e), e);
 
 
 Date.prototype._getTime = Date.prototype._getTime || Date.prototype.getTime;

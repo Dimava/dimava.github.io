@@ -8,7 +8,8 @@
 // https: version has autoupdates, but local version is more safe in case you don't trust me because it has no autoupdates
 
 // pooplib
-q = s => document.querySelector(s);
+var q = s => document.querySelector(s);
+Promise.frame = () => new Promise(r => requestAnimationFrame(r));
 
 var pastedText = '';
 document.addEventListener('paste', event => {
@@ -36,7 +37,6 @@ addEventListener('keydown', async event => {
 		$(textarea).change();
 		await Promise.frame();
 		textarea.focus();
-		// $(textarea).focus();
 	}
 	if (event.code == 'KeyS' && event.ctrlKey) {
 		saveGameToFile();
@@ -51,8 +51,6 @@ setTimeout(() => {
 		}
 	}
 });
-
-Promise.frame = () => new Promise(requestAnimationFrame);
 
 async function saveGameToFile() {
 	let info = {};
