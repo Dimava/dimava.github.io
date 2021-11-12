@@ -37,7 +37,7 @@
  - <kbd>Ctrl</kbd>+<kbd>C</kbd> for fast export (copy export string)
  - <kbd>Ctrl</kbd>+<kbd>V</kbd> to open import modal
    - <kbd>Ctrl</kbd>+<kbd>V</kbd>, <kbd>Ctrl</kbd>+<kbd>V</kbd>, <kbd>Enter</kbd> for fast import
- - (fast saving with ctrl-s will be implemented later)
+ - <kbd>Ctrl</kbd>+<kbd>S</kbd> saves the game into a save named like `run78-19꞉10-ch3-Tiger_teaching-1,2,3,2,0,1,3,4,1,0,0.incsave`
 
 # Speedhack.js : game speed multiplier and timeskips
  - Change game speed multiplier
