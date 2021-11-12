@@ -1,0 +1,242 @@
+
+div#automations-modal-container > h5:nth-child(1) {
+    display: none;
+}
+table.automations-modal-table {
+    display: table !important;
+    table-layout: fixed;
+    margin-bottom: 1.5em;
+}
+table.automations-modal-table::before {
+    content: "Chapter ???";
+    white-space: nowrap;
+    font-weight: bold;
+    left: calc((766px - 110px) / 2);
+    position: relative;
+    font-size: 150%;
+    text-decoration: underline;
+}
+table#automations-modal-table-0::before {content: "Chapter 1";}
+table#automations-modal-table-1::before {content: "Chapter 2";}
+table#automations-modal-table-2::before {content: "Chapter 3";}
+table#automations-modal-table-3::before {content: "Chapter 4";}
+table#automations-modal-table-4::before {content: "Chapter 5";}
+table#automations-modal-table-5::before {content: "Chapter 6";}
+table#automations-modal-table-6::before {content: "Chapter 7";}
+
+.modal-body > [style="width: 100%; text-align: center;"]:nth-child(1) {
+    --has: "modal-automations-tutorial-button";
+    position: absolute;
+    top: -55px;
+    display: inline-block;
+    right: 45px;
+    width: auto !important;
+}
+table.automations-modal-table
+td > span {
+    position: relative;
+}
+
+table.automations-modal-table td > span::before {
+    display: block;
+    position: absolute;
+    left: -46px;
+    background: #f8f9fa;
+    min-width: 27px;
+    text-align: right;
+}
+
+span[              title^="Lowers health decay"]::before,
+span[data-original-title^="Lowers health decay"]::before {
+    content: "\f004\2191";
+    color: red;
+}
+span[              title^="Increases your inventory"]::before,
+span[data-original-title^="Increases your inventory"]::before {
+    content: "\f941\2191";
+    color: sandybrown;
+}
+span[              title^="Increases the multiplier"][              title*="fa-swords"]::before,
+span[data-original-title^="Increases the multiplier"][data-original-title*="fa-swords"]::before {
+    content: "\f71d\2191";
+    color: blue;
+}
+span[              title^="Increases the multiplier"][              title*="fa-hat-chef"]::before,
+span[data-original-title^="Increases the multiplier"][data-original-title*="fa-hat-chef"]::before {
+    content: "xxx\2191";
+    color: blue;
+}
+span[              title^="Increases the multiplier"][              title*="fa-running"]::before,
+span[data-original-title^="Increases the multiplier"][data-original-title*="fa-running"]::before {
+    content: "\f70c\2191";
+    color: blue;
+}
+span[              title^="Increases the multiplier"][              title*="fa-anchor"]::before,
+span[data-original-title^="Increases the multiplier"][data-original-title*="fa-anchor"]::before {
+    content: "\f13d\2191";
+    color: blue;
+}
+span[              title^="Increases the multiplier"][              title*="fa-hat-chef"]::before,
+span[data-original-title^="Increases the multiplier"][data-original-title*="fa-hat-chef"]::before {
+    content: "\f86b\2191";
+    color: blue;
+}
+
+
+span[              title^="Increases the multiplier"]::before,
+span[data-original-title^="Increases the multiplier"]::before {
+    content: "???\2191";
+    color: blue;
+}
+
+
+span[              title*="lose access to"]::before,
+span[data-original-title*="lose access to"]::before {
+    content: "x";
+    color: blue;
+    background-color: transparent !important;
+}
+
+
+span[              title*="optional,"]::after,
+span[data-original-title*="optional,"]::after,
+span[              title*="you won't be able to"]::after,
+span[data-original-title*="you won't be able to"]::after,
+null {
+    position: absolute;
+    content: "|";
+    color: transparent;
+    top: -2px !important;
+    bottom: -1px !important;
+    left: -50px !important;
+    text-align: left !important;
+    border: 2px solid blue;
+    border-right: 0;
+    width: 9px !important;
+    min-width: unset !important;
+    background-color: transparent !important;
+}
+
+table#exploration-table td {
+	position: relative;
+}
+
+table#exploration-table td span[              title*="optional,"]::after,
+table#exploration-table td span[data-original-title*="optional,"]::after,
+table#exploration-table td span[              title*="you won't be able to"]::after,
+table#exploration-table td span[data-original-title*="you won't be able to"]::after {
+    left: -63px !important;
+}
+
+
+table#exploration-table td span[              title*="gemstone"]::after,
+table#exploration-table td span[data-original-title*="gemstone"]::after {
+    content: "123" !important;
+}
+
+span[              title*="fa-heart"]::before,
+span[data-original-title*="fa-heart"]::before {
+    content: "\f004\2191";
+    color: red;
+    font-size: 80%;
+    text-align: bottom;
+    line-height: 26px;
+    background-color: transparent !important;
+    left: -40px !important;
+}
+
+span[              title*="glittering"]::before,
+span[data-original-title*="glittering"]::before,
+span[              title*="what's behind it"]::before,
+span[data-original-title*="what's behind it"]::before,
+span[              title*="gemstone"]::before,
+span[data-original-title*="gemstone"]::before,
+_ {
+    font-size: 80%;
+    text-align: bottom;
+    line-height: 26px;
+    background-color: transparent !important;
+    left: -40px !important;
+    content: "\1f48e";
+    color: "green";
+    background-color: transparent !important;
+}
+
+span[              title*="fa-heart-broken'></i> health decay"]::before,
+span[data-original-title*="fa-heart-broken'></i> health decay"]::before {
+    content: "\f7a9";
+    left: -46px !important;
+}
+
+table.automations-modal-table
+tr:not(:hover) i.fa-tachometer-slowest::after {
+    content: "";
+    position: absolute;
+    -outline: 1px solid rgba(0 0 0 / 0.2);
+    background: rgba(255 0 0 / 0.05);
+    left: -180px;
+    right: 70px;
+    right: 20px;
+    top: 0;
+    bottom: 0;
+    display: block;
+}
+
+table.automations-modal-table td {
+    position: relative;
+}
+
+
+/* :root {
+	--box-bg-white: pink;
+	--progress-border-grey: blue; 
+	--text-white: lightgreen;
+}
+.game-block {
+	background-color: var(--box-bg-white);
+}
+.progress {
+	background-color: var(--box-bg-white);
+	border-color: var(--progress-border-grey);
+}
+
+#pause-button-block,
+.game-block-title {
+	border-color: var(--progress-border-grey);
+}
+#menu-button,
+.skills-block {
+    color: var(--text-white);
+	border-color: var(--text-white);
+}
+#top-skills-row {
+	border-color: var(--text-white);
+}
+#performance-log,
+#performance-table,
+#pause-button,
+.tooltip-inner {
+    color: var(--text-white);
+}
+.progress.top p {
+    -webkit-text-fill-color: var(--text-white);
+}
+*/
+
+i:not(#menu-button) {
+    width: 1em;
+    height: 1em;
+    display: inline-flex !important;
+    /* border: 1px solid red; */
+    justify-content: center;
+    align-items: center;
+}
+
+.queue-action-name {
+	display: block;
+	position: relative;
+}
+
+i[style="-webkit-text-stroke-width: 0px;"] {
+	width: unset;
+}
