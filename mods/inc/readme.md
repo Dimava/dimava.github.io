@@ -1,5 +1,6 @@
 # Mods
 
+## Installation
 
 	<!-- put the required lines below line 15 of index.html -->
 	
@@ -16,3 +17,33 @@
 		<link rel="stylesheet" href="https://dimava.github.io/mods/inc/custom.css">
 	
 	<!-- // https: version has autoupdates, but local version is more safe in case you don't trust me because it has no autoupdates -->
+
+## Custom.css : better style
+ - Upgrade icons for upgrades
+ - Blue border for optional
+ - Life-up icon for decay lowers
+ - Life-crash icon for decay uppers
+ - Red background for disabled
+ - Blue cross for action lockers
+ - Automation list (F1) is a list instead of tabs
+ - (it also has a theming support, ask me if you need a dark theme)
+
+# Showlifetime.js : show estimated life time
+ - Numbers in brackets are est food consumed
+ - Decimals mean there is a high chance for 1 more food to be consumed
+ - Estimation is based on displayed values so it's not perfect
+
+# Saving.js : fast import / export
+ - <kbd>Ctrl</kbd>+<kbd>C</kbd> for fast export (copy export string)
+ - <kbd>Ctrl</kbd>+<kbd>V</kbd> to open import modal
+   - <kbd>Ctrl</kbd>+<kbd>V</kbd>, <kbd>Ctrl</kbd>+<kbd>V</kbd>, <kbd>Enter</kbd> for fast import
+ - (fast saving with ctrl-s will be implemented later)
+
+# Speedhack.js : game speed multiplier and timeskips
+ - Change game speed multiplier
+   - use <kbd>\[</kbd>/<kbd>\]</kbd> keys to choose speed in the list of `0.01`, `0.05`, `0.25`, `1`, `2`, `5`, `10`, `20`
+   - max working is around x10, for even bigger speed use timeskips 
+   - on game open the multiplier is set to x20 so you don't forget to
+ - Use number keys for timeskips
+   - max timeskip is around 10 minutes, on higher values the game will reload so it'll be ignored
+   - time values are following: <kbd>1</kbd>: `10s`, <kbd>2</kbd>: `20s`, <kbd>3</kbd>: `60s`, <kbd>4</kbd>: `300s`, 
