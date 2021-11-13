@@ -229,13 +229,17 @@ table.automations-modal-table td {
 }
 */
 
-i:not(#menu-button) {
+i {
     width: 1em;
     height: 1em;
     display: inline-flex !important;
     /* border: 1px solid red; */
     justify-content: center;
     align-items: center;
+}
+#menu-button {
+	height: auto;
+	width: auto;
 }
 
 .queue-action-name {

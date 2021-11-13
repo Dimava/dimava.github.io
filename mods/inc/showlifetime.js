@@ -31,7 +31,6 @@ function displayLifetimeLeft() {
 	let dec = +this['top-current-health-decay'].innerText.toKNumber('ceil');
 	let hp = +this['top-current-health'].innerText.toKNumber();
 	let maxhp = +this['top-max-health'].innerText.toKNumber();
-	let decay = t => dec * 1.25 ** (t / 60);
 	let foods = [...qq('.inventory-row[style*=row]')]
 		.map(el => {
 			let span = el.q('span');
@@ -47,23 +46,34 @@ function displayLifetimeLeft() {
 			if (!isRaw && rawEl && !rawEl.matches('[style*=row]')) isRaw = true;
 			return { hp, cooldown, used: 0, amount, el, isRaw, rawEl, rawAmount };
 		});
+	if (foods.length == 0) return;
 	foods = foods.filter(e => e.hp);
 	let mainFoods = foods.filter(e => !e.isRaw && (e.amount || e.cooldown && (!e.rawEl || e.rawAmount)));
 	let rawFoods = foods.filter(e => e.isRaw && !mainFoods.find(f => f.rawEl == e.el));
 	let extraHp = 0; rawFoods.map(e => e.amount * e.hp).reduce((v, e) => v + e, 0);
 	// foods.map(e => e.cooldown && (e.cooldown -= 25));
 	foods = foods.filter(e => mainFoods.includes(e) || rawFoods.includes(e));
-	let time = 0;
 	let dt = 50;
-	for (time = 0; time < 3600 * 1e3; time += dt) {
-		hp -= decay((time + dt) * 0.001) * dt * 0.001;
+	let decay = (t0, t1) => dec * 60 * (1.25 ** (t1 / 60e3) - 1.25 ** (t0 / 60e3)) / Math.log(1.25);
+	let maxRecovery = foods.map(e => e.hp).reduce((v, e) => v + e / 5, 0);
+	let minRecovery = Math.min(...foods.map(e => e.hp));
+	let time = 0;
+	let tickTime = 0;
+	let tickDecay = 0;
+	for (time; time < 3600e3; time += tickTime) {
+		tickTime = 50;
+		let minDecayToHeal = minRecovery - (maxhp - hp);
+		for (tickTime = dt; time + tickTime < 3600e3; tickTime += dt) {
+			tickDecay = decay(time, time + tickTime)
+			if (tickDecay > minDecayToHeal) break;
+		}
+		hp -= tickDecay;
 		if (hp + extraHp < 0) break;
-		let recovery = 0;
 		for (let f of foods) {
-			f.cooldown -= dt;
+			f.cooldown -= tickTime;
 			if (maxhp - hp > f.hp && f.cooldown <= 0) {
 				if (!f.isRaw) {
-					recovery += f.hp;
+					hp += f.hp;
 					f.cooldown = 5000;
 					f.used++;
 				} else if (f.used < f.amount) {
@@ -73,7 +83,6 @@ function displayLifetimeLeft() {
 				}
 			}
 		}
-		hp += recovery;
 	}
 	time /= 1000;
 	qq('.inventory-amount[add]').map(e => e.setAttribute('add', ''));
