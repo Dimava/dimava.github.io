@@ -35,6 +35,8 @@
 		var(--gradient-background);
 }
 
+/* Please note that I use 125% system screen scale */
+
 /* fix jumpy antimatter (happens at ~110k) */
 #antimatter_block {
 	white-space: nowrap;
