@@ -35,11 +35,28 @@
 		var(--gradient-background);
 }
 
-td#antimatter_block {
+/* fix jumpy antimatter (happens at ~110k) */
+#antimatter_block {
 	white-space: nowrap;
 }
 
+/* fix jumpy news (table will still jump but the whole page won't) */
+/* better way to fix requires <td> to have a <div> inside */
 .header {
 	height: 50px;
 	overflow: hidden;
+}
+
+/* fix jumpy table */
+#gameboard>*>*>
+td.button_holder {
+	width: 12.5%;
+}
+#gameboard>*>*>
+td.storage_holder {
+	width: 12.5%;
+}
+#gameboard>*>*>
+td.pb_holder {
+	width: 25%;
 }
