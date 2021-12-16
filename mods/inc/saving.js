@@ -75,12 +75,12 @@ async function saveGameToFile() {
 	infoText('time', '#generation-history-table tr:nth-child(2) th+td');
 	infoText('exploration', '#generation-history-table tr:nth-child(3) th+td', e => e.trim());
 	infoText('maxhealth', '#generation-history-table tr:nth-child(4) th+td');
-	info.instincts = qq('#generation-history-table tr[style]+tr+tr td:nth-child(2)').map(e => e.innerText.split('(').map(e => e.toKNumber()))
+	info.instincts = qq('#generation-history-table tr[style]+tr+tr td:nth-child(2)').map(e => e.innerText.split('(').map(e => e.toKNumber()));
 
 	await clickOpenModal('#option-automations-button');
-	let tr = qq('#automations-modal-container span').find(e => e.innerText == info.exploration).closest('tr')
-	info.prevChapter = tr.closest('table').id.slice(-1).toKNumber();
-	info.chapter = info.prevChapter + (tr.nextElementSibling || info.end ? 1 : 2);
+	let tr = qq('#automations-modal-container span').find(e => e.innerText == info.exploration)?.closest('tr');
+	info.prevChapter = tr?.closest('table').id.slice(-1).toKNumber();
+	info.chapter = info.prevChapter + (tr?.nextElementSibling || info.end ? 1 : 2);
 
 	await clickOpenModal('#automations-modal');
 	info.filename = `run${info.generation + (info.end ? 'end' : '')

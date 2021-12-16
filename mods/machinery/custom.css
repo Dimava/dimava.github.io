@@ -1,0 +1,45 @@
+.pb2 {
+	--gradient-background: #272727;
+	--gradient-upgrade: hsl(0, 0%, 50%, 0.5);
+	--gradient-upgrade-5: hsl(0, 0%, 75%, 0.5);
+	--gradient-upgrade-boost: hsl(60, 100%, 50%, 0.5);
+}
+
+.menutabs:nth-child(1) .pb2 {
+	background:
+		repeating-linear-gradient(90deg,
+			transparent,
+			transparent 80%,
+			transparent 90%,
+			var(--gradient-upgrade-boost) 100%),
+		repeating-linear-gradient(90deg,
+			transparent,
+			transparent 10%,
+			var(--gradient-upgrade-5) 20%),
+		var(--gradient-background);
+}
+
+.menutabs:nth-child(2) .pb2 {
+	background:
+		repeating-linear-gradient(90deg,
+			transparent,
+			transparent 96%,
+			var(--gradient-upgrade-boost) 100%),
+		repeating-linear-gradient(90deg,
+			transparent,
+			transparent 16%,
+			var(--gradient-upgrade-5) 20%),
+		repeating-linear-gradient(90deg,
+			transparent,
+			var(--gradient-upgrade) 4%),
+		var(--gradient-background);
+}
+
+td#antimatter_block {
+	white-space: nowrap;
+}
+
+.header {
+	height: 50px;
+	overflow: hidden;
+}
