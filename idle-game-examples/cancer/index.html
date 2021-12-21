@@ -6,15 +6,18 @@
 
 <body>
 
+	<!-- writing game elements in html is ok, and is a common practice -->
 	<div id="elCoinsContainer"> Coins: <span id="elCoins"></span> </div>
 	<div id="elWorkerContainer"> Workers: <span id="elWorkerCount"></span> </div>
 	<br>
+	<!-- using onclick in html is cancer, but is a common practice -->
 	<button onclick="game.getCoin()"> Get a coin </button>
 	<button onclick="game.getWorker()"> Get a worker (<span id="elWorkerCost"></span> coins)</button>
 	<br>
 	<div id="elEndGame"> There is no more content in the game </div>
 	<button style="float: right;" onclick="game.clearSave()"> Reset game </button>
 
+	<!-- using inline <script> tags is an common practice -->
 	<script>
 		/** everything that saves goes here */
 		var data = {
@@ -23,7 +26,7 @@
 		};
 		/** everything that is function goes here */
 		var game = {
-			/** everythin that updates goes here */
+			/** everything that updates goes here */
 			tick() {
 				data.coins += data.workers;
 
@@ -31,6 +34,10 @@
 			},
 			/** everything that draws goes here */
 			updateDisplay() {
+				// finding elements as `window[id]` (or just `id`) is cancer, but it is simple and does work
+				// using `element.innerText` is a good practice
+				// using `element.hidden` is an okay practice
+				// updating every every tick may be cancer if you do over 10000 element updates per second
 				elCoins.innerText = data.coins;
 				elWorkerContainer.hidden = data.workers == 0 && !game.canGetWorker();
 				elWorkerCost.innerText = game.getWorkerCost();
@@ -72,6 +79,7 @@
 			}
 		}
 		game.load();
+		// using setInterval is an okay practice, it has its own features and problems
 		setInterval(() => game.tick(), /* 1 second */ 1e3);
 		setInterval(() => game.save(), /* 10 seconds */ 10e3);
 
