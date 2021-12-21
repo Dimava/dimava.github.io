@@ -1,0 +1,83 @@
+<html>
+
+<head>
+	<title>The Cancer Idle</title>
+</head>
+
+<body>
+
+	<div id="elCoinsContainer"> Coins: <span id="elCoins"></span> </div>
+	<div id="elWorkerContainer"> Workers: <span id="elWorkerCount"></span> </div>
+	<br>
+	<button onclick="game.getCoin()"> Get a coin </button>
+	<button onclick="game.getWorker()"> Get a worker (<span id="elWorkerCost"></span> coins)</button>
+	<br>
+	<div id="elEndGame"> There is no more content in the game </div>
+	<button style="float: right;" onclick="game.clearSave()"> Reset game </button>
+
+	<script>
+		/** everything that saves goes here */
+		var data = {
+			coins: 0,
+			workers: 0,
+		};
+		/** everything that is function goes here */
+		var game = {
+			/** everythin that updates goes here */
+			tick() {
+				data.coins += data.workers;
+
+				game.updateDisplay();
+			},
+			/** everything that draws goes here */
+			updateDisplay() {
+				elCoins.innerText = data.coins;
+				elWorkerContainer.hidden = data.workers == 0 && !game.canGetWorker();
+				elWorkerCost.innerText = game.getWorkerCost();
+				elWorkerCount.innerText = data.workers;
+				elEndGame.hidden = data.workers < 2;
+			},
+
+			getCoin() {
+				data.coins++;
+				game.updateDisplay();
+			},
+
+			getWorkerCost() {
+				return data.workers + 10;
+			},
+			canGetWorker() {
+				return data.coins >= game.getWorkerCost();
+			},
+			getWorker() {
+				if (game.canGetWorker()) {
+					data.coins -= game.getWorkerCost();
+					data.workers++;
+				}
+				game.updateDisplay();
+			},
+
+			// theese three 
+			save(savename = 'cancersave') {
+				localStorage.setItem(savename, JSON.stringify(data));
+			},
+			load(savename = 'cancersave') {
+				Object.assign(data, JSON.parse(localStorage.getItem(savename) || '{}'));
+				game.tick();
+				game.updateDisplay();
+			},
+			clearSave(savename = 'cancersave') {
+				localStorage.setItem(savename, '{}');
+				location.reload();
+			}
+		}
+		game.load();
+		setInterval(() => game.tick(), /* 1 second */ 1e3);
+		setInterval(() => game.save(), /* 10 seconds */ 10e3);
+
+	</script>
+
+
+</body>
+
+</html>
