@@ -1,54 +1,54 @@
 
 
 let ClickRune: number
-	, UpgradeRune: number
-	, PrestigeRune: number
-	, RuneChance: number;
+, UpgradeRune: number
+, PrestigeRune: number
+, RuneChance: number;
 
 let PointAmount: number
-	, UpgradePrice: number
-	, Click: number
-	, UpgradeProcent: number
-	, PrestigePointAmount: number
-	, PrestigePrice: number
-	, RunePrice: number
-	, PrestigeBoost: number
-	, PrestigePointGain: number
-	;
+, UpgradePrice: number
+, Click: number
+, UpgradeProcent: number
+, PrestigePointAmount: number
+, PrestigePrice: number
+, RunePrice: number
+, PrestigeBoost: number
+, PrestigePointGain: number
+;
 
 function resetToDefaultValues(): void {
-	PointAmount = 0;
-	UpgradePrice = 2;
-	Click = 1;
-	UpgradeProcent = 50;
-	PrestigePointAmount = 0;
-	PrestigePrice = 10000;
-	RunePrice = 1;
-	PrestigePointGain = 1;
+PointAmount = 0;
+UpgradePrice = 2;
+Click = 1;
+UpgradeProcent = 50;
+PrestigePointAmount = 0;
+PrestigePrice = 10000;
+RunePrice = 1;
+PrestigePointGain = 1;
 }
 
 
 function prestigeAndUpdatePrestigeValues(): void {
-	PointAmount = 0;
-	UpgradePrice = 2;
-	Click = 1;
-	PrestigeBoost = PrestigePointAmount * 5;
-	UpgradeProcent = 50;
+PointAmount = 0;
+UpgradePrice = 2;
+Click = 1;
+PrestigeBoost = PrestigePointAmount * 5;
+UpgradeProcent = 50;
 }
 
 function MainInterface(): string {
-	return `
-	Points: ${PointAmount}
-	Prestige-Points: ${PrestigePointAmount}
-	Upgrade[2] +${UpgradeProcent}% per Click | ${UpgradePrice} Points
-	Prestige[3] Resets your Progress but gives you a Point-Bonus | ${PrestigePrice} Points
+return `
+Points: ${PointAmount}
+Prestige-Points: ${PrestigePointAmount}
+Upgrade[2] +${UpgradeProcent}% per Click | ${UpgradePrice} Points
+Prestige[3] Resets your Progress but gives you a Point-Bonus | ${PrestigePrice} Points
 
-	Runes[4]
-	---   ---   ---
-	|${ClickRune}|   |${UpgradeRune}|   |${PrestigeRune}|
-	---   ---   ---
-	|Press 1 to get more Points|
-	`;
+Runes[4]
+---   ---   ---
+|${ClickRune}|   |${UpgradeRune}|   |${PrestigeRune}|
+---   ---   ---
+|Press 1 to get more Points|
+`;
 }
 
 // int RunenInterface()
@@ -75,7 +75,11 @@ function MainInterface(): string {
 
 resetToDefaultValues();
 function keydownListener(event: KeyboardEvent): void {
-
+// event.code is like `KeyD` or `Digit5` or `ArrowLeft` or `ShiftLeft` or `Space`
+if(event.code == 'Space') {
+	PointAmount = PointAmount + Click;
+	log.innerText = "You made a click with spacebar!";
+}
 }
 addEventListener('keydown', keydownListener);
 function ontick() {
@@ -83,18 +87,18 @@ function ontick() {
 }
 setInterval(ontick, 1000/* ms */);
 function updateGui() {
-	mainText.innerText = MainInterface();
+mainText.innerText = MainInterface();
 }
 setInterval(updateGui, 100/* ms */);
 
 document.body.innerHTML = `
 <pre><code>
-	<main id="mainText"> here goes main text </main> <br>
-	<button id="clickButton1"> Click! </button>
-	<button id="clickButton2"> Upgrade! </button>
-	<button id="clickButtonPrestige"> Prestige! </button>
-	<br>
-	<div id="log"> updated info goes here </div>
+<main id="mainText"> here goes main text </main> <br>
+<button id="clickButton1"> Click! </button>
+<button id="clickButton2"> Upgrade! </button>
+<button id="clickButtonPrestige"> Prestige! </button>
+<br>
+<div id="log"> updated info goes here </div>
 </code></pre>
 `
 
@@ -105,28 +109,28 @@ declare let clickButtonPrestige: HTMLButtonElement;
 declare let log: HTMLElement;
 
 clickButton1.onclick = function () {
-	PointAmount = PointAmount + Click;
-	log.innerText = "You made a click!";
+PointAmount = PointAmount + Click;
+log.innerText = "You made a click!";
 }
 clickButton2.onclick = function () {
-	if (PointAmount >= UpgradePrice) {
-		Click = Click + Click / 100 * UpgradeProcent;
-		PointAmount = PointAmount - UpgradePrice;
-		UpgradePrice = UpgradePrice * 2;
-	} else {
-		log.innerText = `You don't have enough Points for upgrade (${PointAmount}/${UpgradePrice})!`;
-	}
+if (PointAmount >= UpgradePrice) {
+	Click = Click + Click / 100 * UpgradeProcent;
+	PointAmount = PointAmount - UpgradePrice;
+	UpgradePrice = UpgradePrice * 2;
+} else {
+	log.innerText = `You don't have enough Points for upgrade (${PointAmount}/${UpgradePrice})!`;
+}
 }
 clickButtonPrestige.onclick = function () {
-	if (PointAmount >= PrestigePrice) {
-		PrestigePointAmount = PrestigePointAmount + PrestigePointGain;
-		prestigeAndUpdatePrestigeValues();
-		Click = Click + (Click / 100) * PrestigeBoost;
-		PrestigePrice = PrestigePrice * 3.5;
-	}
-	else {
-		log.innerText = `You don't have enough Points for Prestige(${PointAmount}/${PrestigePrice})!`;
-	}
+if (PointAmount >= PrestigePrice) {
+	PrestigePointAmount = PrestigePointAmount + PrestigePointGain;
+	prestigeAndUpdatePrestigeValues();
+	Click = Click + (Click / 100) * PrestigeBoost;
+	PrestigePrice = PrestigePrice * 3.5;
+}
+else {
+	log.innerText = `You don't have enough Points for Prestige(${PointAmount}/${PrestigePrice})!`;
+}
 }
 
 // 	else if (MainInput == '3') {
