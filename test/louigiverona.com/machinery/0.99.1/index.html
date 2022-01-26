@@ -1,0 +1,1581 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+<title>Machinery</title>
+<link type="text/css" href="dark.css" rel="Stylesheet"/>
+<script type="text/javascript" src="jq/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="jq/lz-string.min.js"></script>
+<script type="text/javascript" src="jq/howler.core.min.js"></script>
+<script type="text/javascript" src="jq/game_dev.js"></script>
+
+</head>
+<body>
+
+
+  <div class="titlecard" id="titlecard" style="display:none">
+    <p>Welcome to <span class="orange">Machinery</span></p>
+    <p class="mid">Start by clicking <button class="button2">1</button> and see what happens!</p>
+    <br>
+    <button class="button4">Let's go!</button>
+    <br><br>
+    <p class="sm"><span class="red">Machinery [0.99.1]</span> Original release date: <b>January 2022</b>. Created by <a class="lv_site" href="https://louigiverona.com/?page=about" target="_blank">Louigi Verona</a></p>
+  </div>
+
+  <!-- Settings -->
+  <div class="faqbox" id="settings_infobox" style="display:none">
+
+    <table class="simple1">
+      <tr>
+        <td>Mute all audio</td>
+        <td><button class="button3green" id="audio_toggle">Mute audio</button></td>
+      </tr>
+      <tr>
+        <td colspan="2">Mute generators</td>
+      </tr>
+      <tr>
+        <td><button class="button3green" id="audio_toggle_one">Mute Electric</button></td>
+        <td><button class="button3green" id="audio_toggle_two">Mute Plasma</button></td>
+      </tr>
+      <tr>
+        <td><button class="button3green" id="audio_toggle_three">Mute Nuclear</button></td>
+        <td><button class="button3green" id="audio_toggle_four">Mute Gravity</button></td>
+      </tr>
+      <tr>
+        <td colspan="2"><button class="button3green" id="audio_toggle_allgen">Mute all</button></td>
+      </tr>
+      <tr>
+        <td colspan="2">Volume <input type="range" id="audio_control_volume" value="0.5" step="0.1" min="0" max="1"></td>
+      </tr>
+    </table>
+    <br>
+
+    <table class="simple1">
+      <tr>
+        <td>
+          <p style="letter-spacing: 0;">Save and reload game for the setting to take effect</p>
+          <button class="button3" id="toggle_scientific">Toggle scientific notation</button>
+        </td>
+      </tr>
+    </table>
+
+    <br>
+    <table class="simple1">
+      <tr>
+        <td><button class="button3" id="import_save_button">Import save</button></td>
+        <td><div contenteditable="true" class="textarea" id="import_save_dump"></div></td>
+      </tr>
+
+      <tr>
+        <td>Game save<br><span class="sm">copy to text file for backup</span></td>
+        <td><div contenteditable="true" class="textarea" id="gamesavedump">Your save</div></td>
+      </tr>
+
+      <tr>
+        <td colspan="2"><button class="button3" id="reset_upgrade">Wipe save</button></td>
+      </tr>
+
+    </table>
+
+
+    <br>
+    <button id="settings_cancel" class="button4">Close Settings</button><br>
+
+  </div>
+
+  <!-- Incorrect save -->
+  <div class="infobox" id="incorrectsave_infobox" style="display:none">
+
+    <table class="infobox_table">
+      <tr>
+        <td>The version of your save does not match the current version of the game. This might lead to incorrect behavior. Overwriting your save will hide this warning, but it is unlikely to fix the save.</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;"><button id="incorrectsave_infobox_cancel" class="button4">Close</button></td>
+      </tr>
+    </table>
+
+  </div>
+
+  <!-- Reset game -->
+  <div class="infobox" id="reset_infobox" style="display:none">
+
+    <table class="infobox_table">
+      <tr>
+        <td colspan="2">Wiping your save will erase <i>all</i> of your progress, including warp levels.</td>
+      </tr>
+      <tr>
+        <td style="text-align:left;"><button id="reset_ok" class="button4">Reset game</button></td>
+        <td style="text-align:right;"><button id="reset_cancel" class="button4">Cancel</button></td>
+      </tr>
+    </table>
+
+  </div>
+
+  <!-- Rank info -->
+  <div class="faqbox" id="rank_infobox" style="display:none">
+
+    <table class="simple2">
+      <tr>
+        <td width="30%">Rank</td>
+        <td><span style="letter-spacing: 0em;text-align:justify" id="rank_description_label">You are an operator</span></td>
+      </tr>
+      <tr>
+        <td colspan="2">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>
+          Estimated Energy per Cycle
+          <p style="letter-spacing: 0;">generators with no bonuses applied</p>
+        </td>
+        <td><span class="purple" id="eepc_label">⌬0</span></td>
+      </tr>
+      <tr>
+        <td>Research Lab</td>
+        <td><span class="blue" id="bonus_multiplier_label">0</span> to all generators' power</td>
+      </tr>
+      <tr>
+        <td>Antimatter Amplifier</td>
+        <td><span class="red" id="prestige_multiplier_label">0</span> to all generators' power</td>
+      </tr>
+    </table>
+    <br>
+    <button id="rank_infobox_cancel" class="button4">Close Stats</button><br>
+
+  </div>
+
+  <!-- Magic Number info -->
+  <div class="infobox" id="magicnumber_infobox" style="display:none">
+
+    <table width="70%" class="simple1">
+      <tr>
+        <td class="noborder" style="text-align:left">
+          <p class="gray">Quantum Number is the resource required for the Interdimensional Warp. There are several achievements that will increment your Quantum Number:</p>
+
+          <ul class="blue">
+            <li>buying a Quantum Number warp upgrade</li>
+            <li>collecting 100 duotronic butterflies</li>
+            <li>reaching battery throughput of 35%</li>
+            <li>reaching shuttle capacity of 300k</li>
+            <li>charting 2 galaxies</li>
+          </ul>
+
+          <br>
+          <p class="gray" style="font-size:8pt">The Interdimensional Warp is going to be introduced in the upcoming versions of the game.</p>
+        </td>
+      </tr>
+    </table
+
+
+
+    </table>
+    <br>
+    <button id="magicnumber_infobox_cancel" class="button4">Close Stats</button><br>
+
+  </div>
+
+  <!-- Stats -->
+  <div class="faqbox" id="stats_infobox" style="display:none">
+
+    <table class="simple1">
+      <tr>
+        <td>Antimatter cubes in stock</td>
+        <td width="30%"><span id="ac_stock_label">0</span></td>
+      </tr>
+      <tr>
+        <td>All-time energy generated</td>
+        <td><span id="all_time_money_label">⌬0</span></td>
+      </tr>
+      <tr>
+        <td>Total amount of energy generated this run</td>
+        <td><span id="total_money_label">⌬0</span></td>
+      </tr>
+      <tr>
+        <td>Amount till next antimatter</td>
+        <td><span id="tillNextAntimatter_label">⌬0</span></td>
+      </tr>
+    </table>
+    <br>
+    <button id="stats_cancel" class="button4">Close Stats</button><br>
+
+  </div>
+
+  <!-- Prestige -->
+  <div class="infobox" id="prestige_infobox" style="display:none">
+
+    <table class="infobox_table">
+      <tr>
+        <td colspan="3">
+          <table class="simple1">
+            <tr>
+              <td colspan="3" class="noborder">
+                <br><span class="gray">Warping right now will earn you:</span><br>
+                <ul style="text-align:left">
+                  <li class="gray">Antimatter cubes: <span class="yellow" id="ac_label">0</span></li>
+                  <li class="gray">Antimatter Amplifier: <span class="red" id="am_label">x0</span></li>
+                </ul>
+
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align:left;"><button id="prestige_ok" class="button4">Warp</button></td>
+        <td style="text-align:center;"><button id="prestige_inspect" class="button4">See prices without warping</button></td>
+        <td style="text-align:right;"><button id="prestige_cancel" class="button4">Cancel</button></td>
+      </tr>
+    </table>
+
+  </div>
+
+<!--prestige board-->
+<div class="all" id="prestige_board" style="display:none">
+
+  <div class="prestige_header">
+    <table class="prestige_header">
+      <tr>
+        <td>
+          <span class="blue">Antimatter cubes</span>
+        </td>
+        <td>
+          <span class="yellow" id="ac_owned_label">[0]</span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button class="button5" id="reboot_upgrade">Reboot</button>
+          <button class="button5" id="reboot_backtogame">Go Back</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <br><br><br>
+
+
+  <table class="prestige_board">
+
+    <tr>
+      <td colspan="4" style="text-align:left;"><span class="red" style="font-size:10pt;">Antimatter amplifier:</span> <span class="red" style="font-size:10pt;font-weight:bold" id="ac_all_label">x0%</span></td>
+    </tr>
+
+    <tr>
+      <td colspan="4">&nbsp;</td>
+    </tr>
+
+    <tr>
+      <td colspan="4" class="header">Academy</td>
+    </tr>
+
+    <tr>
+
+      <td class="item" width="25%">
+        <button class="button2" id="warp_rank1_upgrade">1k warp levels</button><br><br>
+        <b>Rank of Engineer</b><br>
+        unlocks Engineering Den
+      </td>
+      <td class="item" width="25%">
+        <button class="button2" id="warp_rank2_upgrade">100M warp levels</button><br><br>
+        <b>Rank of Floor Administrator</b><br>
+        unlocks Lifeforms Scanner
+      </td>
+      <td class="item" width="25%" style="visibility:hidden">
+        <button class="button2" id="warp_rank3_upgrade">1B warp levels</button><br><br>
+        <b>Rank of Chief Engineer</b><br>
+        unlocks Night Shift
+      </td>
+      <td class="item" style="visibility:hidden">
+        <button class="button2" id="warp_rank4_upgrade">1T warp levels</button><br><br>
+        <b>Rank of Captain</b><br>
+        send spaceships on missions
+      </td>
+
+    </tr>
+
+  </table>
+
+
+  <table class="prestige_board">
+
+    <tr>
+      <td colspan="4" class="header">Engineering</td>
+    </tr>
+
+    <tr>
+
+      <td class="item" width="25%">
+        <button class="button2" id="warp_panel1_upgrade">5 warp levels</button><br><br>
+        <b>Panel Upgrade I</b><br>
+        see whether the power upgrade has a x5 or a x100 multiplier
+      </td>
+
+      <td class="item" width="25%">
+        <button class="button2" id="warp_panel2_upgrade">50 warp levels</button><br><br>
+        <b>Panel Upgrade II</b><br>
+        buy all available upgrades with a single click
+      </td>
+
+      <td class="item" width="25%">
+        <button class="button2" id="warp_panel3_upgrade">10k warp levels</button><br><br>
+        <b>Panel Upgrade III</b><br>
+        auto-buy Research Lab upgrades
+      </td>
+
+      <td>&nbsp;</td>
+
+    </tr>
+
+    <tr>
+
+      <td class="item" width="25%">
+        <button class="button2" id="warp_magnetron_duration_upgrade">1M warp levels</button><br><br>
+        <b>Magnetron Resistance</b><br>
+        Magnetron duration can now be upgraded to a maximum of 120 seconds
+      </td>
+
+      <td class="item" width="25%">
+        <button class="button2" id="warp_magnetron_multiplier_upgrade">1M warp levels</button><br><br>
+        <b>Magnetron Power</b><br>
+        Magnetron multiplier can now be upgraded to a maximum of x20
+      </td>
+
+      <td class="item" width="25%">
+        <button class="button2" id="warp_magnetron_alerting_upgrade">1M warp levels</button><br><br>
+        <b>Magnetron Alerting System</b><br>
+        an audio alert is issued when the magnetron is armed
+      </td>
+
+      <td>&nbsp;</td>
+
+    </tr>
+
+  </table>
+
+
+
+  <table class="prestige_board">
+
+    <tr>
+      <td colspan="4" class="header">Status</td>
+    </tr>
+
+    <tr>
+
+      <td class="item" width="25%">
+        <button class="button2"  id="warp_magicnumber_upgrade">1M warp levels</button><br><br>
+        <b>Quantum Number &#8984;</b><br>
+        a key to another dimension
+      </td>
+
+      <td>&nbsp;</td>
+
+      <td>&nbsp;</td>
+
+      <td>&nbsp;</td>
+
+    </tr>
+
+  </table>
+
+
+</div>
+
+<!--ALL-->
+<div class="all" id="all">
+
+  <!-- header -->
+  <div class="header">
+    <table class="header">
+      <tr>
+        <td width="15%" id="rank_block" class="screen_blue" style="">Rank <span id="rank_label" class="red">[Operator]</span></td>
+        <td width="5%" id="magicnumber_block" class="screen_blue">&#8984; <span id="magicnumber_label" class="red">[0]</span></td>
+        <td>&nbsp;</td>
+        <td width="40%" id="telescope" class="screen_telescope"></td>
+        <td>&nbsp;</td>
+        <td width="10%" id="antimatter_block" class="screen_red">Antimatter: <b><span id="antimatter_label">0</span></b><div id="pb_antimatter" class="pb3"><div id="pb_antimatter_indicator"></div></div></td>
+        <td width="10%" class="screen_red"><button class="button3" id="prestige_upgrade">Warp</button></td>
+      </tr>
+    </table>
+    <table class="gameboard">
+
+      <td class="control_panel">
+        &nbsp;
+      </td>
+
+    </table>
+  </div>
+
+  <!-- The main container -->
+  <table class="main_container">
+  <tr>
+
+  <!-- Generators -->
+  <td style="width:50%;vertical-align:top;">
+
+    <table class="gameboard" id="gameboard">
+
+      <tr>
+        <td colspan="6" class="small_description">Generators</td>
+      </tr>
+
+      <tr>
+        <td class="small_description2">&nbsp;</td>
+        <td class="small_description2">Supply</td>
+        <td class="small_description2">Generator</td>
+        <td class="small_description2">&nbsp;</td>
+        <td class="small_description2">Supply</td>
+        <td class="small_description2">Generator</td>
+      </tr>
+
+      <tr>
+
+        <td class="button_holder">
+          <button id="button_one" class="button_start">x</button>
+        </td>
+        <td class="storage_holder">
+          <div id="one_supply_label">0</div>
+        </td>
+        <td class="pb_holder">
+          <div id="g_electric" class="generator_strip">&nbsp;</div>
+        </td>
+
+        <td class="button_holder">
+          <button id="button_two" class="button1">x</button>
+        </td>
+        <td class="storage_holder">
+          <div id="two_supply_label">0</div>
+        </td>
+        <td class="pb_holder">
+          <div id="g_plasma" class="generator_strip">&nbsp;</div>
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <td class="button_holder">
+          <button id="button_three" class="button1">x</button>
+        </td>
+        <td class="storage_holder">
+          <div id="three_supply_label">0</div>
+        </td>
+        <td class="pb_holder">
+          <div id="g_nuclear" class="generator_strip">&nbsp;</div>
+        </td>
+
+        <td class="button_holder">
+          <button id="button_four" class="button1">x</button>
+        </td>
+        <td class="storage_holder">
+          <div id="four_supply_label">0</div>
+        </td>
+        <td class="pb_holder">
+          <div id="g_gravity" class="generator_strip">&nbsp;</div>
+        </td>
+
+      </tr>
+
+      <tr id="rank_block_panel">
+        <td colspan="6" class="small_description3">
+
+          <table style="white-space: nowrap;overflow:hidden" width="100%">
+            <tr>
+              <td width="34%">Energy per Cycle <span class="purple" id="eepc_panel">⌬0</span></td>
+              <td width="33%">Research Lab <span class="blue" id="rlab_panel">+3%</span></td>
+              <td width="33%">Antimatter Amplifier <span class="red" id="aa_panel">x12</span></td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="6" class="lower_label"><div id="pb_money" class="pb_money"><div id="pb_money_indicator"></div></div></td>
+      </tr>
+
+      <tr>
+        <td colspan="6" class="divider">&nbsp;</td>
+      </tr>
+
+
+      <tr id="control_panel_tab">
+        <td colspan="6" class="small_description">Control Panel<span id="buymax_toggle" style="position:absolute;right:10px;letter-spacing:0.5em;cursor:pointer;display:none" class="silver">
+          [<span class="purple">1</span>/max]
+        </span></td>
+      </tr>
+
+      <tr id="generator_tabs">
+        <td colspan="6" class="control_panel">
+          <table class="menutabs">
+            <tr>
+              <td class="tab_description"><div id="one_tab" class="color_block"><span id="one_name_label">Electric</span> [<span id="one_ratio_label">100%</span>]</div></td>
+              <td class="tab_description"><div id="two_tab" class="color_block"><span id="two_name_label">Plasma</span> [<span id="two_ratio_label">0%</span>]</div></td>
+              <td class="tab_description"><div id="three_tab" class="color_block"><span id="three_name_label">Nuclear</span> [<span id="three_ratio_label">0%</span>]</div></td>
+              <td class="tab_description"><div id="four_tab" class="color_block"><span id="four_name_label">Gravity</span> [<span id="four_ratio_label">0%</span>]</div></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr id="one_tab_contents">
+        <td colspan="6" class="control_panel">
+
+          <table class="menutabs">
+            <tr>
+              <td class="upgrade_description">
+                Supply limit <span class="blue" id="one_price_label">[1]</span>
+              </td>
+              <td class="button_holder">
+                <button id="one_upgrade_supply_limit" class="button1">x</button>
+              </td>
+              <td class="pb_holder">
+                <div id="pb_one_upgrade_supply_limit" class="pb2_supply"><div id="pb_one_supply_indicator"></div></div>
+              </td>
+            </tr>
+          </table>
+
+          <table class="menutabs" id="one_effectiveness_block">
+            <tr>
+              <td class="upgrade_description">
+                Power <span class="blue" id="one_effectiveness_label">[1]</span><sup id="sup_one_label" class="silver" style="display:none">x</sup>
+              </td>
+              <td class="button_holder">
+                <button id="one_upgrade_effectiveness" class="button1">x</button>
+              </td>
+              <td class="pb_holder">
+                <div id="pb_one_upgrade_effectiveness" class="pb2_power">
+                  <div class="pb2_power_max_upgrade"></div>
+                  <div class="pb2_power_indicator"></div>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <table class="menutabs" id="one_generation_block">
+            <tr>
+              <td class="upgrade_description">
+                <span class="yellow" id="one_generation_label">Generation II</span>
+              </td>
+              <td class="button_holder">
+                <button id="one_upgrade_generation" class="button1">x</button>
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+
+      <tr id="two_tab_contents">
+        <td colspan="6" class="control_panel">
+
+          <table class="menutabs">
+            <tr>
+              <td class="upgrade_description">
+                Supply limit <span class="blue" id="two_price_label">[1]</span>
+              </td>
+              <td class="button_holder">
+                <button id="two_upgrade_supply_limit" class="button1">x</button>
+              </td>
+              <td class="pb_holder">
+                <div id="pb_two_upgrade_supply_limit" class="pb2_supply"><div id="pb_two_supply_indicator"></div></div>
+              </td>
+            </tr>
+          </table>
+
+          <table class="menutabs" id="two_effectiveness_block">
+            <tr>
+              <td class="upgrade_description">
+                Power <span class="blue" id="two_effectiveness_label">[1]</span><sup id="sup_two_label" class="silver" style="display:none">x</sup>
+              </td>
+              <td class="button_holder">
+                <button id="two_upgrade_effectiveness" class="button1">x</button>
+              </td>
+              <td class="pb_holder">
+                <div id="pb_two_upgrade_effectiveness" class="pb2_power">
+                  <div class="pb2_power_max_upgrade"></div>
+                  <div class="pb2_power_indicator"></div>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+
+          <table class="menutabs" id="two_generation_block">
+            <tr>
+              <td class="upgrade_description">
+                <span class="yellow" id="two_generation_label">Generation II</span>
+              </td>
+              <td class="button_holder">
+                <button id="two_upgrade_generation" class="button1">x</button>
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+
+      <tr id="three_tab_contents">
+        <td colspan="6" class="control_panel">
+
+          <table class="menutabs">
+            <tr>
+              <td class="upgrade_description">
+                Supply limit <span class="blue" id="three_price_label">[1]</span>
+              </td>
+              <td class="button_holder">
+                <button id="three_upgrade_supply_limit" class="button1">x</button>
+              </td>
+              <td class="pb_holder">
+                <div id="pb_three_upgrade_supply_limit" class="pb2_supply"><div id="pb_three_supply_indicator"></div></div>
+              </td>
+            </tr>
+          </table>
+
+          <table class="menutabs" id="three_effectiveness_block">
+            <tr>
+              <td class="upgrade_description">
+                Power <span class="blue" id="three_effectiveness_label">[1]</span><sup id="sup_three_label" class="silver" style="display:none">x</sup>
+              </td>
+              <td class="button_holder">
+                <button id="three_upgrade_effectiveness" class="button1">x</button>
+              </td>
+              <td class="pb_holder">
+                <div id="pb_three_upgrade_effectiveness" class="pb2_power">
+                  <div class="pb2_power_max_upgrade"></div>
+                  <div class="pb2_power_indicator"></div>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <table class="menutabs" id="three_generation_block">
+            <tr>
+              <td class="upgrade_description">
+                <span class="yellow" id="three_generation_label">Generation II</span>
+              </td>
+              <td class="button_holder">
+                <button id="three_upgrade_generation" class="button1">x</button>
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+
+      <tr id="four_tab_contents">
+        <td colspan="6" class="control_panel">
+
+          <table class="menutabs">
+            <tr>
+              <td class="upgrade_description">
+                Supply limit <span class="blue" id="four_price_label">[1]</span>
+              </td>
+              <td class="button_holder">
+                <button id="four_upgrade_supply_limit" class="button1">x</button>
+              </td>
+              <td class="pb_holder">
+                <div id="pb_four_upgrade_supply_limit" class="pb2_supply"><div id="pb_four_supply_indicator"></div></div>
+              </td>
+            </tr>
+          </table>
+
+          <table class="menutabs" id="four_effectiveness_block">
+            <tr>
+              <td class="upgrade_description">
+                Power <span class="blue" id="four_effectiveness_label">[1]</span><sup id="sup_four_label" class="silver" style="display:none">x</sup>
+              </td>
+              <td class="button_holder">
+                <button id="four_upgrade_effectiveness" class="button1">x</button>
+              </td>
+              <td class="pb_holder">
+                <div id="pb_four_upgrade_effectiveness" class="pb2_power">
+                  <div class="pb2_power_max_upgrade"></div>
+                  <div class="pb2_power_indicator"></div>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <table class="menutabs" id="four_generation_block">
+            <tr>
+              <td class="upgrade_description">
+                <span class="yellow" id="four_generation_label">Generation II</span>
+              </td>
+              <td class="button_holder">
+                <button id="four_upgrade_generation" class="button1">x</button>
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+
+      <tr id="general_info_box" style="display:none">
+        <td colspan="6" class="machine_element1_help">
+          <p><b>Overdrive</b> becomes available when you reach a target amount of energy. The bonus fills up your whole energy tank, and after this the next target is set.</p>
+          <p style="text-align:center;"><button id="general_info_close" class="button3">close</button></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="6" class="tab_description_no_width">&nbsp;<span id="general_info" style="position:absolute;right:10px;font-size:9pt;letter-spacing:0.2em;cursor:pointer;" class="darkgray">[i]</span></td>
+      </tr>
+
+      <tr id="overdrive_panel">
+        <td colspan="6" class="control_panel">
+
+          <table class="menutabs">
+            <tr>
+              <td class="upgrade_description">
+                <span class="blue" id="overdrive_label">x</span>
+              </td>
+              <td class="button_holder">
+                <button id="overdrive_upgrade" class="button2">overdrive</button>
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="6" class="control_panel">
+
+          <table class="menutabs">
+            <tr>
+              <td class="upgrade_description">
+                Power limit <span class="blue" id="money_limit_label">[50]</span>
+              </td>
+              <td class="button_holder">
+                <button id="money_limit_upgrade" class="button1">x</button>
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+
+
+      <tr id="rlab_info_box" style="display:none">
+        <td colspan="6" class="machine_element1_help">
+          <p><b>Research Lab</b> provides upgrades to generators. They are reset when you warp.</p>
+          <p>
+            <ul>
+              <li><span class="blue">Power upgrades</span> increase the overall power output of all generators</li>
+              <li><span class="green">Supply upgrades</span> double the base supply unit up to 128</li>
+              <li><span class="red">Lifeform upgrades</span> add non-organic lifeforms to the Lifeforms Scanner</li>
+            </ul>
+          </p>
+          <p>Some upgrades will begin appearing only after certain machines are unlocked.</p>
+          <p style="text-align:center;"><button id="rlab_info_close" class="button3">close</button></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="6" class="tab_description_no_width">Research Lab<span id="rlab_info" style="position:absolute;right:10px;font-size:9pt;letter-spacing:0.2em;cursor:pointer;" class="darkgray">[i]</span><span id="rlab_autobuy_toggle" style="font-size:9pt;position:absolute;right:30px;letter-spacing:0.5em;cursor:pointer;display:none" class="silver">
+          [auto]
+        </span></td>
+      </tr>
+
+
+      <tr>
+        <td colspan="6">
+
+        <table width="100%">
+          <tr>
+            <td class="bonusbox" id="bonusboxblock_1">
+              <b><span class="silver">⌬500</span></b>
+              <br><br>
+              <span class="silver">+1% Power</span>
+            </td>
+            <td class="bonusbox" id="bonusboxblock_2">
+              <b><span class="silver">⌬500</span></b><br><br>
+                <span class="silver">+1% Power</span>
+            </td>
+            <td class="bonusbox" id="bonusboxblock_3">
+              <b><span class="silver">⌬500</span></b><br><br>
+                <span class="silver">+1% Power</span>
+            </td>
+            <td class="bonusbox" id="bonusboxblock_4">
+              <b><span class="silver">⌬500</span></b><br><br>
+                <span class="silver">+1% Power</span>
+            </td>
+            <td class="bonusbox" id="bonusboxblock_5">
+              <b><span class="silver">⌬500</span></b>
+              <br><br>
+              <span class="silver">+1% Power</span>
+            </td>
+            <td class="bonusbox" id="bonusboxblock_6">
+              <b><span class="silver">⌬500</span></b><br><br>
+                <span class="silver">+1% Power</span>
+            </td>
+            <td class="bonusbox" id="bonusboxblock_7">
+              <b><span class="silver">⌬500</span></b><br><br>
+                <span class="silver">+1% Power</span>
+            </td>
+            <td class="bonusbox" id="bonusboxblock_8">
+              <b><span class="silver">⌬500</span></b><br><br>
+                <span class="silver">+1% Power</span>
+            </td>
+
+
+          </tr>
+        </table>
+
+        </td>
+      </tr>
+
+
+      <tr id="engden_info_box" style="display:none">
+        <td colspan="6" class="machine_element1_help">
+          <p><b>Engineering Den</b> allows you to align couplings. This improves the efficiency of the generators. Vibrations from the generators will constantly push the couplings out of alignment, so be sure to keep an eye on them!</p>
+
+          <p>Engineering Den also provides Power limit and Charge limit auto-upgrades. Charge limit auto-upgrade is always ON.</p>
+
+          <p style="text-align:center;"><button id="engden_info_close" class="button3">close</button></p>
+        </td>
+      </tr>
+
+      <tr id="engden_title"  style="display:none">
+        <td colspan="6" class="tab_description_no_width"><span>Engineering Den</span><span id="engden_info" style="position:absolute;right:10px;font-size:9pt;letter-spacing:0.2em;cursor:pointer;" class="darkgray">[i]</span></td>
+      </tr>
+
+      <tr id="engden_block"  style="display:none">
+        <td colspan="6" class="control_panel">
+
+          <table class="menutabs">
+            <tr>
+              <td colspan="2" class="upgrade_description">
+                <br>
+                Auxiliary power <span class="blue" id="auxiliary_effectiveness_label">[+0%]</span>
+                <br><br>
+              </td>
+            </tr>
+            <tr>
+              <td class="button_holder">
+                <input type="range" id="auxiliary_lever1" class="lever" value="-50" step="1" min="-50" max="50">
+              </td>
+              <td class="button_holder">
+                <input type="range" id="auxiliary_lever2" class="lever" value="50" step="1" min="-50" max="50">
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="upgrade_description">
+                &nbsp;
+                <br><br>
+              </td>
+            </tr>
+            <tr>
+              <td class="button_holder_engden">
+                Power limit auto-upgrade<br><br><button id="night_shift_toggle" class="engden_off">OFF</button>
+              </td>
+              <td class="button_holder_engden">
+                Charge limit auto-upgrade<br><br><button class="engden_default">ON</button>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="upgrade_description">
+                &nbsp;
+                <br><br>
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+
+
+      <tr id="lscanner_info_box" style="display:none">
+        <td colspan="6" class="machine_element1_help">
+          <p><b>Lifeforms Scanner</b> allows you to identify the non-organic lifeforms that live in and around the generators. Each time you catch and identify one, it will provide permanent upgrades.</p>
+          <p>Collecting lifeforms impacts their population. Warping when the Repopulation value is below 100% will lead to lifeforms becoming unavailable during the next warp. Growing Repopulation to 100% or higher at any of the subsequent warps will restore them.</p>
+          <p style="text-align:center;"><button id="lscanner_info_close" class="button3">close</button></p>
+        </td>
+      </tr>
+
+      <tr id="lscanner_title" style="display:none">
+        <td colspan="6" class="tab_description_no_width"><span>Lifeforms Scanner</span><span id="lscanner_info" style="position:absolute;right:10px;font-size:9pt;letter-spacing:0.2em;cursor:pointer;" class="darkgray">[i]</span></td>
+      </tr>
+
+      <tr id="lscanner_block" style="display:none">
+        <td colspan="6">
+          <table class="catalog">
+
+            <tr>
+
+              <td class="catalog_item">
+                <table id="animal1" class="catalog_item_container">
+                  <tr><td class="catalog_item_title">Mech Ciliate</td></tr>
+                  <tr><td class="catalog_item_pic"><img src="img/lifeforms/lifeform1.png"></td></tr>
+                  <tr><td id="animal_quantity_1">Quantity: 0</td></tr>
+                  <tr><td>&nbsp;</td></tr>
+                  <tr><td>Effect: <span style="font-size:8pt;">+1% Power</span></td></tr>
+
+
+                </table>
+              </td>
+
+              <td class="catalog_item">
+                <table id="animal2" class="catalog_item_container">
+                  <tr><td class="catalog_item_title">Non-Organic Isopod</td></tr>
+                  <tr><td class="catalog_item_pic"><img src="img/lifeforms/lifeform2.png"></td></tr>
+                  <tr><td id="animal_quantity_2">Quantity: 0</td></tr>
+                  <tr><td>&nbsp;</td></tr>
+                  <tr><td>Effect: <span style="font-size:8pt;">Every 3 isopods increase Magnetron duration by 1 sec</span></td></tr>
+                </table>
+              </td>
+
+              <td class="catalog_item">
+                <table id="animal3" class="catalog_item_container">
+                  <tr><td class="catalog_item_title">Mutated Worm</td></tr>
+                  <tr><td class="catalog_item_pic"><img src="img/lifeforms/lifeform3.png"></td></tr>
+                  <tr><td id="animal_quantity_3">Quantity: 0</td></tr>
+                  <tr><td>&nbsp;</td></tr>
+                  <tr><td>Effect: <span style="font-size:8pt;">Every 5 worms increase Magnetron multiplier by 1%</span></td></tr>
+                </table>
+              </td>
+
+              <td class="catalog_item">
+                <table id="animal4" class="catalog_item_container">
+                  <tr><td class="catalog_item_title">Plasmic Frog</td></tr>
+                  <tr><td class="catalog_item_pic"><img src="img/lifeforms/lifeform4.png"></td></tr>
+                  <tr><td id="animal_quantity_4">Quantity: 0</td></tr>
+                  <tr><td>&nbsp;</td></tr>
+                  <tr><td>Effect: <span style="font-size:8pt;">Every frog increases the probability of arming the Magnetron</span></td></tr>
+                </table>
+              </td>
+
+            </tr>
+
+            <tr>
+
+              <td class="catalog_item">
+                <table id="animal5" class="catalog_item_container">
+                  <tr><td class="catalog_item_title">Cable Lizard</td></tr>
+                  <tr><td class="catalog_item_pic"><img src="img/lifeforms/lifeform5.png"></td></tr>
+                  <tr><td id="animal_quantity_5">Quantity: 0</td></tr>
+                  <tr><td>&nbsp;</td></tr>
+                  <tr><td>Effect: <span style="font-size:8pt;">Every lizard increases auxiliary power by 2%</span></td></tr>
+                </table>
+              </td>
+
+              <td class="catalog_item">
+                <table id="animal6" class="catalog_item_container">
+                  <tr><td class="catalog_item_title">Plastic Fly</td></tr>
+                  <tr><td class="catalog_item_pic"><img src="img/lifeforms/lifeform6.png"></td></tr>
+                  <tr><td id="animal_quantity_6">Quantity: 0</td></tr>
+                  <tr><td>&nbsp;</td></tr>
+                  <tr><td>Effect: <span style="font-size:8pt;">Every fly increases the production of components by 5%</span></td></tr>
+                </table>
+              </td>
+
+              <td class="catalog_item">
+                <table id="animal7" class="catalog_item_container">
+                  <tr><td class="catalog_item_title">Nut Beetle</td></tr>
+                  <tr><td class="catalog_item_pic"><img src="img/lifeforms/lifeform7.png"></td></tr>
+                  <tr><td id="animal_quantity_7">Quantity: 0</td></tr>
+                  <tr><td>&nbsp;</td></tr>
+                  <tr><td>Effect: <span style="font-size:8pt;">Every 2 beetles increase the efficiency of the battery by 10%</span></td></tr>
+                </table>
+              </td>
+
+              <td class="catalog_item">
+                <table id="animal8" class="catalog_item_container">
+                  <tr><td class="catalog_item_title">Duotronic Butterfly</td></tr>
+                  <tr><td class="catalog_item_pic"><img src="img/lifeforms/lifeform8.png"></td></tr>
+                  <tr><td id="animal_quantity_8">Quantity: 0</td></tr>
+                  <tr><td>&nbsp;</td></tr>
+                  <tr><td>Effect: <span style="font-size:8pt;">Collecting 100 increments your Magic Number</span></td></tr>
+                </table>
+              </td>
+
+
+            </tr>
+
+
+            <tr>
+              <td class="machine_element5center" colspan="4" style="text-align:center;color:#30d069;font-size:10pt;">
+                <span class="gray">Repopulation: </span><span id="repopulation_label">0</span>%<span class="gray">/100%</span>
+              </td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="6" class="control_panel">
+          &nbsp;
+        </td>
+      </tr>
+
+    </table>
+
+  </td>
+
+  <!-- Machines -->
+  <td style="vertical-align:top;">
+
+      <!-- Machines title -->
+      <table class="gameboard" id="machines_container">
+
+        <tr>
+          <td class="small_description">Machines<span id="machines_buymax_toggle" style="font-size: 9pt;position:absolute;right:10px;letter-spacing:0.5em;cursor:pointer;display:none" class="silver">
+            [<span class="purple">1</span>/max]
+          </span></td>
+        </tr>
+
+      </table>
+
+      <!-- Battery Lock -->
+      <table class="machine" id="battery_lock_block">
+        <tr>
+          <td colspan="2" class="machine_element_locked1">Unlock Battery</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="machine_element_locked2">
+            <button id="battery_unlock_upgrade" class="button1">10 B</button>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Battery -->
+      <table class="machine" id="battery_block" style="display:none">
+
+        <tr id="battery_info_box" style="display:none">
+          <td colspan="2" class="machine_element1_help">
+            <p><b>Battery</b> is the power source for all the machines. Developing the battery allows to provide more power to the machines.</p>
+            <p>Battery charges from the generators. By specifying the percentage, you control the amount of power the battery consumes. If it's at 100%, it will consume all the energy produced by the generators.</p>
+            <p style="text-align:center;"><button id="battery_info_close" class="button3">close</button></p>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2" class="machine_element1">Battery<span id="battery_info" style="position:absolute;right:10px;font-size:9pt;letter-spacing:0.2em;cursor:pointer;" class="gray">[i]</span></td>
+        </tr>
+
+        <tr>
+          <td colspan="2" class="machine_element2" style="padding:20px;"><div id="pb_battery" class="pb_battery"><div id="pb_battery_indicator"></div></div></td>
+        </tr>
+
+        <tr>
+          <td colspan="2" class="machine_element3center">
+            <button class="button3" id="battery_percent_up">&#9650;</button>&nbsp;<span class="blue" id="battery_charge_percentage_label">0%</span>&nbsp;<button class="button3" id="battery_percent_down">&#9660;</button>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2" class="machine_element2center_nopadding">Power&nbsp;<span class="blue" id="battery_effectiveness_label">[⑂0]</span><span id="animal7_battery_charge_multiplier_label" class="green"></span></td>
+        </tr>
+
+        <tr>
+          <td class="machine_element2left_nopadding" width="48%">
+            Max Throughput <span class="blue" id="charge_throughput_label">[1%]</span>
+          </td>
+          <td class="machine_element2right_nopadding">
+            <button id="charge_throughput_upgrade" class="button1">x</button>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="machine_element3left" width="48%">
+            Charge limit <span class="blue" id="charge_limit_label">[50]</span>
+          </td>
+          <td class="machine_element3right">
+            <button id="charge_limit_upgrade" class="button1">x</button>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2" class="control_panel">
+            &nbsp;
+          </td>
+        </tr>
+
+      </table>
+
+      <!-- Magnetron Lock -->
+      <table class="machine" id="magnetron_lock_block" style="display:none">
+        <tr>
+          <td colspan="2" class="machine_element_locked1">Unlock Magnetron</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="machine_element_locked2">
+            <button id="magnetron_unlock_upgrade" class="button1">⑂1 M</button>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Magnetron -->
+      <table class="machine" id="magnetron_block" style="display:none">
+
+        <tr id="magnetron_info_box" style="display:none">
+          <td colspan="2" class="machine_element1_help">
+            <p><b>Magnetron</b> provides short boosts of efficiency to generators. It needs to be armed before it can be used. The probability of the Magnetron getting armed is 1 in 2000 for every request it receives.</p>
+            <p>Requests to arm the Magnetron are being sent in the same cycle as the charging of the battery, therefore if the battery is not charging, the magnetron won't get armed. Therefore, the more generators are running, the more requests are being sent to the Magnetron.</p>
+            <p>Keep in mind that 1 in 2000 is a fairly low probability and that the process is truly random. It's quite normal to have very long periods of time with the Magnetron being dormant, and sometimes having it getting armed quickly several times in a row. You can increase this probability through collecting Plasmic Frogs.</p>
+            <p style="text-align:center;"><button id="magnetron_info_close" class="button3">close</button></p>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2" class="machine_element1" style="">Magnetron<span id="magnetron_info" style="position:absolute;right:10px;font-size:9pt;letter-spacing:0.2em;cursor:pointer;" class="gray">[i]</span></td>
+        </tr>
+
+        <tr>
+          <td colspan="2" class="machine_element2" style="padding:20px;"><button class="magnetron_button_armed" id="magnetron_button">x2</button></td>
+        </tr>
+
+        <tr>
+          <td class="machine_element3left" style="color:#f48c37;" width="48%">
+            Multiplier <span class="blue" id="magnetron_multiplier_label">[x2]</span><span id="animal3_magnetron_multiplier_label" class="green">+1</span>
+          </td>
+          <td class="machine_element3right" style="background-color:#222;background-image:none;">
+            <button id="magnetron_multiplier_upgrade" class="button1">x</button>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="machine_element3left" style="color:#f48c37;" width="48%">
+            Duration <span class="blue" id="magnetron_duration_label">[30 sec]</span><span id="animal2_magnetron_duration_label" class="green"></span>
+          </td>
+          <td class="machine_element3right" style="background-color:#222;background-image:none;">
+            <button id="magnetron_duration_upgrade" class="button1">x</button>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2" class="control_panel">
+            &nbsp;
+          </td>
+        </tr>
+
+      </table>
+
+      <!-- Foundry Lock -->
+      <table class="machine" id="foundry_lock_block" style="display:none">
+        <tr>
+          <td colspan="2" class="machine_element_locked1">Unlock Foundry</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="machine_element_locked2">
+            <button id="foundry_unlock_upgrade" class="button1">⑂1 T</button>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Foundry -->
+      <table class="machine" id="foundry_block" style="display:none">
+
+        <tr id="foundry_info_box" style="display:none">
+          <td colspan="3" class="machine_element1_help">
+            <p><b>Foundry</b> manufactures components that will then be used to produce and maintain the space station, shuttle bay, probes and spaceships.</p>
+            <p>Its furnace must be kept at a working temperature of 3000+ °C. If it cools down, it will stop producing components and would require re-heating.</p>
+            <p>In order to heat up and operate the furnace, the battery should be kept at 10% throughput.<br>Setting it to a higher value will increase the speed at which the furnace heats up, but it won't affect how quickly the components are produced.<br>Setting it to 9% and lower will switch off the furnace, which will stop the production of components, and the furnace will begin to cool down.</p>
+            <p>The waste management system provides a periodic bonus to your generators. You can reduce the amount of cycles required to trigger it by building shuttles and the Space Station.</p>
+            <p style="text-align:center;"><button id="foundry_info_close" class="button3">close</button></p>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="3" class="machine_element1" style="">Foundry<span id="foundry_info" style="position:absolute;right:10px;font-size:9pt;letter-spacing:0.2em;cursor:pointer;" class="gray">[i]</span></td>
+        </tr>
+
+        <tr>
+          <td colspan="3" class="machine_element2">
+            <div id="furnace_screen" class="furnace_screen_dim">0 °C</div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="upgrade_description" width="48%">
+            Components per cycle <span class="red" id="foundry_components_multiplier_label">[1]</span><span id="animal6_components_multiplier_label" class="green"></span>
+          </td>
+          <td class="button_holder">
+            <button id="foundry_components_cycle_upgrade" class="button1">⑂1k</button>
+          </td>
+          <td class="pb_holder">
+            <div id="pb_components_multiplier" class="pb2_components"><div id="pb_components_multiplier_indicator"></div></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="upgrade_description" width="48%">
+            Waste <span class="red" id="foundry_waste_label">0/1000</span>
+          </td>
+          <td colspan="2" class="button_holder">
+            <button id="foundry_recycle_upgrade" class="button1">Recycle ⌬</button>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="3" class="upgrade_description" style="padding:20px;font-size:10pt">Components: <span class="red" id="foundry_components_label">⯎0</span></td>
+        </tr>
+
+        <tr>
+          <td colspan="3" class="control_panel">
+            &nbsp;
+          </td>
+        </tr>
+
+      </table>
+
+      <!-- Shuttlebay Lock -->
+      <table class="machine" id="shuttlebay_lock_block" style="display:none">
+        <tr>
+          <td colspan="2" class="machine_element_locked1">Construct Shuttlebay</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="machine_element_locked2">
+            <button id="shuttlebay_unlock_upgrade" class="button1">x</button>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Shuttlebay -->
+      <table class="machine" id="shuttlebay_block" style="display:none">
+
+        <tr id="shuttlebay_info_box" style="display:none">
+          <td colspan="3" class="machine_element1_help">
+            <p><b>Shuttlebay</b> allows you to build, repair and upgrade space shuttles.</p>
+            <p>
+              <ul>
+                <li>every shuttle built slightly decreases the foundry waste limit</li>
+                <li>shuttle capacity increases the amount of debris shuttles can carry</li>
+              </ul>
+            </p>
+            <p style="text-align:center;"><button id="shuttlebay_info_close" class="button3">close</button></p>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="3" class="machine_element1" style="">Shuttlebay<span id="shuttlebay_info" style="position:absolute;right:10px;font-size:9pt;letter-spacing:0.2em;cursor:pointer;" class="gray">[i]</span></td>
+        </tr>
+
+        <tr>
+          <td colspan="3" class="machine_element4center">
+            <div id="shuttleport" class="shuttleport">
+              <img src="img/shuttle.png" width="30" style="visibility:hidden">
+              <img src="img/shuttle.png" width="30" style="visibility:hidden">
+              <img src="img/shuttle.png" width="30" style="visibility:hidden">
+              <img src="img/shuttle.png" width="30" style="visibility:hidden">
+              <img src="img/shuttle.png" width="30" style="visibility:hidden">
+            </div>
+          </td>
+        </tr>
+
+        <tr id="build_shuttle_row">
+          <td class="upgrade_description" width="48%">
+            <span class="blue">Build shuttle</span>
+          </td>
+          <td class="button_holder">
+            <button id="build_shuttle_upgrade" class="button1">⯎1T</button>
+          </td>
+          <td class="pb_holder">
+            <div id="pb_build_shuttle" class="pb4"><div id="pb_build_shuttle_indicator"></div></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="upgrade_description">
+            <span class="blue">Shuttle capacity</span> <span id="shuttle_capacity_upgrade_label" class="silver">[1]</span>
+          </td>
+          <td colspan="2" class="button_holder">
+            <button id="shuttle_capacity_upgrade" class="button1">⯎1T</button>
+          </td>
+        </tr>
+
+        <tr style="display:none">
+          <td class="upgrade_description">
+            <span class="blue">Repair shuttle</span>
+          </td>
+          <td class="button_holder">
+            <button id="repair_shuttle_upgrade" class="button1">⯎1T</button>
+          </td>
+          <td class="pb_holder">
+            <div id="pb_repair_shuttle" class="pb4"><div id="pb_repair_shuttle_indicator"></div></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="3" class="control_panel">
+            &nbsp;
+          </td>
+        </tr>
+
+      </table>
+
+      <!-- Mission Control Lock -->
+      <table class="machine" id="mc_lock_block" style="display:none">
+        <tr>
+          <td colspan="2" class="machine_element_locked1">Unlock Mission Control</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="machine_element_locked2">
+            <button id="mc_unlock_upgrade" class="button1">x</button>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Mission Control -->
+      <table class="machine" id="mc_block" style="display:none">
+
+        <tr id="mc_info_box" style="display:none">
+          <td colspan="3" class="machine_element1_help">
+            <p><b>Mission Control</b> lists and tracks the status of low orbit missions.</p>
+            <p>Note that neither the Space Station, nor the Orbital Telescope can be deployed before the amount of low orbit debris is reduced to below 1000000000.</p>
+            <p style="text-align:center;"><button id="mc_info_close" class="button3">close</button></p>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="3" class="machine_element5" style="">Mission Control<span id="mc_info" style="position:absolute;right:10px;font-size:9pt;letter-spacing:0.2em;cursor:pointer;" class="gray">[i]</span></td>
+        </tr>
+
+        <tr id="mission_debris_block">
+          <td class="machine_element5center" width="48%">
+            <span class="blue">> Remove low orbit debris</span>
+          </td>
+          <td class="machine_element5center">
+            <button id="mission_debris_launch" class="disabled7">1 Shuttle</button>
+          </td>
+          <td class="machine_element5center">
+            <span id="mission_debris_upgrade_label" class="red" style="white-space: nowrap;">Debris detected: 1237861241</span>
+          </td>
+        </tr>
+
+        <tr id="mission_debris_block_progress">
+          <td class="machine_element5center_lighter" style="text-align:right;" width="48%">
+            <span class="orange">Shuttles: <span id="mission_debris_shuttle_name">"Yangtzee Kiang"</span></span>
+          </td>
+          <td class="machine_element5center_lighter">
+            &nbsp;
+          </td>
+          <td class="machine_element5center_lighter" width="35%">
+            <div id="pb_mission_debris" class="pb5"><div id="pb_mission_debris_indicator"></div></div>
+          </td>
+        </tr>
+
+        <tr id="mission_station_block">
+          <td class="machine_element5center" width="48%">
+            <span class="blue">> Deploy Space Station</span>
+          </td>
+          <td class="machine_element5center">
+            <button id="mission_station_launch" class="disabled7">1 Shuttle</button>
+          </td>
+          <td class="machine_element5center">
+            <span id="mission_station_upgrade_label" class="red">Deployment status: 0%</span>
+          </td>
+        </tr>
+
+        <tr id="mission_station_block_progress">
+          <td class="machine_element5center_lighter" style="text-align:right;" width="48%">
+            <span class="orange">Shuttle <span id="mission_station_shuttle_name">"Yangtzee Kiang"</span></span>
+          </td>
+          <td class="machine_element5center_lighter">
+            <button id="mission_station_upgrade" class="button1">⯎100.56T</button>
+          </td>
+          <td class="machine_element5center_lighter" width="35%">
+            <div id="pb_mission_station" class="pb5"><div id="pb_mission_station_indicator"></div></div>
+          </td>
+        </tr>
+
+        <tr id="mission_telescope_block">
+          <td class="machine_element5center" width="48%">
+            <span class="blue">> Deploy Orbital Telescope</span>
+          </td>
+          <td class="machine_element5center">
+            <button id="mission_telescope_launch" class="disabled7">1 Shuttle</button>
+          </td>
+          <td class="machine_element5center">
+            <span id="mission_telescope_upgrade_label" class="red">Deployment status: 0%</span>
+          </td>
+        </tr>
+
+        <tr id="mission_telescope_block_progress">
+          <td class="machine_element5center_lighter" style="text-align:right;" width="48%">
+            <span class="orange">Shuttle <span id="mission_telescope_shuttle_name">"Yangtzee Kiang"</span></span>
+          </td>
+          <td class="machine_element5center_lighter">
+            <button id="mission_telescope_upgrade" class="button1">⯎100.56T</button>
+          </td>
+          <td class="machine_element5center_lighter" width="35%">
+            <div id="pb_mission_telescope" class="pb5"><div id="pb_mission_telescope_indicator"></div></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="3" class="control_panel">
+            &nbsp;
+          </td>
+        </tr>
+
+      </table>
+
+      <!-- Space Station Lock -->
+      <table class="machine" id="station_lock_block" style="display:none">
+        <tr>
+          <td colspan="2" class="machine_element_locked1">Unlock Space Station</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="machine_element_locked2">
+            <button id="station_unlock_upgrade" class="button1">x</button>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Space Station -->
+      <table class="machine" id="station_block" style="display:none">
+
+        <tr id="station_info_box" style="display:none">
+          <td class="machine_element1_help">
+            <p><b>Space Station</b> is the gateway to deep space exploration.</p>
+            <p> Building the Space Station has the following effects:
+              <ul>
+                <li>you become Chief Engineer (permanent change)</li>
+                <li>the foundry waste limit is decreased by 50 (reset at warp)</li>
+              </ul>
+            </p>
+            <p style="text-align:center;"><button id="station_info_close" class="button3">close</button></p>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="machine_element1" style="">Space Station<span id="station_info" style="position:absolute;right:10px;font-size:9pt;letter-spacing:0.2em;cursor:pointer;" class="gray">[i]</span></td>
+        </tr>
+
+        <tr>
+          <td class="machine_element2">&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td class="machine_element3center">
+            <div id="space_window" class="space_station_window">&nbsp;<br>&nbsp;<br>&nbsp;<br></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="machine_element2">&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td colspan="2" class="control_panel">
+            &nbsp;
+          </td>
+        </tr>
+
+      </table>
+
+      <!-- Telescope Lock -->
+      <table class="machine" id="telescope_lock_block" style="display:none">
+        <tr>
+          <td colspan="2" class="machine_element_locked1">Unlock Orbital Telescope</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="machine_element_locked2">
+            <button id="telescope_unlock_upgrade" class="button1">0%</button>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Telescope -->
+      <table class="machine" id="telescope_block" style="display:none">
+
+        <tr id="telescope_info_box" style="display:none">
+          <td colspan="2" class="machine_element1_help">
+            <p><b>Orbital Telescope</b> charts stars, galaxies and, in the future, habitable planets and interstellar lifeforms.</p>
+            <p style="text-align:center;"><button id="telescope_info_close" class="button3">close</button></p>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2" class="machine_element1" style="">Orbital Telescope<span id="telescope_info" style="position:absolute;right:10px;font-size:9pt;letter-spacing:0.2em;cursor:pointer;" class="gray">[i]</span></td>
+        </tr>
+
+        <tr class="machine_element6center">
+          <td colspan="2">
+            <div class="clock">
+              <div class="outer-clock-face">
+                <div class="inner-clock-face">
+                  <div id="telescope_seconds" class="hand second-hand"></div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="machine_element6center"><span class="silver">Stars cataloged</span>&nbsp;<span class="red" id="telescope_stars_amount_label">[0/1T]</span></td>
+          <td class="machine_element6center"><span class="silver">Galaxies charted</span>&nbsp;<span class="red" id="telescope_galaxies_amount_label">[0]</span></td>
+        </tr>
+
+        <tr>
+          <td class="machine_element6center" style="color:#9f9f9f;" width="48%">
+            Resolution <span class="red" id="telescope_resolution_label">[1-15]</span>
+          </td>
+          <td class="machine_element6center">
+            <button id="telescope_resolution_upgrade" class="button1">x</button>
+          </td>
+        </tr>
+
+
+
+
+        <tr>
+          <td colspan="2" class="control_panel">
+            &nbsp;
+          </td>
+        </tr>
+
+      </table>
+
+      <!-- Bottom tile -->
+      <table class="gameboard">
+        <tr>
+          <td class="control_panel">
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+
+
+
+
+
+  </td>
+
+
+  </tr>
+  </table>
+
+
+
+
+
+
+</div>
+
+<br><br>
+
+
+<!-- footer -->
+<div class="footer">
+  <span class="footer_item1"><button class="button3" id="settings_upgrade">Settings</button></span>
+  <span class="footer_item1"><button class="button3" id="manual_upgrade" onclick='window.open("faq/index.html", "_blank");'>FAQ</button></span>
+  <span class="footer_item1">Next save in <span id="save_timer_label">60</span>&nbsp;&nbsp;<button class="button3" id="save_upgrade">Save now</button></span>
+
+  <span class="signature"><span class="footer_item1"><a class="lv_discord" href="https://discord.gg/AVHRPhJ" target="_blank">Join our Discord</a></span><span class="footer_item2"><a class="lv_site" href="https://louigiverona.com/?page=about" target="_blank">Louigi Verona's Workshop</a></span></span>
+
+
+</div>
+
+</body>
+</html>
