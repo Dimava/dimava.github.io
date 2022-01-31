@@ -81,7 +81,7 @@ declare namespace PoopJs {
         function toFakeTime(realtime: number): number;
         function toPerformanceFakeTime(realtime: number): number;
         let bracketSpeeds: number[];
-        function speedhack(speed: number): void;
+        function speedhack(speed?: number): void;
         function timejump(seconds: number): void;
         function switchSpeedhack(dir: number): boolean;
         function bindBrackets(mode?: string): void;
