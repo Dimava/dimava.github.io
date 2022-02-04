@@ -1,0 +1,1 @@
+document.title = `#${ladderData.yourRanker.rank} ${ladderData.yourRanker.username} - Fair Game`;
