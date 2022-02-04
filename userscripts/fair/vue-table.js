@@ -1,8 +1,10 @@
-if (!ladderData._isReactive) {
-	_ladderData = ladderData;
-	ladderData = Vue.reactive(ladderData);
-	ladderData._isReactive = true;
-}
+setInterval(() => {
+	if (!ladderData._isReactive) {
+		_ladderData = ladderData;
+		ladderData = Vue.reactive(ladderData);
+		ladderData._isReactive = true;
+	}	
+}, 1000)
 
 _style = $('style#myStyle').length ? $('style#myStyle') : $('<style id="myStyle"></style>').appendTo('head');
 _style.html(`
@@ -126,7 +128,7 @@ LadderVue = class LadderVue extends VueImpl.with(makeClass({
 	get visibleRankers() {
 		const rank = ladderData.yourRanker.rank;
 		const offset = 10;
-		return this.ladderData.rankers.filter(ranker => {
+		return ladderData.rankers.filter(ranker => {
 			if (!(ranker instanceof Ranker)) Object.setPrototypeOf(ranker, Ranker.prototype);
 			if (ranker.uuid) return true;
 			if (ranker.rank == 1) return true;
