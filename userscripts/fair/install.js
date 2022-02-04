@@ -24,7 +24,7 @@ void async function install() {
 
 	await _importScript('https://dimava.github.io/userscripts/fair/cookie.js');
 
-	await _importScript('https://dimava.github.io/userscripts/fair/vue-table.js');
+	await _importScript('https://dimava.github.io/userscripts/fair/simple-table.js');
 }();
 
 function _importScript(src) {

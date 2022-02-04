@@ -8,12 +8,8 @@ handleLadderInit = function(...a) {
 	gameData.ladderData = ladderData;
 	ladderData = gameData.ladderData;
 }
-// window._handleJoin ??= handleJoin;
-// handleJoin = function(...a) {
-// 	_handleJoin(...a);
-// 	ladderData.filter(e => !(e instanceof Ranker)).map(e => Object.setPrototypeOf(e, Ranker.prototype));
-// }
 
+// add some styling
 _style = $('style#myStyle').length ? $('style#myStyle') : $('<style id="myStyle"></style>').appendTo('head');
 _style.html(`
 	tr.ranker-promoted {
@@ -53,29 +49,7 @@ LadderVue = {
 			});
 		}
 	}
-}
-
-/*
-
-		<tr :class="{'ranker-promoted': !ranker.growing, 'ranker-you': ranker.you}">
-			<td>
-				<a v-if="vinegarable" href="#" style="text-decoration: none" onclick="throwVinegar()">🍇</a>
-				<span v-else>{{ ranker.rank }}{{ assholeTag }}</span>
-			</td>
-			<td style="overflow: hidden;">
-				<a v-if="isAlt" :href="'#acc'+ranker.accountId" target="_blank">{{ ranker.growing ? '' : '^' }}{{ ranker.username }}</a>
-				<span v-else>{{ ranker.growing ? '' : '^' }}{{ ranker.username }}</span>
-				<sup v-if="isYou">you</sup>
-				<sup v-if="isAlt">alt</sup>
-				<span v-if="isYou || isAlt" @click="changeUsername">🖉</span>
-			</td>
-			<td class="text-end"> {{ numberFormatter.format(this.ranker.power) }} [
-				[+{{('' + this.ranker.bias).padStart(2, '0')}}
-				x{{('' + this.ranker.multiplier).padStart(2, '0')}}]
-			</td>
-			<td class="text-end"> {{ numberFormatter.format(this.ranker.points) }} </td>
-		</tr>
-*/
+};
 
 LadderRowVue = {
 	props: ['ranker'],
@@ -132,7 +106,7 @@ LadderRowVue = {
 			return numberFormatter;
 		},
 	},
-}
+};
 
 
 $('#app').remove();
