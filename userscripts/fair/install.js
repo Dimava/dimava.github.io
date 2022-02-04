@@ -1,7 +1,10 @@
-// https://dimava.github.io/userscripts/fair/install.js
+/**
+ * usage: 
+ * 		import('https://dimava.github.io/userscripts/fair/install.js')
+ */
 
 
-await async function installVue() {
+void async function installVue() {
 	if (window.Vue) return console.log('Vue is already loaded!');;
 	const scripts = [
 		'https://unpkg.com/vue@next',
