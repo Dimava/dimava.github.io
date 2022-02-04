@@ -12,7 +12,7 @@ getCookie = cname => {
 setInterval(() => {
 	localStorage['acc' + identityData.uuid] = identityData.accountId;
 	localStorage['acc' + identityData.accountId] = identityData.uuid;
-	if (localStorage.hash == '#' + identityData.uuid) {
+	if (location.hash == '#' + identityData.uuid) {
 		location.hash = 'acc' + localStorage['acc' + hash];
 	}
 	document.title = `#${ladderData.yourRanker.rank} ${ladderData.yourRanker.username || 'disconnected'} - Fair Game`;
