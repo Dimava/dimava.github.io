@@ -4,15 +4,15 @@
  */
 
 
-void async function installVue() {
-	if (window.Vue) return console.log('Vue is already loaded!');;
+void async function install() {
 	const scripts = [
-		'https://unpkg.com/vue@next',
-		'https://unpkg.com/vue-class-component@next',
-		'https://unpkg.com/@dimava/vue-prop-decorator-a-variation@0.3.0/dist/vue-prop-decorator-a-variation.global.js',
+		!window.Vue && 'https://unpkg.com/vue@next',
+		!window.VueClassComponent && 'https://unpkg.com/vue-class-component@next',
+		!window.VuePropDecoratorAVariation && 'https://unpkg.com/@dimava/vue-prop-decorator-a-variation@0.3.0/dist/vue-prop-decorator-a-variation.global.js',
 		'https://dimava.github.io/userscripts/fair/vue-table.js',
 	];
 	for (let src of scripts) {
+		if (!src) continue;
 		let el = elm('script');
 		el.async = false;
 		let p = Promise.empty();
