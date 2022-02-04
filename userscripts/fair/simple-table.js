@@ -94,13 +94,6 @@ LadderRowVue = {
 			if (ladderData.yourRanker.vinegar.cmp(getVinegarThrowCost()) < 0) return false;
 			return true;
 		},
-		rank() {
-			// this function is extracted from ladder.js from writeNewRow
-			let ranker = this.ranker;
-			(ranker.rank === 1 && !ranker.you && ranker.growing && ladderData.rankers.length >= Math.max(infoData.minimumPeopleForPromote, ladderData.currentLadder.number)
-				&& ladderData.firstRanker.points.cmp(infoData.pointsForPromote) >= 0 && ladderData.yourRanker.vinegar.cmp(getVinegarThrowCost()) >= 0) ?
-				'<a href="#" style="text-decoration: none" onclick="throwVinegar()">🍇</a>' : ranker.rank;
-		},
 		// external constants have to be imported
 		numberFormatter() {
 			return numberFormatter;
