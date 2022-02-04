@@ -22,6 +22,8 @@ void async function install() {
 	});
 	console.log('Vue ready');
 
+	await _importScript('https://dimava.github.io/userscripts/fair/cookie.js');
+
 	await _importScript('https://dimava.github.io/userscripts/fair/vue-table.js');
 }();
 

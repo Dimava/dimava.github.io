@@ -29,15 +29,15 @@ Ranker = class Ranker {
 			alert('The maximum number of characters in your username is 32, not ' + newUsername.length + '!');
 			newUsername = newUsername.slice(0, 32);
 		}
-        stompClient.send("/app/account/name", {}, JSON.stringify({
-            'uuid': this.uuid,
-            'content': newUsername
-        }))
-    }
+		stompClient.send("/app/account/name", {}, JSON.stringify({
+			'uuid': this.uuid,
+			'content': newUsername
+		}))
+	}
 	get uuid() {
 		let ls = localStorage['acc' + this.accountId] || '';
 		if (ls.length != 36) ls = '';
-		Object.defineProperty(this, 'uuid', {value: ls});
+		Object.defineProperty(this, 'uuid', { value: ls });
 		return ls;
 	}
 }
@@ -66,22 +66,22 @@ LadderRowVue = class LadderRowVue extends VueImpl.with(makeClass({
 	get assholeTag() {
 		let ranker = this.ranker;
 		let tag = (ranker.timesAsshole < infoData.assholeTags.length) ?
-        infoData.assholeTags[ranker.timesAsshole] : infoData.assholeTags[infoData.assholeTags.length - 1];
-        return $('<a/>').html(tag).text();
+			infoData.assholeTags[ranker.timesAsshole] : infoData.assholeTags[infoData.assholeTags.length - 1];
+		return $('<a/>').html(tag).text();
 	}
 	get vinegarable() {
 		if (this.ranker.rank != 1) return false;
 		if (this.ranker.you) return false;
 		if (!this.ranker.growing) return false;
 		if (ladderData.rankers.length < Math.max(infoData.minimumPeopleForPromote, ladderData.currentLadder.number)) return false;
-        if (ladderData.firstRanker.points.cmp(infoData.pointsForPromote) < 0) return false;
-        if (ladderData.yourRanker.vinegar.cmp(getVinegarThrowCost()) < 0) return false;
-		return true;		
+		if (ladderData.firstRanker.points.cmp(infoData.pointsForPromote) < 0) return false;
+		if (ladderData.yourRanker.vinegar.cmp(getVinegarThrowCost()) < 0) return false;
+		return true;
 	}
 	get rank() {
 		(ranker.rank === 1 && !ranker.you && ranker.growing && ladderData.rankers.length >= Math.max(infoData.minimumPeopleForPromote, ladderData.currentLadder.number)
-        && ladderData.firstRanker.points.cmp(infoData.pointsForPromote) >= 0 && ladderData.yourRanker.vinegar.cmp(getVinegarThrowCost()) >= 0) ?
-        '<a href="#" style="text-decoration: none" onclick="throwVinegar()">🍇</a>' : ranker.rank;
+			&& ladderData.firstRanker.points.cmp(infoData.pointsForPromote) >= 0 && ladderData.yourRanker.vinegar.cmp(getVinegarThrowCost()) >= 0) ?
+			'<a href="#" style="text-decoration: none" onclick="throwVinegar()">🍇</a>' : ranker.rank;
 	}
 	get points() {
 		return numberFormatter.format(this.ranker.points);
@@ -142,7 +142,6 @@ $('#app').remove();
 $('<div id="app" class="container-fluid"/>').prependTo('body')
 app = Vue.createApp(LadderVue, {
 	ladderData,
-})
-.use(VuePropDecoratorAVariation.known)
+}).use(VuePropDecoratorAVariation.known);
 lad = app.mount('#app')
 
