@@ -15,7 +15,7 @@ getCookie = cname => {
     return _getCookie(cname);
 }
 setInterval(() => {
-	localStorage['acc' + identityData.udid] = identityData.accountId;
+	localStorage['acc' + identityData.uuid] = identityData.accountId;
 	localStorage['acc' + identityData.accountId] = identityData.uuid;
 	document.title = `#${ladderData.yourRanker.rank} ${ladderData.yourRanker.username || 'disconnected'} - Fair Game`;
 }, 10e3)
