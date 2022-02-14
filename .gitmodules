@@ -1,0 +1,3 @@
+[submodule "fair-client"]
+	path = fair-client
+	url = https://github.com/Dimava/fair-client.git
