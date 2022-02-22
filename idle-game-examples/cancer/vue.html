@@ -1,0 +1,202 @@
+<html>
+
+<head>
+	<title>The Cancer Idle</title>
+
+	<script src="../libs/vue.global.js"></script>
+</head>
+
+<body>
+	<small>source code on <a
+			href="https://github.com/Dimava/dimava.github.io/blob/master/idle-game-examples/cancer/vue.html">Github</a></small>
+
+	<!-- the root element -->
+	<!-- using non-HTML tags is cancer, but it looks pretty in devtools -->
+	<APP>
+
+		<div> Coins: {{ state.coins }} </div>
+		<div> Workers: {{ state.workers }}
+			<!-- just an example loop for lulz -->
+			<span v-for=" i of state.workers ">🤖</span>
+		</div>
+		<br>
+
+		<!-- @click defines click action -->
+		<button @click=" game.getCoin() "> Get a coin </button>
+		<!-- v-show defines when to hide/show element -->
+		<!-- :enabled binds (with `:`) enabled attribute to some value -->
+		<button v-show=" state.workers > 0 || game.canGetWorker() " @click=" game.getWorker() "
+			:disabled=" !game.canGetWorker() "> Get a worker ({{ game.getWorkerCost() }} coins)
+		</button>
+		<br>
+
+		<div v-show=" state.workers >= 2 "> There is no more content in the game </div>
+		<button style="float: right;" @click=" game.clearSave() "> Reset game </button>
+
+		<!-- all the game data, to show you can show it -->
+		{{ state }}
+		{{ game }}
+
+	</APP>
+
+	<!-- using inline <script> tags is an common practice -->
+	<script>
+		/** everything that saves goes here */
+		var state = {
+			coins: 0,
+			workers: 0,
+		};
+		/** this makes it reactive (i.e. UI which depends on values will be updated) */
+		state = Vue.reactive(state);
+		/** everything that is function goes here */
+		var game = {
+			/** initialization goes here */
+			init() { },
+			/** everything that updates goes here */
+			tick() {
+				state.coins += state.workers;
+			},
+
+			getCoin() {
+				state.coins++;
+			},
+
+			getWorkerCost() {
+				return state.workers + 10;
+			},
+			canGetWorker() {
+				return state.coins >= game.getWorkerCost();
+			},
+			getWorker() {
+				if (game.canGetWorker()) {
+					state.coins -= game.getWorkerCost();
+					state.workers++;
+				}
+			},
+
+			// theese are not perfect, but they are simple 
+			save(savename = 'cancersave') {
+				localStorage.setItem(savename, JSON.stringify(state));
+			},
+			load(savename = 'cancersave') {
+				Object.assign(state, JSON.parse(localStorage.getItem(savename) || '{}'));
+				game.init();
+			},
+			clearSave(savename = 'cancersave') {
+				localStorage.setItem(savename, '{}');
+				location.reload();
+			},
+			start() {
+				// using setInterval is an okay practice, it has its own features and problems
+				setInterval(() => game.tick(), /* 1 second */ 1e3);
+				setInterval(() => game.save(), /* 10 seconds */ 10e3);
+			},
+		}
+		Vue.createApp({
+			data:() => ({
+				state,
+				game,
+			})
+		}).mount('app');
+
+		game.load();
+		game.start();
+	</script>
+
+	<script>
+
+		/* and a short JavaScript overview: */
+		var exapleNumberVariable = 123;
+		exapleNumberVariable = 1234;
+		var exampleStringVariable = '123';
+		exampleStringVariable = "1234"; // ' or " it does not matter
+		exampleStringVariable = `num is ${exapleNumberVariable} !!`; // ` is formated string
+		var exampleActuallyVariablesHaveNoType = 123;
+		exampleActuallyVariablesHaveNoType = '1234'
+		// All the math is in
+		Math.min(1, 2); Math.sin(1); Math.log(1);
+		// number caculations are same everywhere
+		exapleNumberVariable = 1 + 2 * 3 / 4 % 5;
+
+		// boolean type:
+		true; false;
+		1 + 1 == 2; // => true;
+		2 * 2 == 5; // => false;
+
+		// conversions
+		(+"123") == 123; // (+ value): unary + converts to number
+		123 + "" == "123"; // (value + ""): adding string converts to string
+		`${123} qwe`; // ( `${value}` ): template strings convert values in them to strings
+		!!(123) == false; // (!!value): double negate (!) converts to boolean
+		//                   0, "", false, null, undefined    converts to false, everything else to true
+		//                   so those values which convert to `false` are called "falsey", and which to `true` are called "truthy"
+		if (123) { true }; // `if` converts to boolean automatically
+		JSON.stringify({ a: 1, b: 2 }) == '{"a":1,"b":2}'; // JSON.stringify converts objects to strings (ignoring functions in then)
+		JSON.parse('{"a":1,"b":2}') != ({ a: 1, b: 2 }); // JSON.parse converts strings to objects
+
+		// "boolean" operators
+		true && 123 && 'any' == 'any'; // && gives last truthy value
+		true && 0 && 'any' == 0; //          or first falsey
+		false || 0 || '' == ''; // || giver last falsey value
+		false || 1 || '' == '1'; //   or firts truthy
+		(123 == '123') == true; // please note that if the types are different values can still be equal
+		//                         so avoid comparing values of different types if you are not sure they won't randomly be equal
+
+		// objects
+		var exampleObject = { a: 1, b: "123", c: { c1: 999, c2: "w" } };
+		exampleObject.a == 1; exampleObject.c.c1 += 123; // read-write access through `.`
+		exampleObject['a'] == 1; exampleObject['c'].c1 += 123; // read-write access through `[]`
+		exampleObject.undef == undefined; // missing values are `undefined`
+		exampleObject.undef = 123; // yet you can freely define them
+		exampleObject.undef == 123;
+		({ a: 1 }) != ({ a: 1 }); exampleObject == exampleObject; // objects are compared by being the same object
+
+		// functions
+		function exampleFunction(exampleArgument, exampleArgumentWithDefault = 123) {
+			var exampleLocalVariable = exampleArgument + exampleArgumentWithDefault;
+			return exampleReturnedValue;
+		}
+		var exampleFunction = (a, b = 123) => { return a + b; }; // 
+		exampleFunction = (a, b = 123) => a + b; // shorthand
+		exampleObject = {
+			f1: function (a) { return a; },
+			f2: (a, b = 1) => a + b,
+			f3(a, b = 1) { return a + b; },
+		}
+
+		// arrays: both array, tuple, list, queue at once
+		var exArray = [1, 2, 3, 4, 5];
+		exArray[1] == 2; // starting index is 0
+		exArray.length == 5;
+		exArray.push(123); exArray.pop() == 123; // modifying end;
+		exArray.unshift(321); exArray[0] == 321; exArray.shift() == 312; // modifying start
+		exArray2 = exArray.map((element, index, array) => element * 2); // use .map to make a new array or to iterate over array
+		exArray != [2, 4, 6, 8, 10];
+
+
+		// loops:
+		while (false) { true; } // while loop
+		for (let i = 0; i < 10; i++) { i; } // for i in range loop
+		for (let i = 0; i < exArray.length; i++) { var element = exArray[i]; } // for i in array loop
+		for (let element of exArray) { element; } // for readonly el of array loop
+		exArray.map((e, i, a) => { e; }) // for readonly el of array loop
+		for (let key in exampleObject) { var value = exampleObject[key]; } // for key in object
+
+
+
+
+		// semicolons: you rarely *must* use them
+		exampleFunction
+			(1) == exampleFunction(1); // round bracket ignore newline
+		exampleObject
+		['c'] == exampleObject.c; // square brackets ignore newline
+		// everywhere else you don't have to use them
+
+
+
+	</script>
+
+
+</body>
+
+</html>
