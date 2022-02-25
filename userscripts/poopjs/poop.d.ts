@@ -20,6 +20,9 @@ declare namespace PoopJs {
         function map<T = number>(this: ArrayConstructor, length: number, mapper?: (number: any) => T): T[];
         function vsort<T>(this: T[], mapper: (e: T, i: number, a: T[]) => number, sorter?: ((a: number, b: number, ae: T, be: T) => number) | -1): T[];
         function vsort<T, V>(this: T[], mapper: (e: T, i: number, a: T[]) => V, sorter: ((a: V, b: V, ae: T, be: T) => number) | -1): T[];
+        function at<T>(this: T[], index: number): T;
+        function findLast<T, S extends T>(this: T[], predicate: (this: void, value: T, index: number, obj: T[]) => value is S, thisArg?: any): S | undefined;
+        function findLast<T>(predicate: (this: T[], value: T, index: number, obj: T[]) => unknown, thisArg?: any): T | undefined;
         class PMap<T, V, E = never> {
             /** Original array */
             source: T[];
@@ -583,6 +586,12 @@ interface String {
 }
 interface Array<T> {
     pop(): this extends [T, ...T[]] ? T : T | undefined;
+    at(index: number): T;
+    findLast<S extends T>(predicate: (this: void, value: T, index: number, obj: T[]) => value is S, thisArg?: any): S | undefined;
+    findLast(predicate: (value: T, index: number, obj: T[]) => unknown, thisArg?: any): T | undefined;
+}
+interface Math {
+    sign(x: number): -1 | 0 | 1;
 }
 declare namespace PoopJs {
     namespace EntryFiltererExtension {
@@ -795,4 +804,51 @@ declare namespace PoopJs {
         }
     }
     let EF: typeof EntryFiltererExtension.EntryFilterer;
+}
+declare namespace PoopJs {
+    class ScrollInfo {
+        el: HTMLElement;
+        /** absolute rect */
+        rect: DOMRect;
+        constructor(el: HTMLElement);
+        topOffset(scrollY?: number): number;
+        centerOffset(scrollY?: number): number;
+        bottomOffset(scrollY?: number): number;
+        distanceFromScreen(scrollY?: number): number;
+        get fullDir(): 1 | -1 | 0;
+        get _offsets(): number[];
+    }
+    class ImageScroller {
+        selector: string;
+        enabled: boolean;
+        listener?: any;
+        stopPropagation: boolean;
+        constructor(selector?: string);
+        _wheelListener?: (event: WheelEvent) => void;
+        bindWheel(): void;
+        _arrowListener?: (event: KeyboardEvent) => void;
+        bindArrows(): void;
+        /** enable this scroller */
+        on(selector?: string): void;
+        /** disable this scroller */
+        off(selector?: string): this;
+        mode: 'single' | 'group';
+        /** scroll to the next item */
+        scroll(dir: -1 | 0 | 1): boolean;
+        scrollToNextCenter(dir: -1 | 0 | 1): boolean;
+        scrollToNextGroup(dir: -1 | 0 | 1): boolean;
+        _nextScrollTarget(dir: -1 | 0 | 1, mode: 'single'): ScrollInfo | undefined;
+        _nextScrollTarget(dir: -1 | 0 | 1, mode: 'group'): ScrollInfo[] | undefined;
+        getAllScrolls(): ScrollInfo[];
+        /** used  */
+        keep(resizer: () => void | Promise<void>, raf?: boolean): Promise<void>;
+        /** save current item scroll position */
+        save(): {
+            info: ScrollInfo;
+            offset: number;
+            restore(): void;
+        };
+        static createDefault(): ImageScroller;
+    }
+    let is: ImageScroller;
 }
