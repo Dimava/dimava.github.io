@@ -39,7 +39,7 @@ function displayLifetimeLeft() {
 			let amount = +el.q('.inventory-amount').innerText.toKNumber();
 			let rawEl = qq('.inventory-row')
 				.find(e => e != el
-					&& eq(e.q('span:not([class])'), span, el => el.innerText.trim().split(' ').pop()));
+					&& eq(e.q('span.item-name-column'), span, el => el.innerText.trim().split(' ').pop()));
 			let rawAmount = +rawEl?.q('.inventory-amount').innerText.toKNumber() || 0;
 			let isRaw = !hp && !!rawEl;
 			if (isRaw) hp = +(rawEl.q('span').title || rawEl.q('span').dataset.originalTitle).toKNumber();
