@@ -9,6 +9,7 @@
 
 // pooplib
 var q = s => document.querySelector(s);
+var qq = s => [...document.querySelectorAll(s)];
 Promise.frame = () => new Promise(r => requestAnimationFrame(r));
 
 var pastedText = '';
