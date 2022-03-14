@@ -10,10 +10,10 @@
 
 // pooplib
 Promise.frame = () => new Promise(r => requestAnimationFrame(r));
-var makeStyle = (s, e) => (e = document.createElement('style'), e.innerHTML = s, document.head.append(e), e);
-var makeraf = (f) => ((async () => { while (f) { await Promise.frame(); requestAnimationFrame(f); } })(), () => f = 0);
-var qq = s => [...document.querySelectorAll(s)];
-var q = s => document.querySelector(s);
+makeStyle = (s, e) => (e = document.createElement('style'), e.innerHTML = s, document.head.append(e), e);
+makeraf = (f) => ((async () => { while (f) { await Promise.frame(); requestAnimationFrame(f); } })(), () => f = () => { });
+qq = (s, v) => [...(v = document.querySelectorAll(s), v)];
+q = s => document.querySelector(s);
 Element.prototype.q = function (s) { return this.querySelector(s) }
 Element.prototype.qq = function (s) { return [...this.querySelectorAll(s)] }
 String.prototype.toKNumber = function (unround = '') {
@@ -35,7 +35,7 @@ function displayLifetimeLeft() {
 		.map(el => {
 			let span = el.q('span');
 			let hp = +(span.title || span.dataset.originalTitle).toKNumber() || 0;
-			let cooldown = parseFloat(el.q('.food-cooldown')?.innerText || 0) * 1000;
+			let cooldown = parseFloat(el.q('.food-cooldown')?.innerText || '0') * 1000;
 			let amount = +el.q('.inventory-amount').innerText.toKNumber();
 			let rawEl = qq('.inventory-row')
 				.find(e => e != el
@@ -87,8 +87,8 @@ function displayLifetimeLeft() {
 	time /= 1000;
 	qq('.inventory-amount[add]').map(e => e.setAttribute('add', ''));
 	for (let f of foods) {
-		f.el.q('.inventory-amount').setAttribute('add', f.isRaw ? '==' + f.used : f.used - f.amount);
-		f.rawEl?.q('.inventory-amount').setAttribute('add', f.isRaw ? '=+' + f.used : f.used - f.amount - f.rawAmount);
+		f.el.q('.inventory-amount').setAttribute('add', f.isRaw ? '==' + f.used : f.used - f.amount + '');
+		f.rawEl?.q('.inventory-amount').setAttribute('add', f.isRaw ? '=+' + f.used : f.used - f.amount - f.rawAmount + '');
 		if (f.cooldown > 0 && f.cooldown < 950 && !f.isRaw)
 			f.used += 0.9499 - f.cooldown * 0.001;
 	}

@@ -1,5 +1,5 @@
 declare namespace PoopJs {
-    interface UnwrappedPromise<T = void> extends Promise<T> {
+    interface Deferred<T = void> extends Promise<T> {
         resolve(value: T | PromiseLike<T>): void;
         reject: (reason?: any) => void;
         r(value: any): any;
@@ -10,7 +10,7 @@ declare namespace PoopJs {
         /**
          * Creates unwrapped promise
          */
-        function empty<T = void>(): UnwrappedPromise<T>;
+        function empty<T = void>(): Deferred<T>;
         function frame(n?: number): Promise<number>;
     }
 }
@@ -37,7 +37,7 @@ declare namespace PoopJs {
             /** Unfinished result array */
             results: (V | E | undefined)[];
             /** Promises for every element */
-            requests: UnwrappedPromise<V | E>[];
+            requests: Deferred<V | E>[];
             beforeStart: (data: {
                 e: T;
                 i: number;
@@ -62,25 +62,25 @@ declare namespace PoopJs {
              *  in the mapper function: including the current one */
             activeThreads: number;
             lastStarted: number;
-            allTasksDone: UnwrappedPromise<(V | E)[]> & {
+            allTasksDone: Deferred<(V | E)[]> & {
                 pmap: PMap<T, V, E>;
             };
-            anyTaskResolved: UnwrappedPromise<void>;
+            anyTaskResolved: Deferred<void>;
             constructor(source: Partial<PMap<T, V, E>>);
             startTask(arrayIndex: number): Promise<void>;
             run_internal(): Promise<(V | E)[]>;
-            run(): UnwrappedPromise<(V | E)[]> & {
+            run(): Deferred<(V | E)[]> & {
                 pmap: PMap<T, V, E>;
             };
             pause(): void;
             unpause(): void;
             cancel(): void;
             prepare(): this;
-            emptyResult<T = V | E>(): UnwrappedPromise<T>;
-            static this_pmap<T, V, E = never>(this: T[], mapper: PMap<T, V, E>['mapper'], options?: Partial<PMap<T, V, E>> | number | true): UnwrappedPromise<(V | E)[]> & {
+            emptyResult<T = V | E>(): Deferred<T>;
+            static this_pmap<T, V, E = never>(this: T[], mapper: PMap<T, V, E>['mapper'], options?: Partial<PMap<T, V, E>> | number | true): Deferred<(V | E)[]> & {
                 pmap: PMap<T, V, E>;
             };
-            static pmap<T, V, E = never>(array: T[], mapper: PMap<T, V, E>['mapper'], options?: Partial<PMap<T, V, E>> | number | true): UnwrappedPromise<(V | E)[]> & {
+            static pmap<T, V, E = never>(array: T[], mapper: PMap<T, V, E>['mapper'], options?: Partial<PMap<T, V, E>> | number | true): Deferred<(V | E)[]> & {
                 pmap: PMap<T, V, E>;
             };
         }
@@ -186,11 +186,7 @@ declare namespace PoopJs {
 declare namespace PoopJs {
     let debug: boolean;
     namespace etc {
-        function keybind(key: string, fn: (event: KeyboardEvent) => void): () => void;
         function fullscreen(on?: boolean): Promise<boolean>;
-        function anybind(keyOrEvent: string | number, fn: (event: Event) => void): void;
-        function fullscreenOn(key: string): () => void;
-        function fIsForFullscreen(): void;
         function hashCode(this: string): any;
         function hashCode(value: string): any;
         function init(): void;
@@ -207,15 +203,8 @@ declare namespace PoopJs {
         const kds: {
             [k: string]: string | ((e: KeyboardEvent & MouseEvent) => void);
         };
+        function generateKdsCodes(e: KeyboardEvent & MouseEvent): string[];
         function kdsListener(e: KeyboardEvent & MouseEvent): void;
-        let _kbdInited: boolean;
-        function makeKds(kds: {
-            [k: string]: string | ((e: KeyboardEvent & MouseEvent) => void);
-        }): {
-            [k: string]: string | ((e: KeyboardEvent & MouseEvent) => void);
-        } & {
-            [k: string]: string | ((e: KeyboardEvent & MouseEvent) => void);
-        };
     }
     let kds: typeof etc.kds;
 }
@@ -226,6 +215,9 @@ declare namespace PoopJs {
         type RequestInitEx = RequestInit & {
             maxAge?: deltaTime;
             xml?: boolean;
+            cacheUrl?: string | 'post' & {
+                _?: 'post';
+            };
         };
         type RequestInitExJson = RequestInit & {
             maxAge?: deltaTime;
@@ -316,6 +308,7 @@ declare namespace PoopJs {
             modifyEntries(): void;
             moveToTop(item: ISorter<Data> | IModifier<Data>): void;
             findEntries(): HTMLElement[];
+            _earliestUpdate: number;
             update(reparse?: boolean): void;
             offIncompatible(incompatible: string[]): void;
             style(s?: string): this;
@@ -575,6 +568,9 @@ interface Date {
 interface Performance {
     _now: Performance['now'];
 }
+interface Window {
+    _requestAnimationFrame: Window['requestAnimationFrame'];
+}
 interface Response {
     cachedAt: number;
 }
@@ -825,11 +821,12 @@ declare namespace PoopJs {
         stopPropagation: boolean;
         constructor(selector?: string);
         _wheelListener?: (event: WheelEvent) => void;
+        onWheelScrollFailed?: (event: WheelEvent) => void;
         bindWheel(): void;
         _arrowListener?: (event: KeyboardEvent) => void;
         bindArrows(): void;
         /** enable this scroller */
-        on(selector?: string): void;
+        on(selector?: string): this;
         /** disable this scroller */
         off(selector?: string): this;
         mode: 'single' | 'group';
@@ -841,7 +838,7 @@ declare namespace PoopJs {
         _nextScrollTarget(dir: -1 | 0 | 1, mode: 'group'): ScrollInfo[] | undefined;
         getAllScrolls(): ScrollInfo[];
         /** used  */
-        keep(resizer: () => void | Promise<void>, raf?: boolean): Promise<void>;
+        keep(resizer: () => any | Promise<any>, raf?: boolean): Promise<void>;
         /** save current item scroll position */
         save(): {
             info: ScrollInfo;
@@ -851,4 +848,6 @@ declare namespace PoopJs {
         static createDefault(): ImageScroller;
     }
     let is: ImageScroller;
+    const styleVars: Record<string, string>;
+    const styleVarsN: Record<string, number>;
 }
