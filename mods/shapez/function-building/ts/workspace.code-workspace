@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "D:\\repos\\shapemod\\shapezio-mods\\src\\dimavas-mod-loader"
+		},
+		{
+			"path": "D:\\repos\\shapemod\\shapezio-mods\\src\\hexagonal"
+		},
+		{
+			"path": "D:\\repos\\shapemod\\shapezio-mods\\src\\shapest"
+		},
+		{
+			"path": "d:\\repos\\shapemod\\shapezio-mods\\mods"
+		},
+		{
+			"path": "d:\\repos\\shapemod\\shapezio-mods\\shapez\\mod_examples"
+		},
+		{
+			"path": "d:\\repos\\shapemod\\shapezio-mods\\shapez"
+		},
+		{
+			"path": "..\\..\\shapest-working"
+		}
+	],
+	"settings": {}
+}
