@@ -1,5 +1,5 @@
 async function fetch64(img) {
-    return `http://127.0.0.1:8080/shapest-working/sprites/${img}`;
+    return `https://dimava.github.io/mods/shapez/shapest-working/sprites/${img}`;
     // http://127.0.0.1:8080/shapest-working/sprites/1.png
     // let r = await fetch(`http://127.0.0.1:8080/shapest-working/sprites/${img}`);
     // let t = await r.text();
