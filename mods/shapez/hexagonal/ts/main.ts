@@ -3,7 +3,7 @@ import { SzDefinition } from "./shapest/definition.js";
 import { SzShapeItem } from "./shapest/item.js";
 import { SzInfo } from "./shapest/layer.js";
 import { SpawnOwerride } from "./SpawnOverride.js";
-import { Blueprint, enumColorsToHexCode, enumShortcodeToColor, HubGoals, Mod, ModMetadata } from "./types/shapez.js";
+import { Blueprint, enumColorsToHexCode, enumShortcodeToColor, HubGoals, Mod as ModBase, ModMetadata } from "./types/shapez.js";
 
 export const METADATA: ModMetadata = {
     "id": "hexagonal",
@@ -16,7 +16,7 @@ export const METADATA: ModMetadata = {
 }
 
 class TestMode {
-	static install(mod: Mod) {
+	static install(mod: ModBase) {
 		mod.modInterface.replaceMethod(Blueprint, "getCost", function () {
 			return 0;
 		});
@@ -53,7 +53,7 @@ class TestMode {
 }
 
 
-export default class ModImpl extends Mod {
+export default class Mod extends ModBase {
 	init() {
 
 		// return;
@@ -84,7 +84,7 @@ export default class ModImpl extends Mod {
 
 	}
 
-	use(module: { install(mod: Mod): void }) {
+	use(module: { install(mod: ModBase): void }) {
 		module.install(this);
 		return this;
 	}
