@@ -1,14 +1,19 @@
-import { Blueprint } from "shapez/game/blueprint";
-import { enumColorsToHexCode, enumShortcodeToColor } from "shapez/game/colors";
-import { HubGoals } from "shapez/game/hub_goals";
-import { Mod } from "shapez/mods/mod";
-import { SzLevel } from "./levels/levels";
-import { SzDefinition } from "./shapest/definition";
-import { SzShapeItem } from "./shapest/item";
-import { SzInfo } from "./shapest/layer";
-import { SpawnOwerride } from "./SpawnOverride";
+import { SzLevel } from "./levels/levels.js";
+import { SzDefinition } from "./shapest/definition.js";
+import { SzShapeItem } from "./shapest/item.js";
+import { SzInfo } from "./shapest/layer.js";
+import { SpawnOwerride } from "./SpawnOverride.js";
+import { Blueprint, enumColorsToHexCode, enumShortcodeToColor, HubGoals, Mod, ModMetadata } from "./types/shapez.js";
 
-
+export const METADATA: ModMetadata = {
+    "id": "hexagonal",
+    "version": "1.3.0",
+    "name": "hexagonal",
+    "author": "Dimava",
+    "description": "Hexagonal shapes",
+    "website": "",
+    "settings": {} as any,
+}
 
 class TestMode {
 	static install(mod: Mod) {
@@ -48,7 +53,7 @@ class TestMode {
 }
 
 
-class ModImpl extends Mod {
+export default class ModImpl extends Mod {
 	init() {
 
 		// return;

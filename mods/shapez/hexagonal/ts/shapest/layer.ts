@@ -507,6 +507,11 @@ export class SzLayer implements ISzLayer {
 		return true;
 	}
 	stackWith(upper: SzLayer | undefined): SzLayer {
+		if (!this.canStackWith(upper)) {
+			console.error('Invalid stacking requested!');
+			debugger;
+			return this.clone();
+		}
 		if (!upper) return this.clone();
 		return new SzLayer({
 			quads: this.quads.concat(upper.quads),

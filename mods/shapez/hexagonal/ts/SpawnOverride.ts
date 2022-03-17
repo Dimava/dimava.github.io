@@ -1,16 +1,8 @@
-import { globalConfig } from "shapez/core/config";
-import { RandomNumberGenerator } from "shapez/core/rng";
-import { clamp } from "shapez/core/utils";
-import { BaseItem } from "shapez/game/base_item";
-import { COLOR_ITEM_SINGLETONS } from "shapez/game/items/color_item";
-import { MapChunk } from "shapez/game/map_chunk";
-import { ShapeDefinition } from "shapez/game/shape_definition";
-import { Mod } from "shapez/mods/mod";
-import { ExtendSuperclass } from "./common";
-import { SzDefinition } from "./shapest/definition";
-import { SzInfo } from "./shapest/layer";
-import { szShapeHash6 } from "./shapest/SzContext2D";
-
+import { ExtendSuperclass } from "./common.js";
+import { SzDefinition } from "./shapest/definition.js";
+import { SzInfo } from "./shapest/layer.js";
+import { szShapeHash6 } from "./shapest/SzContext2D.js";
+import { BaseItem, clamp, COLOR_ITEM_SINGLETONS, globalConfig, MapChunk, Mod, RandomNumberGenerator, ShapeDefinition } from "./types/shapez.js";
 
 
 export const shapePatchChances
@@ -91,7 +83,6 @@ export class SpawnOwerride extends MapChunk {
 		}).join('');
 
 
-		// @ts-ignore
 		const definition = SzDefinition.fromShortKey(hash);
 		this.internalGeneratePatch(
 			rng,

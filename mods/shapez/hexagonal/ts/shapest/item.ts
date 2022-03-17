@@ -1,15 +1,5 @@
-
-import { DrawParameters } from "shapez/core/draw_parameters";
-import { BaseItem } from "shapez/game/base_item";
-import { ShapeItem } from "shapez/game/items/shape_item";
-import { GameRoot } from "shapez/game/root";
-import { ShapeDefinition } from "shapez/game/shape_definition";
-import { ShapeDefinitionManager } from "shapez/game/shape_definition_manager";
-import { THEME } from "shapez/game/theme";
-import { Mod } from "shapez/mods/mod";
-import { types } from "shapez/savegame/serialization";
-import { SzDefinition } from "./definition";
-import { SzLayer } from "./layer";
+import { BaseItem, DrawParameters, Mod, ShapeDefinitionManager, ShapeItem, THEME, types } from "../types/shapez.js";
+import { SzDefinition } from "./definition.js";
 
 
 export class SzShapeItem extends ShapeItem implements ShapeItem {

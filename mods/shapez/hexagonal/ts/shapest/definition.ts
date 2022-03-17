@@ -1,20 +1,7 @@
-import { makeOffscreenBuffer } from "shapez/core/buffer_utils";
-import { globalConfig } from "shapez/core/config";
-import { smoothenDpi } from "shapez/core/dpi_manager";
-import { DrawParameters } from "shapez/core/draw_parameters";
-import { BaseItem } from "shapez/game/base_item";
-import { enumShortcodeToColor } from "shapez/game/colors";
-import { COLOR_ITEM_SINGLETONS } from "shapez/game/items/color_item";
-import { ShapeItem } from "shapez/game/items/shape_item";
-import { GameRoot } from "shapez/game/root";
-import { ShapeDefinition, ShapeLayer } from "shapez/game/shape_definition";
-import { LogicGateSystem } from "shapez/game/systems/logic_gate";
-import { THEME } from "shapez/game/theme";
-import { Mod } from "shapez/mods/mod";
-import { BasicSerializableObject, types } from "shapez/savegame/serialization";
-import { override, strToH } from "../common";
-import { color, SzInfo, SzLayer } from "./layer";
-import { rmode, rotation24, SzContext2D } from "./SzContext2D";
+import { BaseItem, BasicSerializableObject, COLOR_ITEM_SINGLETONS, DrawParameters, GameRoot, globalConfig, LogicGateSystem, makeOffscreenBuffer, Mod, ShapeDefinition, ShapeItem, ShapeLayer, smoothenDpi, THEME, types } from "../types/shapez.js";
+import { SzLayer, SzInfo, color } from "./layer.js";
+import { rotation24, SzContext2D } from "./SzContext2D.js";
+
 
 
 export class SzDefinition extends BasicSerializableObject implements ShapeDefinition {
@@ -102,12 +89,21 @@ export class SzDefinition extends BasicSerializableObject implements ShapeDefini
 		let bottom = this.clone(e => e.removeCover()).layers;
 		let top = upper.clone().layers;
 		let dh = 0;
-		while (!bottom.every((l, i) => {
-			return l.canStackWith(top[i - dh]);
-		})) dh++;
+		dhloop: for (dh = 5; dh > 0; dh--) {
+			for (let iBottom = 0; iBottom < bottom.length; iBottom++) {
+				let iTop = iBottom - dh + 1;
+				let can = bottom[iBottom].canStackWith(top[iTop]);
+				console.log({
+					iBottom,
+					iTop, can
+				});
+				if (!can)
+					break dhloop;
+			}
+		}
 		let overlap = bottom.length - dh;
 		let newLayers = bottom.map((l, i) => {
-			return l.stackWith(top[i + dh]);
+			return l.stackWith(top[i - dh]);
 		}).concat(top.slice(
 			overlap
 		));

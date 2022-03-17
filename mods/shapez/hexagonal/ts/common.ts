@@ -1,6 +1,4 @@
-import { Mod } from "shapez/mods/mod";
-
-
+import { Mod } from "./types/shapez.js";
 
 
 declare module "shapez/game/components/item_processor" {

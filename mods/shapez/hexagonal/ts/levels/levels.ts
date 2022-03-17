@@ -1,15 +1,10 @@
-import { RandomNumberGenerator } from "shapez/core/rng";
-import { GameMode } from "shapez/game/game_mode";
-import { HubGoals } from "shapez/game/hub_goals";
-import type { enumHubGoalRewards } from "shapez/game/tutorial_goals";
-import { enumHubGoalRewardsToContentUnlocked } from "shapez/game/tutorial_goals_mappings";
-import { Mod } from "shapez/mods/mod";
-import { T } from "shapez/translations";
-import { ExtendSuperclass } from "../common";
-import { SzDefinition } from "../shapest/definition";
-import { SzShapeItem } from "../shapest/item";
-import { SzInfo } from "../shapest/layer";
-import { szShapeHash6 } from "../shapest/SzContext2D";
+import { ExtendSuperclass } from "../common.js";
+import { SzDefinition } from "../shapest/definition.js";
+import { SzInfo } from "../shapest/layer.js";
+import { szShapeHash6 } from "../shapest/SzContext2D.js";
+import { enumHubGoalRewards, GameMode, HubGoals, Mod, RandomNumberGenerator, T } from "../types/shapez.js";
+
+
 
 export class SzLevel {
 	index: number;
