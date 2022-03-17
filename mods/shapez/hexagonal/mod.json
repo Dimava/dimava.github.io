@@ -1,0 +1,10 @@
+{
+    "entry": "main.js",
+    "id": "hexagonal",
+    "version": "1.2.0",
+    "name": "hexagonal",
+    "author": "Dimava",
+    "description": "Hexagonal shapes",
+    "website": "",
+    "settings": {}
+}
