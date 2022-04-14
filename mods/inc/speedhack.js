@@ -5,7 +5,7 @@
 // https: version has autoupdates, but local version is more safe in case you don't trust me because it has no autoupdates
 
 // multipliers to toggle with `[` / `]` bracket keys
-Date.timeMultipliers = [0.01, 0.05, 0.25, 1, 2, 5, 10, 20];
+Date.timeMultipliers = [0.01, 0.05, 0.25, 1, 2, 5, 10, 20, 60, 120, 240, 300, 600, 1200];
 // keybindings are modified here
 Date.keybinds = {
 	// bracket keys change speedhack speed
@@ -37,6 +37,7 @@ Date.prototype.getTime = function () {
 	let timeSince = this._getTime() - Date.realtimeAtStart;
 	return Math.round(Date.timeAtStart + timeSince * Date.timeMulti + Date.deltaTime);
 }
+Date.now = () => new Date().getTime()
 
 Date.timeskip = function (seconds = 10) {
 	return Date.deltaTime += seconds * 1000;
