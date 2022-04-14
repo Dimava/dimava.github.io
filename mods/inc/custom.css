@@ -6,10 +6,10 @@ You may use this style by adding `<link rel="stylesheet" href="https://dimava.gi
 
 
 div#automations-modal-container > h5:nth-child(1) {
-    display: none;
+    /* display: none; */
 }
 table.automations-modal-table {
-    display: table !important;
+    /* display: table !important; */
     table-layout: fixed;
     margin-bottom: 1.5em;
 }

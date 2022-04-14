@@ -72,5 +72,24 @@ addEventListener('keydown', event => {
 	}
 });
 
+function updatehack() {
+	a = Object.values(this);
+	a = a.filter(e => typeof e == 'function');
+	a = a.filter(e => (e + '').includes('setInterval'));
+	a = a.filter(e => e != setInterval);
+	if (a.length != 1) throw 0;;
+	eval(a[0].toString().match(/setInterval\([^]*?,20\)/)[0].replace(',20)', ')'));
+}
+
+if (localStorage.speedhack_version != '1.2') {
+	alert(`
+Speedhack mod has updated to v1.2
+ - fixed not working on latest update
+ - added updatehack (speeds up early game 5x)
+	`.trim());
+	localStorage.speedhack_version = '1.2';
+}
+
+updatehack();
 
 // settings, keybondings and descriptions are in the top of this file
