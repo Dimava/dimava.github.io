@@ -1823,7 +1823,9 @@ class Rotator3 {
             [var81]: var81,
             [var82]: var82,
         });
-        const base = (img) => ({
+        const base = (img, angle, ccw) => ({
+            name: `ROTATOR (${angle}°)${ccw ? ' (CCW)' : ''}`,
+            description: `Rotates shapes ${ccw ? 'counter-' : ''}clockwise by ${angle}} degrees.`,
             tutorialImageBase64: RESOURCES[img],
             regularSpriteBase64: RESOURCES[img],
             blueprintSpriteBase64: RESOURCES[img],
@@ -1836,32 +1838,16 @@ class Rotator3 {
         });
         mod.modInterface.addVariantToExistingBuilding(
         // @ts-ignore
-        MetaRotaterBuilding, var31, {
-            name: "Rotater-3",
-            description: "Rotates the shape by 1/3",
-            ...base('rotate31'),
-        });
+        MetaRotaterBuilding, var31, base('rotate31', 120, true));
         mod.modInterface.addVariantToExistingBuilding(
         // @ts-ignore
-        MetaRotaterBuilding, var32, {
-            name: "Rotater-3",
-            description: "Rotates the shape by 1/3",
-            ...base('rotate32'),
-        });
+        MetaRotaterBuilding, var32, base('rotate32', 120, false));
         mod.modInterface.addVariantToExistingBuilding(
         // @ts-ignore
-        MetaRotaterBuilding, var81, {
-            name: "Rotater-8",
-            description: "Rotates the shape by 1/8",
-            ...base('rotate81'),
-        });
+        MetaRotaterBuilding, var81, base('rotate81', 45, true));
         mod.modInterface.addVariantToExistingBuilding(
         // @ts-ignore
-        MetaRotaterBuilding, var82, {
-            name: "Rotater-8",
-            description: "Rotates the shape by 1/8",
-            ...base('rotate82'),
-        });
+        MetaRotaterBuilding, var82, base('rotate82', 45, false));
         // Extend instance methods
         mod.modInterface.extendClass(MetaRotaterBuilding, ({ $old }) => ({
             updateVariants(entity, rotationVariant, variant) {
