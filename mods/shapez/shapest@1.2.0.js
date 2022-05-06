@@ -1370,14 +1370,13 @@ class SzColorItem extends BaseItem {
         return [color, item];
     }
     fillFromColor(other) {
-        let s1 = this.color, s2 = other.color;
-        while (s1.includes('-') && s2 != '---') {
-            s1.lastIndexOf('-');
-            let c = '-';
-            s2 = s2.replace(/[^-]/, C => (c = C, '-'));
-            s1 = s1.replace(/-(?!.*-)/, c);
-        }
-        return [new SzColorItem(s1), s2 == '---' ? null : new SzColorItem(s2)];
+        let aaa = this.color, bbb = other.color;
+        // aaa,bbb => a,aab,bb-
+        // aa-,bbb => -,aab,bb-
+        // a--,bbb => -,ab-,bb-
+        aaa = aaa.includes('-') ? aaa.replace('-', bbb[0]) : aaa.slice(1) + bbb[0];
+        bbb = bbb.slice(1) + '-';
+        return [new SzColorItem(aaa), bbb == '---' ? null : new SzColorItem(bbb)];
     }
     splitIntoColors() {
         const toc = (c) => SzInfo.color.byChar[c].name;
@@ -1746,25 +1745,24 @@ class PainterOverride extends MetaPainterBuilding {
         mod.modInterface.extendClass(MetaPainterBuilding, ({ $old }) => ({
             updateVariants(entity, rotationVariant, variant) {
                 $old.updateVariants.call(this, entity, rotationVariant, variant);
-                if (variant == defaultBuildingVariant) {
-                    entity.components.ItemEjector.setSlots([
-                        { pos: new Vector(1, 0), direction: enumDirection.right },
-                        { pos: new Vector(1, 0), direction: enumDirection.bottom },
-                    ]);
-                    entity.components.ItemAcceptor.setSlots([
-                        { pos: new Vector(0, 0), direction: enumDirection.left },
-                        { pos: new Vector(1, 0), direction: enumDirection.top, filter: "color" },
-                    ]);
+                if (!entity.components.BeltUnderlays) {
+                    entity.addComponent(new BeltUnderlaysComponent({ underlays: [] }));
                 }
-                if (variant == enumPainterVariants.mirrored) {
+                entity.components.BeltUnderlays.underlays = [];
+                if (variant == defaultBuildingVariant || variant == enumPainterVariants.mirrored) {
+                    let x = variant == defaultBuildingVariant;
+                    let { top, bottom, left, right } = enumDirection;
                     entity.components.ItemEjector.setSlots([
-                        { pos: new Vector(1, 0), direction: enumDirection.right },
-                        { pos: new Vector(1, 0), direction: enumDirection.top },
+                        { pos: new Vector(1, 0), direction: right },
+                        { pos: new Vector(1, 0), direction: x ? bottom : top },
                     ]);
                     entity.components.ItemAcceptor.setSlots([
-                        { pos: new Vector(0, 0), direction: enumDirection.left },
-                        { pos: new Vector(1, 0), direction: enumDirection.bottom, filter: "color" },
+                        { pos: new Vector(0, 0), direction: left },
+                        { pos: new Vector(1, 0), direction: x ? top : bottom, filter: "color" },
                     ]);
+                    entity.components.BeltUnderlays.underlays = [
+                        { pos: new Vector(1, 0), direction: x ? bottom : top },
+                    ];
                 }
             },
         }));
@@ -1825,77 +1823,44 @@ class Rotator3 {
             [var81]: var81,
             [var82]: var82,
         });
-        mod.modInterface.addVariantToExistingBuilding(
-        // @ts-ignore
-        MetaRotaterBuilding, var31, {
-            name: "Cutter (Mirrored)",
-            description: "A mirrored cutter",
-            tutorialImageBase64: RESOURCES.rotate31,
-            regularSpriteBase64: RESOURCES.rotate31,
-            blueprintSpriteBase64: RESOURCES.rotate31,
+        const base = (img) => ({
+            tutorialImageBase64: RESOURCES[img],
+            regularSpriteBase64: RESOURCES[img],
+            blueprintSpriteBase64: RESOURCES[img],
             dimensions: new Vector(1, 1),
             additionalStatistics(root) {
                 const speed = root.hubGoals.getProcessorBaseSpeed(enumItemProcessorTypes.rotater);
                 return [[T.ingame.buildingPlacement.infoTexts.speed, formatItemsPerSecond(speed),],
                 ];
             },
-            // isUnlocked(root) {
-            // 	return true;
-            // },
+        });
+        mod.modInterface.addVariantToExistingBuilding(
+        // @ts-ignore
+        MetaRotaterBuilding, var31, {
+            name: "Rotater-3",
+            description: "Rotates the shape by 1/3",
+            ...base('rotate31'),
         });
         mod.modInterface.addVariantToExistingBuilding(
         // @ts-ignore
         MetaRotaterBuilding, var32, {
-            name: "Cutter (Mirrored)",
-            description: "A mirrored cutter",
-            tutorialImageBase64: RESOURCES.rotate32,
-            regularSpriteBase64: RESOURCES.rotate32,
-            blueprintSpriteBase64: RESOURCES.rotate32,
-            dimensions: new Vector(1, 1),
-            additionalStatistics(root) {
-                const speed = root.hubGoals.getProcessorBaseSpeed(enumItemProcessorTypes.rotater);
-                return [[T.ingame.buildingPlacement.infoTexts.speed, formatItemsPerSecond(speed),],
-                ];
-            },
-            // isUnlocked(root) {
-            // 	return true;
-            // },
+            name: "Rotater-3",
+            description: "Rotates the shape by 1/3",
+            ...base('rotate32'),
         });
         mod.modInterface.addVariantToExistingBuilding(
         // @ts-ignore
         MetaRotaterBuilding, var81, {
-            name: "Cutter (Mirrored)",
-            description: "A mirrored cutter",
-            tutorialImageBase64: RESOURCES.rotate81,
-            regularSpriteBase64: RESOURCES.rotate81,
-            blueprintSpriteBase64: RESOURCES.rotate81,
-            dimensions: new Vector(1, 1),
-            additionalStatistics(root) {
-                const speed = root.hubGoals.getProcessorBaseSpeed(enumItemProcessorTypes.rotater);
-                return [[T.ingame.buildingPlacement.infoTexts.speed, formatItemsPerSecond(speed),],
-                ];
-            },
-            // isUnlocked(root) {
-            // 	return true;
-            // },
+            name: "Rotater-8",
+            description: "Rotates the shape by 1/8",
+            ...base('rotate81'),
         });
         mod.modInterface.addVariantToExistingBuilding(
         // @ts-ignore
         MetaRotaterBuilding, var82, {
-            name: "Cutter (Mirrored)",
-            description: "A mirrored cutter",
-            tutorialImageBase64: RESOURCES.rotate82,
-            regularSpriteBase64: RESOURCES.rotate82,
-            blueprintSpriteBase64: RESOURCES.rotate82,
-            dimensions: new Vector(1, 1),
-            additionalStatistics(root) {
-                const speed = root.hubGoals.getProcessorBaseSpeed(enumItemProcessorTypes.rotater);
-                return [[T.ingame.buildingPlacement.infoTexts.speed, formatItemsPerSecond(speed),],
-                ];
-            },
-            // isUnlocked(root) {
-            // 	return true;
-            // },
+            name: "Rotater-8",
+            description: "Rotates the shape by 1/8",
+            ...base('rotate82'),
         });
         // Extend instance methods
         mod.modInterface.extendClass(MetaRotaterBuilding, ({ $old }) => ({
