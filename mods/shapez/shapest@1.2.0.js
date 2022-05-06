@@ -1306,6 +1306,7 @@ class SzColorItem extends BaseItem {
     }
     constructor(color) {
         super();
+        color = color.replace(/(-)(\w)/, '$2$1').replace(/(-)(\w)/, '$2$1');
         this.color = color;
     }
     cachedSprite;
@@ -1376,6 +1377,7 @@ class SzColorItem extends BaseItem {
         // a--,bbb => -,ab-,bb-
         aaa = aaa.includes('-') ? aaa.replace('-', bbb[0]) : aaa.slice(1) + bbb[0];
         bbb = bbb.slice(1) + '-';
+        console.log(`split: `, this.color, other.color, '=>', aaa, bbb);
         return [new SzColorItem(aaa), bbb == '---' ? null : new SzColorItem(bbb)];
     }
     splitIntoColors() {
@@ -1825,7 +1827,7 @@ class Rotator3 {
         });
         const base = (img, angle, ccw) => ({
             name: `ROTATOR (${angle}°)${ccw ? ' (CCW)' : ''}`,
-            description: `Rotates shapes ${ccw ? 'counter-' : ''}clockwise by ${angle}} degrees.`,
+            description: `Rotates shapes ${ccw ? 'counter-' : ''}clockwise by ${angle} degrees.`,
             tutorialImageBase64: RESOURCES[img],
             regularSpriteBase64: RESOURCES[img],
             blueprintSpriteBase64: RESOURCES[img],
@@ -1838,16 +1840,16 @@ class Rotator3 {
         });
         mod.modInterface.addVariantToExistingBuilding(
         // @ts-ignore
-        MetaRotaterBuilding, var31, base('rotate31', 120, true));
+        MetaRotaterBuilding, var31, base('rotate31', 120, false));
         mod.modInterface.addVariantToExistingBuilding(
         // @ts-ignore
-        MetaRotaterBuilding, var32, base('rotate32', 120, false));
+        MetaRotaterBuilding, var32, base('rotate32', 120, true));
         mod.modInterface.addVariantToExistingBuilding(
         // @ts-ignore
-        MetaRotaterBuilding, var81, base('rotate81', 45, true));
+        MetaRotaterBuilding, var81, base('rotate81', 45, false));
         mod.modInterface.addVariantToExistingBuilding(
         // @ts-ignore
-        MetaRotaterBuilding, var82, base('rotate82', 45, false));
+        MetaRotaterBuilding, var82, base('rotate82', 45, true));
         // Extend instance methods
         mod.modInterface.extendClass(MetaRotaterBuilding, ({ $old }) => ({
             updateVariants(entity, rotationVariant, variant) {
