@@ -354,6 +354,7 @@ var SzInfo;
             circleRed: 'sz!l!z|q!C-0o|a!sr0o|c!',
             // squarehalfLeftBlue: 'sz!l!z|q!R-co|a!sb0o|c!',
             // circlePurple: 'sz!l!z|q!C-0o|a!sv0o|c!',
+            blueprint: 'sz!l!z|q!C-06,C-6c,C-ci,R-io|a!sb0o|c!:l!z|q!C-06,C-6c,C-ci,C-io|a!sw0o|c!',
             square3TopBlue: 'sz!l!z|q!R-ks|a!sbks|c!',
             star3Cyan: 'sz!l!z|q!S-4c,S-ck,S-ks|a!sc0o|c!',
             squid: 'sz!l!z|q!S-6c,S-ci,C-iu|a!sc6i,sgiu|c!',
@@ -1954,6 +1955,9 @@ class SzLevel {
 				It can use more then a single paint at once to paint shapes in 7 combined colors
 			`,
         };
+        GameMode.prototype.getBlueprintShapeKey = function () {
+            return SzInfo.quad.named.blueprint;
+        };
         // const rewardName = T.storyRewards[reward].title;
         // let html = `
         // <div class="rewardName">
@@ -1977,6 +1981,7 @@ const levelDefinitions = [
     new SzLevel(9, 600, 'star3Cyan', 'reward_rotater_180'),
     new SzLevel(10, 800, 'diamond', 'reward_stacker'),
     new SzLevel(11, 1000, 'squid', 'no_reward'),
+    new SzLevel(12, 1000, 'bl', 'reward_blueprints'),
     // new SzLevel(12, 1000, 'splikeball48', 'no_reward'),
     // // @ts-expect-error
     // new SzLevel(8, 480, "RbRb----", 'reward_mixer'),
