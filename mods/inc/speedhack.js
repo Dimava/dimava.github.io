@@ -78,7 +78,7 @@ function updatehack() {
 	a = a.filter(e => (e + '').includes('setInterval'));
 	a = a.filter(e => e != setInterval);
 	if (a.length != 1) throw 0;;
-	eval(a[0].toString().match(/setInterval\([^]*?,20\)/)[0].replace(',20)', ')'));
+	eval(a[0].toString().match(/setInterval\([^]*?,(20|0x14)\)/)[0].replace(',20)', ')'));
 }
 
 if (localStorage.speedhack_version != '1.2') {
