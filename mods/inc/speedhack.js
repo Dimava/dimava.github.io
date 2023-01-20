@@ -73,21 +73,28 @@ addEventListener('keydown', event => {
 });
 
 function updatehack() {
-	a = Object.values(this);
-	a = a.filter(e => typeof e == 'function');
-	a = a.filter(e => (e + '').includes('setInterval'));
-	a = a.filter(e => e != setInterval);
-	if (a.length != 1) throw 0;;
+	let a = Object.values(this);
+	a = a.filter(e=>typeof e == 'function');
+	a = a.filter(e=>(e + '').includes('setInterval'));
+	a = a.filter(e=>e != setInterval && e != updatehack);
+	if (a.length != 1) throw alert('The script is broken, please ping Dimava to update it!');
 	eval(a[0].toString().match(/setInterval\([^]*?,(20|0x14)\)/)[0].replace(',20)', ')'));
 }
 
-if (localStorage.speedhack_version != '1.2') {
+if (! (+localStorage.speedhack_version >= '1.2')) {
 	alert(`
 Speedhack mod has updated to v1.2
  - fixed not working on latest update
  - added updatehack (speeds up early game 5x)
 	`.trim());
 	localStorage.speedhack_version = '1.2';
+}
+if (! (+localStorage.speedhack_version >= '1.3')) {
+	alert(`
+Speedhack mod has updated to v1.3
+ - fixed not working on latest update
+	`.trim());
+	localStorage.speedhack_version = '1.3';
 }
 
 updatehack();
