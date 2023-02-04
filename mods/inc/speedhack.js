@@ -73,7 +73,7 @@ addEventListener('keydown', event => {
 });
 
 function updatehack() {
-	let a = Object.values(this);
+	let a = Object.values(globalThis);
 	a = a.filter(e=>typeof e == 'function');
 	a = a.filter(e=>(e + '').includes('setInterval'));
 	a = a.filter(e=>e != setInterval && e != updatehack);
