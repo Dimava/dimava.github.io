@@ -97,6 +97,6 @@ Speedhack mod has updated to v1.3
 	localStorage.speedhack_version = '1.3';
 }
 
-updatehack();
+setTimeout(updatehack, 1000);
 
 // settings, keybondings and descriptions are in the top of this file
